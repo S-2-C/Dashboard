@@ -1,11 +1,11 @@
-"use client";
-
+import type { Metadata } from "next";
 import "./globals.css";
-import { Amplify } from "aws-amplify";
-import { Authenticator } from "@aws-amplify/ui-react";
+import WrappedAuthenticator from "./authenticator";
 
-import awsExports from "../aws-exports";
-Amplify.configure(awsExports);
+export const metadata: Metadata = {
+  title: "Wallmart Dashboard",
+  description: "For Amazon Connect Supervisors and Agents",
+};
 
 export default function RootLayout({
   children,
@@ -13,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body>
-        <Authenticator hideSignUp={true}>{children}</Authenticator>
+        <WrappedAuthenticator>{children}</WrappedAuthenticator>
       </body>
     </html>
   );
