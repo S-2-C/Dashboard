@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "dashboardIDPool",
+    "identityPoolName": "DashboardIDPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "dashbo32d94676",
-    "userPoolName": "dashboardUserPool",
+    "resourceNameTruncated": "capsto510af769",
+    "userPoolName": "DashboardUserPool",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,10 +31,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "dashbo32d94676_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": true,
-    "sharedId": "32d94676",
-    "resourceName": "dashboardAuth",
+    "userpoolClientLambdaRole": "Dashbo510af769_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "sharedId": "510af769",
+    "resourceName": "DashboardAuth",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "thirdPartyAuth": false,
