@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "merge:test-report": "npx mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/mochawesome.json",
+    "amplify:test:merge-report": "npx mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/mochawesome.json",
+    "amplify:test": "npx cypress run --record",
     "test": "npx cypress run"
   },
   "dependencies": {
