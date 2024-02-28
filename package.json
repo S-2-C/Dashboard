@@ -6,16 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "merge:test-report": "npx mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/mochawesome.json",
+    "test": "npx cypress run"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.1.4",
     "aws-amplify": "^6.0.17",
+    "mocha": "^10.3.0",
     "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0",
     "next": "14.1.0",
     "react": "^18",
-    "react-dom": "^18",
-    "wait-on": "^7.2.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
