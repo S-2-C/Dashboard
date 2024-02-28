@@ -6,6 +6,11 @@ node_modules
 .env.development
 .env.production
 
+# Cypress
+cypress/screenshots
+cypress/videos
+cypress/report
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
