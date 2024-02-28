@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import WrappedAuthenticator from "./authenticator";
+// import WrappedAuthenticator from "./authenticator";
 
 export const metadata: Metadata = {
   title: "Wallmart Dashboard",
@@ -15,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <WrappedAuthenticator>{children}</WrappedAuthenticator>
+        {/* <WrappedAuthenticator> */}
+        {children}
+        {/* </WrappedAuthenticator> */}
       </body>
     </html>
   );
