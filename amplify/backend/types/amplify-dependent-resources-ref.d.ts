@@ -13,5 +13,14 @@ export type AmplifyDependentResourcesAttributes = {
       "agentGroupRole": "string",
       "supervisorGroupRole": "string"
     }
+  },
+  "function": {
+    "dashboard192a359e": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    }
   }
 }
