@@ -27,9 +27,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {/* <WrappedAuthenticator> */}
+        <WrappedAuthenticator>
         {children}
-        {/* </WrappedAuthenticator> */}
+        </WrappedAuthenticator>
       </body>
     </html>
   );
