@@ -42,6 +42,10 @@ export const getAgent = /* GraphQL */ `
       profilePic
       email
       needsHelp
+      calls {
+        nextToken
+        __typename
+      }
       id
       createdAt
       updatedAt
@@ -78,7 +82,7 @@ export const getCall = /* GraphQL */ `
       phone
       callStart
       callEnd
-      agentId {
+      agent {
         name
         profilePic
         email
@@ -91,6 +95,7 @@ export const getCall = /* GraphQL */ `
       id
       createdAt
       updatedAt
+      agentCallsId
       __typename
     }
   }
@@ -110,6 +115,7 @@ export const listCalls = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        agentCallsId
         __typename
       }
       nextToken

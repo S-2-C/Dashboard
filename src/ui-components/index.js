@@ -6,8 +6,6 @@
 
 export { default as AgentCreateForm } from "./AgentCreateForm";
 export { default as AgentUpdateForm } from "./AgentUpdateForm";
-export { default as CallCreateForm } from "./CallCreateForm";
-export { default as CallUpdateForm } from "./CallUpdateForm";
 export { default as SupervisorCreateForm } from "./SupervisorCreateForm";
 export { default as SupervisorUpdateForm } from "./SupervisorUpdateForm";
 export { default as studioTheme } from "./studioTheme";

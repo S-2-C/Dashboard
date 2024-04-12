@@ -59,6 +59,10 @@ export const createAgent = /* GraphQL */ `
       profilePic
       email
       needsHelp
+      calls {
+        nextToken
+        __typename
+      }
       id
       createdAt
       updatedAt
@@ -76,6 +80,10 @@ export const updateAgent = /* GraphQL */ `
       profilePic
       email
       needsHelp
+      calls {
+        nextToken
+        __typename
+      }
       id
       createdAt
       updatedAt
@@ -93,6 +101,10 @@ export const deleteAgent = /* GraphQL */ `
       profilePic
       email
       needsHelp
+      calls {
+        nextToken
+        __typename
+      }
       id
       createdAt
       updatedAt
@@ -110,7 +122,7 @@ export const createCall = /* GraphQL */ `
       phone
       callStart
       callEnd
-      agentId {
+      agent {
         name
         profilePic
         email
@@ -123,6 +135,7 @@ export const createCall = /* GraphQL */ `
       id
       createdAt
       updatedAt
+      agentCallsId
       __typename
     }
   }
@@ -137,7 +150,7 @@ export const updateCall = /* GraphQL */ `
       phone
       callStart
       callEnd
-      agentId {
+      agent {
         name
         profilePic
         email
@@ -150,6 +163,7 @@ export const updateCall = /* GraphQL */ `
       id
       createdAt
       updatedAt
+      agentCallsId
       __typename
     }
   }
@@ -164,7 +178,7 @@ export const deleteCall = /* GraphQL */ `
       phone
       callStart
       callEnd
-      agentId {
+      agent {
         name
         profilePic
         email
@@ -177,6 +191,7 @@ export const deleteCall = /* GraphQL */ `
       id
       createdAt
       updatedAt
+      agentCallsId
       __typename
     }
   }
