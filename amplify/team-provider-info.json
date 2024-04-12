@@ -21,6 +21,9 @@
           "deploymentBucketName": "amplify-dashboard-dev-12235-deployment",
           "s3Key": "amplify-builds/dashboard192a359e-5444366731735a4b5764-build.zip"
         }
+      },
+      "api": {
+        "dashboard": {}
       }
     }
   }
