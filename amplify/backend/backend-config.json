@@ -1,4 +1,22 @@
 {
+  "api": {
+    "dashboard": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "dashboardAuth": {
       "customAuth": false,
@@ -48,24 +66,6 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_dashboard192a359e_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dashboard192a359e"
-        }
-      ]
-    },
-    "AMPLIFY_function_dashboard192a359e_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dashboard192a359e"
-        }
-      ]
     }
   }
 }
