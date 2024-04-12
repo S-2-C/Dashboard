@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import "@/styles/globals.css"
 import { Inter as FontSans } from "next/font/google"
 import "./globals.css";
 import WrappedAuthenticator from "./authenticator";
-import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
