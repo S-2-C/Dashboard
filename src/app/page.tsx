@@ -60,7 +60,7 @@ export default function Home() {
                 HOME
               </a>
             </li>
-            <li className="mt-1 flex items-center ml-4">
+            <li className="mt-4 flex items-center ml-4">
               <a
                 href="#"
                 className={`text-teal hover:text-teal-highlight relative`}
@@ -186,7 +186,7 @@ export default function Home() {
                 OTHERS
               </a>
             </li>
-            <li className="mt-1 flex items-center ml-4">
+            <li className="mt-4 flex items-center ml-4">
               <a
                 href="#"
                 className={`text-teal hover:text-teal-highlight relative`}
