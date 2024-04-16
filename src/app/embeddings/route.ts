@@ -1,9 +1,8 @@
 import { Pinecone } from '@pinecone-database/pinecone';
 
 const pc = new Pinecone({
-    apiKey: 'YOUR_API_KEY'
+  apiKey: process.env.PINECONE_API_KEY as string,
 });
-
 
 export async function POST() {
   const res = await fetch('https://data.mongodb-api.com/...', {
@@ -14,8 +13,8 @@ export async function POST() {
     },
     body: JSON.stringify({ time: new Date().toISOString() }),
   })
- 
+
   const data = await res.json()
- 
+
   return Response.json(data)
 }
