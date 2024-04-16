@@ -1,8 +1,249 @@
 "use client";
-
-import { Button, Flex, Heading, Image, Text } from "@aws-amplify/ui-react";
+import { useState, useEffect, useRef } from "react";
+import { Button, Flex, Heading, Text } from "@aws-amplify/ui-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import "@aws-amplify/ui-react/styles.css";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faChartBar, faTasks, faUsers, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
-  return <div>Hello world</div>;
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  // const [hoveredItem, setHoveredItem] = useState(null); // Track hovered item
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isNavOpen && navRef.current) {
+      // Calculate the width of the navigation bar based on the width of the longest text inside it
+      const maxWidth = Array.from(navRef.current.querySelectorAll("a")).reduce(
+        (maxWidth, link) => Math.max(maxWidth, link.offsetWidth),
+        0
+      );
+      navRef.current.style.width = `${maxWidth + 120}px`; // Adding extra padding for aesthetics
+    } else if (navRef.current) {
+      navRef.current.style.width = "120px"; // Default width when the navigation bar is closed
+    }
+  }, [isNavOpen]);
+
+  return (
+    <div className="flex h-screen bg-background text-foreground relative">
+      {/* Blue line (Clickable area to show the nav bar) */}
+      <div
+        className="h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
+        onMouseEnter={() => setIsNavOpen(true)}
+        onMouseLeave={() => setIsNavOpen(false)}
+        style={{ paddingTop: "2rem" }} // Added padding from the top
+      >
+        {isNavOpen ? null : <Text className="text-white">Menu</Text>}
+      </div>
+
+      {/* Navigation Bar (conditionally rendered based on isNavOpen state) */}
+      {isNavOpen && (
+        <nav
+          ref={navRef}
+          className={`h-full bg-blue-highlight px-6 py-8 absolute left-0 transition-all ${
+            isNavOpen
+              ? "transform translate-x-0"
+              : "transform -translate-x-full"
+          }`}
+          onMouseEnter={() => setIsNavOpen(true)}
+          onMouseLeave={() => setIsNavOpen(false)}
+        >
+          <ul>
+            <li className="mt-8 flex items-center">
+              <a href="#" className="text-teal-dark">
+                HOME
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Control Panel")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Control Panel
+                  {hoveredItem === "Control Panel" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Chat")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Chat
+                  {hoveredItem === "Chat" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Agent Management")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Agent Management
+                  {hoveredItem === "Agent Management" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Performance Metrics")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Performance Metrics
+                  {hoveredItem === "Performance Metrics" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Notifications")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Notifications
+                  {hoveredItem === "Notifications" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Reports")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Reports
+                  {hoveredItem === "Reports" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Documentation")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Documentation
+                  {hoveredItem === "Documentation" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Channels")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Channels
+                  {hoveredItem === "Channels" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-6 flex items-center">
+              <a href="#" className="text-teal-dark">
+                OTHERS
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Settings")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Settings
+                  {hoveredItem === "Settings" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+            <li className="mt-1 flex items-center ml-4">
+              <a
+                href="#"
+                className={`text-teal hover:text-teal-highlight relative`}
+                onMouseEnter={() => setHoveredItem("Logout")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="w-max h-max p-2">
+                  Logout
+                  {hoveredItem === "Logout" && (
+                    <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                  )}
+                </div>
+              </a>
+            </li>
+
+            {/* Add more navigation items as needed */}
+          </ul>
+        </nav>
+      )}
+
+      {/* Main Content */}
+      <div className={`flex flex-col flex-1 p-10 ml-20`}>
+        <Flex direction="column" gap="2rem">
+          <Heading level={1}>Control Panel</Heading>
+          <Text className="text-sans">Here is some text</Text>
+          <Button>Click Me</Button>
+        </Flex>
+        <div className="absolute top-0 right-0 mt-4 mr-4">
+          {/* Position popover in the upper right corner */}
+          <Popover>
+            <PopoverTrigger>
+              <Button>Open Popover</Button>
+            </PopoverTrigger>
+            <PopoverContent className="bg-popover text-popover-foreground rounded-lg shadow-lg p-4">
+              <Flex direction="column" gap="2rem">
+                <Heading level={3}>Popover Content</Heading>
+                <Text>Here is some content for the popover</Text>
+              </Flex>
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
+    </div>
+  );
 }
