@@ -22,11 +22,11 @@ import {
   faCog, 
   faSignOutAlt 
 } from '@fortawesome/free-solid-svg-icons';
-import { useAuthenticator } from "@aws-amplify/ui-react";
+// import { useAuthenticator } from "@aws-amplify/ui-react";
 
 
 export default function Home() {
-  const { signOut } = useAuthenticator((context) => [context.signOut]);
+  // const { signOut } = useAuthenticator((context) => [context.signOut]);
   const [isNavOpen, setIsNavOpen] = useState(false);
   // const [hoveredItem, setHoveredItem] = useState(null); // Track hovered item
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -56,20 +56,27 @@ export default function Home() {
         style={{ paddingTop: "2rem" }} // Added padding from the top
       >
         {isNavOpen ? null : (
-    <div className="text-white flex flex-col justify-around h-full">
-      <FontAwesomeIcon icon={faChartBar} className="text-teal" />
-      <FontAwesomeIcon icon={faTasks} className="text-teal" />
-      <FontAwesomeIcon icon={faUsers} className="text-teal" />
-      <FontAwesomeIcon icon={faCalendar} className="text-teal" />
-      <FontAwesomeIcon icon={faComments} className="text-teal" />
-      <FontAwesomeIcon icon={faUserTie} className="text-teal" />
-      <FontAwesomeIcon icon={faChartLine} className="text-teal" />
-      <FontAwesomeIcon icon={faBell} className="text-teal" />
-      <FontAwesomeIcon icon={faBook} className="text-teal" />
-      <FontAwesomeIcon icon={faFileAlt} className="text-teal" />
-      <FontAwesomeIcon icon={faCog} className="text-teal" />
-      <FontAwesomeIcon icon={faSignOutAlt} className="text-teal" />
+    <div className="text-white flex flex-col justify-between h-full">
+    {/* Upper column with only the logo */}
+    <div className="flex flex-col items-center justify-center">
+      <img src="images/S2C Logo.svg" alt="Logo" className="w-12 h-12" />
+      <FontAwesomeIcon icon={faChartBar} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faComments} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faUsers} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faChartLine} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faFileAlt} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faBook} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faUserTie} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faCog} className="text-teal my-4 text-2xl" />
     </div>
+    {/* Lowest column with only sign out */}
+    <div className="flex items-center justify-center pb-8">
+      <FontAwesomeIcon icon={faSignOutAlt} className="text-teal text-2xl" />
+    </div>
+  </div>
+  
+  
   )}
       </div>
 
