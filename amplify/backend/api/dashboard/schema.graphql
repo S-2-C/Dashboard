@@ -2,8 +2,24 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Todo @model {
-  id: ID!
+type Supervisor @model {
   name: String!
-  description: String
+  profilePic: String
+  email: AWSEmail!
+}
+
+type Agent @model {
+  name: String!
+  profilePic: String
+  email: AWSEmail!
+  needsHelp: Boolean!
+  calls: [Call] @hasMany
+}
+
+type Call @model {
+  ARN: String!
+  phone: String!
+  callStart: AWSTimestamp!
+  callEnd: AWSTimestamp
+  agent: Agent! @belongsTo
 }

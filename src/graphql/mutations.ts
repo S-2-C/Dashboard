@@ -8,54 +8,216 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createTodo = /* GraphQL */ `mutation CreateTodo(
-  $input: CreateTodoInput!
-  $condition: ModelTodoConditionInput
+export const createSupervisor = /* GraphQL */ `mutation CreateSupervisor(
+  $input: CreateSupervisorInput!
+  $condition: ModelSupervisorConditionInput
 ) {
-  createTodo(input: $input, condition: $condition) {
-    id
+  createSupervisor(input: $input, condition: $condition) {
     name
-    description
+    profilePic
+    email
+    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateTodoMutationVariables,
-  APITypes.CreateTodoMutation
+  APITypes.CreateSupervisorMutationVariables,
+  APITypes.CreateSupervisorMutation
 >;
-export const updateTodo = /* GraphQL */ `mutation UpdateTodo(
-  $input: UpdateTodoInput!
-  $condition: ModelTodoConditionInput
+export const updateSupervisor = /* GraphQL */ `mutation UpdateSupervisor(
+  $input: UpdateSupervisorInput!
+  $condition: ModelSupervisorConditionInput
 ) {
-  updateTodo(input: $input, condition: $condition) {
-    id
+  updateSupervisor(input: $input, condition: $condition) {
     name
-    description
+    profilePic
+    email
+    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateTodoMutationVariables,
-  APITypes.UpdateTodoMutation
+  APITypes.UpdateSupervisorMutationVariables,
+  APITypes.UpdateSupervisorMutation
 >;
-export const deleteTodo = /* GraphQL */ `mutation DeleteTodo(
-  $input: DeleteTodoInput!
-  $condition: ModelTodoConditionInput
+export const deleteSupervisor = /* GraphQL */ `mutation DeleteSupervisor(
+  $input: DeleteSupervisorInput!
+  $condition: ModelSupervisorConditionInput
 ) {
-  deleteTodo(input: $input, condition: $condition) {
-    id
+  deleteSupervisor(input: $input, condition: $condition) {
     name
-    description
+    profilePic
+    email
+    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteTodoMutationVariables,
-  APITypes.DeleteTodoMutation
+  APITypes.DeleteSupervisorMutationVariables,
+  APITypes.DeleteSupervisorMutation
+>;
+export const createAgent = /* GraphQL */ `mutation CreateAgent(
+  $input: CreateAgentInput!
+  $condition: ModelAgentConditionInput
+) {
+  createAgent(input: $input, condition: $condition) {
+    name
+    profilePic
+    email
+    needsHelp
+    calls {
+      nextToken
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateAgentMutationVariables,
+  APITypes.CreateAgentMutation
+>;
+export const updateAgent = /* GraphQL */ `mutation UpdateAgent(
+  $input: UpdateAgentInput!
+  $condition: ModelAgentConditionInput
+) {
+  updateAgent(input: $input, condition: $condition) {
+    name
+    profilePic
+    email
+    needsHelp
+    calls {
+      nextToken
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateAgentMutationVariables,
+  APITypes.UpdateAgentMutation
+>;
+export const deleteAgent = /* GraphQL */ `mutation DeleteAgent(
+  $input: DeleteAgentInput!
+  $condition: ModelAgentConditionInput
+) {
+  deleteAgent(input: $input, condition: $condition) {
+    name
+    profilePic
+    email
+    needsHelp
+    calls {
+      nextToken
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteAgentMutationVariables,
+  APITypes.DeleteAgentMutation
+>;
+export const createCall = /* GraphQL */ `mutation CreateCall(
+  $input: CreateCallInput!
+  $condition: ModelCallConditionInput
+) {
+  createCall(input: $input, condition: $condition) {
+    ARN
+    phone
+    callStart
+    callEnd
+    agent {
+      name
+      profilePic
+      email
+      needsHelp
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    agentCallsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateCallMutationVariables,
+  APITypes.CreateCallMutation
+>;
+export const updateCall = /* GraphQL */ `mutation UpdateCall(
+  $input: UpdateCallInput!
+  $condition: ModelCallConditionInput
+) {
+  updateCall(input: $input, condition: $condition) {
+    ARN
+    phone
+    callStart
+    callEnd
+    agent {
+      name
+      profilePic
+      email
+      needsHelp
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    agentCallsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateCallMutationVariables,
+  APITypes.UpdateCallMutation
+>;
+export const deleteCall = /* GraphQL */ `mutation DeleteCall(
+  $input: DeleteCallInput!
+  $condition: ModelCallConditionInput
+) {
+  deleteCall(input: $input, condition: $condition) {
+    ARN
+    phone
+    callStart
+    callEnd
+    agent {
+      name
+      profilePic
+      email
+      needsHelp
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    agentCallsId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteCallMutationVariables,
+  APITypes.DeleteCallMutation
 >;
