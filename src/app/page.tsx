@@ -7,8 +7,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import "@aws-amplify/ui-react/styles.css";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faChartBar, faTasks, faUsers, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faChartBar, 
+  faTasks, 
+  faUsers, 
+  faCalendar, 
+  faComments, 
+  faUserTie, 
+  faChartLine, 
+  faBell, 
+  faBook, 
+  faFileAlt, 
+  faCog, 
+  faSignOutAlt 
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -39,7 +52,22 @@ export default function Home() {
         onMouseLeave={() => setIsNavOpen(false)}
         style={{ paddingTop: "2rem" }} // Added padding from the top
       >
-        {isNavOpen ? null : <Text className="text-white">Menu</Text>}
+        {isNavOpen ? null : (
+    <div className="text-white flex flex-col justify-around h-full">
+      <FontAwesomeIcon icon={faChartBar} className="text-teal" />
+      <FontAwesomeIcon icon={faTasks} className="text-teal" />
+      <FontAwesomeIcon icon={faUsers} className="text-teal" />
+      <FontAwesomeIcon icon={faCalendar} className="text-teal" />
+      <FontAwesomeIcon icon={faComments} className="text-teal" />
+      <FontAwesomeIcon icon={faUserTie} className="text-teal" />
+      <FontAwesomeIcon icon={faChartLine} className="text-teal" />
+      <FontAwesomeIcon icon={faBell} className="text-teal" />
+      <FontAwesomeIcon icon={faBook} className="text-teal" />
+      <FontAwesomeIcon icon={faFileAlt} className="text-teal" />
+      <FontAwesomeIcon icon={faCog} className="text-teal" />
+      <FontAwesomeIcon icon={faSignOutAlt} className="text-teal" />
+    </div>
+  )}
       </div>
 
       {/* Navigation Bar (conditionally rendered based on isNavOpen state) */}
@@ -68,6 +96,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                    <FontAwesomeIcon icon={faChartBar} className="text-teal hover:text-teal-highlight mr-2" />
                   Control Panel
                   {hoveredItem === "Control Panel" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -83,6 +112,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faComments} className="text-teal hover:text-teal-highlight mr-2" />
                   Chat
                   {hoveredItem === "Chat" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -99,6 +129,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faUsers} className="text-teal hover:text-teal-highlight mr-2" />
                   Agent Management
                   {hoveredItem === "Agent Management" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -114,6 +145,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faChartLine} className="text-teal hover:text-teal-highlight mr-2" />
                   Performance Metrics
                   {hoveredItem === "Performance Metrics" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -129,6 +161,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faBell} className="text-teal hover:text-teal-highlight mr-2" />
                   Notifications
                   {hoveredItem === "Notifications" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -144,6 +177,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faFileAlt} className="text-teal hover:text-teal-highlight mr-2" />
                   Reports
                   {hoveredItem === "Reports" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -159,6 +193,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faBook} className="text-teal hover:text-teal-highlight mr-2" />
                   Documentation
                   {hoveredItem === "Documentation" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -174,6 +209,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faUserTie} className="text-teal hover:text-teal-highlight mr-2" />
                   Channels
                   {hoveredItem === "Channels" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -194,6 +230,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faCog} className="text-teal hover:text-teal-highlight mr-2" />
                   Settings
                   {hoveredItem === "Settings" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
@@ -209,6 +246,7 @@ export default function Home() {
                 onMouseLeave={() => setHoveredItem(null)}
               >
                 <div className="w-max h-max p-2">
+                <FontAwesomeIcon icon={faSignOutAlt} className="text-teal hover:text-teal-highlight mr-2" />
                   Logout
                   {hoveredItem === "Logout" && (
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>

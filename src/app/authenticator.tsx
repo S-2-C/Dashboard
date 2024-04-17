@@ -13,8 +13,8 @@ export default function WrappedAuthenticator({
   children: React.ReactNode;
 }) {
   return (
-  // <Authenticator>
-    children
-    // </Authenticator>
+  <Authenticator>
+    {children}
+  </Authenticator>
   );
 }
