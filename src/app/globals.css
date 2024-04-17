@@ -35,6 +35,18 @@
       --ring: 222.2 84% 4.9%;
 
       --radius: 0.5rem;
+
+      --blue: 205 83% 91%;
+      --blue-foreground: 210 40% 98%;
+      --blue-highlight: 204 70% 91%;
+
+      --teal:210 98% 17%;
+      --teal-foreground: 222.2 47.4% 11.2%;
+      --teal-highlight: 203 95% 40%;
+      --teal-dark: 203 69% 11%;
+
+      
+
     }
 
     .dark {
