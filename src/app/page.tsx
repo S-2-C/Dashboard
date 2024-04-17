@@ -2,8 +2,10 @@
 
 import { Button, Flex, Heading, Image, Text } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 export default function Home() {
+  const { signOut } = useAuthenticator((context) => [context.signOut]);
   return (
     <Flex
       direction={{ base: "column", large: "row" }}
@@ -27,9 +29,9 @@ export default function Home() {
         </Text>
         <Button
           variation="primary"
-          onClick={() => alert("Added item to cart!")}
+          onClick={signOut}
         >
-          Add to Cart
+          Sign Out
         </Button>
       </Flex>
     </Flex>
