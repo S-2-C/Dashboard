@@ -20,7 +20,26 @@
   "auth": {
     "dashboardAuth": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "dashboardAuthPostConfirmation",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "dashboardAuthPreSignup",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -77,6 +96,16 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "dashboardAuthPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "dashboardAuthPreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -93,6 +122,38 @@
         {
           "category": "function",
           "resourceName": "StoreStreamARN"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPreSignup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPreSignup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPreSignup"
         }
       ]
     }
