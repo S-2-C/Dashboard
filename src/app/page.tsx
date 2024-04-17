@@ -22,8 +22,11 @@ import {
   faCog, 
   faSignOutAlt 
 } from '@fortawesome/free-solid-svg-icons';
+import { useAuthenticator } from "@aws-amplify/ui-react";
+
 
 export default function Home() {
+  const { signOut } = useAuthenticator((context) => [context.signOut]);
   const [isNavOpen, setIsNavOpen] = useState(false);
   // const [hoveredItem, setHoveredItem] = useState(null); // Track hovered item
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -245,7 +248,9 @@ export default function Home() {
                 onMouseEnter={() => setHoveredItem("Logout")}
                 onMouseLeave={() => setHoveredItem(null)}
               >
-                <div className="w-max h-max p-2">
+                <div className="w-max h-max p-2" 
+                // onClick={signOut}
+                >
                 <FontAwesomeIcon icon={faSignOutAlt} className="text-teal hover:text-teal-highlight mr-2" />
                   Logout
                   {hoveredItem === "Logout" && (
