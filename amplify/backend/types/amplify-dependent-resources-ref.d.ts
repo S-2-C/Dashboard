@@ -1,4 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
+  "api": {
+    "dashboard": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    }
+  },
   "auth": {
     "dashboardAuth": {
       "AppClientID": "string",
@@ -12,6 +19,15 @@ export type AmplifyDependentResourcesAttributes = {
     "userPoolGroups": {
       "agentGroupRole": "string",
       "supervisorGroupRole": "string"
+    }
+  },
+  "function": {
+    "StoreStreamARN": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
     }
   }
 }

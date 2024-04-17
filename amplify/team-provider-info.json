@@ -34,6 +34,15 @@
       "auth": {
         "dashboardAuth": {},
         "userPoolGroups": {}
+      },
+      "function": {
+        "StoreStreamARN": {
+          "deploymentBucketName": "amplify-dashboard-main-10953-deployment",
+          "s3Key": "amplify-builds/StoreStreamARN-574f526b366969486b59-build.zip"
+        }
+      },
+      "api": {
+        "dashboard": {}
       }
     }
   }

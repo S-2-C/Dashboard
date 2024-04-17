@@ -1,4 +1,22 @@
 {
+  "api": {
+    "dashboard": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "dashboardAuth": {
       "customAuth": false,
@@ -41,6 +59,42 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "function": {
+    "StoreStreamARN": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "dashboard"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_StoreStreamARN_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "StoreStreamARN"
+        }
+      ]
+    },
+    "AMPLIFY_function_StoreStreamARN_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "StoreStreamARN"
+        }
+      ]
     }
   }
 }
