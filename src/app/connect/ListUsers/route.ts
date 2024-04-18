@@ -1,9 +1,10 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { ConnectClient, ListUsersCommand, } from "@aws-sdk/client-connect"; // Import the required client and commands.
 
 
 function make_config_json() {
     return {
-        region: process.env.AMAZON_REGION,
+        region: process.env.REGION,
         credentials: {
             accessKeyId: process.env.CONNECT_ACCESS_KEY,
             secretAccessKey: process.env.CONNECT_SECRET_ACCESS_KEY,
@@ -32,18 +33,14 @@ function arrangeUserList(response: any) {
 }
 
 
-export async function GET() {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
     const config = make_config_json();
     const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
     const client = new ConnectClient(config as any);
 
     const response = await getUserList(client, InstanceId)
 
-    console.log(response)
+    return Response.json(arrangeUserList(response));
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(arrangeUserList(response)),
-    };
 
 }
