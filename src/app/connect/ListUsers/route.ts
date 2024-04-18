@@ -1,5 +1,4 @@
-import { ConnectClient, ListUsersCommand, } from "@aws-sdk/client-connect"; // ES Modules import
-// const { ConnectClient, ListUsersCommand } = require("@aws-sdk/client-connect"); // CommonJS import
+import { ConnectClient, ListUsersCommand, } from "@aws-sdk/client-connect"; // Import the required client and commands.
 
 
 function make_config_json() {
@@ -34,7 +33,6 @@ function arrangeUserList(response: any) {
 
 
 export async function GET() {
-    console.log("Hello from historic")
     const config = make_config_json();
     const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
     const client = new ConnectClient(config as any);
