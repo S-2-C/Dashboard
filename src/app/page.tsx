@@ -7,23 +7,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import "@aws-amplify/ui-react/styles.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faChartBar, 
-  faTasks, 
-  faUsers, 
-  faCalendar, 
-  faComments, 
-  faUserTie, 
-  faChartLine, 
-  faBell, 
-  faBook, 
-  faFileAlt, 
-  faCog, 
-  faSignOutAlt 
-} from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { 
+//   faChartBar, 
+//   faTasks, 
+//   faUsers, 
+//   faCalendar, 
+//   faComments, 
+//   faUserTie, 
+//   faChartLine, 
+//   faBell, 
+//   faBook, 
+//   faFileAlt, 
+//   faCog, 
+//   faSignOutAlt 
+// } from '@fortawesome/free-solid-svg-icons';
 // import { useAuthenticator } from "@aws-amplify/ui-react";
-import Home from "./NavBar.tsx"
+import Home from "./NavBar.tsx" // Importing the NavBar component
 
 export default function Home2() {
   // const { signOut } = useAuthenticator((context) => [context.signOut]);

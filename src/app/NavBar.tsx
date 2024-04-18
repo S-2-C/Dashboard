@@ -24,7 +24,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 // import { useAuthenticator } from "@aws-amplify/ui-react";
 
-
+//Function that exports navbar to be used in other pages
 export default function Home() {
   // const { signOut } = useAuthenticator((context) => [context.signOut]);
   const [isNavOpen, setIsNavOpen] = useState(false);

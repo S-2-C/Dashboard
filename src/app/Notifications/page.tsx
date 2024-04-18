@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Home from "../NavBar.tsx"
+import Home from "../NavBar.tsx" // Importing the NavBar component
 import { Button, Flex, Heading, Text } from "@aws-amplify/ui-react";
 
 export default function Notifications(){
