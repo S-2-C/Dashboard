@@ -9,7 +9,29 @@
       "UnauthRoleName": "amplify-dashboard-stage-e84c5-unauthRole",
       "StackName": "amplify-dashboard-stage-e84c5",
       "StackId": "arn:aws:cloudformation:us-east-1:905418190753:stack/amplify-dashboard-stage-e84c5/df4eba30-fde9-11ee-aa3f-0e0e787241bd",
-      "AmplifyAppId": "d3t7nukbads082"
+      "AmplifyAppId": "d3t7nukbads082",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-dashboard-stage-e84c5-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "dashboardAuth": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "StoreStreamARN": {
+          "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
+          "s3Key": "amplify-builds/StoreStreamARN-394931336c782f356430-build.zip"
+        },
+        "dashboardAuthPostConfirmation": {
+          "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
+          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61766d6256636f393362-build.zip"
+        },
+        "dashboardAuthPreSignup": {
+          "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
+          "s3Key": "amplify-builds/dashboardAuthPreSignup-3672787064664d6d7071-build.zip"
+        },
+        "dashboard": {}
+      }
     }
   },
   "main": {
@@ -27,7 +49,22 @@
     },
     "categories": {
       "auth": {
-        "dashboardAuth": {}
+        "dashboardAuth": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "StoreStreamARN": {
+          "deploymentBucketName": "amplify-dashboard-prod-60b17-deployment",
+          "s3Key": "amplify-builds/StoreStreamARN-394931336c782f356430-build.zip"
+        },
+        "dashboardAuthPostConfirmation": {
+          "deploymentBucketName": "amplify-dashboard-prod-60b17-deployment",
+          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61766d6256636f393362-build.zip"
+        },
+        "dashboardAuthPreSignup": {
+          "deploymentBucketName": "amplify-dashboard-prod-60b17-deployment",
+          "s3Key": "amplify-builds/dashboardAuthPreSignup-3672787064664d6d7071-build.zip"
+        }
       }
     }
   }
