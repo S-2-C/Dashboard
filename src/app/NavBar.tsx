@@ -47,51 +47,50 @@ export default function Home() {
   }, [isNavOpen]);
 
   return (
-    <div className="flex h-screen bg-background text-foreground relative">
-      {/* Blue line (Clickable area to show the nav bar) */}
-      <div
-        className="h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
-        onMouseEnter={() => setIsNavOpen(true)}
-        onMouseLeave={() => setIsNavOpen(false)}
-        style={{ paddingTop: "2rem" }} // Added padding from the top
-      >
-        {isNavOpen ? null : (
-    <div className="text-white flex flex-col justify-between h-full">
-    {/* Upper column with only the logo */}
-    <div className="flex flex-col items-center justify-center">
-      <img src="images/S2C Logo.svg" alt="Logo" className="w-12 h-12" />
-      <FontAwesomeIcon icon={faChartBar} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faComments} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faUsers} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faChartLine} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faFileAlt} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faBook} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faUserTie} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faCog} className="text-teal my-4 text-2xl" />
-    </div>
-    {/* Lowest column with only sign out */}
-    <div className="flex items-center justify-center pb-8">
-      <FontAwesomeIcon icon={faSignOutAlt} className="text-teal text-2xl" />
-    </div>
-  </div>
-  
-  
-  )}
-      </div>
-
-      {/* Navigation Bar (conditionally rendered based on isNavOpen state) */}
-      {isNavOpen && (
-        <nav
-          ref={navRef}
-          className={`h-full bg-blue-highlight px-6 py-8 absolute left-0 transition-all ${
-            isNavOpen
-              ? "transform translate-x-0"
-              : "transform -translate-x-full"
-          }`}
+    <div className="flex">
+    {/* Navbar */}
+    <div className="flex-shrink-0">
+      <div className="flex h-screen bg-background text-foreground relative">
+        {/* Blue line (Clickable area to show the nav bar) */}
+        <div
+          className="h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
           onMouseEnter={() => setIsNavOpen(true)}
           onMouseLeave={() => setIsNavOpen(false)}
+          style={{ paddingTop: "2rem" }} // Added padding from the top
         >
+          {isNavOpen ? null : (
+            <div className="text-white flex flex-col justify-between h-full">
+              {/* Upper column with only the logo */}
+              <div className="flex flex-col items-center justify-center">
+                <img src="images/S2C Logo.svg" alt="Logo" className="w-12 h-12" />
+                <FontAwesomeIcon icon={faChartBar} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faComments} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faUsers} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faChartLine} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faFileAlt} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faBook} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faUserTie} className="text-teal my-4 text-2xl" />
+                <FontAwesomeIcon icon={faCog} className="text-teal my-4 text-2xl" />
+              </div>
+              {/* Lowest column with only sign out */}
+              <div className="flex items-center justify-center pb-8">
+                <FontAwesomeIcon icon={faSignOutAlt} className="text-teal text-2xl" />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Navigation Bar (conditionally rendered based on isNavOpen state) */}
+        {isNavOpen && (
+          <nav
+            ref={navRef}
+            className={`h-full bg-blue-highlight px-6 py-8 absolute left-0 transition-all ${
+              isNavOpen ? "transform translate-x-0" : "transform -translate-x-full"
+            }`}
+            onMouseEnter={() => setIsNavOpen(true)}
+            onMouseLeave={() => setIsNavOpen(false)}
+          >
           <ul>
             <li className="mt-8 flex items-center">
               <a href="#" className="text-teal-dark">
@@ -269,11 +268,16 @@ export default function Home() {
 
             {/* Add more navigation items as needed */}
           </ul>
-        </nav>
-      )}
+          </nav>
+        )}
 
-      {/* Main Content */}
-      
+        {/* Main Content */}
+      </div>
     </div>
+    {/* <div className="flex-grow"> */}
+      {/* Content goes here */}
+      {/* <Button>Click Me</Button> */}
+    {/* </div> */}
+  </div>
   );
                   } 
