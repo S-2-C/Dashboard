@@ -16,16 +16,10 @@ async function getUserMetricData(InstanceId: string, client: ConnectClient): Pro
     InstanceId: InstanceId,
     Filters: { // Filters
       Queues: [ // Queues
-        "queueARN",
+        "fe0bd989-c3d1-4959-a47c-b7d27def9a99",
       ],
       Channels: [ // Channels
         "VOICE" || "CHAT" || "TASK",
-      ],
-      RoutingProfiles: [ // RoutingProfiles
-        "STRING_VALUE",
-      ],
-      RoutingStepExpressions: [ // RoutingExpressions
-        "STRING_VALUE",
       ],
     },
     Groupings: [ // Groupings
@@ -33,16 +27,8 @@ async function getUserMetricData(InstanceId: string, client: ConnectClient): Pro
     ],
     CurrentMetrics: [ // CurrentMetrics // required
       { // CurrentMetric
-        Name: "AGENTS_ONLINE" || "AGENTS_AVAILABLE" || "AGENTS_ON_CALL" || "AGENTS_NON_PRODUCTIVE" || "AGENTS_AFTER_CONTACT_WORK" || "AGENTS_ERROR" || "AGENTS_STAFFED" || "CONTACTS_IN_QUEUE" || "OLDEST_CONTACT_AGE" || "CONTACTS_SCHEDULED" || "AGENTS_ON_CONTACT" || "SLOTS_ACTIVE" || "SLOTS_AVAILABLE",
-        Unit: "SECONDS" || "COUNT" || "PERCENT",
-      },
-    ],
-    NextToken: "STRING_VALUE",
-    MaxResults: Number("int"),
-    SortCriteria: [ // CurrentMetricSortCriteriaMaxOne
-      { // CurrentMetricSortCriteria
-        SortByMetric: "AGENTS_ONLINE" || "AGENTS_AVAILABLE" || "AGENTS_ON_CALL" || "AGENTS_NON_PRODUCTIVE" || "AGENTS_AFTER_CONTACT_WORK" || "AGENTS_ERROR" || "AGENTS_STAFFED" || "CONTACTS_IN_QUEUE" || "OLDEST_CONTACT_AGE" || "CONTACTS_SCHEDULED" || "AGENTS_ON_CONTACT" || "SLOTS_ACTIVE" || "SLOTS_AVAILABLE",
-        SortOrder: "ASCENDING" || "DESCENDING",
+        Name: "AGENTS_ONLINE",
+        Unit: "COUNT",
       },
     ],
   };
