@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { ConnectClient, ListUsersCommand, } from "@aws-sdk/client-connect"; // Import the required client and commands.
+import { ConnectClient, ListQueuesCommand, QueueType } from "@aws-sdk/client-connect"; // Import the required client and commands.
 
 
 function make_config_json() {
@@ -12,24 +12,25 @@ function make_config_json() {
     }
 }
 
-async function getUserList(client: ConnectClient, InstanceId: string) {
+async function getQueueList(client: ConnectClient, InstanceId: string) {
     const input = {
         InstanceId: InstanceId,
     };
-    const command = new ListUsersCommand(input);
+    const command = new ListQueuesCommand(input);
     const response = await client.send(command);
     return response;
 }
 
-function arrangeUserList(response: any) {
-    const users = response.UserSummaryList;
-    const userList = users.map((user: any) => {
+function arrangeQueuesList(response: any) {
+    const queue = response.QueueSummaryList;
+    const queueList = queue.map((queue: any) => {
         return {
-            Id: user.Id,
-            Username: user.Username,
+            Id: queue.Id,
+            QueueType: queue.QueueType,
+            Name: queue.Name || "",
         };
     });
-    return userList;
+    return queueList;
 }
 
 
@@ -38,11 +39,10 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
     const client = new ConnectClient(config as any);
 
-    const response = await getUserList(client, InstanceId)
-
+    const response = await getQueueList(client, InstanceId)
     return Response.json({
-        "message": "List of users retrieved successfully.",
-        "data": arrangeUserList(response)
+        "message": "List of queues retrieved successfully.",
+        "data": arrangeQueuesList(response)
     });
 
 
