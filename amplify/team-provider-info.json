@@ -18,6 +18,8 @@
         "userPoolGroups": {}
       },
       "function": {
+        "dashboard": {},
+        "dashboard192a359e": {},
         "StoreStreamARN": {
           "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
           "s3Key": "amplify-builds/StoreStreamARN-394931336c782f356430-build.zip"
@@ -29,8 +31,7 @@
         "dashboardAuthPreSignup": {
           "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
           "s3Key": "amplify-builds/dashboardAuthPreSignup-3672787064664d6d7071-build.zip"
-        },
-        "dashboard": {}
+        }
       }
     }
   },
