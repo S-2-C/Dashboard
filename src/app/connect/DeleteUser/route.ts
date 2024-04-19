@@ -3,7 +3,7 @@ import { ConnectClient, DeleteUserCommand } from "@aws-sdk/client-connect";
 
 function make_config_json() {
     return {
-        region: process.env.AMAZON_REGION,
+        region: process.env.REGION,
         credentials: {
             accessKeyId: process.env.CONNECT_ACCESS_KEY,
             secretAccessKey: process.env.CONNECT_SECRET_ACCESS_KEY,
@@ -16,48 +16,50 @@ async function deleteUser(InstanceId: string, userId: string, client: ConnectCli
         InstanceId: InstanceId,
         UserId: userId,
     };
+    try {
+        const command = new DeleteUserCommand(input);
+        const response: any = await client.send(command);
 
-    const command = new DeleteUserCommand(input);
-    const response = await client.send(command);
-    return response;
+        return response;
+    }
+    catch (err) {
+        console.error(err);
+    }
+    return { $metadata: { httpStatusCode: 400 } };
 }
 
 
-export async function POST(request: Request) {
-    const body = await request.json();
+export async function DELETE(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId") || undefined;
+
 
     // Check that request body contains a userId key 
-    if (!body.userId) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: "Missing userId in request body" }),
-        };
-    }
+    if (userId === undefined) {
+        return new Response(JSON.stringify({ message: "Please provide a userId" }), {
+            status: 400,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    // Check that userId is a number
-    if (typeof body.userId !== "string") {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: "userId must be a number" }),
-        };
     }
-    const userId = body.userId;
 
     const config = make_config_json();
     const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
     const client = new ConnectClient(config as any);
 
-    const response: any = deleteUser(InstanceId, userId, client);
+    //const response: any = deleteUser(InstanceId, userId, client);
+    const response = await deleteUser(InstanceId, userId, client);
     // Check if response is successful
     if (response.$metadata.httpStatusCode === 200) {
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "User deleted successfully" }),
-        };
+        return Response.json({ message: "User deleted successfully" });
     } else {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: "Failed to delete user" }),
-        };
+        return new Response(JSON.stringify({ message: "Please provide a valid userId" }), {
+            status: 400,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 }
