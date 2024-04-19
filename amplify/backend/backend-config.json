@@ -20,7 +20,26 @@
   "auth": {
     "dashboardAuth": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "dashboardAuthPostConfirmation",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "dashboardAuthPreSignup",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -62,26 +81,79 @@
     }
   },
   "function": {
-    "dashboard192a359e": {
+    "StoreStreamARN": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "dashboard"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "dashboardAuthPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "dashboardAuthPreSignup": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_dashboard192a359e_deploymentBucketName": {
+    "AMPLIFY_function_StoreStreamARN_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "dashboard192a359e"
+          "resourceName": "StoreStreamARN"
         }
       ]
     },
-    "AMPLIFY_function_dashboard192a359e_s3Key": {
+    "AMPLIFY_function_StoreStreamARN_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "dashboard192a359e"
+          "resourceName": "StoreStreamARN"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPreSignup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashboardAuthPreSignup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashboardAuthPreSignup"
         }
       ]
     }
