@@ -39,6 +39,20 @@ const config = {
           highlight: "hsl(var(--teal-highlight))",
           dark: "hsl(var(--teal-dark))",
         },
+        figma: {
+          DEFAULT: "hsl(var(--figma))",
+          figma1: "hsl(var(--figma-foreground))",
+          figma2: "hsl(var(--figma-foreground))",
+          figma3: "hsl(var(--figma-foreground))",
+          figma4: "hsl(var(--figma-foreground))",
+          figma5: "hsl(var(--figma-foreground))",
+          figma6: "hsl(var(--figma-foreground))",
+          figma7: "hsl(var(--figma-foreground))",
+          figma8: "hsl(var(--figma-foreground))",
+          figma9: "hsl(var(--figma-foreground))",
+          figma10: "hsl(var(--figma-foreground))",
+        },
+        
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
