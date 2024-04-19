@@ -23,5 +23,12 @@
         }
       }
     }
+  },
+  "main": {
+    "categories": {
+      "auth": {
+        "dashboardAuth": {}
+      }
+    }
   }
 }
