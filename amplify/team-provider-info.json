@@ -68,12 +68,5 @@
         }
       }
     }
-  },
-  "main": {
-    "categories": {
-      "auth": {
-        "dashboardAuth": {}
-      }
-    }
   }
 }
