@@ -47,20 +47,17 @@
 
       /* figma colors */
       --figma: 0, 0%, 100%;
-      --figma1: 203, 95%, 40%;
-      --figma2: 44, 100%, 56%;
-      --figma3:203, 93%, 30%;
-      --figma4: 216, 20%, 95%;
-      --figma5: 0, 0%, 0%;
-      --figma6: 203, 66%, 73%;
-      --figma7: 210, 98%, 17%;
-      --figma8: 126, 65%, 30%; /* //green */
-      --figma9: 43, 94%, 51%;/* //yellow */
-      --figma10:0, 100%, 50%;   /* //red */
+      --figma-figma1: 203, 95%, 40%;
+      --figma-figma2: 44, 100%, 56%;
+      --figma-figma3:203, 93%, 30%;
+      --figma-figma4: 216, 20%, 95%;
+      --figma5-figma5: 0, 0%, 0%;
+      --figma6-figma6: 203, 66%, 73%;
+      --figma7-figma7: 210, 98%, 17%;
+      --figma8-figma8: 126, 65%, 30%; /* //green */
+      --figma9-figma9: 43, 94%, 51%;/* //yellow */
+      --figma10-figma10:0, 100%, 50%;   /* //red */
 
-     
-
-      
 
     }
 
