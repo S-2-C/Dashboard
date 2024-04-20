@@ -1,12 +1,15 @@
 import { ConnectClient, GetMetricDataV2Command } from "@aws-sdk/client-connect";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-async function getData() {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
+  console.log("HOla");
+
   if (
-    !process.env.AMAZON_REGION ||
+    !process.env.REGION ||
     !process.env.CONNECT_ACCESS_KEY ||
     !process.env.CONNECT_SECRET_ACCESS_KEY
   )
-    throw new Error("NO KEYS");
+    return new Response("Environmental variables are missing");
   const client = new ConnectClient({
     region: process.env.AMAZON_REGION,
     credentials: {
@@ -17,33 +20,22 @@ async function getData() {
 
   const input = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
-    StartTime: new Date(),
-    EndTime: new Date(),
+    StartTime: new Date("2024-03-18"),
+    EndTime: new Date("2024-04-19"),
     Filters: [
       {
         FilterKey: "AGENT",
-        FilterValues: ["ID"],
+        FilterValues: ["3f2a1212-1458-471f-8adb-04080c44f235"],
       },
     ],
     Metrics: [
       {
-        Name: "AGENT_NON_RESPONSE",
-        // Threshold: [
-        //   {
-        //     Comparison: "STRING_VALUE",
-        //     ThresholdValue: Number("double"),
-        //   },
-        // ],
-        // MetricFilters: [
-        //   {
-        //     MetricFilterKey: "STRING_VALUE",
-        //     MetricFilterValues: ["STRING_VALUE"],
-        //     Negate: true || false,
-        //   },
-        // ],
+        Name: "AGENT_ANSWER_RATE",
       },
     ],
   };
+  console.log(input);
+
   const command = new GetMetricDataV2Command(input);
   const response = await client.send(command);
   return Response.json(response);
