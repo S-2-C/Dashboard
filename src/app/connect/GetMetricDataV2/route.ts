@@ -21,7 +21,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
   const input = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
     StartTime: new Date("2024-03-18"),
-    EndTime: new Date("2024-04-19"),
+    EndTime: new Date(),
     Filters: [
       {
         FilterKey: "AGENT",
