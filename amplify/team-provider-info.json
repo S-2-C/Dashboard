@@ -1,71 +1,38 @@
 {
-  "dev": {
+  "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-dashboard-stage-e84c5-authRole",
-      "UnauthRoleArn": "arn:aws:iam::905418190753:role/amplify-dashboard-stage-e84c5-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::905418190753:role/amplify-dashboard-stage-e84c5-authRole",
+      "AuthRoleName": "amplify-connectdashboard-staging-5ea37-authRole",
+      "UnauthRoleArn": "arn:aws:iam::905418190753:role/amplify-connectdashboard-staging-5ea37-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::905418190753:role/amplify-connectdashboard-staging-5ea37-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
-      "UnauthRoleName": "amplify-dashboard-stage-e84c5-unauthRole",
-      "StackName": "amplify-dashboard-stage-e84c5",
-      "StackId": "arn:aws:cloudformation:us-east-1:905418190753:stack/amplify-dashboard-stage-e84c5/df4eba30-fde9-11ee-aa3f-0e0e787241bd",
-      "AmplifyAppId": "d3t7nukbads082",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-dashboard-stage-e84c5-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+      "DeploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+      "UnauthRoleName": "amplify-connectdashboard-staging-5ea37-unauthRole",
+      "StackName": "amplify-connectdashboard-staging-5ea37",
+      "StackId": "arn:aws:cloudformation:us-east-1:905418190753:stack/amplify-connectdashboard-staging-5ea37/65050eb0-feb5-11ee-ad17-12a2c66487c1",
+      "AmplifyAppId": "d29u1f6lnc5crs",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-connectdashboard-staging-5ea37-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
-        "dashboardAuth": {},
+        "connectdashboard": {},
         "userPoolGroups": {}
       },
       "function": {
-        "dashboard": {},
-        "dashboard192a359e": {},
-        "StoreStreamARN": {
-          "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
-          "s3Key": "amplify-builds/StoreStreamARN-394931336c782f356430-build.zip"
+        "connectdashboardPostConfirmation": {
+          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+          "s3Key": "amplify-builds/connectdashboardPostConfirmation-67762b6f737157632f55-build.zip"
         },
-        "dashboardAuthPostConfirmation": {
-          "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61766d6256636f393362-build.zip"
+        "connectdashboardPreSignup": {
+          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+          "s3Key": "amplify-builds/connectdashboardPreSignup-672f5477445153305869-build.zip"
         },
-        "dashboardAuthPreSignup": {
-          "deploymentBucketName": "amplify-dashboard-stage-e84c5-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPreSignup-3672787064664d6d7071-build.zip"
+        "kvsTrigger": {
+          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+          "s3Key": "amplify-builds/kvsTrigger-734c424c6a35444f3673-build.zip"
         }
-      }
-    }
-  },
-  "main": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-dashboard-prod-60b17-authRole",
-      "UnauthRoleArn": "arn:aws:iam::905418190753:role/amplify-dashboard-prod-60b17-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::905418190753:role/amplify-dashboard-prod-60b17-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-dashboard-prod-60b17-deployment",
-      "UnauthRoleName": "amplify-dashboard-prod-60b17-unauthRole",
-      "StackName": "amplify-dashboard-prod-60b17",
-      "StackId": "arn:aws:cloudformation:us-east-1:905418190753:stack/amplify-dashboard-prod-60b17/2e91abd0-fde9-11ee-a0ba-12c1d76bdfcb",
-      "AmplifyAppId": "d3t7nukbads082",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-dashboard-prod-60b17-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
-    },
-    "categories": {
-      "auth": {
-        "dashboardAuth": {},
-        "userPoolGroups": {}
       },
-      "function": {
-        "StoreStreamARN": {
-          "deploymentBucketName": "amplify-dashboard-prod-60b17-deployment",
-          "s3Key": "amplify-builds/StoreStreamARN-394931336c782f356430-build.zip"
-        },
-        "dashboardAuthPostConfirmation": {
-          "deploymentBucketName": "amplify-dashboard-prod-60b17-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61766d6256636f393362-build.zip"
-        },
-        "dashboardAuthPreSignup": {
-          "deploymentBucketName": "amplify-dashboard-prod-60b17-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPreSignup-3672787064664d6d7071-build.zip"
-        }
+      "api": {
+        "connectdashboard": {}
       }
     }
   }
