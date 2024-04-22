@@ -67,6 +67,7 @@ async function getEmbed(
   // Invoke the ragChain and return the result as a string
   console.log("Invoking ragChain...");
   const ragChainResult = await ragChain.invoke({ question: query, context: retrievedDocs});
+  console.log(query);
   console.log("RagChain result:", ragChainResult);
 
   return ragChainResult.toString(); // Return the result as a string
