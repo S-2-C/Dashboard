@@ -13,26 +13,28 @@
       "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-connectdashboard-staging-5ea37-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
+      "api": {
+        "dashboard": {}
+      },
       "auth": {
-        "connectdashboard": {},
+        "cognitoDashboard": {},
+        "dashboardAuth": {},
         "userPoolGroups": {}
       },
       "function": {
-        "connectdashboardPostConfirmation": {
+        "preSignUp": {},
+        "cognitoDashboardPreSignup": {},
+        "dashboardAuthPostConfirmation": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/connectdashboardPostConfirmation-67762b6f737157632f55-build.zip"
+          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61766d6256636f393362-build.zip"
         },
-        "connectdashboardPreSignup": {
+        "dashboardAuthPreSignup": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/connectdashboardPreSignup-672f5477445153305869-build.zip"
-        },
-        "kvsTrigger": {
-          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/kvsTrigger-734c424c6a35444f3673-build.zip"
+          "s3Key": "amplify-builds/dashboardAuthPreSignup-3672787064664d6d7071-build.zip"
         }
       },
-      "api": {
-        "connectdashboard": {}
+      "storage": {
+        "dashboardS3": {}
       }
     }
   }
