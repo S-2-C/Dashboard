@@ -39,11 +39,16 @@
       --blue: 205 83% 91%;
       --blue-foreground: 210 40% 98%;
       --blue-highlight: 204 70% 91%;
+      --blue-dark: 210 98% 17%;
+      --blue-darkhighlight: 210 65% 40%;
+    
 
       --teal:210 98% 17%;
       --teal-foreground: 222.2 47.4% 11.2%;
       --teal-highlight: 203 95% 40%;
       --teal-dark: 203 69% 11%;
+      --teal-background: 202, 43%, 61%;
+      --teal-FU: 203 61% 33%;
 
       /* figma colors */
       --figma: 0, 0%, 100%;

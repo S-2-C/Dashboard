@@ -5,10 +5,9 @@ import Home from "../NavBar";
 
 export default  function ControlPanel() {
     return (
-      <div>
+      <div className="pd-6">
         {/* <div>Main content of Control Panel page</div> */}
         <Home />
-        <h2>Hello from page </h2>
 
       </div>
         // <Home />

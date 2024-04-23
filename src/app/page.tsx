@@ -23,7 +23,7 @@ import "@aws-amplify/ui-react/styles.css";
 //   faSignOutAlt 
 // } from '@fortawesome/free-solid-svg-icons';
 // import { useAuthenticator } from "@aws-amplify/ui-react";
-import Home from "./NavBar.tsx" // Importing the NavBar component
+import Home from "./NavBar" // Importing the NavBar component
 
 export default function Home2() {
   // const { signOut } = useAuthenticator((context) => [context.signOut]);
