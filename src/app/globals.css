@@ -41,6 +41,7 @@
       --blue-highlight: 204 70% 91%;
       --blue-dark: 210 98% 17%;
       --blue-darkhighlight: 210 65% 40%;
+      --blue-teal: 203 51% 44%;
     
 
       --teal:210 98% 17%;
@@ -62,6 +63,8 @@
       --figma8-figma8: 126, 65%, 30%; /* //green */
       --figma9-figma9: 43, 94%, 51%;/* //yellow */
       --figma10-figma10:0, 100%, 50%;   /* //red */
+
+      --gray: 213 12% 29%;
 
 
     }

@@ -34,6 +34,7 @@ const config = {
           highlight: "hsl(var(--blue-highlight))",
           dark: "hsl(var(--blue-dark))",
           darkhighlight: "hsl(var(--blue-darkhighlight))",
+          teal: "hsl(var(--blue-teal))",
         },
         teal: {
           DEFAULT: "hsl(var(--teal))",
@@ -55,6 +56,10 @@ const config = {
           figma8: "hsl(var(--figma-figma8))",
           figma9: "hsl(var(--figma-figma9))",
           figma10: "hsl(var(--figma-figma10))",
+        },
+        gray:{
+          DEFAULT: "hsl(var(--gray))",
+
         },
         
         
