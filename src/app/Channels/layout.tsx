@@ -18,11 +18,12 @@ export default function ControlPanelLayout({
         {/* <div className="h-full flex-col">
           Header
         </div> */}
-        <div className="h-full flex-col w-2/3">
+        <div className="h-full flex-col w-3/5 ">
           {children}
         </div>
+
         {/* Second column for Agent, Notif, and Saturation */}
-        <div className="mt-20">
+        <div className="w-2/5">
           {SmartNotif}
         </div>
       </div>
