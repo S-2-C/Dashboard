@@ -28,13 +28,8 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
         FilterValues: ["3f2a1212-1458-471f-8adb-04080c44f235"],
       },
     ],
-    Metrics: [
-      {
-        Name: "AGENT_ANSWER_RATE",
-      },
-    ],
+    Metrics: [{ Name: "AGENT_NON_RESPONSE" }, { Name: "AGENT_OCCUPANCY" }],
   };
-  console.log(input);
 
   const command = new GetMetricDataV2Command(input);
   const response = await client.send(command);
