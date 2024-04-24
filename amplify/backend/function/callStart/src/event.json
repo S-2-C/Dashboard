@@ -1,5 +1,52 @@
 {
-  "key1": "value1",
-  "key2": "value2",
-  "key3": "value3"
+  "Details": {
+    "ContactData": {
+      "Attributes": {},
+      "AwsRegion": "us-east-1",
+      "Channel": "VOICE",
+      "ContactId": "6a12364f-45ac-4d12-9a28-c3b3358394b8",
+      "CustomerEndpoint": {
+        "Address": "+525561154355",
+        "Type": "TELEPHONE_NUMBER"
+      },
+      "CustomerId": null,
+      "Description": null,
+      "InitialContactId": "6a12364f-45ac-4d12-9a28-c3b3358394b8",
+      "InitiationMethod": "INBOUND",
+      "InstanceARN": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597",
+      "LanguageCode": "en-US",
+      "MediaStreams": {
+        "Customer": {
+          "Audio": {
+            "StartFragmentNumber": "91343852333181432392682062661986210183151715171",
+            "StartTimestamp": "1713920385839",
+            "StreamARN": "arn:aws:kinesisvideo:us-east-1:905418190753:stream/s2c-connect-ss2cc-contact-c920c22c-0dc4-4b44-95c3-5b2a5333ec8d/1713571618789"
+          }
+        }
+      },
+      "Name": null,
+      "PreviousContactId": "6a12364f-45ac-4d12-9a28-c3b3358394b8",
+      "Queue": null,
+      "References": {},
+      "RelatedContactId": null,
+      "SegmentAttributes": {
+        "connect:Subtype": {
+          "ValueString": "connect:Telephony"
+        }
+      },
+      "SystemEndpoint": {
+        "Address": "+528126821849",
+        "Type": "TELEPHONE_NUMBER"
+      },
+      "Tags": {
+        "aws:connect:instanceId": "96cb63e2-25a1-4014-8f3c-e3919415d597",
+        "aws:connect:systemEndpoint": "+528126821849"
+      }
+    },
+    "Parameters": {
+      "contactID": "6a12364f-45ac-4d12-9a28-c3b3358394b8",
+      "phone": ""
+    }
+  },
+  "Name": "ContactFlowEvent"
 }

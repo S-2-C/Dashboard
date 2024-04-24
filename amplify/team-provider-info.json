@@ -28,7 +28,7 @@
         },
         "callStart": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/callStart-554b342f6a32516c412b-build.zip"
+          "s3Key": "amplify-builds/callStart-59313030663071384132-build.zip"
         }
       },
       "storage": {

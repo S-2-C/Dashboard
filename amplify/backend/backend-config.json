@@ -108,56 +108,6 @@
       "service": "Lambda"
     }
   },
-  "parameters": {
-    "AMPLIFY_function_callStart_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "callStart"
-        }
-      ]
-    },
-    "AMPLIFY_function_callStart_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "callStart"
-        }
-      ]
-    },
-    "AMPLIFY_function_dashboardAuthPostConfirmation_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dashboardAuthPostConfirmation"
-        }
-      ]
-    },
-    "AMPLIFY_function_dashboardAuthPostConfirmation_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dashboardAuthPostConfirmation"
-        }
-      ]
-    },
-    "AMPLIFY_function_dashboardAuthPreSignup_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dashboardAuthPreSignup"
-        }
-      ]
-    },
-    "AMPLIFY_function_dashboardAuthPreSignup_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dashboardAuthPreSignup"
-        }
-      ]
-    }
-  },
   "storage": {
     "dashboardS3": {
       "dependsOn": [],

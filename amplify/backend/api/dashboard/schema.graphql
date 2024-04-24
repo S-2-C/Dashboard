@@ -13,13 +13,12 @@ type Agent @model {
   profilePic: String
   email: AWSEmail!
   needsHelp: Boolean!
-  calls: [Call] @hasMany
+  Contacts: [Contact] @hasMany
 }
 
-type Call @model {
-  ARN: String!
+type Contact @model {
   phone: String!
-  callStart: AWSTimestamp!
-  callEnd: AWSTimestamp
+  callStart: AWSDateTime!
+  callEnd: AWSDateTime
   agent: Agent! @belongsTo
 }
