@@ -8,26 +8,27 @@ export default async function Frequently() {
       </div>
       <div className="flex-grow flex justify-center items-center">
   <div className="max-w-screen-xl w-full bg-teal-background p-4 rounded-tr-lg rounded-br-lg">
-    <div className="flex items-center justify-between">
-      <button className="bg-background hover:bg-blue-teal text-gray hover:text-background font-bold py-2 px-4 rounded">
-        Agent Management
-      </button>
-      <button className="bg-background hover:bg-blue-teal text-gray hover:text-background font-bold py-2 px-4 rounded ml-8">
-        Notifications
-      </button>
-      <button className="bg-background hover:bg-blue-teal text-gray hover:text-background font-bold py-2 px-4 rounded ml-8">
-        Metrics
-      </button>
-      <button className="bg-background hover:bg-blue-teal text-gray hover:text-background font-bold py-2 px-4 rounded ml-8">
-        Reports
-      </button>
-      <button className="bg-background hover:bg-blue-teal text-gray hover:text-background font-bold py-2 px-4 rounded ml-8">
-        Chat
-      </button>
-      <button className="bg-background hover:bg-blue-teal text-gray hover:text-background font-bold py-2 px-4 rounded ml-8">
-        Channels
-      </button>
-    </div>
+  <div className="flex items-center justify-between">
+  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded">
+    Agent Management
+  </button>
+  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+    Notifications
+  </button>
+  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+    Metrics
+  </button>
+  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+    Reports
+  </button>
+  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+    Chat
+  </button>
+  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+    Channels
+  </button>
+</div>
+
   </div>
 </div>
 
