@@ -8,8 +8,17 @@ export default function Notifications(){
     return (
         <div className=" h-full flex">
             <Home />
-            <div className=" h-full ml-4">
-                <h1 className="text-figma-figma1">Notifications</h1>
+            <div className="mt-20 flex flex-col ml-40">
+                <div className=" ">
+                    <h1 className="text-figma-figma1">Notifications</h1>
+                    <h2>Category</h2>
+               
+                <div className="">
+                    <div>OverView</div>
+                    <div>Walmart.com</div>
+                    <div>Walmart Express</div>
+                </div>
+                </div>
             </div>
         </div>
     )
