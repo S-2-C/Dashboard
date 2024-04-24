@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "connectdashboardIDPool",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "connec440c7028",
-    "userPoolName": "connectdashboardUserPool",
+    "identityPoolName": "dashboardIDPool",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "dashbo4d1f8c9a",
+    "userPoolName": "dashboardUserPool",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -24,17 +24,17 @@
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
-    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientRefreshTokenValidity": "365",
     "userpoolClientWriteAttributes": [
       "email"
     ],
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "connec440c7028_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "dashbo4d1f8c9a_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "440c7028",
-    "resourceName": "connectdashboard",
+    "sharedId": "4d1f8c9a",
+    "resourceName": "dashboardAuth",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "thirdPartyAuth": false,
@@ -75,7 +75,7 @@
     "dependsOn": [
       {
         "category": "function",
-        "resourceName": "connectdashboardPostConfirmation",
+        "resourceName": "dashboardAuthPostConfirmation",
         "triggerProvider": "Cognito",
         "attributes": [
           "Arn",
@@ -84,7 +84,7 @@
       },
       {
         "category": "function",
-        "resourceName": "connectdashboardPreSignup",
+        "resourceName": "dashboardAuthPreSignup",
         "triggerProvider": "Cognito",
         "attributes": [
           "Arn",
@@ -96,7 +96,10 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "permissions": [],
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"connectdashboardPostConfirmation\"\n  },\n  {\n    \"triggerType\": \"PreSignUp\",\n    \"lambdaFunctionName\": \"connectdashboardPreSignup\"\n  }\n]"
+    "authTriggerConnections": [
+      "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"dashboardAuthPostConfirmation\"}",
+      "{\"triggerType\":\"PreSignUp\",\"lambdaFunctionName\":\"dashboardAuthPreSignup\"}"
+    ],
+    "permissions": []
   }
 }

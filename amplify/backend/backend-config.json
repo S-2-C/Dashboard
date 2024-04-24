@@ -1,15 +1,13 @@
 {
   "api": {
-    "connectdashboard": {
+    "dashboard": {
       "dependsOn": [],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDate": "2025-04-11T01:33:26.879Z",
-              "apiKeyExpirationDays": 356,
-              "description": ""
+              "apiKeyExpirationDays": 7
             },
             "authenticationType": "API_KEY"
           }
@@ -20,7 +18,7 @@
     }
   },
   "auth": {
-    "connectdashboard": {
+    "dashboardAuth": {
       "customAuth": false,
       "dependsOn": [
         {
@@ -29,7 +27,7 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "connectdashboardPostConfirmation",
+          "resourceName": "dashboardAuthPostConfirmation",
           "triggerProvider": "Cognito"
         },
         {
@@ -38,7 +36,7 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "connectdashboardPreSignup",
+          "resourceName": "dashboardAuthPreSignup",
           "triggerProvider": "Cognito"
         }
       ],
@@ -75,7 +73,7 @@
             "IdentityPoolId"
           ],
           "category": "auth",
-          "resourceName": "connectdashboard"
+          "resourceName": "dashboardAuth"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -83,17 +81,7 @@
     }
   },
   "function": {
-    "connectdashboardPostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "connectdashboardPreSignup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "kvsTrigger": {
+    "callStart": {
       "build": true,
       "dependsOn": [
         {
@@ -103,61 +91,78 @@
             "GraphQLAPIKeyOutput"
           ],
           "category": "api",
-          "resourceName": "connectdashboard"
+          "resourceName": "dashboard"
         }
       ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "dashboardAuthPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "dashboardAuthPreSignup": {
+      "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_connectdashboardPostConfirmation_deploymentBucketName": {
+    "AMPLIFY_function_callStart_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "connectdashboardPostConfirmation"
+          "resourceName": "callStart"
         }
       ]
     },
-    "AMPLIFY_function_connectdashboardPostConfirmation_s3Key": {
+    "AMPLIFY_function_callStart_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "connectdashboardPostConfirmation"
+          "resourceName": "callStart"
         }
       ]
     },
-    "AMPLIFY_function_connectdashboardPreSignup_deploymentBucketName": {
+    "AMPLIFY_function_dashboardAuthPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "connectdashboardPreSignup"
+          "resourceName": "dashboardAuthPostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_connectdashboardPreSignup_s3Key": {
+    "AMPLIFY_function_dashboardAuthPostConfirmation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "connectdashboardPreSignup"
+          "resourceName": "dashboardAuthPostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_kvsTrigger_deploymentBucketName": {
+    "AMPLIFY_function_dashboardAuthPreSignup_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "kvsTrigger"
+          "resourceName": "dashboardAuthPreSignup"
         }
       ]
     },
-    "AMPLIFY_function_kvsTrigger_s3Key": {
+    "AMPLIFY_function_dashboardAuthPreSignup_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "kvsTrigger"
+          "resourceName": "dashboardAuthPreSignup"
         }
       ]
+    }
+  },
+  "storage": {
+    "dashboardS3": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

@@ -1,12 +1,8 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.8.2\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Linux\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.11.1\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
-    "DOMAINBLACKLIST": {
-      "Type": "String",
-      "Default": ""
-    },
-    "DOMAINWHITELIST": {
+    "GROUP": {
       "Type": "String",
       "Default": ""
     },
@@ -71,12 +67,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "connectdashboardPreSignup",
+            "dashboardAuthPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "connectdashboardPreSignup",
+                  "dashboardAuthPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -97,11 +93,8 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "DOMAINWHITELIST": {
-              "Ref": "DOMAINWHITELIST"
-            },
-            "DOMAINBLACKLIST": {
-              "Ref": "DOMAINBLACKLIST"
+            "GROUP": {
+              "Ref": "GROUP"
             }
           }
         },
@@ -129,12 +122,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "connectdashboardPreSignup",
+            "dashboardAuthPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "connectdashboardPreSignup",
+                  "dashboardAuthPostConfirmation",
                   "-",
                   {
                     "Ref": "env"

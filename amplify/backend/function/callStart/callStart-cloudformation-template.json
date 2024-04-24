@@ -16,17 +16,17 @@
     "s3Key": {
       "Type": "String"
     },
-    "apiconnectdashboardGraphQLAPIIdOutput": {
+    "apidashboardGraphQLAPIIdOutput": {
       "Type": "String",
-      "Default": "apiconnectdashboardGraphQLAPIIdOutput"
+      "Default": "apidashboardGraphQLAPIIdOutput"
     },
-    "apiconnectdashboardGraphQLAPIEndpointOutput": {
+    "apidashboardGraphQLAPIEndpointOutput": {
       "Type": "String",
-      "Default": "apiconnectdashboardGraphQLAPIEndpointOutput"
+      "Default": "apidashboardGraphQLAPIEndpointOutput"
     },
-    "apiconnectdashboardGraphQLAPIKeyOutput": {
+    "apidashboardGraphQLAPIKeyOutput": {
       "Type": "String",
-      "Default": "apiconnectdashboardGraphQLAPIKeyOutput"
+      "Default": "apidashboardGraphQLAPIKeyOutput"
     }
   },
   "Conditions": {
@@ -59,12 +59,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "kvsTrigger",
+            "callStart",
             {
               "Fn::Join": [
                 "",
                 [
-                  "kvsTrigger",
+                  "callStart",
                   "-",
                   {
                     "Ref": "env"
@@ -82,14 +82,14 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "API_CONNECTDASHBOARD_GRAPHQLAPIIDOUTPUT": {
-              "Ref": "apiconnectdashboardGraphQLAPIIdOutput"
+            "API_DASHBOARD_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apidashboardGraphQLAPIIdOutput"
             },
-            "API_CONNECTDASHBOARD_GRAPHQLAPIENDPOINTOUTPUT": {
-              "Ref": "apiconnectdashboardGraphQLAPIEndpointOutput"
+            "API_DASHBOARD_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apidashboardGraphQLAPIEndpointOutput"
             },
-            "API_CONNECTDASHBOARD_GRAPHQLAPIKEYOUTPUT": {
-              "Ref": "apiconnectdashboardGraphQLAPIKeyOutput"
+            "API_DASHBOARD_GRAPHQLAPIKEYOUTPUT": {
+              "Ref": "apidashboardGraphQLAPIKeyOutput"
             }
           }
         },
@@ -110,12 +110,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "connectdashboardLambdaRole19634d49",
+            "connectdashboardLambdaRolef8377aee",
             {
               "Fn::Join": [
                 "",
                 [
-                  "connectdashboardLambdaRole19634d49",
+                  "connectdashboardLambdaRolef8377aee",
                   "-",
                   {
                     "Ref": "env"
@@ -221,7 +221,7 @@
                       },
                       ":apis/",
                       {
-                        "Ref": "apiconnectdashboardGraphQLAPIIdOutput"
+                        "Ref": "apidashboardGraphQLAPIIdOutput"
                       },
                       "/types/Mutation/*"
                     ]
