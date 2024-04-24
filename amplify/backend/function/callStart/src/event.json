@@ -3,7 +3,7 @@
     "ContactData": {
       "Attributes": {
         "greetingPlayed": "true",
-        "agentUsername": "pridapablo"
+        "agentUsername": "pridapablo@gmail.com"
       },
       "AwsRegion": "us-east-1",
       "Channel": "VOICE",
