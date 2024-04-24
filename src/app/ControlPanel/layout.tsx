@@ -7,6 +7,7 @@ export default function ControlPanelLayout({
   Agent,
   Notif,
   Saturation,
+  FU,
 }: // Home
 {
   children: ReactNode;
@@ -14,22 +15,28 @@ export default function ControlPanelLayout({
   Agent: ReactNode;
   Saturation: ReactNode;
   Home: ReactNode;
+  FU: ReactNode;
 }) {
   return (
     <>
-      <div className="h-full flex">
-    {/* First column for children */}
-    <div className="h-full flex-col">
-      {children}
+    <div className="h-full flex">
+  <div className="flex-grow">{children}</div>
+  <div className="h-full flex flex-col">
+    {/* Row for children and components */}
+    <div className="flex flex-grow">
+      {/* Second column for Agent, Saturation, and Notif */}
+      <div className="h-full flex justify-between p-4 px-20">
+        <div className="p-4">{Agent}</div>
+        <div className="p-4">{Saturation}</div>
+        <div className="p-4">{Notif}</div>
+      </div>
     </div>
-    {/* Second column for Agent, Notif, and Saturation */}
-    <div className="h-full">
-      {Agent}
-      {Notif}
-      {Saturation}
+    {/* Third column for FU at the bottom */}
+    <div className="h-full flex justify-between p-4 px-20">
+    <div className="p-4" >{FU}</div>
     </div>
   </div>
-      
+</div>
       {/* {Home} */}
     </>
   );
