@@ -16,13 +16,14 @@ const { sendAppSyncRequest } = require("./helpers/appSync.js");
  */
 
 // Function for updating a fixture
-async function createContact(phone, id, callStart) {
+async function createContact(phone, id, callStart, userContactsId) {
   const createContact = {
     query: `mutation CreateContact($input: CreateContactInput!) {
         createContact(input: $input) {
             phone
             id
             callStart
+            userContactsId
         }
       }`,
     variables: {
@@ -30,6 +31,7 @@ async function createContact(phone, id, callStart) {
         phone,
         id,
         callStart,
+        userContactsId,
       },
     },
   };
@@ -56,11 +58,11 @@ exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
   const contactID = event.Details.Parameters.contactID;
   const phone = event.Details.ContactData.CustomerEndpoint.Address;
+  const agentUsername = event.Details.ContactData.Attributes.agentUsername;
+
   const callStart = new Date().toISOString();
   try {
-    console.log(`Creating contact with id ${contactID}`);
-    const res = await createContact(phone, contactID, callStart);
-    console.log(`Created contact with id ${contactID}`);
+    const res = await createContact(phone, contactID, callStart, agentUsername);
     return {
       statusCode: 200,
       body: JSON.stringify(res),
