@@ -83,7 +83,7 @@ export default function Notifications() {
                                 
                             </Accordion>
                         </div>
-                        <div>
+                        <div className="w-full">
                             <Accordion className="w-full" type="single" collapsible>
                                 <AccordionItem value="item-1">
                                     <AccordionTrigger>Sales </AccordionTrigger>
