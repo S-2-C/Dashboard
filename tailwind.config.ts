@@ -57,11 +57,25 @@ const config = {
           figma9: "hsl(var(--figma-figma9))",
           figma10: "hsl(var(--figma-figma10))",
         },
+        
         gray:{
           DEFAULT: "hsl(var(--gray))",
 
         },
-        
+
+        agenman: {
+          DEFAULT: "hsl(var(--agenman))",
+          agenmangray: "hsl(var(--agenman-agenmangray))",
+          agenmanred: "hsl(var(--agenman-agenmanred))",
+          agenmanyellow: "hsl(var(--agenman-agenmanyellow))",
+          agenmanblue: "hsl(var(--agenman-agenmanblue))",
+          agenmandarkblue: "hsl(var(--agenman-agenmandarkblue))",
+          agenmansblue1: "hsl(var(--agenman-agenmansblue1))",
+          agenmansblue2: "hsl(var(--agenman-agenmansblue2))",
+          agenmansblue3: "hsl(var(--agenman-agenmansblue3))",
+        },
+
+
         
         primary: {
           DEFAULT: "hsl(var(--primary))",
