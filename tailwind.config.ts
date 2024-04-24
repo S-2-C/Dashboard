@@ -32,12 +32,17 @@ const config = {
           DEFAULT: "hsl(var(--blue))",
           foreground: "hsl(var(--blue-foreground))",
           highlight: "hsl(var(--blue-highlight))",
+          dark: "hsl(var(--blue-dark))",
+          darkhighlight: "hsl(var(--blue-darkhighlight))",
+          teal: "hsl(var(--blue-teal))",
         },
         teal: {
           DEFAULT: "hsl(var(--teal))",
           foreground: "hsl(var(--teal-foreground))",
           highlight: "hsl(var(--teal-highlight))",
           dark: "hsl(var(--teal-dark))",
+          background : "hsl(var(--teal-background))",
+          FU: "hsl(var(--teal-FU))",
         },
         figma: {
           DEFAULT: "hsl(var(--figma))",
@@ -52,6 +57,11 @@ const config = {
           figma9: "hsl(var(--figma-figma9))",
           figma10: "hsl(var(--figma-figma10))",
         },
+        
+        gray:{
+          DEFAULT: "hsl(var(--gray))",
+
+        },
 
         agenman: {
           DEFAULT: "hsl(var(--agenman))",
@@ -64,6 +74,7 @@ const config = {
           agenmansblue2: "hsl(var(--agenman-agenmansblue2))",
           agenmansblue3: "hsl(var(--agenman-agenmansblue3))",
         },
+
 
         
         primary: {
@@ -114,6 +125,7 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      
     },
   },
   plugins: [require("tailwindcss-animate")],

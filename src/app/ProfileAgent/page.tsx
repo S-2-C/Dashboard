@@ -7,32 +7,41 @@ import { Separator } from "@/components/ui/separator"
 //import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { Badge } from "@/components/ui/badge";
+
+// cambiar color del badge por status
 
 
 const profileData = {
-    title: 'Supervisor Walmart® Call Center',
-    name: 'Emily Smith',
-    email: 'smith.e@walmart.com',
+    title: 'Agent Walmart® Call Center',
+    name: 'Dinesh Chugtai',
+    email: 'dinesh.c@walmart.com',
     location: 'Mexico City, Mexico',
     ID: '123456',
-    profileImage: 'https://orlandosydney.com/wp-content/uploads/2023/05/Female-Professional-Headshot.-LinkedIn-Business-Profile.-By-Orlandosydney.com-202300752.jpg',
-    avatarImages: "images/S2C Logo.svg"
+    profileImage: 'https://monteliphotography.com/wp-content/uploads/2022/04/Monteli-Photography-Retrato-Profesional-Barcelona-1.jpg',
+    avatarImages: "images/S2C Logo.svg",
+    status: 'Available'
 };
+
+const performanceData = {
+    takenCalls: '183',
+    averageOnCall: '15 minutes'
+}
 
 export default function Profile() {
 
     return (
-        <div className="flex h-screen bg-background text-foreground relative">
+        <div className="flex h-screen bg-background text-foreground relative items-center">
             <Home />
-            <div className="flex flex-col bg-background text-foreground h-screen ml-20">
+            <div className="flex flex-col bg-background text-foreground h-screen w-screen items-center">
                 {/* Sección superior */}
-                <div className="flex m-20">
+                <div className="flex ml-20 mr-20 mt-20 mb-10">
                     {/* Imagen de perfil */}
                     <div>
                         <img
                             src={profileData.profileImage}
                             alt="Imagen de perfil"
-                            style={{ width: '250px', height: '250px', borderRadius: '50%', objectFit: 'cover' }}
+                            style={{ width: '300px', height: '300px', borderRadius: '50%', objectFit: 'cover' }}
                         />
                     </div>
                     {/* Información personal */}
@@ -54,12 +63,15 @@ export default function Profile() {
                         <div className="m-5">
                             <label>Employee ID: {profileData.ID}</label>
                         </div>
+                        <div className="m-5 ml-10 ">
+                            <Badge variant="outline" className='text-lg transform w-3/4 justify-center bg-green-600 text-white'>{profileData.status}</Badge>
+                        </div>
                     </div>
                 </div>
                 {/* Sección inferior */}
-                <div className="flex ml-20">
+                <div className="flex ml-20 w-3/4 items-center">
                     {/* Agentes */}
-                    <div className=' p-5 w-3/4 bg-gray-100'>
+                    <div className=' p-5 w-1/2 bg-gray-100'>
                         <div className='font-bold text-xl mb-2 '>Agents</div>
                         <Separator />
                         <Accordion type="single" collapsible>
@@ -109,6 +121,21 @@ export default function Profile() {
                                 <AccordionTrigger className='ml-2'>Walmart® Pass </AccordionTrigger>
                             </AccordionItem>
                         </Accordion>
+                    </div>
+                    <div>
+                        {/* Performance */}
+                        <div className='flex flex-col'>
+                            <div className='ml-10 w-80 h-40 bg-gray-100 flex flex-col justify-center items-center shadow-md'>
+                                
+                                <label className='text-2xl font-bold p-3'> Taken Calls:</label>
+                                <label className='text-2xl font-bold text-blue-600'> {performanceData.takenCalls}</label>
+                            </div>
+                            <div className='ml-10 mt-5 w-80 h-40 bg-gray-100 flex flex-col justify-center items-center shadow-top-md'>
+                                
+                                <label className='text-2xl font-bold p-3'>Average on Call:</label>
+                                <label className='text-2xl font-bold text-green-600'> {performanceData.averageOnCall}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

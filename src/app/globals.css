@@ -39,24 +39,32 @@
       --blue: 205 83% 91%;
       --blue-foreground: 210 40% 98%;
       --blue-highlight: 204 70% 91%;
+      --blue-dark: 210 98% 17%;
+      --blue-darkhighlight: 210 82% 26%;
+      --blue-teal: 203 51% 44%;
+    
 
       --teal:210 98% 17%;
       --teal-foreground: 222.2 47.4% 11.2%;
       --teal-highlight: 203 95% 40%;
       --teal-dark: 203 69% 11%;
+      --teal-background: 202, 43%, 61%;
+      --teal-FU: 203 61% 33%;
 
-      /* figma colors */
+      /* figma colors HSL */
       --figma: 0, 0%, 100%;
       --figma-figma1: 203, 95%, 40%;
       --figma-figma2: 44, 100%, 56%;
       --figma-figma3:203, 93%, 30%;
       --figma-figma4: 216, 20%, 95%;
-      --figma5-figma5: 0, 0%, 0%;
-      --figma6-figma6: 203, 66%, 73%;
-      --figma7-figma7: 210, 98%, 17%;
-      --figma8-figma8: 126, 65%, 30%; /* //green */
-      --figma9-figma9: 43, 94%, 51%;/* //yellow */
-      --figma10-figma10:0, 100%, 50%;   /* //red */
+      --figma-figma5: 0, 0%, 0%;
+      --figma-figma6: 203, 66%, 73%;
+      --figma-figma7: 210, 98%, 17%;
+      --figma-figma8: 126, 65%, 30%; /* //green */
+      --figma-figma9: 43, 94%, 51%;/* //yellow */
+      --figma-figma10:0, 100%, 50%;   /* //red */
+
+      --gray: 213 12% 29%;
 
       /* Agent Management */
       --agenman: 205, 83%, 93%; /* baby blue */
