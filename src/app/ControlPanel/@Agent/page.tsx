@@ -4,7 +4,7 @@ export default async function AgentSlot() {
   return (
     <div>
     <div className="bg-blue-highlight p-4 rounded-lg">
-      <h1 className="text-4xl font-bold text-white">Agent</h1>
+      <h1 className="text-4xl font-bold text-center p-4">Agent</h1>
       <p className="text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua.

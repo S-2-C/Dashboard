@@ -1,11 +1,9 @@
 export default async function SaturationSlot() {
     return (
-      <div className="bg-blue-dark rounded-lg">
+      <div className="bg-blue-dark rounded-lg shadow-md">
       <div className="text-center p-4 bg-blue-darkhighlight rounded-lg">
-        <h1 className="text-4xl font-bold text-white">Saturation</h1>
-        {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Button
-        </button> */}
+      <h1 className="text-3xl font-bold text-white text-center p-4">Saturation in channels</h1> {/* Changed text-2xl to text-5xl for slightly bigger heading */}
+
       </div>
         <div className="h-full flex justify-center items-center">
         <p className="text-white mt-4 p-4">
