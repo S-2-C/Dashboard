@@ -22,6 +22,8 @@ import {
   faCog, 
   faSignOutAlt 
 } from '@fortawesome/free-solid-svg-icons';
+// import { Link } from "react-router-dom";
+
 // import { useAuthenticator } from "@aws-amplify/ui-react";
 
 //Function that exports navbar to be used in other pages
@@ -33,19 +35,18 @@ export default function Home() {
 
   const navRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (isNavOpen && navRef.current) {
-      // Calculate the width of the navigation bar based on the width of the longest text inside it
-      const maxWidth = Array.from(navRef.current.querySelectorAll("a")).reduce(
-        (maxWidth, link) => Math.max(maxWidth, link.offsetWidth),
-        0
-      );
-      navRef.current.style.width = `${maxWidth + 120}px`; // Adding extra padding for aesthetics
-    } else if (navRef.current) {
-      navRef.current.style.width = "120px"; // Default width when the navigation bar is closed
-    }
-  }, [isNavOpen]);
+  const [activeItem, setActiveItem] = useState<string | null>(null);
 
+  // Function to handle click event on navigation items
+  const handleItemClick = (itemName: string) => {
+    if (activeItem === itemName) {
+      // If the clicked item is already active, deactivate it
+      setActiveItem(null);
+    } else {
+      // Otherwise, set the clicked item as active
+      setActiveItem(itemName);
+    }
+  };
   return (
     <div className="flex">
     {/* Navbar */}
@@ -54,8 +55,7 @@ export default function Home() {
         {/* Blue line (Clickable area to show the nav bar) */}
         <div
           className="h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
-          onMouseEnter={() => setIsNavOpen(true)}
-          onMouseLeave={() => setIsNavOpen(false)}
+          onClick={() => setIsNavOpen(!isNavOpen)} 
           style={{ paddingTop: "2rem" }} // Added padding from the top
         >
           {isNavOpen ? null : (
@@ -99,7 +99,7 @@ export default function Home() {
             </li>
             <li className="mt-4 flex items-center ml-4">
               <a
-                href="#"
+                href="../ControlPanel"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Control Panel")}
                 onMouseLeave={() => setHoveredItem(null)}

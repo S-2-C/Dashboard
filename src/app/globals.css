@@ -39,11 +39,17 @@
       --blue: 205 83% 91%;
       --blue-foreground: 210 40% 98%;
       --blue-highlight: 204 70% 91%;
+      --blue-dark: 210 98% 17%;
+      --blue-darkhighlight: 210 82% 26%;
+      --blue-teal: 203 51% 44%;
+    
 
       --teal:210 98% 17%;
       --teal-foreground: 222.2 47.4% 11.2%;
       --teal-highlight: 203 95% 40%;
       --teal-dark: 203 69% 11%;
+      --teal-background: 202, 43%, 61%;
+      --teal-FU: 203 61% 33%;
 
       /* figma colors HSL */
       --figma: 0, 0%, 100%;
@@ -58,7 +64,21 @@
       --figma-figma9: 43, 94%, 51%;/* //yellow */
       --figma-figma10:0, 100%, 50%;   /* //red */
 
+
       --metrics: 0 0% 96%;
+      --gray: 213 12% 29%;
+
+      /* Agent Management */
+      --agenman: 205, 83%, 93%; /* baby blue */
+      --agenman-agenmangray:204, 45%, 98%; /* light gray */
+      --agenman-agenmanred: 0, 100%, 50%; /* red */
+      --agenman-agenmanyellow: 43, 94%, 51%; /* yellow */
+      --agenman-agenmanblue: 203, 92%, 48%; /* blue */
+      --agenman-agenmandarkblue: 270, 56%, 13%; /* dark blue */
+      --agenman-agenmansblue1: 202, 67%, 78%; /* sky blue */
+      --agenman-agenmansblue2: 202, 76%, 33%; /* mid blue */
+      --agenman-agenmansblue3: 210, 74%, 21%; /* mid-dark blue */
+
 
 
     }

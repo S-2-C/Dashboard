@@ -32,12 +32,17 @@ const config = {
           DEFAULT: "hsl(var(--blue))",
           foreground: "hsl(var(--blue-foreground))",
           highlight: "hsl(var(--blue-highlight))",
+          dark: "hsl(var(--blue-dark))",
+          darkhighlight: "hsl(var(--blue-darkhighlight))",
+          teal: "hsl(var(--blue-teal))",
         },
         teal: {
           DEFAULT: "hsl(var(--teal))",
           foreground: "hsl(var(--teal-foreground))",
           highlight: "hsl(var(--teal-highlight))",
           dark: "hsl(var(--teal-dark))",
+          background : "hsl(var(--teal-background))",
+          FU: "hsl(var(--teal-FU))",
         },
         figma: {
           DEFAULT: "hsl(var(--figma))",
@@ -58,6 +63,25 @@ const config = {
           DEFAULT: "hsl(var(--metrics))",
 
         },
+        
+        gray:{
+          DEFAULT: "hsl(var(--gray))",
+
+        },
+
+        agenman: {
+          DEFAULT: "hsl(var(--agenman))",
+          agenmangray: "hsl(var(--agenman-agenmangray))",
+          agenmanred: "hsl(var(--agenman-agenmanred))",
+          agenmanyellow: "hsl(var(--agenman-agenmanyellow))",
+          agenmanblue: "hsl(var(--agenman-agenmanblue))",
+          agenmandarkblue: "hsl(var(--agenman-agenmandarkblue))",
+          agenmansblue1: "hsl(var(--agenman-agenmansblue1))",
+          agenmansblue2: "hsl(var(--agenman-agenmansblue2))",
+          agenmansblue3: "hsl(var(--agenman-agenmansblue3))",
+        },
+
+
         
         primary: {
           DEFAULT: "hsl(var(--primary))",
