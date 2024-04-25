@@ -47,7 +47,8 @@ export default function Home2() {
   }, [isNavOpen]);
 
   return (
-    <div className="flex h-screen bg-background text-foreground relative">
+    <div className="h-screen">
+    <div className="flex h-full bg-background text-foreground relative">
       <Home/>
       {/* Main Content */}
       <div className={`flex flex-col flex-1 p-10 ml-20`}>
@@ -71,6 +72,7 @@ export default function Home2() {
           </Popover>
         </div>
       </div>
+    </div>
     </div>
   );
   

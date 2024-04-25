@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 export default async function NotifSlot() {
   return (
     <div className="bg-teal-background p-4 rounded-lg">
@@ -26,10 +29,25 @@ export default async function NotifSlot() {
       <div className="bg-figma-figma1 p-4 rounded-lg shadow-md mb-4">
         {" "}
         {/* Added mb-4 for margin-bottom */}
-        <text className="text-blue-dark font-bold">Notification Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea</text>
+        <text className="text-blue-dark font-bold">
+          Notification Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+          enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+          ut aliquip ex ea
+        </text>
       </div>
+      <div className="bg-blue-dark p-3 rounded-lg shadow-md mb-4 flex flex-col items-center">
+  {/* Added mb-4 for margin-bottom */}
+  <div className="text-center mb-2 flex">
+    <img src="images/AgentRed.svg" className="w-60 h-auto mx-auto"/>
+    <text className="font-bold text-white">You should consider reassigning more agents to the Walmart®.com channel</text>
+  </div>
+  <Link href="/">
+    <Button className="bg-figma-figma10 focus:bg-blue-teal active:bg-blue-teal text-background focus:text-blue-dark active:text-background font-bold py-2 px-4 rounded">
+      Reassign
+    </Button>
+  </Link>
+</div>
     </div>
   );
 }

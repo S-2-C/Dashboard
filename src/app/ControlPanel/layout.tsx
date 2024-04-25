@@ -19,6 +19,8 @@ export default function ControlPanelLayout({
 }) {
   return (
     <>
+    <div className="h-screen">
+      
     <div className="h-full flex">
   <div className="flex-grow">{children}</div>
   <div className="h-full flex flex-col">
@@ -32,10 +34,11 @@ export default function ControlPanelLayout({
       </div>
     </div>
     {/* Third column for FU at the bottom */}
-    <div className="h-full flex justify-between p-4 px-20">
-    <div className="p-4" >{FU}</div>
+    <div className="h-full flex justify-between px-20">
+    <div className="p-4 flex" >{FU}</div>
     </div>
   </div>
+</div>
 </div>
       {/* {Home} */}
     </>

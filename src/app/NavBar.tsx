@@ -23,6 +23,7 @@ import {
   faSignOutAlt 
 } from '@fortawesome/free-solid-svg-icons';
 // import { Link } from "react-router-dom";
+import Link from 'next/link'
 
 // import { useAuthenticator } from "@aws-amplify/ui-react";
 
@@ -48,6 +49,7 @@ export default function Home() {
     }
   };
   return (
+    <div className="h-screen">
     <div className="flex">
     {/* Navbar */}
     <div className="flex-shrink-0">
@@ -93,12 +95,12 @@ export default function Home() {
           >
           <ul>
             <li className="mt-8 flex items-center">
-              <a href="#" className="text-teal-dark">
+              <Link href="/" className="text-teal-dark">
                 HOME
-              </a>
+              </Link>
             </li>
             <li className="mt-4 flex items-center ml-4">
-              <a
+              <Link
                 href="../ControlPanel"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Control Panel")}
@@ -111,11 +113,11 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <a
-                href="#"
+              <Link
+                href="/Chat"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Chat")}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -127,12 +129,12 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
 
             <li className="mt-1 flex items-center ml-4">
-              <a
-                href="#"
+              <Link
+                href="/AgentManagement"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Agent Management")}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -144,11 +146,11 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <a
-                href="#"
+              <Link
+                href="/Metrics"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Performance Metrics")}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -160,11 +162,11 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <a
-                href="#"
+              <Link
+                href="Notifications"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Notifications")}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -176,11 +178,11 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <a
-                href="#"
+              <Link
+                href="ManageReports"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Reports")}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -192,11 +194,11 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <a
-                href="#"
+              <Link
+                href="Documentation"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Documentation")}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -208,11 +210,11 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <a
-                href="#"
+              <Link
+                href="Channels"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Channels")}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -224,7 +226,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                   )}
                 </div>
-              </a>
+              </Link>
             </li>
             <li className="mt-6 flex items-center">
               <a href="#" className="text-teal-dark">
@@ -278,6 +280,7 @@ export default function Home() {
       {/* Content goes here */}
       {/* <Button>Click Me</Button> */}
     {/* </div> */}
+  </div>
   </div>
   );
                   } 
