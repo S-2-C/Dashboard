@@ -27,6 +27,28 @@ describe('S2C API Tests', function () {
         });
     });
 
+    describe('S2C API Tests - ListQueues', function () {
+        it('fetches list of queues successfully, response is correct', () => {
+            type Queue = {
+                Id: string;
+                QueueType: string;
+                Name: string;
+            };
+            cy.request(`${baseUrl}/ListQueues`).then((response) => {
+                expect(response.status).to.eq(200);
+                expect(response.body.message).to.eq('List of queues retrieved successfully.');
+                expect(response.body.data).to.be.an('array').and.have.length.above(0);
+                // Validate each queue in the response body
+                response.body.data.forEach((queue: Queue) => {
+                    expect(queue).to.have.property('Id').that.is.a('string');
+                    expect(queue).to.have.property('QueueType').that.is.a('string');
+                    expect(queue).to.have.property('Name').that.is.a('string');
+                });
+            });
+        });
+    });
+
+
     // To add Delete User test, but a flow must be implemented so it creates a user first, then deletes it
 
 
