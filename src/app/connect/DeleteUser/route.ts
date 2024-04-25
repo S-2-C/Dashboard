@@ -1,15 +1,6 @@
 // Import connect client and commands
 import { ConnectClient, DeleteUserCommand } from "@aws-sdk/client-connect";
-
-function make_config_json() {
-    return {
-        region: process.env.REGION,
-        credentials: {
-            accessKeyId: process.env.CONNECT_ACCESS_KEY,
-            secretAccessKey: process.env.CONNECT_SECRET_ACCESS_KEY,
-        },
-    }
-}
+import { make_config_json } from "@/app/apis_library/connect";
 
 async function deleteUser(InstanceId: string, userId: string, client: ConnectClient) {
     const input: any = {

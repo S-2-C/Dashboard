@@ -1,16 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ConnectClient, ListUsersCommand, } from "@aws-sdk/client-connect"; // Import the required client and commands.
-
-
-function make_config_json() {
-    return {
-        region: process.env.REGION,
-        credentials: {
-            accessKeyId: process.env.CONNECT_ACCESS_KEY,
-            secretAccessKey: process.env.CONNECT_SECRET_ACCESS_KEY,
-        },
-    }
-}
+import { make_config_json } from "@/app/apis_library/connect";
 
 async function getUserList(client: ConnectClient, InstanceId: string) {
     const input = {

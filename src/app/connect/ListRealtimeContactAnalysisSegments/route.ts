@@ -1,16 +1,7 @@
 import { ConnectContactLensClient, ListRealtimeContactAnalysisSegmentsCommand } from "@aws-sdk/client-connect-contact-lens"
 import { Contact } from "lucide-react";
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-function make_config_json() {
-    return {
-        region: process.env.REGION,
-        credentials: {
-            accessKeyId: process.env.CONNECT_ACCESS_KEY,
-            secretAccessKey: process.env.CONNECT_SECRET_ACCESS_KEY,
-        },
-    }
-}
+import { make_config_json } from "@/app/apis_library/connect";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
