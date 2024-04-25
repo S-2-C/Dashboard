@@ -141,6 +141,22 @@
         }
       ]
     },
+    "AMPLIFY_function_connectEvents_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "connectEvents"
+        }
+      ]
+    },
+    "AMPLIFY_function_connectEvents_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "connectEvents"
+        }
+      ]
+    },
     "AMPLIFY_function_dashboardAuthPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
