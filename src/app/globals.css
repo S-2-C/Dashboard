@@ -64,6 +64,8 @@
       --figma-figma9: 43, 94%, 51%;/* //yellow */
       --figma-figma10:0, 100%, 50%;   /* //red */
 
+
+      --metrics: 0 0% 96%;
       --gray: 213 12% 29%;
 
       /* Agent Management */
@@ -76,6 +78,7 @@
       --agenman-agenmansblue1: 202, 67%, 78%; /* sky blue */
       --agenman-agenmansblue2: 202, 76%, 33%; /* mid blue */
       --agenman-agenmansblue3: 210, 74%, 21%; /* mid-dark blue */
+
 
 
     }

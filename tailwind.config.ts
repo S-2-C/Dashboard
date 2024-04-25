@@ -57,6 +57,12 @@ const config = {
           figma9: "hsl(var(--figma-figma9))",
           figma10: "hsl(var(--figma-figma10))",
         },
+
+        metrics: {
+
+          DEFAULT: "hsl(var(--metrics))",
+
+        },
         
         gray:{
           DEFAULT: "hsl(var(--gray))",
