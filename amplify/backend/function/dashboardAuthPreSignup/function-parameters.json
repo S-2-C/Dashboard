@@ -12,5 +12,12 @@
   "triggerTemplate": "PreSignup.json.ejs",
   "triggerEventPath": "PreSignup.event.json",
   "roleName": "dashboardAuthPreSignup",
-  "skipEdit": true
+  "skipEdit": true,
+  "permissions": {
+    "storage": {
+      "dashboardS3": [
+        "read"
+      ]
+    }
+  }
 }

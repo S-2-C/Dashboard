@@ -1,4 +1,11 @@
-/**
+/* Amplify Params - DO NOT EDIT
+	API_DASHBOARD_GRAPHQLAPIENDPOINTOUTPUT
+	API_DASHBOARD_GRAPHQLAPIIDOUTPUT
+	API_DASHBOARD_GRAPHQLAPIKEYOUTPUT
+	ENV
+	REGION
+	STORAGE_DASHBOARDS3_BUCKETNAME
+Amplify Params - DO NOT EDIT *//**
  * @fileoverview
  *
  * This CloudFormation Trigger creates a handler which awaits the other handlers

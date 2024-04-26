@@ -43,6 +43,22 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "apidashboardGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apidashboardGraphQLAPIIdOutput"
+    },
+    "apidashboardGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apidashboardGraphQLAPIEndpointOutput"
+    },
+    "apidashboardGraphQLAPIKeyOutput": {
+      "Type": "String",
+      "Default": "apidashboardGraphQLAPIKeyOutput"
+    },
+    "storagedashboardS3BucketName": {
+      "Type": "String",
+      "Default": "storagedashboardS3BucketName"
     }
   },
   "Conditions": {
@@ -95,6 +111,18 @@
             },
             "GROUP": {
               "Ref": "GROUP"
+            },
+            "API_DASHBOARD_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apidashboardGraphQLAPIIdOutput"
+            },
+            "API_DASHBOARD_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apidashboardGraphQLAPIEndpointOutput"
+            },
+            "API_DASHBOARD_GRAPHQLAPIKEYOUTPUT": {
+              "Ref": "apidashboardGraphQLAPIKeyOutput"
+            },
+            "STORAGE_DASHBOARDS3_BUCKETNAME": {
+              "Ref": "storagedashboardS3BucketName"
             }
           }
         },
@@ -193,6 +221,130 @@
                   }
                 ]
               }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "appsync:GraphQL"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apidashboardGraphQLAPIIdOutput"
+                      },
+                      "/types/Query/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apidashboardGraphQLAPIIdOutput"
+                      },
+                      "/types/Mutation/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apidashboardGraphQLAPIIdOutput"
+                      },
+                      "/types/Subscription/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "s3:ListBucket",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storagedashboardS3BucketName"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storagedashboardS3BucketName"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }

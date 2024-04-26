@@ -18,14 +18,6 @@
         "userPoolGroups": {}
       },
       "function": {
-        "dashboardAuthPostConfirmation": {
-          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61766d6256636f393362-build.zip"
-        },
-        "dashboardAuthPreSignup": {
-          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPreSignup-3672787064664d6d7071-build.zip"
-        },
         "callStart": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
           "s3Key": "amplify-builds/callStart-702b5a58587333554879-build.zip"
@@ -33,13 +25,18 @@
         "connectEvents": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
           "s3Key": "amplify-builds/connectEvents-74332b4e416370304856-build.zip"
+        },
+        "dashboardAuthPostConfirmation": {
+          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61416e51505669357254-build.zip"
+        },
+        "dashboardAuthPreSignup": {
+          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+          "s3Key": "amplify-builds/dashboardAuthPreSignup-504c5a6531674d37614a-build.zip"
         }
       },
       "storage": {
         "dashboardS3": {}
-      },
-      "api": {
-        "dashboard": {}
       }
     }
   }
