@@ -1,17 +1,25 @@
 import { ConnectClient, GetMetricDataV2Command } from "@aws-sdk/client-connect";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-  console.log("HOla");
-
+export async function GET(req: Request, res: Response) {
   if (
     !process.env.REGION ||
     !process.env.CONNECT_ACCESS_KEY ||
     !process.env.CONNECT_SECRET_ACCESS_KEY
-  )
-    return new Response("Environmental variables are missing");
+  ) {
+    return new Response(
+      JSON.stringify({ message: "No enviromental variables found" }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
   const client = new ConnectClient({
-    region: process.env.AMAZON_REGION,
+    region: process.env.REGION,
     credentials: {
       accessKeyId: process.env.CONNECT_ACCESS_KEY,
       secretAccessKey: process.env.CONNECT_SECRET_ACCESS_KEY,
@@ -62,25 +70,31 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     ],
   };
 
-  // const command = new GetMetricDataV2Command(inputAgent);
-  // const command1 = new GetMetricDataV2Command(inputQueue);
-  // const response = await client.send(command);
-  // return Response.json(response);
   try {
     const responses = await Promise.all([
       client.send(new GetMetricDataV2Command(inputAgent)),
       client.send(new GetMetricDataV2Command(inputQueue)),
     ]);
 
-    // Combine results
     const combinedResponse = {
       data1: responses[0],
       data2: responses[1],
     };
-
-    return Response.json(combinedResponse);
+    return new Response(JSON.stringify(combinedResponse), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
-    console.error("Error fetching metrics:", error);
-    return res.status(500).json({ error: "Failed to fetch metrics" });
+    return new Response(
+      JSON.stringify({ message: "Failed to fetch metrics" }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 }
