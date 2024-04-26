@@ -8,6 +8,7 @@ export default function ControlPanelLayout({
   Notif,
   Saturation,
   FU,
+  Metrics,
 }: // Home
 {
   children: ReactNode;
@@ -16,6 +17,7 @@ export default function ControlPanelLayout({
   Saturation: ReactNode;
   Home: ReactNode;
   FU: ReactNode;
+  Metrics:ReactNode;
 }) {
   return (
     <>
@@ -28,8 +30,8 @@ export default function ControlPanelLayout({
     <div className="flex flex-grow">
       {/* Second column for Agent, Saturation, and Notif */}
       <div className="h-full flex justify-between p-4 px-20">
-        <div className="p-4">{Agent}</div>
-        <div className="p-4">{Saturation}</div>
+        <div className="p-4">{Agent}{Metrics}</div>
+        <div className="p-4">{Saturation} {Metrics}</div>
         <div className="p-4">{Notif}</div>
       </div>
     </div>
