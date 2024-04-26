@@ -64,7 +64,7 @@ export default function Profile() {
                             <label>Employee ID: {profileData.ID}</label>
                         </div>
                         <div className="m-5 ml-10 ">
-                            <Badge variant="outline" className='text-lg transform w-3/4 justify-center bg-green-600 text-white'>{profileData.status}</Badge>
+                            <Badge variant="outline" className='text-lg transform w-3/4 justify-center bg-figma-figma8 text-white'>{profileData.status}</Badge>
                         </div>
                     </div>
                 </div>
@@ -128,12 +128,12 @@ export default function Profile() {
                             <div className='ml-10 w-80 h-40 bg-gray-100 flex flex-col justify-center items-center shadow-md'>
                                 
                                 <label className='text-2xl font-bold p-3'> Taken Calls:</label>
-                                <label className='text-2xl font-bold text-blue-600'> {performanceData.takenCalls}</label>
+                                <label className='text-4xl font-bold text-figma-figma1'> {performanceData.takenCalls}</label>
                             </div>
                             <div className='ml-10 mt-5 w-80 h-40 bg-gray-100 flex flex-col justify-center items-center shadow-top-md'>
                                 
                                 <label className='text-2xl font-bold p-3'>Average on Call:</label>
-                                <label className='text-2xl font-bold text-green-600'> {performanceData.averageOnCall}</label>
+                                <label className='text-3xl font-bold text-figma-figma8'> {performanceData.averageOnCall}</label>
                             </div>
                         </div>
                     </div>
