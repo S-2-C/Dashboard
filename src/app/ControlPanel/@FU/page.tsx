@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function Frequently() {
   return (
@@ -12,46 +12,34 @@ export default async function Frequently() {
           <div className="max-w-screen-xl w-full bg-teal-background p-6 rounded-tr-lg rounded-br-lg px-16">
             <div className="flex items-center justify-between">
               <Link href="/AgentManagement">
-                
-                  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded">
-                    Agent Management
-                  </button>
-                
+                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded">
+                  Agent Management
+                </button>
               </Link>
               <Link href="/Notifications">
-                
-                  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
-                    Notifications
-                  </button>
-                
+                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+                  Notifications
+                </button>
               </Link>
               <Link href="/Metrics">
-                
-                  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
-                    Metrics
-                  </button>
-                
+                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+                  Metrics
+                </button>
               </Link>
               <Link href="/Reports">
-                
-                  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
-                    Reports
-                  </button>
-                
+                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+                  Reports
+                </button>
               </Link>
               <Link href="/Chat">
-                
-                  <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
-                    Chat
-                  </button>
-                
+                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+                  Chat
+                </button>
               </Link>
               <Link href="/Channels">
-                
-                  <Button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
-                    Channels
-                  </Button>
-                
+                <Button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+                  Channels
+                </Button>
               </Link>
             </div>
           </div>
