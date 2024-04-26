@@ -22,12 +22,10 @@ import {
   faCog, 
   faSignOutAlt 
 } from '@fortawesome/free-solid-svg-icons';
-// import { Link } from "react-router-dom";
 import Link from 'next/link'
-
 // import { useAuthenticator } from "@aws-amplify/ui-react";
 
-//Function that exports navbar to be used in other pages
+
 export default function Home() {
   // const { signOut } = useAuthenticator((context) => [context.signOut]);
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -36,71 +34,74 @@ export default function Home() {
 
   const navRef = useRef<HTMLDivElement>(null);
 
-  const [activeItem, setActiveItem] = useState<string | null>(null);
-
-  // Function to handle click event on navigation items
-  const handleItemClick = (itemName: string) => {
-    if (activeItem === itemName) {
-      // If the clicked item is already active, deactivate it
-      setActiveItem(null);
-    } else {
-      // Otherwise, set the clicked item as active
-      setActiveItem(itemName);
+  useEffect(() => {
+    if (isNavOpen && navRef.current) {
+      // Calculate the width of the navigation bar based on the width of the longest text inside it
+      const maxWidth = Array.from(navRef.current.querySelectorAll("a")).reduce(
+        (maxWidth, link) => Math.max(maxWidth, link.offsetWidth),
+        0
+      );
+      navRef.current.style.width = `${maxWidth + 120}px`; // Adding extra padding for aesthetics
+    } else if (navRef.current) {
+      navRef.current.style.width = "120px"; // Default width when the navigation bar is closed
     }
-  };
+  }, [isNavOpen]);
+
   return (
     <div className="h-screen">
-    <div className="flex">
-    {/* Navbar */}
-    <div className="flex-shrink-0">
-      <div className="flex h-screen bg-background text-foreground relative">
-        {/* Blue line (Clickable area to show the nav bar) */}
-        <div
-          className="h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
-          onClick={() => setIsNavOpen(!isNavOpen)} 
-          style={{ paddingTop: "2rem" }} // Added padding from the top
-        >
-          {isNavOpen ? null : (
-            <div className="text-white flex flex-col justify-between h-full">
-              {/* Upper column with only the logo */}
-              <div className="flex flex-col items-center justify-center">
-                <img src="images/S2C Logo.svg" alt="Logo" className="w-12 h-12" />
-                <FontAwesomeIcon icon={faChartBar} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faComments} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faUsers} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faChartLine} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faFileAlt} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faBook} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faUserTie} className="text-teal my-4 text-2xl" />
-                <FontAwesomeIcon icon={faCog} className="text-teal my-4 text-2xl" />
-              </div>
-              {/* Lowest column with only sign out */}
-              <div className="flex items-center justify-center pb-8">
-                <FontAwesomeIcon icon={faSignOutAlt} className="text-teal text-2xl" />
-              </div>
-            </div>
-          )}
-        </div>
+    <div className="flex h-screen bg-background text-foreground relative">
+      {/* Blue line (Clickable area to show the nav bar) */}
+      <div
+        className="h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
+        onMouseEnter={() => setIsNavOpen(true)}
+        onMouseLeave={() => setIsNavOpen(false)}
+        style={{ paddingTop: "2rem" }} // Added padding from the top
+      >
+        {isNavOpen ? null : (
+    <div className="text-white flex flex-col justify-between h-full">
+    {/* Upper column with only the logo */}
+    <div className="flex flex-col items-center justify-center">
+      <img src="images/S2C Logo.svg" alt="Logo" className="w-12 h-12" />
+      <FontAwesomeIcon icon={faChartBar} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faComments} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faUsers} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faChartLine} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faFileAlt} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faBook} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faUserTie} className="text-teal my-4 text-2xl" />
+      <FontAwesomeIcon icon={faCog} className="text-teal my-4 text-2xl" />
+    </div>
+    {/* Lowest column with only sign out */}
+    <div className="flex items-center justify-center pb-8">
+      <FontAwesomeIcon icon={faSignOutAlt} className="text-teal text-2xl" />
+    </div>
+  </div>
 
-        {/* Navigation Bar (conditionally rendered based on isNavOpen state) */}
-        {isNavOpen && (
-          <nav
-            ref={navRef}
-            className={`h-full bg-blue-highlight px-6 py-8 absolute left-0 transition-all ${
-              isNavOpen ? "transform translate-x-0" : "transform -translate-x-full"
-            }`}
-            onMouseEnter={() => setIsNavOpen(true)}
-            onMouseLeave={() => setIsNavOpen(false)}
-          >
+
+  )}
+      </div>
+
+      {/* Navigation Bar (conditionally rendered based on isNavOpen state) */}
+      {isNavOpen && (
+        <nav
+          ref={navRef}
+          className={`h-full bg-blue-highlight px-6 py-8 absolute left-0 transition-all ${
+            isNavOpen
+              ? "transform translate-x-0"
+              : "transform -translate-x-full"
+          }`}
+          onMouseEnter={() => setIsNavOpen(true)}
+          onMouseLeave={() => setIsNavOpen(false)}
+        >
           <ul>
             <li className="mt-8 flex items-center">
-              <Link href="/" className="text-teal-dark">
+            <Link href="/" className="text-teal-dark">
                 HOME
               </Link>
             </li>
             <li className="mt-4 flex items-center ml-4">
-              <Link
+            <Link
                 href="../ControlPanel"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Control Panel")}
@@ -116,7 +117,7 @@ export default function Home() {
               </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <Link
+            <Link
                 href="/Chat"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Chat")}
@@ -133,7 +134,7 @@ export default function Home() {
             </li>
 
             <li className="mt-1 flex items-center ml-4">
-              <Link
+            <Link
                 href="/AgentManagement"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Agent Management")}
@@ -149,7 +150,7 @@ export default function Home() {
               </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <Link
+            <Link
                 href="/Metrics"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Performance Metrics")}
@@ -165,7 +166,7 @@ export default function Home() {
               </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <Link
+            <Link
                 href="Notifications"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Notifications")}
@@ -181,7 +182,7 @@ export default function Home() {
               </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <Link
+            <Link
                 href="ManageReports"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Reports")}
@@ -197,7 +198,7 @@ export default function Home() {
               </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <Link
+            <Link
                 href="Documentation"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Documentation")}
@@ -213,7 +214,7 @@ export default function Home() {
               </Link>
             </li>
             <li className="mt-1 flex items-center ml-4">
-              <Link
+            <Link
                 href="Channels"
                 className={`text-teal hover:text-teal-highlight relative`}
                 onMouseEnter={() => setHoveredItem("Channels")}
@@ -270,17 +271,12 @@ export default function Home() {
 
             {/* Add more navigation items as needed */}
           </ul>
-          </nav>
-        )}
+        </nav>
+      )}
 
-        {/* Main Content */}
-      </div>
+      {/* Main Content */}
+
     </div>
-    {/* <div className="flex-grow"> */}
-      {/* Content goes here */}
-      {/* <Button>Click Me</Button> */}
-    {/* </div> */}
-  </div>
-  </div>
+    </div>
   );
                   } 
