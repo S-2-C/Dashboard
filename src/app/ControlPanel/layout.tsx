@@ -9,6 +9,7 @@ export default function ControlPanelLayout({
   Saturation,
   FU,
   Metrics,
+  Metrics2,
 }: // Home
 {
   children: ReactNode;
@@ -18,6 +19,7 @@ export default function ControlPanelLayout({
   Home: ReactNode;
   FU: ReactNode;
   Metrics:ReactNode;
+  Metrics2:ReactNode;
 }) {
   return (
     <>
@@ -31,7 +33,7 @@ export default function ControlPanelLayout({
       {/* Second column for Agent, Saturation, and Notif */}
       <div className="h-full flex justify-between p-4 px-20">
         <div className="p-4">{Agent}{Metrics}</div>
-        <div className="p-4">{Saturation} {Metrics}</div>
+        <div className="p-4">{Saturation} {Metrics2}</div>
         <div className="p-4">{Notif}</div>
       </div>
     </div>
