@@ -49,10 +49,10 @@ export default function Home() {
 
   return (
     <div className="h-screen">
-    <div className="flex h-screen bg-background text-foreground relative">
+    <div className="flex h-full bg-background text-foreground relative">
       {/* Blue line (Clickable area to show the nav bar) */}
       <div
-        className="h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
+        className=" min-h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
         onMouseEnter={() => setIsNavOpen(true)}
         onMouseLeave={() => setIsNavOpen(false)}
         style={{ paddingTop: "2rem" }} // Added padding from the top

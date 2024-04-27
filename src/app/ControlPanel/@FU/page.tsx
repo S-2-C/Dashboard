@@ -3,13 +3,12 @@ import { Button } from "@/components/ui/button";
 
 export default async function Frequently() {
   return (
-    <div className="h-full">
       <div className="flex justify-between">
         <div className="bg-teal-FU p-4 rounded-tl-lg rounded-bl-lg">
           <h1 className="text-4xl font-bold text-white">Frequently Used</h1>
         </div>
         <div className="flex-grow flex justify-center items-center">
-          <div className="max-w-screen-xl w-full bg-teal-background p-6 rounded-tr-lg rounded-br-lg px-16">
+          <div className=" bg-teal-background p-6 rounded-tr-lg rounded-br-lg px-16">
             <div className="flex items-center justify-between">
               <Link href="/AgentManagement">
                 <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded">
@@ -45,6 +44,5 @@ export default async function Frequently() {
           </div>
         </div>
       </div>
-    </div>
   );
 }

@@ -154,37 +154,39 @@ export function Saturation() {
 
 export default async function SaturationSlot() {
   return (
-    <div className="bg-blue-dark rounded-lg shadow-md ">
-     <Link href="/Channels">
-      <div className="text-center p-4 bg-blue-darkhighlight rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-white text-center p-4">
-          Saturation in channels
-        </h1>
+    <div className="bg-blue-dark flex flex-col rounded-lg shadow-md h-96">
+      <Link href="/Channels">
+        <div className="text-center p-4 bg-blue-darkhighlight rounded-lg shadow-md">
+          <h1 className="text-3xl font-bold text-white text-center px-4 py-2">
+            Saturation in channels
+          </h1>
+        </div>
+    </Link>
+    <div className=" overflow-scroll  no-scrollbar h-[65%]">
+      <div className=" justify-center items-center text-white w-[calc(60vw-32rem)]">
+        <Saturation /> 
       </div>
-  </Link>
-    <div className="h-full flex justify-center items-center text-white w-[calc(60vw-32rem)]">
-      {/* <Saturation /> */}
+      <div className="flex items-center px-8 py-7">
+      <span className="text-white text-xl">Physical Store</span>
+      <div className="bg-figma-figma9 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
+      {/* <div className="w-3/4"></div> */}
     </div>
-    <div className="flex items-center px-8 py-7">
-    <span className="text-white text-xl">Physical Store</span>
-    <div className="bg-figma-figma9 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-    {/* <div className="w-3/4"></div> */}
-  </div>
-  <div className="flex items-center px-8 py-4">
-    <span className="text-white text-xl">Walmart®.com</span>
-    <div className="bg-figma-figma10 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-    {/* <div className="w-3/4"></div> */}
-  </div>
-  <div className="flex items-center px-8 py-4">
-    <span className="text-white text-xl">Walmart Express</span>
-    <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-    {/* <div className="w-3/4"></div> */}
-  </div>
-  <div className="flex items-center px-8 py-4">
-    <span className="text-white text-xl">Delivery</span>
-    <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-    {/* <div className="w-3/4"></div> */}
-  </div>
+    <div className="flex items-center px-8 py-4">
+      <span className="text-white text-xl">Walmart®.com</span>
+      <div className="bg-figma-figma10 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
+      {/* <div className="w-3/4"></div> */}
+    </div>
+    <div className="flex items-center px-8 py-4">
+      <span className="text-white text-xl">Walmart Express</span>
+      <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
+      {/* <div className="w-3/4"></div> */}
+    </div>
+    <div className="flex items-center px-8 py-4">
+      <span className="text-white text-xl">Delivery</span>
+      <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
+      {/* <div className="w-3/4"></div> */}
+    </div>
+    </div>
   </div>
   
   );
