@@ -14,13 +14,44 @@ export async function GET(request: Request) {
         InstanceId: InstanceId,
         ContactId: contactId
     };
-    console.log(input);
 
-    const command = new ListRealtimeContactAnalysisSegmentsCommand(input);
-    const response = await client.send(command);
 
-    console.log(JSON.stringify(response, null, 2));
+    try {
+        const command = new ListRealtimeContactAnalysisSegmentsCommand(input);
+        const response = await client.send(command);
 
-    return null;
+        // Your code that may throw a ResourceNotFoundException
+    } catch (error: any) {
+        if (error.name === 'ResourceNotFoundException') {
+            return new Response(JSON.stringify({ message: "Contact Id not found please try again." }), {
+                status: 404,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+        else if (error.name === 'InvalidRequestException') {
+            return new Response(JSON.stringify({ message: "Please provide a contact Id" }), {
+                status: 400,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+        else {
+            throw error; // re-throw the error if it's not a ResourceNotFoundException
+        }
+    }
+
+
+
+
+
+    return Response.json(
+        {
+            "message": "Contact analysis segments retrieved successfully.",
+            "data": response.Segments
+        }
+    );
 
 }
