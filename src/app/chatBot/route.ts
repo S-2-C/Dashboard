@@ -3,10 +3,9 @@ import { OpenAIEmbeddings, ChatOpenAI } from "@langchain/openai";
 import { PineconeStore } from "@langchain/pinecone";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { JsonOutputFunctionsParser } from "langchain/output_parsers";
 import { pull } from "langchain/hub";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
-import { RetrievalQAChain } from "langchain/chains";
+
 
 async function getEmbed(
   query: string,
