@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default async function AgentSlot() {
   return (
-    <div className ="bg-blue-highlight rounded-lg p-8 shadow-md" style={{ display: "inline-block" }}>
+    <div className ="bg-blue-highlight rounded-lg p-8 shadow-md h-96" style={{ display: "inline-block" }}>
   
   <div className="bg-blue-highlight rounded-lg">
   <Link href="/AgentManagement">

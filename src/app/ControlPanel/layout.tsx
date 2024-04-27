@@ -18,32 +18,34 @@ export default function ControlPanelLayout({
   Saturation: ReactNode;
   Home: ReactNode;
   FU: ReactNode;
-  Metrics:ReactNode;
-  Metrics2:ReactNode;
+  Metrics: ReactNode;
+  Metrics2: ReactNode;
 }) {
   return (
     <>
-    <div className="h-screen">
-      
-    <div className="h-full flex">
-  <div className="flex-grow">{children}</div>
-  <div className="h-full flex flex-col">
-    {/* Row for children and components */}
-    <div className="flex flex-grow">
-      {/* Second column for Agent, Saturation, and Notif */}
-      <div className="h-full flex justify-between p-4 px-20">
-        <div className="p-4">{Agent}{Metrics}</div>
-        <div className="p-4">{Saturation} {Metrics2}</div>
-        <div className="p-4">{Notif}</div>
+      <div className="h-screen">
+        <div className="h-full flex ">
+          <div className="flex-grow">{children}</div>
+          <div>
+              {/* Row for children and components */}
+                {/* Second column for Agent, Saturation, and Notif */}
+                <div className="flex h-4/5 justify-between p-4 px-20">
+                  <div>
+                    <div className="p-4">{Agent}</div>
+                    <div className="p-4">{Metrics}</div>
+                  </div>
+                  <div >
+                    <div className="p-4">{Saturation}</div>
+                    <div className="p-4">{Metrics2}</div>
+                  </div>
+                  <div className="p-4">{Notif}</div>
+                </div>
+            <div className="justify-between px-20">
+              <div className="p-4 ">{FU}</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    {/* Third column for FU at the bottom */}
-    <div className="h-full flex justify-between px-20">
-    <div className="p-4 flex" >{FU}</div>
-    </div>
-  </div>
-</div>
-</div>
       {/* {Home} */}
     </>
   );
