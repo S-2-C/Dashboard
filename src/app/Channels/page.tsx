@@ -41,7 +41,7 @@ export default function Notifications() {
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Online Store
                                 <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-3/4 "></div>
+                               <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma8 rounded-full w-1/2"></div>
@@ -91,7 +91,7 @@ export default function Notifications() {
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Fisical Store
                                 <div className="bg-figma-figma9 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-3/4 "></div>
+                               <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma9 rounded-full w-3/5"></div>
@@ -141,7 +141,7 @@ export default function Notifications() {
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Walmart Express
                                 <div className="bg-figma-figma10 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-3/4 "></div>
+                               <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma10 rounded-full w-3/4"></div>
@@ -191,7 +191,7 @@ export default function Notifications() {
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Delivery
                                 <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-3/4 "></div>
+                               <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma8 rounded-full w-1/3"></div>
