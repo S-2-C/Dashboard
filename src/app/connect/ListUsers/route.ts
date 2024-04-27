@@ -23,7 +23,7 @@ function arrangeUserList(response: any) {
 }
 
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
     const config = make_config_json();
     const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
     const client = new ConnectClient(config as any);

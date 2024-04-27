@@ -15,10 +15,10 @@ export async function GET(request: Request) {
         ContactId: contactId
     };
 
-
+    let response;
     try {
         const command = new ListRealtimeContactAnalysisSegmentsCommand(input);
-        const response = await client.send(command);
+        response = await client.send(command);
 
         // Your code that may throw a ResourceNotFoundException
     } catch (error: any) {
