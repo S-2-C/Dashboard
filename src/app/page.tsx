@@ -1,79 +1,52 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Button, Flex, Heading, Text } from "@aws-amplify/ui-react";
+import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import "@aws-amplify/ui-react/styles.css";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { 
-//   faChartBar, 
-//   faTasks, 
-//   faUsers, 
-//   faCalendar, 
-//   faComments, 
-//   faUserTie, 
-//   faChartLine, 
-//   faBell, 
-//   faBook, 
-//   faFileAlt, 
-//   faCog, 
-//   faSignOutAlt 
-// } from '@fortawesome/free-solid-svg-icons';
-// import { useAuthenticator } from "@aws-amplify/ui-react";
 import Home from "./NavBar" // Importing the NavBar component
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home2() {
-  // const { signOut } = useAuthenticator((context) => [context.signOut]);
-  const [isNavOpen, setIsNavOpen] = useState(false);
-  // const [hoveredItem, setHoveredItem] = useState(null); // Track hovered item
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-
-  const navRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isNavOpen && navRef.current) {
-      // Calculate the width of the navigation bar based on the width of the longest text inside it
-      const maxWidth = Array.from(navRef.current.querySelectorAll("a")).reduce(
-        (maxWidth, link) => Math.max(maxWidth, link.offsetWidth),
-        0
-      );
-      navRef.current.style.width = `${maxWidth + 120}px`; // Adding extra padding for aesthetics
-    } else if (navRef.current) {
-      navRef.current.style.width = "120px"; // Default width when the navigation bar is closed
-    }
-  }, [isNavOpen]);
 
   return (
-    <div className="h-screen">
-    <div className="flex h-full bg-background text-foreground relative">
-      <Home/>
-      {/* Main Content */}
-      <div className={`flex flex-col flex-1 p-10 ml-20`}>
-        <Flex direction="column" gap="2rem">
-          <Heading level={1}>Control Panel</Heading>
-          <Text className="text-sans">Here is some text</Text>
-          <Button>Click Me</Button>
-        </Flex>
-        <div className="absolute top-0 right-0 mt-4 mr-4">
-          {/* Position popover in the upper right corner */}
-          <Popover>
-            <PopoverTrigger>
-              <Button>Open Popover</Button>
-            </PopoverTrigger>
-            <PopoverContent className="bg-popover text-popover-foreground rounded-lg shadow-lg p-4">
-              <Flex direction="column" gap="2rem">
-                <Heading level={3}>Popover Content</Heading>
-                <Text>Here is some content for the popover</Text>
-              </Flex>
-            </PopoverContent>
-          </Popover>
+    <div className="flex h-screen">
+      <div className="bg-white h-full flex justify-center items-center w-3/5 flex-col">
+        <div className="h-1/2  w-full flex flex-row pl-20 pt-20">
+          <img src="/images/S2C Figma1 Logo.svg" className=" w-16 h-auto pb-64" />
+          <h1 className="text-figma-figma1 font-bold text-4xl pt-4 pl-4">S2C</h1>
+
         </div>
+        <div className="h-1/2  w-full pl-20 ">
+          <Heading level={1} fontWeight="extrabold" className="mb-40">Welcome Supervisor</Heading>
+          <p className="text-figma-figma5 font-bold text-xl w-3/5 mt-12 mb-8">Dynamic, agile task management system leveraging real-time insights for efficiency</p>
+
+          <Link href="/AgentManagement">
+            <Button className="w-48 h-12 bg-gradient-to-b from-figma-figma6 to-figma-figma1 hover:bg-figma-figma9 focus:bg-figma-figma10 active:bg-figma-figma10 text-background font-bold py-2 px-4 rounded-xl">
+              Get Started
+            </Button>
+          </Link>
+        </div>
+
       </div>
+
+      <div className="w-1/5 h-full flex">
+        <div className="w-1/3 bg-figma-figma11 h-full"></div>
+        <div className="w-1/3 bg-figma-figma12 h-full"></div>
+        <div className="w-1/3 bg-figma-figma13 h-full"></div>
+
+      </div>
+
+      <div className="w-1/5 bg-figma-figma1 pt-20 pl-40">
+        <img src="/images/Walmart logo.svg" className=" w-16 h-auto pb-64" />
+      </div>
+
     </div>
-    </div>
+
   );
-  
-                  }
+
+}

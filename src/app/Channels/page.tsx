@@ -23,6 +23,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import SearchBar  from '../searchBar'; //importing the SearchBar component
 
 
 
@@ -32,7 +33,9 @@ export default function Notifications() {
             <div className="h-screen flex w-full">
                 <Home />
                 <div className="mt-12  flex-col ml-40 w-full">
-
+                    <div>
+                        <SearchBar />
+                    </div>
                     <div className="h-12 p-4 m-1">
                         <h1 className="text-figma-figma5 font-bold text-4xl">Channels</h1>
                     </div>
