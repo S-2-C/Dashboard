@@ -1,9 +1,11 @@
 // searchBar.tsx
-import React from 'react';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const SearchBar = () => {
   return (
-    <div className="flex items-center max-w-xl"> 
+    <div className="flex items-center max-w-xl">
       <div className="relative w-full">
         <input
           className="block w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-metrics placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
@@ -19,6 +21,13 @@ const SearchBar = () => {
             alt="Search"
           />
         </div>
+      </div>
+      <div className="flex pl-16">
+        <Link href="/Profile">
+          <Button className="bg-blue hover:bg-blue-dark text-blue-dark hover:text-white font-bold text-base">
+            My Profile
+          </Button>
+        </Link>
       </div>
     </div>
   );
