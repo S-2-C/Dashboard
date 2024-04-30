@@ -4,12 +4,16 @@ import {
     faUser
 } from '@fortawesome/free-solid-svg-icons';
 import Home from "../NavBar" // Importing the NavBar component
+import SearchBar  from '../searchBar'; //importing the SearchBar component
 export default async function Documentation() {
     return (
         <div>
             <div className="h-screen flex w-full">
                 <Home />
                 <div className="flex flex-col mt-12  flex-col ml-40 w-full mr-36">
+                    <div className="w-full flex text-left"> 
+                        <SearchBar />
+                    </div>
                     <div className="h-12 p-4 m-1 mb-8">
                         <h1 className="text-figma-figma5 font-bold text-4xl">Documentation</h1>
                     </div>
