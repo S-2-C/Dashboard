@@ -28,15 +28,18 @@
         },
         "dashboardAuthPostConfirmation": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-61416e51505669357254-build.zip"
+          "s3Key": "amplify-builds/dashboardAuthPostConfirmation-55344368435a5a724c58-build.zip"
         },
         "dashboardAuthPreSignup": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/dashboardAuthPreSignup-504c5a6531674d37614a-build.zip"
+          "s3Key": "amplify-builds/dashboardAuthPreSignup-7a513164653639493245-build.zip"
         }
       },
       "storage": {
         "dashboardS3": {}
+      },
+      "api": {
+        "dashboard": {}
       }
     }
   }

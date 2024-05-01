@@ -1,7 +1,20 @@
 {
+  "version": "1",
+  "region": "us-east-1",
+  "userPoolId": "us-east-1_8tIWhQ4P0",
+  "userName": "c438d4c8-f0a1-7052-cc90-54c06c1bf5f1",
+  "callerContext": {
+    "awsSdkVersion": "aws-sdk-unknown-unknown",
+    "clientId": "4teajkv92o2f65la50qpttfi26"
+  },
+  "triggerSource": "PostConfirmation_ConfirmSignUp",
   "request": {
-    "userPoolId": "testID",
-    "userName": "gabordlr@gmail.com"
+    "userAttributes": {
+      "sub": "c438d4c8-f0a1-7052-cc90-54c06c1bf5f1",
+      "email_verified": "true",
+      "cognito:user_status": "CONFIRMED",
+      "email": "tec@banzo.dev"
+    }
   },
   "response": {}
 }
