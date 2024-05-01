@@ -45,7 +45,10 @@ const getS3file = async () => {
 /**
  @see https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateUser.html
  **/
-const createConnectUser = async (email, securityProfileId) => {
+const createConnectUser = async (email, fullName, securityProfileId) => {
+  // if fullName has a space, split it into first and last name
+  const [firstName, lastName] = fullName.split(" ");
+
   const connectClient = new ConnectClient({ region: "us-east-1" });
 
   const inputConnect = {
@@ -65,8 +68,8 @@ const createConnectUser = async (email, securityProfileId) => {
     IdentityInfo: {
       // UserIdentityInfo
       Email: email, // required
-      FirstName: "John", // required
-      LastName: "Doe", // required
+      FirstName: firstName, // required
+      LastName: lastName ? lastName : " ", // required
     },
   };
 
@@ -115,6 +118,7 @@ const findUserByEmail = (email, usersCsv) => {
 };
 
 exports.handler = async (event, context) => {
+  console.log(JSON.stringify(event, null, 2));
   const csv = await getS3file(event);
 
   const user = findUserByEmail(event.request.userAttributes.email, csv);
@@ -144,11 +148,13 @@ exports.handler = async (event, context) => {
     try {
       const responseConnect = await createConnectUser(
         event.request.userAttributes.email,
+        event.request.userAttributes.name,
         securityProfileId
       );
       console.log(responseConnect);
     } catch (err) {
-      console.error(err); // keep going even if the connect user creation fails
+      console.error(err);
+      throw new Error("Something went wrong with the Connect user creation.");
     }
 
     return event;
