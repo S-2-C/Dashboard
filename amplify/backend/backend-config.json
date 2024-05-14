@@ -18,7 +18,7 @@
     }
   },
   "auth": {
-    "dashboardAuth": {
+    "dashAuth": {
       "customAuth": false,
       "dependsOn": [
         {
@@ -27,7 +27,7 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "dashboardAuthPostConfirmation",
+          "resourceName": "dashAuthPostConfirmation",
           "triggerProvider": "Cognito"
         },
         {
@@ -36,7 +36,7 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "dashboardAuthPreSignup",
+          "resourceName": "dashAuthPreSignup",
           "triggerProvider": "Cognito"
         }
       ],
@@ -50,7 +50,8 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL"
+          "EMAIL",
+          "NAME"
         ],
         "socialProviders": [],
         "usernameAttributes": [
@@ -62,26 +63,10 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
-    },
-    "userPoolGroups": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId",
-            "AppClientIDWeb",
-            "AppClientID",
-            "IdentityPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "dashboardAuth"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Cognito-UserPool-Groups"
     }
   },
   "function": {
-    "StoreStreamARN": {
+    "callStart": {
       "build": true,
       "dependsOn": [
         {
@@ -97,65 +82,131 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "dashboardAuthPostConfirmation": {
+    "connectEvents": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "dashboard"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "dashboardAuthPreSignup": {
+    "dashAuthPostConfirmation": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "dashboard"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "dashboardS3"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "dashAuthPreSignup": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "dashboardS3"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_StoreStreamARN_deploymentBucketName": {
+    "AMPLIFY_function_callStart_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "StoreStreamARN"
+          "resourceName": "callStart"
         }
       ]
     },
-    "AMPLIFY_function_StoreStreamARN_s3Key": {
+    "AMPLIFY_function_callStart_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "StoreStreamARN"
+          "resourceName": "callStart"
         }
       ]
     },
-    "AMPLIFY_function_dashboardAuthPostConfirmation_deploymentBucketName": {
+    "AMPLIFY_function_connectEvents_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "dashboardAuthPostConfirmation"
+          "resourceName": "connectEvents"
         }
       ]
     },
-    "AMPLIFY_function_dashboardAuthPostConfirmation_s3Key": {
+    "AMPLIFY_function_connectEvents_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "dashboardAuthPostConfirmation"
+          "resourceName": "connectEvents"
         }
       ]
     },
-    "AMPLIFY_function_dashboardAuthPreSignup_deploymentBucketName": {
+    "AMPLIFY_function_dashAuthPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "dashboardAuthPreSignup"
+          "resourceName": "dashAuthPostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_dashboardAuthPreSignup_s3Key": {
+    "AMPLIFY_function_dashAuthPostConfirmation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "dashboardAuthPreSignup"
+          "resourceName": "dashAuthPostConfirmation"
         }
       ]
+    },
+    "AMPLIFY_function_dashAuthPreSignup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashAuthPreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashAuthPreSignup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashAuthPreSignup"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "dashboardS3": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

@@ -1,0 +1,59 @@
+{
+    "version": "0",
+    "id": "22e674b9-2b1f-bb39-a318-b9080b61bab7",
+    "detail-type": "Amazon Connect Contact Event",
+    "source": "aws.connect",
+    "account": "905418190753",
+    "time": "2024-04-24T22:32:59Z",
+    "region": "us-east-1",
+    "resources": [
+        "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597",
+        "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/contact/4cf25e32-32a8-485c-89cd-fa864c0d66b7"
+    ],
+    "detail": {
+        "eventType": "DISCONNECTED",
+        "contactId": "4cf25e32-32a8-485c-89cd-fa864c0d66b7",
+        "channel": "VOICE",
+        "instanceArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597",
+        "initiationMethod": "INBOUND",
+        "queueInfo": {
+            "queueArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/queue/fe0bd989-c3d1-4959-a47c-b7d27def9a99",
+            "enqueueTimestamp": "2024-04-24T22:32:49.821Z",
+            "queueType": "STANDARD"
+        },
+        "agentInfo": {
+            "agentArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/agent/ab454c37-6f3e-4c50-9b01-e0f262ad5336",
+            "connectedToAgentTimestamp": "2024-04-24T22:32:56.440Z"
+        },
+        "initiationTimestamp": "2024-04-24T22:32:27.382Z",
+        "connectedToSystemTimestamp": "2024-04-24T22:32:27.975Z",
+        "disconnectTimestamp": "2024-04-24T22:32:59.250Z",
+        "tags": {
+            "aws:connect:instanceId": "96cb63e2-25a1-4014-8f3c-e3919415d597",
+            "aws:connect:systemEndpoint": "+528126821849"
+        },
+        "queuePriority": 5,
+        "segmentAttributes": {
+            "connect:Subtype": {
+                "valueString": "connect:Telephony"
+            }
+        },
+        "contactLens": {
+            "conversationalAnalytics": {
+                "configuration": {
+                    "enabled": true,
+                    "channelConfiguration": {
+                        "analyticsModes": [
+                            "RealTime"
+                        ]
+                    },
+                    "languageLocale": "en-US",
+                    "redactionConfiguration": {
+                        "behavior": "Disable",
+                        "policy": "RedactedAndOriginal"
+                    }
+                }
+            }
+        }
+    }
+}

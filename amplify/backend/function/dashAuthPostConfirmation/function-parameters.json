@@ -1,0 +1,28 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "dashAuth",
+  "functionName": "dashAuthPostConfirmation",
+  "resourceName": "dashAuthPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "/snapshot/amplify-cli/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "dashAuthPostConfirmation",
+  "skipEdit": true,
+  "permissions": {
+    "api": {
+      "dashboard": [
+        "Mutation"
+      ]
+    },
+    "storage": {
+      "dashboardS3": [
+        "read"
+      ]
+    }
+  }
+}
