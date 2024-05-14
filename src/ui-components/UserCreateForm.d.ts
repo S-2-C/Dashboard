@@ -5,8 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Supervisor } from "../API.ts";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -22,32 +21,37 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type SupervisorUpdateFormInputValues = {
+export declare type UserCreateFormInputValues = {
+    id?: string;
     name?: string;
     profilePic?: string;
-    email?: string;
+    role?: string;
+    needsHelp?: boolean;
 };
-export declare type SupervisorUpdateFormValidationValues = {
+export declare type UserCreateFormValidationValues = {
+    id?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
     profilePic?: ValidationFunction<string>;
-    email?: ValidationFunction<string>;
+    role?: ValidationFunction<string>;
+    needsHelp?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type SupervisorUpdateFormOverridesProps = {
-    SupervisorUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+export declare type UserCreateFormOverridesProps = {
+    UserCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    id?: PrimitiveOverrideProps<TextFieldProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
     profilePic?: PrimitiveOverrideProps<TextFieldProps>;
-    email?: PrimitiveOverrideProps<TextFieldProps>;
+    role?: PrimitiveOverrideProps<SelectFieldProps>;
+    needsHelp?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
-export declare type SupervisorUpdateFormProps = React.PropsWithChildren<{
-    overrides?: SupervisorUpdateFormOverridesProps | undefined | null;
+export declare type UserCreateFormProps = React.PropsWithChildren<{
+    overrides?: UserCreateFormOverridesProps | undefined | null;
 } & {
-    id?: string;
-    supervisor?: Supervisor;
-    onSubmit?: (fields: SupervisorUpdateFormInputValues) => SupervisorUpdateFormInputValues;
-    onSuccess?: (fields: SupervisorUpdateFormInputValues) => void;
-    onError?: (fields: SupervisorUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: SupervisorUpdateFormInputValues) => SupervisorUpdateFormInputValues;
-    onValidate?: SupervisorUpdateFormValidationValues;
+    clearOnSuccess?: boolean;
+    onSubmit?: (fields: UserCreateFormInputValues) => UserCreateFormInputValues;
+    onSuccess?: (fields: UserCreateFormInputValues) => void;
+    onError?: (fields: UserCreateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: UserCreateFormInputValues) => UserCreateFormInputValues;
+    onValidate?: UserCreateFormValidationValues;
 } & React.CSSProperties>;
-export default function SupervisorUpdateForm(props: SupervisorUpdateFormProps): React.ReactElement;
+export default function UserCreateForm(props: UserCreateFormProps): React.ReactElement;

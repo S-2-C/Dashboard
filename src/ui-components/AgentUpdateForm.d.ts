@@ -6,6 +6,7 @@
 
 import * as React from "react";
 import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { Agent } from "../API.ts";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -45,7 +46,7 @@ export declare type AgentUpdateFormProps = React.PropsWithChildren<{
     overrides?: AgentUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    agent?: any;
+    agent?: Agent;
     onSubmit?: (fields: AgentUpdateFormInputValues) => AgentUpdateFormInputValues;
     onSuccess?: (fields: AgentUpdateFormInputValues) => void;
     onError?: (fields: AgentUpdateFormInputValues, errorMessage: string) => void;

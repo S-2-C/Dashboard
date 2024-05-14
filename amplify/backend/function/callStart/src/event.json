@@ -1,0 +1,60 @@
+{
+  "Details": {
+    "ContactData": {
+      "Attributes": {
+        "greetingPlayed": "true",
+        "agentUsername": "pridapablo@gmail.com"
+      },
+      "AwsRegion": "us-east-1",
+      "Channel": "VOICE",
+      "ContactId": "583778d0-1bb4-4706-a830-eecde408a2bf",
+      "CustomerEndpoint": {
+        "Address": "+525561154355",
+        "Type": "TELEPHONE_NUMBER"
+      },
+      "CustomerId": null,
+      "Description": null,
+      "InitialContactId": "583778d0-1bb4-4706-a830-eecde408a2bf",
+      "InitiationMethod": "INBOUND",
+      "InstanceARN": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597",
+      "LanguageCode": "en-US",
+      "MediaStreams": {
+        "Customer": {
+          "Audio": {
+            "StartFragmentNumber": "91343852333181432392682062661987253037966492102",
+            "StartTimestamp": "1713924270788",
+            "StreamARN": "arn:aws:kinesisvideo:us-east-1:905418190753:stream/s2c-connect-ss2cc-contact-6835e4bf-b7c5-44e5-bc24-93ee3261c98e/1713571618886"
+          }
+        }
+      },
+      "Name": null,
+      "PreviousContactId": "583778d0-1bb4-4706-a830-eecde408a2bf",
+      "Queue": {
+        "ARN": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/queue/f617a7d6-2be6-4f9b-b365-600fd3fc8646",
+        "Name": "Walmart Physical Store",
+        "OutboundCallerId": null
+      },
+      "References": {},
+      "RelatedContactId": null,
+      "SegmentAttributes": {
+        "connect:Subtype": {
+          "ValueString": "connect:Telephony"
+        }
+      },
+      "SystemEndpoint": {
+        "Address": "+528126821849",
+        "Type": "TELEPHONE_NUMBER"
+      },
+      "Tags": {
+        "aws:connect:instanceId": "96cb63e2-25a1-4014-8f3c-e3919415d597",
+        "aws:connect:systemEndpoint": "+528126821849"
+      }
+    },
+    "Parameters": {
+      "contactID": "583778d0-1bb4-4706-a830-eecde408a2bf",
+      "agentARN": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/agent/3f2a1212-1458-471f-8adb-04080c44f235",
+      "agentUsername": "pridapablo"
+    }
+  },
+  "Name": "ContactFlowEvent"
+}
