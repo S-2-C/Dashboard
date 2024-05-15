@@ -8,129 +8,77 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateSupervisor = /* GraphQL */ `subscription OnCreateSupervisor(
-  $filter: ModelSubscriptionSupervisorFilterInput
-) {
-  onCreateSupervisor(filter: $filter) {
-    name
-    profilePic
-    email
+export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+  onCreateUser(filter: $filter) {
     id
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateSupervisorSubscriptionVariables,
-  APITypes.OnCreateSupervisorSubscription
->;
-export const onUpdateSupervisor = /* GraphQL */ `subscription OnUpdateSupervisor(
-  $filter: ModelSubscriptionSupervisorFilterInput
-) {
-  onUpdateSupervisor(filter: $filter) {
     name
     profilePic
-    email
-    id
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateSupervisorSubscriptionVariables,
-  APITypes.OnUpdateSupervisorSubscription
->;
-export const onDeleteSupervisor = /* GraphQL */ `subscription OnDeleteSupervisor(
-  $filter: ModelSubscriptionSupervisorFilterInput
-) {
-  onDeleteSupervisor(filter: $filter) {
-    name
-    profilePic
-    email
-    id
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteSupervisorSubscriptionVariables,
-  APITypes.OnDeleteSupervisorSubscription
->;
-export const onCreateAgent = /* GraphQL */ `subscription OnCreateAgent($filter: ModelSubscriptionAgentFilterInput) {
-  onCreateAgent(filter: $filter) {
-    name
-    profilePic
-    email
+    role
     needsHelp
-    calls {
+    Contacts {
       nextToken
       __typename
     }
-    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateAgentSubscriptionVariables,
-  APITypes.OnCreateAgentSubscription
+  APITypes.OnCreateUserSubscriptionVariables,
+  APITypes.OnCreateUserSubscription
 >;
-export const onUpdateAgent = /* GraphQL */ `subscription OnUpdateAgent($filter: ModelSubscriptionAgentFilterInput) {
-  onUpdateAgent(filter: $filter) {
+export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+  onUpdateUser(filter: $filter) {
+    id
     name
     profilePic
-    email
+    role
     needsHelp
-    calls {
+    Contacts {
       nextToken
       __typename
     }
-    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdateAgentSubscriptionVariables,
-  APITypes.OnUpdateAgentSubscription
+  APITypes.OnUpdateUserSubscriptionVariables,
+  APITypes.OnUpdateUserSubscription
 >;
-export const onDeleteAgent = /* GraphQL */ `subscription OnDeleteAgent($filter: ModelSubscriptionAgentFilterInput) {
-  onDeleteAgent(filter: $filter) {
+export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+  onDeleteUser(filter: $filter) {
+    id
     name
     profilePic
-    email
+    role
     needsHelp
-    calls {
+    Contacts {
       nextToken
       __typename
     }
-    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeleteAgentSubscriptionVariables,
-  APITypes.OnDeleteAgentSubscription
+  APITypes.OnDeleteUserSubscriptionVariables,
+  APITypes.OnDeleteUserSubscription
 >;
-export const onCreateCall = /* GraphQL */ `subscription OnCreateCall($filter: ModelSubscriptionCallFilterInput) {
-  onCreateCall(filter: $filter) {
-    ARN
+export const onCreateContact = /* GraphQL */ `subscription OnCreateContact($filter: ModelSubscriptionContactFilterInput) {
+  onCreateContact(filter: $filter) {
     phone
     callStart
     callEnd
-    agent {
+    user {
+      id
       name
       profilePic
-      email
+      role
       needsHelp
-      id
       createdAt
       updatedAt
       __typename
@@ -138,26 +86,25 @@ export const onCreateCall = /* GraphQL */ `subscription OnCreateCall($filter: Mo
     id
     createdAt
     updatedAt
-    agentCallsId
+    userContactsId
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateCallSubscriptionVariables,
-  APITypes.OnCreateCallSubscription
+  APITypes.OnCreateContactSubscriptionVariables,
+  APITypes.OnCreateContactSubscription
 >;
-export const onUpdateCall = /* GraphQL */ `subscription OnUpdateCall($filter: ModelSubscriptionCallFilterInput) {
-  onUpdateCall(filter: $filter) {
-    ARN
+export const onUpdateContact = /* GraphQL */ `subscription OnUpdateContact($filter: ModelSubscriptionContactFilterInput) {
+  onUpdateContact(filter: $filter) {
     phone
     callStart
     callEnd
-    agent {
+    user {
+      id
       name
       profilePic
-      email
+      role
       needsHelp
-      id
       createdAt
       updatedAt
       __typename
@@ -165,26 +112,25 @@ export const onUpdateCall = /* GraphQL */ `subscription OnUpdateCall($filter: Mo
     id
     createdAt
     updatedAt
-    agentCallsId
+    userContactsId
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdateCallSubscriptionVariables,
-  APITypes.OnUpdateCallSubscription
+  APITypes.OnUpdateContactSubscriptionVariables,
+  APITypes.OnUpdateContactSubscription
 >;
-export const onDeleteCall = /* GraphQL */ `subscription OnDeleteCall($filter: ModelSubscriptionCallFilterInput) {
-  onDeleteCall(filter: $filter) {
-    ARN
+export const onDeleteContact = /* GraphQL */ `subscription OnDeleteContact($filter: ModelSubscriptionContactFilterInput) {
+  onDeleteContact(filter: $filter) {
     phone
     callStart
     callEnd
-    agent {
+    user {
+      id
       name
       profilePic
-      email
+      role
       needsHelp
-      id
       createdAt
       updatedAt
       __typename
@@ -192,11 +138,65 @@ export const onDeleteCall = /* GraphQL */ `subscription OnDeleteCall($filter: Mo
     id
     createdAt
     updatedAt
-    agentCallsId
+    userContactsId
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeleteCallSubscriptionVariables,
-  APITypes.OnDeleteCallSubscription
+  APITypes.OnDeleteContactSubscriptionVariables,
+  APITypes.OnDeleteContactSubscription
+>;
+export const onCreateNotification = /* GraphQL */ `subscription OnCreateNotification(
+  $filter: ModelSubscriptionNotificationFilterInput
+) {
+  onCreateNotification(filter: $filter) {
+    rule
+    action
+    description
+    urgency
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateNotificationSubscriptionVariables,
+  APITypes.OnCreateNotificationSubscription
+>;
+export const onUpdateNotification = /* GraphQL */ `subscription OnUpdateNotification(
+  $filter: ModelSubscriptionNotificationFilterInput
+) {
+  onUpdateNotification(filter: $filter) {
+    rule
+    action
+    description
+    urgency
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateNotificationSubscriptionVariables,
+  APITypes.OnUpdateNotificationSubscription
+>;
+export const onDeleteNotification = /* GraphQL */ `subscription OnDeleteNotification(
+  $filter: ModelSubscriptionNotificationFilterInput
+) {
+  onDeleteNotification(filter: $filter) {
+    rule
+    action
+    description
+    urgency
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteNotificationSubscriptionVariables,
+  APITypes.OnDeleteNotificationSubscription
 >;
