@@ -7,10 +7,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {  fetchContactData } from "@/fetching/fetchingDataFunctions";
 import { GetContactQuery, ListContactsQuery, Contact } from "@/API";
+import { fetchRealTimeData } from "@/fetching/transcript";
 
 export default function ManageCall({params} : {params: {id: string}}) {
     const [isPopoverVisible, setIsPopoverVisible] = useState(false);
     const [ call, setCall ] = useState<GetContactQuery["getContact"]>();
+
+        //create a polling function to fetch data every 5 seconds
+    useEffect(() => {
+        if (params.id == null) {
+            return;
+        }
+
+        const interval = setInterval(async () => {
+            const res = await fetchRealTimeData(params.id);
+            console.log(res);
+        }, 5000);
+        return () => clearInterval(interval);
+
+
+    }, [params.id]);
+
 
     useEffect(() => {
         async function fetchContacts() {
