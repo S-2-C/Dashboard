@@ -1,9 +1,25 @@
 "use client";
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import Home from "../NavBar";
+import { useEffect, useState } from "react";
+import {  fetchAllContacts } from "@/fetching/fetchingDataFunctions";
+import Link from "next/link";
+import { Euphoria_Script } from "next/font/google";
+import { GetContactQuery, ListContactsQuery, Contact } from "@/API";
 
 
 export default function AgentManagement() {
+    const [ calls, setCalls ] = useState<ListContactsQuery["listContacts"]>();
+
+    useEffect(() => {
+        async function fetchContacts() {
+            const res = await fetchAllContacts();
+
+            setCalls(res);
+        }
+        fetchContacts();
+    }, []);
+
     return (
         <div className="flex h-screen bg-background text-foreground relative">
             <Home />
@@ -32,7 +48,7 @@ export default function AgentManagement() {
                                                 />
                                         </div>
                                         <div className="w-3/6  flex items-center text-xs">
-                                            <Text>Agent 10 has been in a call for 1:47:50</Text>
+                                            Hello
                                         </div>
                                 </div>
                                 <div className="flex gap-2 h-16 bg-agenman-agenmangray rounded-xl">
@@ -67,56 +83,24 @@ export default function AgentManagement() {
                                     </div>
                                     <div className="h-4 flex bg-agenman-agenmanred  items-center rounded-xl shadow-md"></div>
                                     <div className="flex bg-agenman-agenmansblue1 items-center rounded-xl" style={{ padding: '10px' }}>
-                                             <div>
+                                        {calls?.items?.map((call: any, index: any) => (
+                                        <div key={index}>
+                                            <Link href={`/ManageCall/${call?.id}`}>
                                                 <img
                                                         src={"images/AgentRed.svg"}
                                                         className="mx-auto h-20 w-20"
                                                         alt="Agent"
                                                 />
                                                 <p className = {"text-center text-sm text-agenman-agenmanred"}>
-                                                    #10
+                                                    {call?.id.split("-")[0]}
                                                 </p>
-                                            </div>
-                                            <div>
-                                                <img
-                                                        src={"images/AgentRed.svg"}
-                                                        className="mx-auto h-20 w-20"
-                                                        alt="Agent"
-                                                />
-                                                <p className = {"text-center text-sm text-agenman-agenmanred"}>
-                                                    #20
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <img
-                                                        src={"images/AgentRed.svg"}
-                                                        className="mx-auto h-20 w-20"
-                                                        alt="Agent"
-                                                />
-                                                <p className = {"text-center text-sm text-agenman-agenmanred"}>
-                                                    #24
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <img
-                                                        src={"images/AgentRed.svg"}
-                                                        className="mx-auto h-20 w-20"
-                                                        alt="Agent"
-                                                />
-                                                <p className = {"text-center text-sm text-agenman-agenmanred"}>
-                                                    #72
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <img
-                                                        src={"images/AgentRed.svg"}
-                                                        className="mx-auto h-20 w-20"
-                                                        alt="Agent"
-                                                />
-                                                <p className = {"text-center text-sm text-agenman-agenmanred"}>
-                                                    #81
-                                                </p>
-                                            </div>
+                                            </Link>
+                                        </div>
+                                            )
+                                        )
+                                        }
+                                            
+                                            
                                     </div>
                                 </Flex>
 

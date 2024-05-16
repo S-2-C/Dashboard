@@ -5,17 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-export declare type EscapeHatchProps = {
-    [elementHierarchy: string]: Record<string, unknown>;
-} | null;
-export declare type VariantValues = {
-    [key: string]: string;
-};
-export declare type Variant = {
-    variantValues: VariantValues;
-    overrides: EscapeHatchProps;
-};
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -35,14 +26,14 @@ export declare type UserCreateFormValidationValues = {
     role?: ValidationFunction<string>;
     needsHelp?: ValidationFunction<boolean>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserCreateFormOverridesProps = {
-    UserCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    id?: PrimitiveOverrideProps<TextFieldProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    profilePic?: PrimitiveOverrideProps<TextFieldProps>;
-    role?: PrimitiveOverrideProps<SelectFieldProps>;
-    needsHelp?: PrimitiveOverrideProps<SwitchFieldProps>;
+    UserCreateFormGrid?: FormProps<GridProps>;
+    id?: FormProps<TextFieldProps>;
+    name?: FormProps<TextFieldProps>;
+    profilePic?: FormProps<TextFieldProps>;
+    role?: FormProps<SelectFieldProps>;
+    needsHelp?: FormProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
     overrides?: UserCreateFormOverridesProps | undefined | null;
@@ -51,7 +42,8 @@ export declare type UserCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: UserCreateFormInputValues) => UserCreateFormInputValues;
     onSuccess?: (fields: UserCreateFormInputValues) => void;
     onError?: (fields: UserCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: UserCreateFormInputValues) => UserCreateFormInputValues;
     onValidate?: UserCreateFormValidationValues;
-} & React.CSSProperties>;
+}>;
 export default function UserCreateForm(props: UserCreateFormProps): React.ReactElement;

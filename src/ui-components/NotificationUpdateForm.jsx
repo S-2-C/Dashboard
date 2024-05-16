@@ -7,20 +7,20 @@
 /* eslint-disable */
 import * as React from "react";
 import { fetchByPath, validateField } from "./utils";
-import { User } from "../models";
+import { Notification } from "../models";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
   Grid,
   SelectField,
-  SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
-export default function UserCreateForm(props) {
+export default function NotificationUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id,
+    notification,
     onSuccess,
     onError,
     onSubmit,
@@ -31,32 +31,43 @@ export default function UserCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    id: undefined,
-    name: undefined,
-    profilePic: undefined,
-    role: undefined,
-    needsHelp: false,
+    rule: undefined,
+    action: undefined,
+    description: undefined,
+    urgency: undefined,
   };
-  const [id, setId] = React.useState(initialValues.id);
-  const [name, setName] = React.useState(initialValues.name);
-  const [profilePic, setProfilePic] = React.useState(initialValues.profilePic);
-  const [role, setRole] = React.useState(initialValues.role);
-  const [needsHelp, setNeedsHelp] = React.useState(initialValues.needsHelp);
+  const [rule, setRule] = React.useState(initialValues.rule);
+  const [action, setAction] = React.useState(initialValues.action);
+  const [description, setDescription] = React.useState(
+    initialValues.description
+  );
+  const [urgency, setUrgency] = React.useState(initialValues.urgency);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setId(initialValues.id);
-    setName(initialValues.name);
-    setProfilePic(initialValues.profilePic);
-    setRole(initialValues.role);
-    setNeedsHelp(initialValues.needsHelp);
+    const cleanValues = { ...initialValues, ...notificationRecord };
+    setRule(cleanValues.rule);
+    setAction(cleanValues.action);
+    setDescription(cleanValues.description);
+    setUrgency(cleanValues.urgency);
     setErrors({});
   };
+  const [notificationRecord, setNotificationRecord] =
+    React.useState(notification);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = id
+        ? await DataStore.query(Notification, id)
+        : notification;
+      setNotificationRecord(record);
+    };
+    queryData();
+  }, [id, notification]);
+  React.useEffect(resetStateValues, [notificationRecord]);
   const validations = {
-    id: [{ type: "Required" }, { type: "Email" }],
-    name: [],
-    profilePic: [],
-    role: [{ type: "Required" }],
-    needsHelp: [{ type: "Required" }],
+    rule: [{ type: "Required" }],
+    action: [{ type: "Required" }],
+    description: [{ type: "Required" }],
+    urgency: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -76,11 +87,10 @@ export default function UserCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          id,
-          name,
-          profilePic,
-          role,
-          needsHelp,
+          rule,
+          action,
+          description,
+          urgency,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -105,12 +115,13 @@ export default function UserCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          await DataStore.save(new User(modelFields));
+          await DataStore.save(
+            Notification.copyOf(notificationRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -119,165 +130,146 @@ export default function UserCreateForm(props) {
         }
       }}
       {...rest}
-      {...getOverrideProps(overrides, "UserCreateForm")}
+      {...getOverrideProps(overrides, "NotificationUpdateForm")}
     >
       <TextField
-        label="Id"
+        label="Rule"
         isRequired={true}
         isReadOnly={false}
+        defaultValue={rule}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id: value,
-              name,
-              profilePic,
-              role,
-              needsHelp,
+              rule: value,
+              action,
+              description,
+              urgency,
             };
             const result = onChange(modelFields);
-            value = result?.id ?? value;
+            value = result?.rule ?? value;
           }
-          if (errors.id?.hasError) {
-            runValidationTasks("id", value);
+          if (errors.rule?.hasError) {
+            runValidationTasks("rule", value);
           }
-          setId(value);
+          setRule(value);
         }}
-        onBlur={() => runValidationTasks("id", id)}
-        errorMessage={errors.id?.errorMessage}
-        hasError={errors.id?.hasError}
-        {...getOverrideProps(overrides, "id")}
+        onBlur={() => runValidationTasks("rule", rule)}
+        errorMessage={errors.rule?.errorMessage}
+        hasError={errors.rule?.hasError}
+        {...getOverrideProps(overrides, "rule")}
       ></TextField>
       <TextField
-        label="Name"
-        isRequired={false}
+        label="Action"
+        isRequired={true}
         isReadOnly={false}
+        defaultValue={action}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
-              name: value,
-              profilePic,
-              role,
-              needsHelp,
+              rule,
+              action: value,
+              description,
+              urgency,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.action ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.action?.hasError) {
+            runValidationTasks("action", value);
           }
-          setName(value);
+          setAction(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
+        onBlur={() => runValidationTasks("action", action)}
+        errorMessage={errors.action?.errorMessage}
+        hasError={errors.action?.hasError}
+        {...getOverrideProps(overrides, "action")}
       ></TextField>
       <TextField
-        label="Profile pic"
-        isRequired={false}
+        label="Description"
+        isRequired={true}
         isReadOnly={false}
+        defaultValue={description}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
-              name,
-              profilePic: value,
-              role,
-              needsHelp,
+              rule,
+              action,
+              description: value,
+              urgency,
             };
             const result = onChange(modelFields);
-            value = result?.profilePic ?? value;
+            value = result?.description ?? value;
           }
-          if (errors.profilePic?.hasError) {
-            runValidationTasks("profilePic", value);
+          if (errors.description?.hasError) {
+            runValidationTasks("description", value);
           }
-          setProfilePic(value);
+          setDescription(value);
         }}
-        onBlur={() => runValidationTasks("profilePic", profilePic)}
-        errorMessage={errors.profilePic?.errorMessage}
-        hasError={errors.profilePic?.hasError}
-        {...getOverrideProps(overrides, "profilePic")}
+        onBlur={() => runValidationTasks("description", description)}
+        errorMessage={errors.description?.errorMessage}
+        hasError={errors.description?.hasError}
+        {...getOverrideProps(overrides, "description")}
       ></TextField>
       <SelectField
-        label="Role"
+        label="Urgency"
         placeholder="Please select an option"
         isDisabled={false}
-        value={role}
+        value={urgency}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
-              name,
-              profilePic,
-              role: value,
-              needsHelp,
+              rule,
+              action,
+              description,
+              urgency: value,
             };
             const result = onChange(modelFields);
-            value = result?.role ?? value;
+            value = result?.urgency ?? value;
           }
-          if (errors.role?.hasError) {
-            runValidationTasks("role", value);
+          if (errors.urgency?.hasError) {
+            runValidationTasks("urgency", value);
           }
-          setRole(value);
+          setUrgency(value);
         }}
-        onBlur={() => runValidationTasks("role", role)}
-        errorMessage={errors.role?.errorMessage}
-        hasError={errors.role?.hasError}
-        {...getOverrideProps(overrides, "role")}
+        onBlur={() => runValidationTasks("urgency", urgency)}
+        errorMessage={errors.urgency?.errorMessage}
+        hasError={errors.urgency?.hasError}
+        {...getOverrideProps(overrides, "urgency")}
       >
         <option
-          children="Agent"
-          value="AGENT"
-          {...getOverrideProps(overrides, "roleoption0")}
+          children="Low"
+          value="LOW"
+          {...getOverrideProps(overrides, "urgencyoption0")}
         ></option>
         <option
-          children="Supervisor"
-          value="SUPERVISOR"
-          {...getOverrideProps(overrides, "roleoption1")}
+          children="Medium"
+          value="MEDIUM"
+          {...getOverrideProps(overrides, "urgencyoption1")}
+        ></option>
+        <option
+          children="High"
+          value="HIGH"
+          {...getOverrideProps(overrides, "urgencyoption2")}
+        ></option>
+        <option
+          children="Regular"
+          value="REGULAR"
+          {...getOverrideProps(overrides, "urgencyoption3")}
         ></option>
       </SelectField>
-      <SwitchField
-        label="Needs help"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={needsHelp}
-        onChange={(e) => {
-          let value = e.target.checked;
-          if (onChange) {
-            const modelFields = {
-              id,
-              name,
-              profilePic,
-              role,
-              needsHelp: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.needsHelp ?? value;
-          }
-          if (errors.needsHelp?.hasError) {
-            runValidationTasks("needsHelp", value);
-          }
-          setNeedsHelp(value);
-        }}
-        onBlur={() => runValidationTasks("needsHelp", needsHelp)}
-        errorMessage={errors.needsHelp?.errorMessage}
-        hasError={errors.needsHelp?.hasError}
-        {...getOverrideProps(overrides, "needsHelp")}
-      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={resetStateValues}
-          {...getOverrideProps(overrides, "ClearButton")}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex {...getOverrideProps(overrides, "RightAlignCTASubFlex")}>
           <Button

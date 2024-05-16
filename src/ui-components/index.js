@@ -6,4 +6,5 @@
 
 export { default as UserCreateForm } from "./UserCreateForm";
 export { default as UserUpdateForm } from "./UserUpdateForm";
-export { default as studioTheme } from "./studioTheme";
+export { default as NotificationCreateForm } from "./NotificationCreateForm";
+export { default as NotificationUpdateForm } from "./NotificationUpdateForm";

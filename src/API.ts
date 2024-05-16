@@ -2,20 +2,29 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateSupervisorInput = {
-  name: string,
-  profilePic?: string | null,
-  email: string,
+export type CreateUserInput = {
   id?: string | null,
+  name?: string | null,
+  profilePic?: string | null,
+  role: Role,
+  needsHelp: boolean,
 };
 
-export type ModelSupervisorConditionInput = {
+export enum Role {
+  AGENT = "AGENT",
+  SUPERVISOR = "SUPERVISOR",
+}
+
+
+export type ModelUserConditionInput = {
+  id?: ModelStringInput | null,
   name?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  and?: Array< ModelSupervisorConditionInput | null > | null,
-  or?: Array< ModelSupervisorConditionInput | null > | null,
-  not?: ModelSupervisorConditionInput | null,
+  role?: ModelRoleInput | null,
+  needsHelp?: ModelBooleanInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -58,43 +67,9 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Supervisor = {
-  __typename: "Supervisor",
-  name: string,
-  profilePic?: string | null,
-  email: string,
-  id: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateSupervisorInput = {
-  name?: string | null,
-  profilePic?: string | null,
-  email?: string | null,
-  id: string,
-};
-
-export type DeleteSupervisorInput = {
-  id: string,
-};
-
-export type CreateAgentInput = {
-  name: string,
-  profilePic?: string | null,
-  email: string,
-  needsHelp: boolean,
-  id?: string | null,
-};
-
-export type ModelAgentConditionInput = {
-  name?: ModelStringInput | null,
-  profilePic?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  needsHelp?: ModelBooleanInput | null,
-  and?: Array< ModelAgentConditionInput | null > | null,
-  or?: Array< ModelAgentConditionInput | null > | null,
-  not?: ModelAgentConditionInput | null,
+export type ModelRoleInput = {
+  eq?: Role | null,
+  ne?: Role | null,
 };
 
 export type ModelBooleanInput = {
@@ -104,79 +79,64 @@ export type ModelBooleanInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type Agent = {
-  __typename: "Agent",
-  name: string,
-  profilePic?: string | null,
-  email: string,
-  needsHelp: boolean,
-  calls?: ModelCallConnection | null,
+export type User = {
+  __typename: "User",
   id: string,
+  name?: string | null,
+  profilePic?: string | null,
+  role: Role,
+  needsHelp: boolean,
+  Contacts?: ModelContactConnection | null,
   createdAt: string,
   updatedAt: string,
 };
 
-export type ModelCallConnection = {
-  __typename: "ModelCallConnection",
-  items:  Array<Call | null >,
+export type ModelContactConnection = {
+  __typename: "ModelContactConnection",
+  items:  Array<Contact | null >,
   nextToken?: string | null,
 };
 
-export type Call = {
-  __typename: "Call",
-  ARN: string,
+export type Contact = {
+  __typename: "Contact",
   phone: string,
-  callStart: number,
-  callEnd?: number | null,
-  agent: Agent,
+  callStart: string,
+  callEnd?: string | null,
+  user: User,
   id: string,
   createdAt: string,
   updatedAt: string,
-  agentCallsId?: string | null,
+  userContactsId?: string | null,
 };
 
-export type UpdateAgentInput = {
+export type UpdateUserInput = {
+  id: string,
   name?: string | null,
   profilePic?: string | null,
-  email?: string | null,
+  role?: Role | null,
   needsHelp?: boolean | null,
+};
+
+export type DeleteUserInput = {
   id: string,
 };
 
-export type DeleteAgentInput = {
-  id: string,
-};
-
-export type CreateCallInput = {
-  ARN: string,
+export type CreateContactInput = {
   phone: string,
-  callStart: number,
-  callEnd?: number | null,
+  callStart: string,
+  callEnd?: string | null,
   id?: string | null,
-  agentCallsId?: string | null,
+  userContactsId?: string | null,
 };
 
-export type ModelCallConditionInput = {
-  ARN?: ModelStringInput | null,
+export type ModelContactConditionInput = {
   phone?: ModelStringInput | null,
-  callStart?: ModelIntInput | null,
-  callEnd?: ModelIntInput | null,
-  and?: Array< ModelCallConditionInput | null > | null,
-  or?: Array< ModelCallConditionInput | null > | null,
-  not?: ModelCallConditionInput | null,
-  agentCallsId?: ModelIDInput | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
+  callStart?: ModelStringInput | null,
+  callEnd?: ModelStringInput | null,
+  and?: Array< ModelContactConditionInput | null > | null,
+  or?: Array< ModelContactConditionInput | null > | null,
+  not?: ModelContactConditionInput | null,
+  userContactsId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -195,67 +155,123 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateCallInput = {
-  ARN?: string | null,
+export type UpdateContactInput = {
   phone?: string | null,
-  callStart?: number | null,
-  callEnd?: number | null,
+  callStart?: string | null,
+  callEnd?: string | null,
   id: string,
-  agentCallsId?: string | null,
+  userContactsId?: string | null,
 };
 
-export type DeleteCallInput = {
+export type DeleteContactInput = {
   id: string,
 };
 
-export type ModelSupervisorFilterInput = {
+export type CreateNotificationInput = {
+  rule: string,
+  action: string,
+  description: string,
+  urgency: Urgency,
+  id?: string | null,
+};
+
+export enum Urgency {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
+  REGULAR = "REGULAR",
+}
+
+
+export type ModelNotificationConditionInput = {
+  rule?: ModelStringInput | null,
+  action?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  urgency?: ModelUrgencyInput | null,
+  and?: Array< ModelNotificationConditionInput | null > | null,
+  or?: Array< ModelNotificationConditionInput | null > | null,
+  not?: ModelNotificationConditionInput | null,
+};
+
+export type ModelUrgencyInput = {
+  eq?: Urgency | null,
+  ne?: Urgency | null,
+};
+
+export type Notification = {
+  __typename: "Notification",
+  rule: string,
+  action: string,
+  description: string,
+  urgency: Urgency,
+  id: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateNotificationInput = {
+  rule?: string | null,
+  action?: string | null,
+  description?: string | null,
+  urgency?: Urgency | null,
+  id: string,
+};
+
+export type DeleteNotificationInput = {
+  id: string,
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelStringInput | null,
   name?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  and?: Array< ModelSupervisorFilterInput | null > | null,
-  or?: Array< ModelSupervisorFilterInput | null > | null,
-  not?: ModelSupervisorFilterInput | null,
-};
-
-export type ModelSupervisorConnection = {
-  __typename: "ModelSupervisorConnection",
-  items:  Array<Supervisor | null >,
-  nextToken?: string | null,
-};
-
-export type ModelAgentFilterInput = {
-  name?: ModelStringInput | null,
-  profilePic?: ModelStringInput | null,
-  email?: ModelStringInput | null,
+  role?: ModelRoleInput | null,
   needsHelp?: ModelBooleanInput | null,
-  and?: Array< ModelAgentFilterInput | null > | null,
-  or?: Array< ModelAgentFilterInput | null > | null,
-  not?: ModelAgentFilterInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
 };
 
-export type ModelAgentConnection = {
-  __typename: "ModelAgentConnection",
-  items:  Array<Agent | null >,
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
   nextToken?: string | null,
 };
 
-export type ModelCallFilterInput = {
-  ARN?: ModelStringInput | null,
+export type ModelContactFilterInput = {
   phone?: ModelStringInput | null,
-  callStart?: ModelIntInput | null,
-  callEnd?: ModelIntInput | null,
-  and?: Array< ModelCallFilterInput | null > | null,
-  or?: Array< ModelCallFilterInput | null > | null,
-  not?: ModelCallFilterInput | null,
-  agentCallsId?: ModelIDInput | null,
+  callStart?: ModelStringInput | null,
+  callEnd?: ModelStringInput | null,
+  and?: Array< ModelContactFilterInput | null > | null,
+  or?: Array< ModelContactFilterInput | null > | null,
+  not?: ModelContactFilterInput | null,
+  userContactsId?: ModelIDInput | null,
 };
 
-export type ModelSubscriptionSupervisorFilterInput = {
+export type ModelNotificationFilterInput = {
+  rule?: ModelStringInput | null,
+  action?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  urgency?: ModelUrgencyInput | null,
+  and?: Array< ModelNotificationFilterInput | null > | null,
+  or?: Array< ModelNotificationFilterInput | null > | null,
+  not?: ModelNotificationFilterInput | null,
+};
+
+export type ModelNotificationConnection = {
+  __typename: "ModelNotificationConnection",
+  items:  Array<Notification | null >,
+  nextToken?: string | null,
+};
+
+export type ModelSubscriptionUserFilterInput = {
+  id?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
   profilePic?: ModelSubscriptionStringInput | null,
-  email?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionSupervisorFilterInput | null > | null,
-  or?: Array< ModelSubscriptionSupervisorFilterInput | null > | null,
+  role?: ModelSubscriptionStringInput | null,
+  needsHelp?: ModelSubscriptionBooleanInput | null,
+  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -273,276 +289,597 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionAgentFilterInput = {
-  name?: ModelSubscriptionStringInput | null,
-  profilePic?: ModelSubscriptionStringInput | null,
-  email?: ModelSubscriptionStringInput | null,
-  needsHelp?: ModelSubscriptionBooleanInput | null,
-  and?: Array< ModelSubscriptionAgentFilterInput | null > | null,
-  or?: Array< ModelSubscriptionAgentFilterInput | null > | null,
-};
-
 export type ModelSubscriptionBooleanInput = {
   ne?: boolean | null,
   eq?: boolean | null,
 };
 
-export type ModelSubscriptionCallFilterInput = {
-  ARN?: ModelSubscriptionStringInput | null,
+export type ModelSubscriptionContactFilterInput = {
   phone?: ModelSubscriptionStringInput | null,
-  callStart?: ModelSubscriptionIntInput | null,
-  callEnd?: ModelSubscriptionIntInput | null,
-  and?: Array< ModelSubscriptionCallFilterInput | null > | null,
-  or?: Array< ModelSubscriptionCallFilterInput | null > | null,
+  callStart?: ModelSubscriptionStringInput | null,
+  callEnd?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionContactFilterInput | null > | null,
+  or?: Array< ModelSubscriptionContactFilterInput | null > | null,
 };
 
-export type ModelSubscriptionIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
+export type ModelSubscriptionNotificationFilterInput = {
+  rule?: ModelSubscriptionStringInput | null,
+  action?: ModelSubscriptionStringInput | null,
+  description?: ModelSubscriptionStringInput | null,
+  urgency?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
+  or?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
 };
 
-export type CreateSupervisorMutationVariables = {
-  input: CreateSupervisorInput,
-  condition?: ModelSupervisorConditionInput | null,
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type CreateSupervisorMutation = {
-  createSupervisor?:  {
-    __typename: "Supervisor",
-    name: string,
-    profilePic?: string | null,
-    email: string,
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
     id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateSupervisorMutationVariables = {
-  input: UpdateSupervisorInput,
-  condition?: ModelSupervisorConditionInput | null,
-};
-
-export type UpdateSupervisorMutation = {
-  updateSupervisor?:  {
-    __typename: "Supervisor",
-    name: string,
+    name?: string | null,
     profilePic?: string | null,
-    email: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteSupervisorMutationVariables = {
-  input: DeleteSupervisorInput,
-  condition?: ModelSupervisorConditionInput | null,
-};
-
-export type DeleteSupervisorMutation = {
-  deleteSupervisor?:  {
-    __typename: "Supervisor",
-    name: string,
-    profilePic?: string | null,
-    email: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateAgentMutationVariables = {
-  input: CreateAgentInput,
-  condition?: ModelAgentConditionInput | null,
-};
-
-export type CreateAgentMutation = {
-  createAgent?:  {
-    __typename: "Agent",
-    name: string,
-    profilePic?: string | null,
-    email: string,
+    role: Role,
     needsHelp: boolean,
-    calls?:  {
-      __typename: "ModelCallConnection",
+    Contacts?:  {
+      __typename: "ModelContactConnection",
+      items:  Array< {
+        __typename: "Contact",
+        phone: string,
+        callStart: string,
+        callEnd?: string | null,
+        user:  {
+          __typename: "User",
+          id: string,
+          name?: string | null,
+          profilePic?: string | null,
+          role: Role,
+          needsHelp: boolean,
+          Contacts?:  {
+            __typename: "ModelContactConnection",
+            items:  Array< {
+              __typename: "Contact",
+              phone: string,
+              callStart: string,
+              callEnd?: string | null,
+              user:  {
+                __typename: "User",
+                id: string,
+                name?: string | null,
+                profilePic?: string | null,
+                role: Role,
+                needsHelp: boolean,
+                createdAt: string,
+                updatedAt: string,
+              },
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+              userContactsId?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        userContactsId?: string | null,
+      } | null >,
       nextToken?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateAgentMutationVariables = {
-  input: UpdateAgentInput,
-  condition?: ModelAgentConditionInput | null,
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type UpdateAgentMutation = {
-  updateAgent?:  {
-    __typename: "Agent",
-    name: string,
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
     profilePic?: string | null,
-    email: string,
+    role: Role,
     needsHelp: boolean,
-    calls?:  {
-      __typename: "ModelCallConnection",
+    Contacts?:  {
+      __typename: "ModelContactConnection",
+      items:  Array< {
+        __typename: "Contact",
+        phone: string,
+        callStart: string,
+        callEnd?: string | null,
+        user:  {
+          __typename: "User",
+          id: string,
+          name?: string | null,
+          profilePic?: string | null,
+          role: Role,
+          needsHelp: boolean,
+          Contacts?:  {
+            __typename: "ModelContactConnection",
+            items:  Array< {
+              __typename: "Contact",
+              phone: string,
+              callStart: string,
+              callEnd?: string | null,
+              user:  {
+                __typename: "User",
+                id: string,
+                name?: string | null,
+                profilePic?: string | null,
+                role: Role,
+                needsHelp: boolean,
+                createdAt: string,
+                updatedAt: string,
+              },
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+              userContactsId?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        userContactsId?: string | null,
+      } | null >,
       nextToken?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteAgentMutationVariables = {
-  input: DeleteAgentInput,
-  condition?: ModelAgentConditionInput | null,
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type DeleteAgentMutation = {
-  deleteAgent?:  {
-    __typename: "Agent",
-    name: string,
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
     profilePic?: string | null,
-    email: string,
+    role: Role,
     needsHelp: boolean,
-    calls?:  {
-      __typename: "ModelCallConnection",
+    Contacts?:  {
+      __typename: "ModelContactConnection",
+      items:  Array< {
+        __typename: "Contact",
+        phone: string,
+        callStart: string,
+        callEnd?: string | null,
+        user:  {
+          __typename: "User",
+          id: string,
+          name?: string | null,
+          profilePic?: string | null,
+          role: Role,
+          needsHelp: boolean,
+          Contacts?:  {
+            __typename: "ModelContactConnection",
+            items:  Array< {
+              __typename: "Contact",
+              phone: string,
+              callStart: string,
+              callEnd?: string | null,
+              user:  {
+                __typename: "User",
+                id: string,
+                name?: string | null,
+                profilePic?: string | null,
+                role: Role,
+                needsHelp: boolean,
+                createdAt: string,
+                updatedAt: string,
+              },
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+              userContactsId?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        userContactsId?: string | null,
+      } | null >,
       nextToken?: string | null,
     } | null,
-    id: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type CreateCallMutationVariables = {
-  input: CreateCallInput,
-  condition?: ModelCallConditionInput | null,
+export type CreateContactMutationVariables = {
+  input: CreateContactInput,
+  condition?: ModelContactConditionInput | null,
 };
 
-export type CreateCallMutation = {
-  createCall?:  {
-    __typename: "Call",
-    ARN: string,
+export type CreateContactMutation = {
+  createContact?:  {
+    __typename: "Contact",
     phone: string,
-    callStart: number,
-    callEnd?: number | null,
-    agent:  {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
+    callStart: string,
+    callEnd?: string | null,
+    user:  {
+      __typename: "User",
       id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
     id: string,
     createdAt: string,
     updatedAt: string,
-    agentCallsId?: string | null,
+    userContactsId?: string | null,
   } | null,
 };
 
-export type UpdateCallMutationVariables = {
-  input: UpdateCallInput,
-  condition?: ModelCallConditionInput | null,
+export type UpdateContactMutationVariables = {
+  input: UpdateContactInput,
+  condition?: ModelContactConditionInput | null,
 };
 
-export type UpdateCallMutation = {
-  updateCall?:  {
-    __typename: "Call",
-    ARN: string,
+export type UpdateContactMutation = {
+  updateContact?:  {
+    __typename: "Contact",
     phone: string,
-    callStart: number,
-    callEnd?: number | null,
-    agent:  {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
+    callStart: string,
+    callEnd?: string | null,
+    user:  {
+      __typename: "User",
       id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
     id: string,
     createdAt: string,
     updatedAt: string,
-    agentCallsId?: string | null,
+    userContactsId?: string | null,
   } | null,
 };
 
-export type DeleteCallMutationVariables = {
-  input: DeleteCallInput,
-  condition?: ModelCallConditionInput | null,
+export type DeleteContactMutationVariables = {
+  input: DeleteContactInput,
+  condition?: ModelContactConditionInput | null,
 };
 
-export type DeleteCallMutation = {
-  deleteCall?:  {
-    __typename: "Call",
-    ARN: string,
+export type DeleteContactMutation = {
+  deleteContact?:  {
+    __typename: "Contact",
     phone: string,
-    callStart: number,
-    callEnd?: number | null,
-    agent:  {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
+    callStart: string,
+    callEnd?: string | null,
+    user:  {
+      __typename: "User",
       id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
     id: string,
     createdAt: string,
     updatedAt: string,
-    agentCallsId?: string | null,
+    userContactsId?: string | null,
   } | null,
 };
 
-export type GetSupervisorQueryVariables = {
+export type CreateNotificationMutationVariables = {
+  input: CreateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type CreateNotificationMutation = {
+  createNotification?:  {
+    __typename: "Notification",
+    rule: string,
+    action: string,
+    description: string,
+    urgency: Urgency,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateNotificationMutationVariables = {
+  input: UpdateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type UpdateNotificationMutation = {
+  updateNotification?:  {
+    __typename: "Notification",
+    rule: string,
+    action: string,
+    description: string,
+    urgency: Urgency,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteNotificationMutationVariables = {
+  input: DeleteNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type DeleteNotificationMutation = {
+  deleteNotification?:  {
+    __typename: "Notification",
+    rule: string,
+    action: string,
+    description: string,
+    urgency: Urgency,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type GetUserQueryVariables = {
   id: string,
 };
 
-export type GetSupervisorQuery = {
-  getSupervisor?:  {
-    __typename: "Supervisor",
-    name: string,
-    profilePic?: string | null,
-    email: string,
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
     id: string,
+    name?: string | null,
+    profilePic?: string | null,
+    role: Role,
+    needsHelp: boolean,
+    Contacts?:  {
+      __typename: "ModelContactConnection",
+      items:  Array< {
+        __typename: "Contact",
+        phone: string,
+        callStart: string,
+        callEnd?: string | null,
+        user:  {
+          __typename: "User",
+          id: string,
+          name?: string | null,
+          profilePic?: string | null,
+          role: Role,
+          needsHelp: boolean,
+          Contacts?:  {
+            __typename: "ModelContactConnection",
+            items:  Array< {
+              __typename: "Contact",
+              phone: string,
+              callStart: string,
+              callEnd?: string | null,
+              user:  {
+                __typename: "User",
+                id: string,
+                name?: string | null,
+                profilePic?: string | null,
+                role: Role,
+                needsHelp: boolean,
+                createdAt: string,
+                updatedAt: string,
+              },
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+              userContactsId?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        userContactsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListSupervisorsQueryVariables = {
-  filter?: ModelSupervisorFilterInput | null,
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListSupervisorsQuery = {
-  listSupervisors?:  {
-    __typename: "ModelSupervisorConnection",
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
     items:  Array< {
-      __typename: "Supervisor",
-      name: string,
-      profilePic?: string | null,
-      email: string,
+      __typename: "User",
       id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -550,293 +887,609 @@ export type ListSupervisorsQuery = {
   } | null,
 };
 
-export type GetAgentQueryVariables = {
+export type GetContactQueryVariables = {
   id: string,
 };
 
-export type GetAgentQuery = {
-  getAgent?:  {
-    __typename: "Agent",
-    name: string,
-    profilePic?: string | null,
-    email: string,
-    needsHelp: boolean,
-    calls?:  {
-      __typename: "ModelCallConnection",
-      nextToken?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListAgentsQueryVariables = {
-  filter?: ModelAgentFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListAgentsQuery = {
-  listAgents?:  {
-    __typename: "ModelAgentConnection",
-    items:  Array< {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetCallQueryVariables = {
-  id: string,
-};
-
-export type GetCallQuery = {
-  getCall?:  {
-    __typename: "Call",
-    ARN: string,
+export type GetContactQuery = {
+  getContact?:  {
+    __typename: "Contact",
     phone: string,
-    callStart: number,
-    callEnd?: number | null,
-    agent:  {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
+    callStart: string,
+    callEnd?: string | null,
+    user:  {
+      __typename: "User",
       id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
     id: string,
     createdAt: string,
     updatedAt: string,
-    agentCallsId?: string | null,
+    userContactsId?: string | null,
   } | null,
 };
 
-export type ListCallsQueryVariables = {
-  filter?: ModelCallFilterInput | null,
+export type ListContactsQueryVariables = {
+  filter?: ModelContactFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListCallsQuery = {
-  listCalls?:  {
-    __typename: "ModelCallConnection",
+export type ListContactsQuery = {
+  listContacts?:  {
+    __typename: "ModelContactConnection",
     items:  Array< {
-      __typename: "Call",
-      ARN: string,
+      __typename: "Contact",
       phone: string,
-      callStart: number,
-      callEnd?: number | null,
+      callStart: string,
+      callEnd?: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        name?: string | null,
+        profilePic?: string | null,
+        role: Role,
+        needsHelp: boolean,
+        Contacts?:  {
+          __typename: "ModelContactConnection",
+          items:  Array< {
+            __typename: "Contact",
+            phone: string,
+            callStart: string,
+            callEnd?: string | null,
+            user:  {
+              __typename: "User",
+              id: string,
+              name?: string | null,
+              profilePic?: string | null,
+              role: Role,
+              needsHelp: boolean,
+              Contacts?:  {
+                __typename: "ModelContactConnection",
+                nextToken?: string | null,
+              } | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            id: string,
+            createdAt: string,
+            updatedAt: string,
+            userContactsId?: string | null,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
       id: string,
       createdAt: string,
       updatedAt: string,
-      agentCallsId?: string | null,
+      userContactsId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type OnCreateSupervisorSubscriptionVariables = {
-  filter?: ModelSubscriptionSupervisorFilterInput | null,
+export type GetNotificationQueryVariables = {
+  id: string,
 };
 
-export type OnCreateSupervisorSubscription = {
-  onCreateSupervisor?:  {
-    __typename: "Supervisor",
-    name: string,
-    profilePic?: string | null,
-    email: string,
+export type GetNotificationQuery = {
+  getNotification?:  {
+    __typename: "Notification",
+    rule: string,
+    action: string,
+    description: string,
+    urgency: Urgency,
     id: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateSupervisorSubscriptionVariables = {
-  filter?: ModelSubscriptionSupervisorFilterInput | null,
+export type ListNotificationsQueryVariables = {
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
 };
 
-export type OnUpdateSupervisorSubscription = {
-  onUpdateSupervisor?:  {
-    __typename: "Supervisor",
-    name: string,
-    profilePic?: string | null,
-    email: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteSupervisorSubscriptionVariables = {
-  filter?: ModelSubscriptionSupervisorFilterInput | null,
-};
-
-export type OnDeleteSupervisorSubscription = {
-  onDeleteSupervisor?:  {
-    __typename: "Supervisor",
-    name: string,
-    profilePic?: string | null,
-    email: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateAgentSubscriptionVariables = {
-  filter?: ModelSubscriptionAgentFilterInput | null,
-};
-
-export type OnCreateAgentSubscription = {
-  onCreateAgent?:  {
-    __typename: "Agent",
-    name: string,
-    profilePic?: string | null,
-    email: string,
-    needsHelp: boolean,
-    calls?:  {
-      __typename: "ModelCallConnection",
-      nextToken?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateAgentSubscriptionVariables = {
-  filter?: ModelSubscriptionAgentFilterInput | null,
-};
-
-export type OnUpdateAgentSubscription = {
-  onUpdateAgent?:  {
-    __typename: "Agent",
-    name: string,
-    profilePic?: string | null,
-    email: string,
-    needsHelp: boolean,
-    calls?:  {
-      __typename: "ModelCallConnection",
-      nextToken?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteAgentSubscriptionVariables = {
-  filter?: ModelSubscriptionAgentFilterInput | null,
-};
-
-export type OnDeleteAgentSubscription = {
-  onDeleteAgent?:  {
-    __typename: "Agent",
-    name: string,
-    profilePic?: string | null,
-    email: string,
-    needsHelp: boolean,
-    calls?:  {
-      __typename: "ModelCallConnection",
-      nextToken?: string | null,
-    } | null,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateCallSubscriptionVariables = {
-  filter?: ModelSubscriptionCallFilterInput | null,
-};
-
-export type OnCreateCallSubscription = {
-  onCreateCall?:  {
-    __typename: "Call",
-    ARN: string,
-    phone: string,
-    callStart: number,
-    callEnd?: number | null,
-    agent:  {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
+export type ListNotificationsQuery = {
+  listNotifications?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      rule: string,
+      action: string,
+      description: string,
+      urgency: Urgency,
       id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    profilePic?: string | null,
+    role: Role,
+    needsHelp: boolean,
+    Contacts?:  {
+      __typename: "ModelContactConnection",
+      items:  Array< {
+        __typename: "Contact",
+        phone: string,
+        callStart: string,
+        callEnd?: string | null,
+        user:  {
+          __typename: "User",
+          id: string,
+          name?: string | null,
+          profilePic?: string | null,
+          role: Role,
+          needsHelp: boolean,
+          Contacts?:  {
+            __typename: "ModelContactConnection",
+            items:  Array< {
+              __typename: "Contact",
+              phone: string,
+              callStart: string,
+              callEnd?: string | null,
+              user:  {
+                __typename: "User",
+                id: string,
+                name?: string | null,
+                profilePic?: string | null,
+                role: Role,
+                needsHelp: boolean,
+                createdAt: string,
+                updatedAt: string,
+              },
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+              userContactsId?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        userContactsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    profilePic?: string | null,
+    role: Role,
+    needsHelp: boolean,
+    Contacts?:  {
+      __typename: "ModelContactConnection",
+      items:  Array< {
+        __typename: "Contact",
+        phone: string,
+        callStart: string,
+        callEnd?: string | null,
+        user:  {
+          __typename: "User",
+          id: string,
+          name?: string | null,
+          profilePic?: string | null,
+          role: Role,
+          needsHelp: boolean,
+          Contacts?:  {
+            __typename: "ModelContactConnection",
+            items:  Array< {
+              __typename: "Contact",
+              phone: string,
+              callStart: string,
+              callEnd?: string | null,
+              user:  {
+                __typename: "User",
+                id: string,
+                name?: string | null,
+                profilePic?: string | null,
+                role: Role,
+                needsHelp: boolean,
+                createdAt: string,
+                updatedAt: string,
+              },
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+              userContactsId?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        userContactsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    profilePic?: string | null,
+    role: Role,
+    needsHelp: boolean,
+    Contacts?:  {
+      __typename: "ModelContactConnection",
+      items:  Array< {
+        __typename: "Contact",
+        phone: string,
+        callStart: string,
+        callEnd?: string | null,
+        user:  {
+          __typename: "User",
+          id: string,
+          name?: string | null,
+          profilePic?: string | null,
+          role: Role,
+          needsHelp: boolean,
+          Contacts?:  {
+            __typename: "ModelContactConnection",
+            items:  Array< {
+              __typename: "Contact",
+              phone: string,
+              callStart: string,
+              callEnd?: string | null,
+              user:  {
+                __typename: "User",
+                id: string,
+                name?: string | null,
+                profilePic?: string | null,
+                role: Role,
+                needsHelp: boolean,
+                createdAt: string,
+                updatedAt: string,
+              },
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+              userContactsId?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        userContactsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateContactSubscriptionVariables = {
+  filter?: ModelSubscriptionContactFilterInput | null,
+};
+
+export type OnCreateContactSubscription = {
+  onCreateContact?:  {
+    __typename: "Contact",
+    phone: string,
+    callStart: string,
+    callEnd?: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
     id: string,
     createdAt: string,
     updatedAt: string,
-    agentCallsId?: string | null,
+    userContactsId?: string | null,
   } | null,
 };
 
-export type OnUpdateCallSubscriptionVariables = {
-  filter?: ModelSubscriptionCallFilterInput | null,
+export type OnUpdateContactSubscriptionVariables = {
+  filter?: ModelSubscriptionContactFilterInput | null,
 };
 
-export type OnUpdateCallSubscription = {
-  onUpdateCall?:  {
-    __typename: "Call",
-    ARN: string,
+export type OnUpdateContactSubscription = {
+  onUpdateContact?:  {
+    __typename: "Contact",
     phone: string,
-    callStart: number,
-    callEnd?: number | null,
-    agent:  {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
+    callStart: string,
+    callEnd?: string | null,
+    user:  {
+      __typename: "User",
       id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
     id: string,
     createdAt: string,
     updatedAt: string,
-    agentCallsId?: string | null,
+    userContactsId?: string | null,
   } | null,
 };
 
-export type OnDeleteCallSubscriptionVariables = {
-  filter?: ModelSubscriptionCallFilterInput | null,
+export type OnDeleteContactSubscriptionVariables = {
+  filter?: ModelSubscriptionContactFilterInput | null,
 };
 
-export type OnDeleteCallSubscription = {
-  onDeleteCall?:  {
-    __typename: "Call",
-    ARN: string,
+export type OnDeleteContactSubscription = {
+  onDeleteContact?:  {
+    __typename: "Contact",
     phone: string,
-    callStart: number,
-    callEnd?: number | null,
-    agent:  {
-      __typename: "Agent",
-      name: string,
-      profilePic?: string | null,
-      email: string,
-      needsHelp: boolean,
+    callStart: string,
+    callEnd?: string | null,
+    user:  {
+      __typename: "User",
       id: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     },
     id: string,
     createdAt: string,
     updatedAt: string,
-    agentCallsId?: string | null,
+    userContactsId?: string | null,
+  } | null,
+};
+
+export type OnCreateNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnCreateNotificationSubscription = {
+  onCreateNotification?:  {
+    __typename: "Notification",
+    rule: string,
+    action: string,
+    description: string,
+    urgency: Urgency,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnUpdateNotificationSubscription = {
+  onUpdateNotification?:  {
+    __typename: "Notification",
+    rule: string,
+    action: string,
+    description: string,
+    urgency: Urgency,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnDeleteNotificationSubscription = {
+  onDeleteNotification?:  {
+    __typename: "Notification",
+    rule: string,
+    action: string,
+    description: string,
+    urgency: Urgency,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
