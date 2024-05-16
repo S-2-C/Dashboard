@@ -29,6 +29,10 @@
         "dashAuthPreSignup": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
           "s3Key": "amplify-builds/dashAuthPreSignup-714f4b41754c72776f45-build.zip"
+        },
+        "chatWebSocket": {
+          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+          "s3Key": "amplify-builds/chatWebSocket-6b784a66665934653646-build.zip"
         }
       },
       "storage": {
