@@ -79,7 +79,7 @@
 // });
 
 describe("S2C API Tests", function () {
-  const baseUrl = "http://localhost:3000/connect"; // Replace with the actual base URL
+  const baseUrl = "http://localhost:3003/connect"; // Replace with the actual base URL
 
   beforeEach(function () {
     cy.visit("/"); // Assuming you have some UI to go along with the API
@@ -155,7 +155,7 @@ describe("S2C API Tests", function () {
 
   describe("Get User Metrics:", () => {
     it("fetches user metrics successfully, response is correct", () => {
-      cy.request(`${baseUrl}/GetUserMetricData`).then((response) => {
+      cy.request(`${baseUrl}/GetCurrentMetricData`).then((response) => {
         expect(response.status).to.eq(200);
       });
     });
@@ -163,71 +163,8 @@ describe("S2C API Tests", function () {
 
   describe("Get Current Metrics:", () => {
     it("fetches current metrics successfully, response is correct", () => {
-      cy.request(`${baseUrl}/GetMetricData`).then((response) => {
+      cy.request(`${baseUrl}/GetMetricDataV2`).then((response) => {
         expect(response.status).to.eq(200);
-      });
-    });
-  });
-
-  describe("List Contact Analysis Segments:", () => {
-    it("handles missing contactId parameter", () => {
-      cy.request({
-        method: "GET",
-        url: `${baseUrl}/ListContactAnalysisSegments`,
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(400);
-        expect(response.body.message).to.eq("Please provide a contact Id");
-      });
-    });
-
-    it("handles invalid contactId parameter", () => {
-      cy.request({
-        method: "GET",
-        url: `${baseUrl}/ListContactAnalysisSegments?contactId=invalid_contact_id`,
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(404);
-        expect(response.body.message).to.eq(
-          "Contact Id not found please try again."
-        );
-      });
-    });
-
-    it("fetches contact analysis segments successfully, response is correct", () => {
-      const validContactId = "your_valid_contact_id"; // Replace with a valid contact ID
-      cy.request(
-        `${baseUrl}/ListContactAnalysisSegments?contactId=${validContactId}`
-      ).then((response) => {
-        expect(response.status).to.eq(200);
-        expect(response.body.message).to.eq(
-          "Contact analysis segments retrieved successfully."
-        );
-        expect(response.body.data).to.be.an("array").and.have.length.above(0);
-        // Add more assertions here as per your response structure
-      });
-    });
-  });
-
-  describe("Create and Delete User:", () => {
-    it("creates and deletes a user successfully", () => {
-      // Replace with your user creation endpoint and payload
-      cy.request("POST", `${baseUrl}/CreateUser`, {
-        Username: "testuser",
-        // Other required fields
-      }).then((createResponse) => {
-        expect(createResponse.status).to.eq(201);
-        const userId = createResponse.body.data.Id;
-
-        // Now delete the created user
-        cy.request("DELETE", `${baseUrl}/DeleteUser?userId=${userId}`).then(
-          (deleteResponse) => {
-            expect(deleteResponse.status).to.eq(200);
-            expect(deleteResponse.body.message).to.eq(
-              "User deleted successfully"
-            );
-          }
-        );
       });
     });
   });

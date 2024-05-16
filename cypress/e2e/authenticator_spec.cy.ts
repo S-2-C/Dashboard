@@ -12,7 +12,7 @@ describe("Authenticator:", function () {
       cy.get(selectors.signInPasswordInput).type("TestUser123");
       cy.get(selectors.signInButton).contains("Sign in").click();
 
-      cy.wait(3000);
+      cy.wait(3003);
 
       // Step 3: Make an assertion (Check for sign-out text)
       // cy.get(selectors.signOutButton).contains("Sign out");
