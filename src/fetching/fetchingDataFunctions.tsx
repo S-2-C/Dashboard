@@ -1,68 +1,84 @@
-import { generateClient } from 'aws-amplify/api';
-import { getContact, listContacts, listUsers } from '@/graphql/queries';
-import { GetContactQuery, ListContactsQuery, ListUsersQuery } from '@/API';
+import { generateClient } from "aws-amplify/api";
+import {
+  getContact,
+  getUser,
+  listContacts,
+  listUsers,
+} from "@/graphql/queries";
+import {
+  GetContactQuery,
+  GetUserQuery,
+  ListContactsQuery,
+  ListUsersQuery,
+} from "@/API";
 
 interface GQLResponse {
-    data: GetContactQuery
+  data: GetContactQuery;
 }
 
-
 export const fetchContactData = async (callId: string) => {
-    const client = generateClient();
+  const client = generateClient();
 
-    const callData = await client.graphql({
-        query: getContact,
-        variables: {
-            id: callId,
-        },
-    }) as GQLResponse;
-    
-    return callData.data.getContact;
-    };
+  const callData = (await client.graphql({
+    query: getContact,
+    variables: {
+      id: callId,
+    },
+  })) as GQLResponse;
 
-export const fetchAllContacts = async () => {
-    const client = generateClient();
+  return callData.data.getContact;
+};
 
-    try{
+export const fetchOneAgent = async (agentId: string) => {
+  const client = generateClient();
 
-    const allCalls = await client.graphql({
-        query: listContacts,
-    }) as ListContactsQuery;
+  // %40 is the URL encoded version of @, replace it with @
+  agentId = agentId.replace("%40", "@");
 
-    console.log(allCalls);
+  try {
+    const agentData = (await client.graphql({
+      query: getUser,
+      variables: {
+        id: agentId,
+      },
+    })) as GetUserQuery;
 
     //@ts-ignore
-    return allCalls.data.listContacts;
+    return agentData.data.getUser;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-    } catch (error) {
+export const fetchAllAgents = async () => {
+  const client = generateClient();
 
-        console.error(error);
-    }
-    
-    }
+  try {
+    const allAgents = (await client.graphql({
+      query: listUsers,
+    })) as ListUsersQuery;
 
-    export const fetchAllUsers = async () => {
-        const client = generateClient();
-    
-        try{    
-            const allUsers = await client.graphql({
-                query: listUsers,
-            }) as ListUsersQuery;
-    
-        //@ts-ignore
-        return allUsers.data.listUsers;
-    
-        } catch (error) {
-    
-            console.error(error);
-        }
-        
-        }
-    
+    //@ts-ignore
+    return allAgents.data.listUsers;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+export const fetchAllUsers = async () => {
+  const client = generateClient();
 
+  try {
+    const allUsers = (await client.graphql({
+      query: listUsers,
+    })) as ListUsersQuery;
 
-
+    //@ts-ignore
+    return allUsers.data.listUsers;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // export const fetchAgentData = async (agentId: string) => {
 //     const client = generateClient();
@@ -73,7 +89,6 @@ export const fetchAllContacts = async () => {
 //         id: agentId,
 //         },
 //     });
-    
+
 //     return agentData.data.getAgent;
 //     }
-

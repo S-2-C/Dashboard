@@ -2,7 +2,7 @@
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import Home from "../NavBar";
 import { useEffect, useState } from "react";
-import {  fetchAllContacts } from "@/fetching/fetchingDataFunctions";
+import {  fetchAllAgents } from "@/fetching/fetchingDataFunctions";
 import Link from "next/link";
 import { Euphoria_Script } from "next/font/google";
 import { GetContactQuery, ListContactsQuery, Contact } from "@/API";
@@ -12,12 +12,12 @@ export default function AgentManagement() {
     const [ calls, setCalls ] = useState<ListContactsQuery["listContacts"]>();
 
     useEffect(() => {
-        async function fetchContacts() {
-            const res = await fetchAllContacts();
+        async function fetchAgents() {
+            const res = await fetchAllAgents();
 
             setCalls(res);
         }
-        fetchContacts();
+        fetchAgents();
     }, []);
 
     return (
