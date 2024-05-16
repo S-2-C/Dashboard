@@ -11,9 +11,9 @@ export default async function Documentation() {
             <div className="h-screen flex w-full">
                 <Home />
                 <div className="flex flex-col mt-12  flex-col ml-40 w-full mr-36">
-                    <div className="w-full flex text-left"> 
-                        <SearchBar />
-                    </div>
+                <div className="flex justify-end mt-8">
+            <SearchBar />
+          </div>
                     <div className="h-12 p-4 m-1 mb-8">
                         <h1 className="text-figma-figma5 font-bold text-4xl">Documentation</h1>
                     </div>
