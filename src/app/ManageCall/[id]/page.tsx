@@ -32,7 +32,7 @@ export default function ManageCall({ params }: { params: { id: string } }) {
       const res = await fetchRealTimeData(currentCall?.id);
       console.log(res.data);
       setTranscript(res.data);
-    }, 5000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [agent]);
 
@@ -230,40 +230,46 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                 minHeight: "200px",
               }}
             ></View>
-            <Heading level={5} fontWeight="bold" style={{ margin: "0.5rem" }}>
+
+            <Heading level={5} fontWeight={"bold"} style={{ margin: "0.5rem" }}>
               Transcript
-              {transcript &&
-                transcript.map((t: any) => {
-                  console.log(t);
-                  if (!t.Transcript) return;
-                  return (
-                    <div
-                      className={`flex flex-col ${
-                        t.Transcript.ParticipantRole == "AGENT"
-                          ? "items-end"
-                          : "items-start"
-                      } ${
-                        t.Transcript.Sentiment == "NEGATIVE" ? "bg-red-600" : ""
-                      }
-                    ${
-                      t.Transcript.Sentiment == "POSITIVE" ? "bg-green-600" : ""
-                    }
-                    `}
-                    >
-                      <Text>{t.Transcript.BeginOffsetMillis}</Text>
-                      <Text>{t.Transcript.Content}</Text>
-                    </div>
-                  );
-                })}
             </Heading>
             <View
-              backgroundColor="#D9D9D9"
+              className="flex flex-col gap-2"
               style={{
                 ...commonShadowStyle,
                 borderRadius: "8px",
                 minHeight: "300px",
               }}
-            ></View>
+            >
+              <div className="flex flex-col gap-2 h-96 overflow-y-scroll">
+                {transcript &&
+                  transcript.map((t: any, index: any) => {
+                    //   console.log(t);
+                    if (!t.Transcript) return;
+                    return (
+                      <div
+                        key={index}
+                        className={`flex rounded-lg  flex-col ${
+                          t.Transcript.ParticipantRole == "AGENT"
+                            ? "items-end text-end"
+                            : "items-start text-start"
+                        } ${
+                          t.Transcript.Sentiment == "NEGATIVE"
+                            ? "bg-red-300"
+                            : t.Transcript.Sentiment == "POSITIVE"
+                            ? "bg-green-200"
+                            : "bg-gray-300"
+                        }
+                  `}
+                      >
+                        <Text>{t.Transcript.ParticipantRole}</Text>
+                        <Text>{t.Transcript.Content}</Text>
+                      </div>
+                    );
+                  })}
+              </div>
+            </View>
           </Flex>
         </Flex>
       </div>
