@@ -14,10 +14,12 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
 ) {
   createUser(input: $input, condition: $condition) {
     id
+    arn
     name
     profilePic
     role
     needsHelp
+    isOnCall
     Contacts {
       nextToken
       __typename
@@ -37,10 +39,12 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
 ) {
   updateUser(input: $input, condition: $condition) {
     id
+    arn
     name
     profilePic
     role
     needsHelp
+    isOnCall
     Contacts {
       nextToken
       __typename
@@ -60,10 +64,12 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
 ) {
   deleteUser(input: $input, condition: $condition) {
     id
+    arn
     name
     profilePic
     role
     needsHelp
+    isOnCall
     Contacts {
       nextToken
       __typename
@@ -87,10 +93,12 @@ export const createContact = /* GraphQL */ `mutation CreateContact(
     callEnd
     user {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename
@@ -116,10 +124,12 @@ export const updateContact = /* GraphQL */ `mutation UpdateContact(
     callEnd
     user {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename
@@ -145,10 +155,12 @@ export const deleteContact = /* GraphQL */ `mutation DeleteContact(
     callEnd
     user {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename

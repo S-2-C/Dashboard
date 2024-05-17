@@ -11,10 +11,12 @@ type GeneratedQuery<InputType, OutputType> = string & {
 export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
+    arn
     name
     profilePic
     role
     needsHelp
+    isOnCall
     Contacts {
       nextToken
       __typename
@@ -33,10 +35,12 @@ export const listUsers = /* GraphQL */ `query ListUsers(
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename
@@ -53,10 +57,12 @@ export const getContact = /* GraphQL */ `query GetContact($id: ID!) {
     callEnd
     user {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename
@@ -135,4 +141,38 @@ export const listNotifications = /* GraphQL */ `query ListNotifications(
 ` as GeneratedQuery<
   APITypes.ListNotificationsQueryVariables,
   APITypes.ListNotificationsQuery
+>;
+export const usersByArn = /* GraphQL */ `query UsersByArn(
+  $arn: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  usersByArn(
+    arn: $arn
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      arn
+      name
+      profilePic
+      role
+      needsHelp
+      isOnCall
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.UsersByArnQueryVariables,
+  APITypes.UsersByArnQuery
 >;

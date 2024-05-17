@@ -11,10 +11,12 @@ type GeneratedSubscription<InputType, OutputType> = string & {
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
   onCreateUser(filter: $filter) {
     id
+    arn
     name
     profilePic
     role
     needsHelp
+    isOnCall
     Contacts {
       nextToken
       __typename
@@ -31,10 +33,12 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
 export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
   onUpdateUser(filter: $filter) {
     id
+    arn
     name
     profilePic
     role
     needsHelp
+    isOnCall
     Contacts {
       nextToken
       __typename
@@ -51,10 +55,12 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
 export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
   onDeleteUser(filter: $filter) {
     id
+    arn
     name
     profilePic
     role
     needsHelp
+    isOnCall
     Contacts {
       nextToken
       __typename
@@ -75,10 +81,12 @@ export const onCreateContact = /* GraphQL */ `subscription OnCreateContact($filt
     callEnd
     user {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename
@@ -101,10 +109,12 @@ export const onUpdateContact = /* GraphQL */ `subscription OnUpdateContact($filt
     callEnd
     user {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename
@@ -127,10 +137,12 @@ export const onDeleteContact = /* GraphQL */ `subscription OnDeleteContact($filt
     callEnd
     user {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       createdAt
       updatedAt
       __typename
