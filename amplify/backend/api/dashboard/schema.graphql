@@ -17,6 +17,7 @@ enum Urgency {
 
 type User @model {
   id: AWSEmail!
+  arn: String! @index
   name: String
   profilePic: String
   role: Role!

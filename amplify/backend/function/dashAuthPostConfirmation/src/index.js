@@ -79,12 +79,13 @@ const createConnectUser = async (email, fullName, securityProfileId) => {
     return responseConnect;
 };
 
-async function createAppSyncUser(email, role, name) {
+async function createAppSyncUser(email, role, name, userArn) {
     const createUser = {
         query: `mutation CreateUser($input: CreateUserInput!) {
         createUser(input: $input) {
             id
             role
+            arn
             name
             needsHelp
             isOnCall
@@ -93,6 +94,7 @@ async function createAppSyncUser(email, role, name) {
         variables: {
             input: {
                 id: email,
+                arn: userArn,
                 role: role,
                 name: name,
                 needsHelp: true,
@@ -134,11 +136,27 @@ exports.handler = async (event, context) => {
                 : "aeb2a576-2506-444a-9967-98891ba6e963";
         let userRole = user[1] === "Agent" ? "AGENT" : "SUPERVISOR"; // Enum: AGENT, SUPERVISOR
 
+        let userArn;
         try {
+            const responseConnect = await createConnectUser(
+                event.request.userAttributes.email,
+                event.request.userAttributes.name,
+                securityProfileId
+            );
+            userArn = responseConnect.UserArn;
+            console.log(responseConnect);
+        } catch (err) {
+            console.error(err);
+            throw new Error("Something went wrong with the Connect user creation.");
+        }
+
+        try {
+            console.log("UserArn: ", userArn);
             const responseDynamoDB = await createAppSyncUser(
                 event.request.userAttributes.email,
                 userRole,
-                event.request.userAttributes.name
+                event.request.userAttributes.name,
+                userArn
             );
             console.log(responseDynamoDB);
         } catch (err) {
@@ -148,18 +166,6 @@ exports.handler = async (event, context) => {
             } else {
                 throw new Error("Something went wrong with the DB user creation.");
             }
-        }
-
-        try {
-            const responseConnect = await createConnectUser(
-                event.request.userAttributes.email,
-                event.request.userAttributes.name,
-                securityProfileId
-            );
-            console.log(responseConnect);
-        } catch (err) {
-            console.error(err);
-            throw new Error("Something went wrong with the Connect user creation.");
         }
 
         return event;
