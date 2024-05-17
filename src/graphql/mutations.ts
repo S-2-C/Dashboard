@@ -21,6 +21,54 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -46,6 +94,54 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -71,6 +167,54 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -99,6 +243,46 @@ export const createContact = /* GraphQL */ `mutation CreateContact(
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -130,6 +314,46 @@ export const updateContact = /* GraphQL */ `mutation UpdateContact(
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -161,6 +385,46 @@ export const deleteContact = /* GraphQL */ `mutation DeleteContact(
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename

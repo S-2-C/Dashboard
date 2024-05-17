@@ -18,6 +18,54 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -40,6 +88,54 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -62,6 +158,54 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -87,6 +231,46 @@ export const onCreateContact = /* GraphQL */ `subscription OnCreateContact($filt
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -115,6 +299,46 @@ export const onUpdateContact = /* GraphQL */ `subscription OnUpdateContact($filt
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -143,6 +367,46 @@ export const onDeleteContact = /* GraphQL */ `subscription OnDeleteContact($filt
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename

@@ -18,6 +18,54 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -34,60 +82,6 @@ export const listUsers = /* GraphQL */ `query ListUsers(
 ) {
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      id
-      arn
-      name
-      profilePic
-      role
-      needsHelp
-      isOnCall
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
-export const getContact = /* GraphQL */ `query GetContact($id: ID!) {
-  getContact(id: $id) {
-    phone
-    callStart
-    callEnd
-    user {
-      id
-      arn
-      name
-      profilePic
-      role
-      needsHelp
-      isOnCall
-      createdAt
-      updatedAt
-      __typename
-    }
-    id
-    createdAt
-    updatedAt
-    userContactsId
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetContactQueryVariables,
-  APITypes.GetContactQuery
->;
-export const listContacts = /* GraphQL */ `query ListContacts(
-  $filter: ModelContactFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      phone
-      callStart
-      callEnd
       id
       arn
       name
@@ -135,6 +129,136 @@ export const listContacts = /* GraphQL */ `query ListContacts(
         nextToken
         __typename
       }
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const getContact = /* GraphQL */ `query GetContact($id: ID!) {
+  getContact(id: $id) {
+    phone
+    callStart
+    callEnd
+    user {
+      id
+      arn
+      name
+      profilePic
+      role
+      needsHelp
+      isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    userContactsId
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetContactQueryVariables,
+  APITypes.GetContactQuery
+>;
+export const listContacts = /* GraphQL */ `query ListContacts(
+  $filter: ModelContactFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      phone
+      callStart
+      callEnd
+      user {
+        id
+        arn
+        name
+        profilePic
+        role
+        needsHelp
+        isOnCall
+        Contacts {
+          items {
+            phone
+            callStart
+            callEnd
+            user {
+              id
+              arn
+              name
+              profilePic
+              role
+              needsHelp
+              isOnCall
+              Contacts {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            id
+            createdAt
+            updatedAt
+            userContactsId
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      id
       createdAt
       updatedAt
       userContactsId
@@ -210,6 +334,46 @@ export const usersByArn = /* GraphQL */ `query UsersByArn(
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
