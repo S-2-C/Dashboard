@@ -27,6 +27,7 @@ export declare type UserCreateFormInputValues = {
     profilePic?: string;
     role?: string;
     needsHelp?: boolean;
+    isOnCall?: boolean;
 };
 export declare type UserCreateFormValidationValues = {
     id?: ValidationFunction<string>;
@@ -34,6 +35,7 @@ export declare type UserCreateFormValidationValues = {
     profilePic?: ValidationFunction<string>;
     role?: ValidationFunction<string>;
     needsHelp?: ValidationFunction<boolean>;
+    isOnCall?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserCreateFormOverridesProps = {
@@ -43,6 +45,7 @@ export declare type UserCreateFormOverridesProps = {
     profilePic?: PrimitiveOverrideProps<TextFieldProps>;
     role?: PrimitiveOverrideProps<SelectFieldProps>;
     needsHelp?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isOnCall?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
     overrides?: UserCreateFormOverridesProps | undefined | null;

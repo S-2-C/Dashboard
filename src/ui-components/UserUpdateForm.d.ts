@@ -28,6 +28,7 @@ export declare type UserUpdateFormInputValues = {
     profilePic?: string;
     role?: string;
     needsHelp?: boolean;
+    isOnCall?: boolean;
 };
 export declare type UserUpdateFormValidationValues = {
     id?: ValidationFunction<string>;
@@ -35,6 +36,7 @@ export declare type UserUpdateFormValidationValues = {
     profilePic?: ValidationFunction<string>;
     role?: ValidationFunction<string>;
     needsHelp?: ValidationFunction<boolean>;
+    isOnCall?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserUpdateFormOverridesProps = {
@@ -44,6 +46,7 @@ export declare type UserUpdateFormOverridesProps = {
     profilePic?: PrimitiveOverrideProps<TextFieldProps>;
     role?: PrimitiveOverrideProps<SelectFieldProps>;
     needsHelp?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isOnCall?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserUpdateFormOverridesProps | undefined | null;

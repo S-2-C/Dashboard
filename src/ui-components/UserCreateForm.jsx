@@ -35,12 +35,14 @@ export default function UserCreateForm(props) {
     profilePic: "",
     role: "",
     needsHelp: false,
+    isOnCall: false,
   };
   const [id, setId] = React.useState(initialValues.id);
   const [name, setName] = React.useState(initialValues.name);
   const [profilePic, setProfilePic] = React.useState(initialValues.profilePic);
   const [role, setRole] = React.useState(initialValues.role);
   const [needsHelp, setNeedsHelp] = React.useState(initialValues.needsHelp);
+  const [isOnCall, setIsOnCall] = React.useState(initialValues.isOnCall);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setId(initialValues.id);
@@ -48,6 +50,7 @@ export default function UserCreateForm(props) {
     setProfilePic(initialValues.profilePic);
     setRole(initialValues.role);
     setNeedsHelp(initialValues.needsHelp);
+    setIsOnCall(initialValues.isOnCall);
     setErrors({});
   };
   const validations = {
@@ -56,6 +59,7 @@ export default function UserCreateForm(props) {
     profilePic: [],
     role: [{ type: "Required" }],
     needsHelp: [{ type: "Required" }],
+    isOnCall: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -88,6 +92,7 @@ export default function UserCreateForm(props) {
           profilePic,
           role,
           needsHelp,
+          isOnCall,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -155,6 +160,7 @@ export default function UserCreateForm(props) {
               profilePic,
               role,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.id ?? value;
@@ -183,6 +189,7 @@ export default function UserCreateForm(props) {
               profilePic,
               role,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -211,6 +218,7 @@ export default function UserCreateForm(props) {
               profilePic: value,
               role,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.profilePic ?? value;
@@ -239,6 +247,7 @@ export default function UserCreateForm(props) {
               profilePic,
               role: value,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.role ?? value;
@@ -278,6 +287,7 @@ export default function UserCreateForm(props) {
               profilePic,
               role,
               needsHelp: value,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.needsHelp ?? value;
@@ -291,6 +301,35 @@ export default function UserCreateForm(props) {
         errorMessage={errors.needsHelp?.errorMessage}
         hasError={errors.needsHelp?.hasError}
         {...getOverrideProps(overrides, "needsHelp")}
+      ></SwitchField>
+      <SwitchField
+        label="Is on call"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isOnCall}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              id,
+              name,
+              profilePic,
+              role,
+              needsHelp,
+              isOnCall: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isOnCall ?? value;
+          }
+          if (errors.isOnCall?.hasError) {
+            runValidationTasks("isOnCall", value);
+          }
+          setIsOnCall(value);
+        }}
+        onBlur={() => runValidationTasks("isOnCall", isOnCall)}
+        errorMessage={errors.isOnCall?.errorMessage}
+        hasError={errors.isOnCall?.hasError}
+        {...getOverrideProps(overrides, "isOnCall")}
       ></SwitchField>
       <Flex
         justifyContent="space-between"
