@@ -82,6 +82,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "chatWebSocket": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "connectEvents": {
       "build": true,
       "dependsOn": [
@@ -150,6 +155,22 @@
         {
           "category": "function",
           "resourceName": "callStart"
+        }
+      ]
+    },
+    "AMPLIFY_function_chatWebSocket_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "chatWebSocket"
+        }
+      ]
+    },
+    "AMPLIFY_function_chatWebSocket_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "chatWebSocket"
         }
       ]
     },

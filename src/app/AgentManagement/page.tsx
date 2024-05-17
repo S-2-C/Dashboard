@@ -115,8 +115,7 @@ export default function AgentManagement() {
                                     <div className="flex bg-agenman-agenmansblue2 items-center rounded-xl" style={{ padding: '10px' }}>
                                             <div>
                                                 <img
-                                                        src={"images/AgentYellow.svg"}
-                                                        className="mx-auto h-10 w-10"
+                                                        src={"images/AgentYellow.svg"}                                                        className="mx-auto h-10 w-10"
                                                         alt="Agent"
                                                 />
                                                 <p className = {"text-center text-sm text-agenman-agenmanyellow"}>
