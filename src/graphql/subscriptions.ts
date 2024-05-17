@@ -6,10 +6,12 @@ export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
     onCreateUser(filter: $filter) {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       Contacts {
         items {
           phone
@@ -17,10 +19,12 @@ export const onCreateUser = /* GraphQL */ `
           callEnd
           user {
             id
+            arn
             name
             profilePic
             role
             needsHelp
+            isOnCall
             Contacts {
               items {
                 phone
@@ -28,10 +32,12 @@ export const onCreateUser = /* GraphQL */ `
                 callEnd
                 user {
                   id
+                  arn
                   name
                   profilePic
                   role
                   needsHelp
+                  isOnCall
                   createdAt
                   updatedAt
                 }
@@ -61,10 +67,12 @@ export const onUpdateUser = /* GraphQL */ `
   subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
     onUpdateUser(filter: $filter) {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       Contacts {
         items {
           phone
@@ -72,10 +80,12 @@ export const onUpdateUser = /* GraphQL */ `
           callEnd
           user {
             id
+            arn
             name
             profilePic
             role
             needsHelp
+            isOnCall
             Contacts {
               items {
                 phone
@@ -83,10 +93,12 @@ export const onUpdateUser = /* GraphQL */ `
                 callEnd
                 user {
                   id
+                  arn
                   name
                   profilePic
                   role
                   needsHelp
+                  isOnCall
                   createdAt
                   updatedAt
                 }
@@ -116,10 +128,12 @@ export const onDeleteUser = /* GraphQL */ `
   subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
     onDeleteUser(filter: $filter) {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       Contacts {
         items {
           phone
@@ -127,10 +141,12 @@ export const onDeleteUser = /* GraphQL */ `
           callEnd
           user {
             id
+            arn
             name
             profilePic
             role
             needsHelp
+            isOnCall
             Contacts {
               items {
                 phone
@@ -138,10 +154,12 @@ export const onDeleteUser = /* GraphQL */ `
                 callEnd
                 user {
                   id
+                  arn
                   name
                   profilePic
                   role
                   needsHelp
+                  isOnCall
                   createdAt
                   updatedAt
                 }
@@ -175,10 +193,12 @@ export const onCreateContact = /* GraphQL */ `
       callEnd
       user {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -186,10 +206,12 @@ export const onCreateContact = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone
@@ -230,10 +252,12 @@ export const onUpdateContact = /* GraphQL */ `
       callEnd
       user {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -241,10 +265,12 @@ export const onUpdateContact = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone
@@ -285,10 +311,12 @@ export const onDeleteContact = /* GraphQL */ `
       callEnd
       user {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -296,10 +324,12 @@ export const onDeleteContact = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone

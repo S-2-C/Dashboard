@@ -33,24 +33,30 @@ export default function UserUpdateForm(props) {
   } = props;
   const initialValues = {
     id: undefined,
+    arn: undefined,
     name: undefined,
     profilePic: undefined,
     role: undefined,
     needsHelp: false,
+    isOnCall: false,
   };
   const [id, setId] = React.useState(initialValues.id);
+  const [arn, setArn] = React.useState(initialValues.arn);
   const [name, setName] = React.useState(initialValues.name);
   const [profilePic, setProfilePic] = React.useState(initialValues.profilePic);
   const [role, setRole] = React.useState(initialValues.role);
   const [needsHelp, setNeedsHelp] = React.useState(initialValues.needsHelp);
+  const [isOnCall, setIsOnCall] = React.useState(initialValues.isOnCall);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...userRecord };
     setId(cleanValues.id);
+    setArn(cleanValues.arn);
     setName(cleanValues.name);
     setProfilePic(cleanValues.profilePic);
     setRole(cleanValues.role);
     setNeedsHelp(cleanValues.needsHelp);
+    setIsOnCall(cleanValues.isOnCall);
     setErrors({});
   };
   const [userRecord, setUserRecord] = React.useState(user);
@@ -64,10 +70,12 @@ export default function UserUpdateForm(props) {
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
     id: [{ type: "Required" }, { type: "Email" }],
+    arn: [{ type: "Required" }],
     name: [],
     profilePic: [],
     role: [{ type: "Required" }],
     needsHelp: [{ type: "Required" }],
+    isOnCall: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -88,10 +96,12 @@ export default function UserUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           id,
+          arn,
           name,
           profilePic,
           role,
           needsHelp,
+          isOnCall,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -143,10 +153,12 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               id: value,
+              arn,
               name,
               profilePic,
               role,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.id ?? value;
@@ -162,6 +174,36 @@ export default function UserUpdateForm(props) {
         {...getOverrideProps(overrides, "id")}
       ></TextField>
       <TextField
+        label="Arn"
+        isRequired={true}
+        isReadOnly={false}
+        defaultValue={arn}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              id,
+              arn: value,
+              name,
+              profilePic,
+              role,
+              needsHelp,
+              isOnCall,
+            };
+            const result = onChange(modelFields);
+            value = result?.arn ?? value;
+          }
+          if (errors.arn?.hasError) {
+            runValidationTasks("arn", value);
+          }
+          setArn(value);
+        }}
+        onBlur={() => runValidationTasks("arn", arn)}
+        errorMessage={errors.arn?.errorMessage}
+        hasError={errors.arn?.hasError}
+        {...getOverrideProps(overrides, "arn")}
+      ></TextField>
+      <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
@@ -171,10 +213,12 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name: value,
               profilePic,
               role,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -199,10 +243,12 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name,
               profilePic: value,
               role,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.profilePic ?? value;
@@ -227,10 +273,12 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name,
               profilePic,
               role: value,
               needsHelp,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.role ?? value;
@@ -266,10 +314,12 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name,
               profilePic,
               role,
               needsHelp: value,
+              isOnCall,
             };
             const result = onChange(modelFields);
             value = result?.needsHelp ?? value;
@@ -283,6 +333,36 @@ export default function UserUpdateForm(props) {
         errorMessage={errors.needsHelp?.errorMessage}
         hasError={errors.needsHelp?.hasError}
         {...getOverrideProps(overrides, "needsHelp")}
+      ></SwitchField>
+      <SwitchField
+        label="Is on call"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isOnCall}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              id,
+              arn,
+              name,
+              profilePic,
+              role,
+              needsHelp,
+              isOnCall: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isOnCall ?? value;
+          }
+          if (errors.isOnCall?.hasError) {
+            runValidationTasks("isOnCall", value);
+          }
+          setIsOnCall(value);
+        }}
+        onBlur={() => runValidationTasks("isOnCall", isOnCall)}
+        errorMessage={errors.isOnCall?.errorMessage}
+        hasError={errors.isOnCall?.hasError}
+        {...getOverrideProps(overrides, "isOnCall")}
       ></SwitchField>
       <Flex
         justifyContent="space-between"

@@ -3,11 +3,13 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateUserInput = {
-  id?: string | null,
+  id: string,
+  arn: string,
   name?: string | null,
   profilePic?: string | null,
   role: Role,
   needsHelp: boolean,
+  isOnCall: boolean,
 };
 
 export enum Role {
@@ -17,14 +19,17 @@ export enum Role {
 
 
 export type ModelUserConditionInput = {
-  id?: ModelStringInput | null,
+  arn?: ModelStringInput | null,
   name?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
   role?: ModelRoleInput | null,
   needsHelp?: ModelBooleanInput | null,
+  isOnCall?: ModelBooleanInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelStringInput = {
@@ -82,10 +87,12 @@ export type ModelBooleanInput = {
 export type User = {
   __typename: "User",
   id: string,
+  arn: string,
   name?: string | null,
   profilePic?: string | null,
   role: Role,
   needsHelp: boolean,
+  isOnCall: boolean,
   Contacts?: ModelContactConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -111,10 +118,12 @@ export type Contact = {
 
 export type UpdateUserInput = {
   id: string,
+  arn?: string | null,
   name?: string | null,
   profilePic?: string | null,
   role?: Role | null,
   needsHelp?: boolean | null,
+  isOnCall?: boolean | null,
 };
 
 export type DeleteUserInput = {
@@ -136,6 +145,8 @@ export type ModelContactConditionInput = {
   and?: Array< ModelContactConditionInput | null > | null,
   or?: Array< ModelContactConditionInput | null > | null,
   not?: ModelContactConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   userContactsId?: ModelIDInput | null,
 };
 
@@ -191,6 +202,8 @@ export type ModelNotificationConditionInput = {
   and?: Array< ModelNotificationConditionInput | null > | null,
   or?: Array< ModelNotificationConditionInput | null > | null,
   not?: ModelNotificationConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelUrgencyInput = {
@@ -223,10 +236,14 @@ export type DeleteNotificationInput = {
 
 export type ModelUserFilterInput = {
   id?: ModelStringInput | null,
+  arn?: ModelStringInput | null,
   name?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
   role?: ModelRoleInput | null,
   needsHelp?: ModelBooleanInput | null,
+  isOnCall?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -242,6 +259,9 @@ export type ModelContactFilterInput = {
   phone?: ModelStringInput | null,
   callStart?: ModelStringInput | null,
   callEnd?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelContactFilterInput | null > | null,
   or?: Array< ModelContactFilterInput | null > | null,
   not?: ModelContactFilterInput | null,
@@ -253,6 +273,9 @@ export type ModelNotificationFilterInput = {
   action?: ModelStringInput | null,
   description?: ModelStringInput | null,
   urgency?: ModelUrgencyInput | null,
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelNotificationFilterInput | null > | null,
   or?: Array< ModelNotificationFilterInput | null > | null,
   not?: ModelNotificationFilterInput | null,
@@ -264,14 +287,25 @@ export type ModelNotificationConnection = {
   nextToken?: string | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionStringInput | null,
+  arn?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
   profilePic?: ModelSubscriptionStringInput | null,
   role?: ModelSubscriptionStringInput | null,
   needsHelp?: ModelSubscriptionBooleanInput | null,
+  isOnCall?: ModelSubscriptionBooleanInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  userContactsId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -294,10 +328,28 @@ export type ModelSubscriptionBooleanInput = {
   eq?: boolean | null,
 };
 
+export type ModelSubscriptionIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  in?: Array< string | null > | null,
+  notIn?: Array< string | null > | null,
+};
+
 export type ModelSubscriptionContactFilterInput = {
   phone?: ModelSubscriptionStringInput | null,
   callStart?: ModelSubscriptionStringInput | null,
   callEnd?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionContactFilterInput | null > | null,
   or?: Array< ModelSubscriptionContactFilterInput | null > | null,
 };
@@ -307,6 +359,9 @@ export type ModelSubscriptionNotificationFilterInput = {
   action?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   urgency?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
   or?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
 };
@@ -320,10 +375,12 @@ export type CreateUserMutation = {
   createUser?:  {
     __typename: "User",
     id: string,
+    arn: string,
     name?: string | null,
     profilePic?: string | null,
     role: Role,
     needsHelp: boolean,
+    isOnCall: boolean,
     Contacts?:  {
       __typename: "ModelContactConnection",
       items:  Array< {
@@ -334,10 +391,12 @@ export type CreateUserMutation = {
         user:  {
           __typename: "User",
           id: string,
+          arn: string,
           name?: string | null,
           profilePic?: string | null,
           role: Role,
           needsHelp: boolean,
+          isOnCall: boolean,
           Contacts?:  {
             __typename: "ModelContactConnection",
             items:  Array< {
@@ -348,10 +407,12 @@ export type CreateUserMutation = {
               user:  {
                 __typename: "User",
                 id: string,
+                arn: string,
                 name?: string | null,
                 profilePic?: string | null,
                 role: Role,
                 needsHelp: boolean,
+                isOnCall: boolean,
                 createdAt: string,
                 updatedAt: string,
               },
@@ -386,10 +447,12 @@ export type UpdateUserMutation = {
   updateUser?:  {
     __typename: "User",
     id: string,
+    arn: string,
     name?: string | null,
     profilePic?: string | null,
     role: Role,
     needsHelp: boolean,
+    isOnCall: boolean,
     Contacts?:  {
       __typename: "ModelContactConnection",
       items:  Array< {
@@ -400,10 +463,12 @@ export type UpdateUserMutation = {
         user:  {
           __typename: "User",
           id: string,
+          arn: string,
           name?: string | null,
           profilePic?: string | null,
           role: Role,
           needsHelp: boolean,
+          isOnCall: boolean,
           Contacts?:  {
             __typename: "ModelContactConnection",
             items:  Array< {
@@ -414,10 +479,12 @@ export type UpdateUserMutation = {
               user:  {
                 __typename: "User",
                 id: string,
+                arn: string,
                 name?: string | null,
                 profilePic?: string | null,
                 role: Role,
                 needsHelp: boolean,
+                isOnCall: boolean,
                 createdAt: string,
                 updatedAt: string,
               },
@@ -452,10 +519,12 @@ export type DeleteUserMutation = {
   deleteUser?:  {
     __typename: "User",
     id: string,
+    arn: string,
     name?: string | null,
     profilePic?: string | null,
     role: Role,
     needsHelp: boolean,
+    isOnCall: boolean,
     Contacts?:  {
       __typename: "ModelContactConnection",
       items:  Array< {
@@ -466,10 +535,12 @@ export type DeleteUserMutation = {
         user:  {
           __typename: "User",
           id: string,
+          arn: string,
           name?: string | null,
           profilePic?: string | null,
           role: Role,
           needsHelp: boolean,
+          isOnCall: boolean,
           Contacts?:  {
             __typename: "ModelContactConnection",
             items:  Array< {
@@ -480,10 +551,12 @@ export type DeleteUserMutation = {
               user:  {
                 __typename: "User",
                 id: string,
+                arn: string,
                 name?: string | null,
                 profilePic?: string | null,
                 role: Role,
                 needsHelp: boolean,
+                isOnCall: boolean,
                 createdAt: string,
                 updatedAt: string,
               },
@@ -523,10 +596,12 @@ export type CreateContactMutation = {
     user:  {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -537,10 +612,12 @@ export type CreateContactMutation = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {
@@ -589,10 +666,12 @@ export type UpdateContactMutation = {
     user:  {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -603,10 +682,12 @@ export type UpdateContactMutation = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {
@@ -655,10 +736,12 @@ export type DeleteContactMutation = {
     user:  {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -669,10 +752,12 @@ export type DeleteContactMutation = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {
@@ -769,10 +854,12 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     id: string,
+    arn: string,
     name?: string | null,
     profilePic?: string | null,
     role: Role,
     needsHelp: boolean,
+    isOnCall: boolean,
     Contacts?:  {
       __typename: "ModelContactConnection",
       items:  Array< {
@@ -783,10 +870,12 @@ export type GetUserQuery = {
         user:  {
           __typename: "User",
           id: string,
+          arn: string,
           name?: string | null,
           profilePic?: string | null,
           role: Role,
           needsHelp: boolean,
+          isOnCall: boolean,
           Contacts?:  {
             __typename: "ModelContactConnection",
             items:  Array< {
@@ -797,10 +886,12 @@ export type GetUserQuery = {
               user:  {
                 __typename: "User",
                 id: string,
+                arn: string,
                 name?: string | null,
                 profilePic?: string | null,
                 role: Role,
                 needsHelp: boolean,
+                isOnCall: boolean,
                 createdAt: string,
                 updatedAt: string,
               },
@@ -838,10 +929,12 @@ export type ListUsersQuery = {
     items:  Array< {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -852,10 +945,12 @@ export type ListUsersQuery = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {
@@ -900,10 +995,12 @@ export type GetContactQuery = {
     user:  {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -914,10 +1011,12 @@ export type GetContactQuery = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {
@@ -969,10 +1068,12 @@ export type ListContactsQuery = {
       user:  {
         __typename: "User",
         id: string,
+        arn: string,
         name?: string | null,
         profilePic?: string | null,
         role: Role,
         needsHelp: boolean,
+        isOnCall: boolean,
         Contacts?:  {
           __typename: "ModelContactConnection",
           items:  Array< {
@@ -983,10 +1084,12 @@ export type ListContactsQuery = {
             user:  {
               __typename: "User",
               id: string,
+              arn: string,
               name?: string | null,
               profilePic?: string | null,
               role: Role,
               needsHelp: boolean,
+              isOnCall: boolean,
               Contacts?:  {
                 __typename: "ModelContactConnection",
                 nextToken?: string | null,
@@ -1053,6 +1156,73 @@ export type ListNotificationsQuery = {
   } | null,
 };
 
+export type UsersByArnQueryVariables = {
+  arn: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UsersByArnQuery = {
+  usersByArn?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      arn: string,
+      name?: string | null,
+      profilePic?: string | null,
+      role: Role,
+      needsHelp: boolean,
+      isOnCall: boolean,
+      Contacts?:  {
+        __typename: "ModelContactConnection",
+        items:  Array< {
+          __typename: "Contact",
+          phone: string,
+          callStart: string,
+          callEnd?: string | null,
+          user:  {
+            __typename: "User",
+            id: string,
+            arn: string,
+            name?: string | null,
+            profilePic?: string | null,
+            role: Role,
+            needsHelp: boolean,
+            isOnCall: boolean,
+            Contacts?:  {
+              __typename: "ModelContactConnection",
+              items:  Array< {
+                __typename: "Contact",
+                phone: string,
+                callStart: string,
+                callEnd?: string | null,
+                id: string,
+                createdAt: string,
+                updatedAt: string,
+                userContactsId?: string | null,
+              } | null >,
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          id: string,
+          createdAt: string,
+          updatedAt: string,
+          userContactsId?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
 };
@@ -1061,10 +1231,12 @@ export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
     id: string,
+    arn: string,
     name?: string | null,
     profilePic?: string | null,
     role: Role,
     needsHelp: boolean,
+    isOnCall: boolean,
     Contacts?:  {
       __typename: "ModelContactConnection",
       items:  Array< {
@@ -1075,10 +1247,12 @@ export type OnCreateUserSubscription = {
         user:  {
           __typename: "User",
           id: string,
+          arn: string,
           name?: string | null,
           profilePic?: string | null,
           role: Role,
           needsHelp: boolean,
+          isOnCall: boolean,
           Contacts?:  {
             __typename: "ModelContactConnection",
             items:  Array< {
@@ -1089,10 +1263,12 @@ export type OnCreateUserSubscription = {
               user:  {
                 __typename: "User",
                 id: string,
+                arn: string,
                 name?: string | null,
                 profilePic?: string | null,
                 role: Role,
                 needsHelp: boolean,
+                isOnCall: boolean,
                 createdAt: string,
                 updatedAt: string,
               },
@@ -1126,10 +1302,12 @@ export type OnUpdateUserSubscription = {
   onUpdateUser?:  {
     __typename: "User",
     id: string,
+    arn: string,
     name?: string | null,
     profilePic?: string | null,
     role: Role,
     needsHelp: boolean,
+    isOnCall: boolean,
     Contacts?:  {
       __typename: "ModelContactConnection",
       items:  Array< {
@@ -1140,10 +1318,12 @@ export type OnUpdateUserSubscription = {
         user:  {
           __typename: "User",
           id: string,
+          arn: string,
           name?: string | null,
           profilePic?: string | null,
           role: Role,
           needsHelp: boolean,
+          isOnCall: boolean,
           Contacts?:  {
             __typename: "ModelContactConnection",
             items:  Array< {
@@ -1154,10 +1334,12 @@ export type OnUpdateUserSubscription = {
               user:  {
                 __typename: "User",
                 id: string,
+                arn: string,
                 name?: string | null,
                 profilePic?: string | null,
                 role: Role,
                 needsHelp: boolean,
+                isOnCall: boolean,
                 createdAt: string,
                 updatedAt: string,
               },
@@ -1191,10 +1373,12 @@ export type OnDeleteUserSubscription = {
   onDeleteUser?:  {
     __typename: "User",
     id: string,
+    arn: string,
     name?: string | null,
     profilePic?: string | null,
     role: Role,
     needsHelp: boolean,
+    isOnCall: boolean,
     Contacts?:  {
       __typename: "ModelContactConnection",
       items:  Array< {
@@ -1205,10 +1389,12 @@ export type OnDeleteUserSubscription = {
         user:  {
           __typename: "User",
           id: string,
+          arn: string,
           name?: string | null,
           profilePic?: string | null,
           role: Role,
           needsHelp: boolean,
+          isOnCall: boolean,
           Contacts?:  {
             __typename: "ModelContactConnection",
             items:  Array< {
@@ -1219,10 +1405,12 @@ export type OnDeleteUserSubscription = {
               user:  {
                 __typename: "User",
                 id: string,
+                arn: string,
                 name?: string | null,
                 profilePic?: string | null,
                 role: Role,
                 needsHelp: boolean,
+                isOnCall: boolean,
                 createdAt: string,
                 updatedAt: string,
               },
@@ -1261,10 +1449,12 @@ export type OnCreateContactSubscription = {
     user:  {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -1275,10 +1465,12 @@ export type OnCreateContactSubscription = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {
@@ -1326,10 +1518,12 @@ export type OnUpdateContactSubscription = {
     user:  {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -1340,10 +1534,12 @@ export type OnUpdateContactSubscription = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {
@@ -1391,10 +1587,12 @@ export type OnDeleteContactSubscription = {
     user:  {
       __typename: "User",
       id: string,
+      arn: string,
       name?: string | null,
       profilePic?: string | null,
       role: Role,
       needsHelp: boolean,
+      isOnCall: boolean,
       Contacts?:  {
         __typename: "ModelContactConnection",
         items:  Array< {
@@ -1405,10 +1603,12 @@ export type OnDeleteContactSubscription = {
           user:  {
             __typename: "User",
             id: string,
+            arn: string,
             name?: string | null,
             profilePic?: string | null,
             role: Role,
             needsHelp: boolean,
+            isOnCall: boolean,
             Contacts?:  {
               __typename: "ModelContactConnection",
               items:  Array< {

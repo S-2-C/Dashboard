@@ -6,10 +6,12 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       Contacts {
         items {
           phone
@@ -17,10 +19,12 @@ export const getUser = /* GraphQL */ `
           callEnd
           user {
             id
+            arn
             name
             profilePic
             role
             needsHelp
+            isOnCall
             Contacts {
               items {
                 phone
@@ -28,10 +32,12 @@ export const getUser = /* GraphQL */ `
                 callEnd
                 user {
                   id
+                  arn
                   name
                   profilePic
                   role
                   needsHelp
+                  isOnCall
                   createdAt
                   updatedAt
                 }
@@ -66,10 +72,12 @@ export const listUsers = /* GraphQL */ `
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -77,10 +85,12 @@ export const listUsers = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone
@@ -118,10 +128,12 @@ export const getContact = /* GraphQL */ `
       callEnd
       user {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -129,10 +141,12 @@ export const getContact = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone
@@ -178,10 +192,12 @@ export const listContacts = /* GraphQL */ `
         callEnd
         user {
           id
+          arn
           name
           profilePic
           role
           needsHelp
+          isOnCall
           Contacts {
             items {
               phone
@@ -189,10 +205,12 @@ export const listContacts = /* GraphQL */ `
               callEnd
               user {
                 id
+                arn
                 name
                 profilePic
                 role
                 needsHelp
+                isOnCall
                 Contacts {
                   nextToken
                 }
@@ -244,6 +262,71 @@ export const listNotifications = /* GraphQL */ `
         description
         urgency
         id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const usersByArn = /* GraphQL */ `
+  query UsersByArn(
+    $arn: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    usersByArn(
+      arn: $arn
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        arn
+        name
+        profilePic
+        role
+        needsHelp
+        isOnCall
+        Contacts {
+          items {
+            phone
+            callStart
+            callEnd
+            user {
+              id
+              arn
+              name
+              profilePic
+              role
+              needsHelp
+              isOnCall
+              Contacts {
+                items {
+                  phone
+                  callStart
+                  callEnd
+                  id
+                  createdAt
+                  updatedAt
+                  userContactsId
+                }
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            id
+            createdAt
+            updatedAt
+            userContactsId
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }

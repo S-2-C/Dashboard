@@ -9,10 +9,12 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       Contacts {
         items {
           phone
@@ -20,10 +22,12 @@ export const createUser = /* GraphQL */ `
           callEnd
           user {
             id
+            arn
             name
             profilePic
             role
             needsHelp
+            isOnCall
             Contacts {
               items {
                 phone
@@ -31,10 +35,12 @@ export const createUser = /* GraphQL */ `
                 callEnd
                 user {
                   id
+                  arn
                   name
                   profilePic
                   role
                   needsHelp
+                  isOnCall
                   createdAt
                   updatedAt
                 }
@@ -67,10 +73,12 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       Contacts {
         items {
           phone
@@ -78,10 +86,12 @@ export const updateUser = /* GraphQL */ `
           callEnd
           user {
             id
+            arn
             name
             profilePic
             role
             needsHelp
+            isOnCall
             Contacts {
               items {
                 phone
@@ -89,10 +99,12 @@ export const updateUser = /* GraphQL */ `
                 callEnd
                 user {
                   id
+                  arn
                   name
                   profilePic
                   role
                   needsHelp
+                  isOnCall
                   createdAt
                   updatedAt
                 }
@@ -125,10 +137,12 @@ export const deleteUser = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       id
+      arn
       name
       profilePic
       role
       needsHelp
+      isOnCall
       Contacts {
         items {
           phone
@@ -136,10 +150,12 @@ export const deleteUser = /* GraphQL */ `
           callEnd
           user {
             id
+            arn
             name
             profilePic
             role
             needsHelp
+            isOnCall
             Contacts {
               items {
                 phone
@@ -147,10 +163,12 @@ export const deleteUser = /* GraphQL */ `
                 callEnd
                 user {
                   id
+                  arn
                   name
                   profilePic
                   role
                   needsHelp
+                  isOnCall
                   createdAt
                   updatedAt
                 }
@@ -187,10 +205,12 @@ export const createContact = /* GraphQL */ `
       callEnd
       user {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -198,10 +218,12 @@ export const createContact = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone
@@ -245,10 +267,12 @@ export const updateContact = /* GraphQL */ `
       callEnd
       user {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -256,10 +280,12 @@ export const updateContact = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone
@@ -303,10 +329,12 @@ export const deleteContact = /* GraphQL */ `
       callEnd
       user {
         id
+        arn
         name
         profilePic
         role
         needsHelp
+        isOnCall
         Contacts {
           items {
             phone
@@ -314,10 +342,12 @@ export const deleteContact = /* GraphQL */ `
             callEnd
             user {
               id
+              arn
               name
               profilePic
               role
               needsHelp
+              isOnCall
               Contacts {
                 items {
                   phone
