@@ -66,7 +66,7 @@ export default function Home() {
       <FontAwesomeIcon icon={faComments} className="text-teal my-4 text-2xl" />
       <FontAwesomeIcon icon={faUsers} className="text-teal my-4 text-2xl" />
       <FontAwesomeIcon icon={faChartLine} className="text-teal my-4 text-2xl" />
-      <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" />
+      {/* <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" /> */}
       <FontAwesomeIcon icon={faFileAlt} className="text-teal my-4 text-2xl" />
       <FontAwesomeIcon icon={faBook} className="text-teal my-4 text-2xl" />
       <FontAwesomeIcon icon={faUserTie} className="text-teal my-4 text-2xl" />
@@ -165,7 +165,7 @@ export default function Home() {
                 </div>
               </Link>
             </li>
-            <li className="mt-1 flex items-center ml-4">
+            {/* <li className="mt-1 flex items-center ml-4">
             <Link
                 href="Notifications"
                 className={`text-teal hover:text-teal-highlight relative`}
@@ -180,7 +180,7 @@ export default function Home() {
                   )}
                 </div>
               </Link>
-            </li>
+            </li> */}
             <li className="mt-1 flex items-center ml-4">
             <Link
                 href="ManageReports"

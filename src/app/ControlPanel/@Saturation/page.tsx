@@ -28,8 +28,9 @@ import Link from 'next/link'
 
 export function Saturation() {
   return (
+    
     <div>
-      <div className="w-full overflow-y-auto p-4">
+      {/* <div className="w-full overflow-y-auto p-4">
         <Accordion className="" type="single" collapsible>
           <AccordionItem value="item-1">
             <AccordionTrigger className="flex items-center">
@@ -146,7 +147,7 @@ export function Saturation() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </div>
+      </div> */}
     </div>
   );
 }

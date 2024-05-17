@@ -3,15 +3,15 @@ import { Button } from "@/components/ui/button";
 
 export default async function Frequently() {
   return (
-      <div className="flex justify-between ">
+      <div className="flex ">
         <div className="bg-teal-FU p-4 rounded-tl-lg rounded-bl-lg ">
           <h1 className="text-4xl font-bold text-white">Frequently Used</h1>
         </div>
-        <div className="flex-grow flex justify-center items-center  bg-teal-background rounded-tr-lg rounded-br-lg ">
+        <div className="flex-grow flex  items-center  bg-teal-background rounded-tr-lg rounded-br-lg ">
           <div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-start justify-between px-4">
               <Link href="/AgentManagement">
-                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded">
+                <button className="bg-background focus:bg-blue-teal hover:bg-blue-teal text-gray hover:text-background active:text-background font-bold py-2 px-4 rounded">
                   Agent Management
                 </button>
               </Link>
@@ -36,9 +36,9 @@ export default async function Frequently() {
                 </button>
               </Link>
               <Link href="/Channels">
-                <Button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
+                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
                   Channels
-                </Button>
+                </button>
               </Link>
             </div>
           </div>
