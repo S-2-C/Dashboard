@@ -1,4 +1,3 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import {
   ConnectClient,
   GetCurrentMetricDataCommand,
@@ -54,18 +53,14 @@ async function getUserMetricData(
   return response;
 }
 
-/*
-function arrangeMetricData(response: any): any {
-    const metricData = response.MetricResults;
-    const metricDataList = metricData.map((metric: any) => {
-        return {
-            MetricName: metric.MetricName,
-            MetricValue: metric.Value,
-        };
-    });
-    return metricDataList;
+function arrangeMetricData(response: any): { Metric: string; Value: number }[] {
+  return response.MetricResults.flatMap((result: any) =>
+    result.Collections.map((metric: any) => ({
+      Metric: metric.Metric.Name,
+      Value: metric.Value,
+    }))
+  );
 }
-*/
 
 export async function GET(request: Request) {
   const config = makeConfig();
@@ -74,5 +69,9 @@ export async function GET(request: Request) {
 
   const response = await getUserMetricData(client, InstanceId);
 
-  return Response.json(response);
+  return Response.json({
+    "httpStatusCode": 200,
+    "message": "Current metric data retrieved successfully.",
+    "data": arrangeMetricData(response)
+});
 }
