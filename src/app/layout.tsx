@@ -5,7 +5,7 @@ import WrappedAuthenticator from "./authenticator";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Wallmart Dashboard",
+  title: "Walmart Dashboard",
   description: "For Amazon Connect Supervisors and Agents",
 };
 

@@ -20,15 +20,27 @@ export const ChatClient: React.FC<ChatClientProps> = ({
     onConnect,
     onDisconnect
 }) => {
+
+    const [seeListOfUsers, setSeeListOfUsers] = React.useState(false);
+
     return (
         <Flex direction="column" style={{ height: '100vh', width: '100%' }}>
-            <Flex direction="row" style={{ height: '100%', backgroundColor: '#f4ede3' }}>
-                <Flex direction="column" style={{ width: '20%', backgroundColor: '#3e103f', color: 'white' }}>
-                    {members.map((item, index) => (
-                        <Button key={index} onClick={() => onPrivateMessage(item)} isFullWidth variation="link">
-                            {item}
-                        </Button>
-                    ))}
+            <Flex direction="row" style={{ height: '100%', backgroundColor: '#FFFFFF' }}>
+                <Flex direction="column" style={{ width: '20%', backgroundColor: '#367BC1', color: 'white' }}>
+                    <Button isFullWidth onClick={() => setSeeListOfUsers(!seeListOfUsers)}>
+                        + New Chat
+                    </Button>
+                    {seeListOfUsers &&
+                        <ul className="transition-height duration-500 ease-in-out">
+                            {members.map((item, index) => (
+                                <li>
+                                    <Button key={index} onClick={() => onPrivateMessage(item)} isFullWidth>
+                                        {item}
+                                    </Button>
+                                </li>
+                            ))}
+                        </ul>
+                    }
                 </Flex>
                 <Flex direction="column" style={{ flex: '1', padding: '10px' }}>
                     <View style={{ overflowY: 'scroll', marginBottom: '20px' }}>
