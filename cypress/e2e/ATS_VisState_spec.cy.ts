@@ -124,6 +124,7 @@ describe("TS_VisState", function () {
               input: {
                 id: offlineAgentId,
                 isOnCall: false,
+                needsHelp: false,
               },
             },
           },
@@ -248,6 +249,7 @@ describe("TS_VisState", function () {
               input: {
                 id: offlineAgentId,
                 needsHelp: false,
+                isOnCall: false,
               },
             },
           },
