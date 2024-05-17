@@ -16,15 +16,15 @@
       "function": {
         "callStart": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/callStart-702b5a58587333554879-build.zip"
+          "s3Key": "amplify-builds/callStart-774951415669695a7242-build.zip"
         },
         "connectEvents": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/connectEvents-74332b4e416370304856-build.zip"
+          "s3Key": "amplify-builds/connectEvents-6532696f334954426d5a-build.zip"
         },
         "dashAuthPostConfirmation": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/dashAuthPostConfirmation-4b574c357231316b3845-build.zip"
+          "s3Key": "amplify-builds/dashAuthPostConfirmation-686a6f2b6b51524a5848-build.zip"
         },
         "dashAuthPreSignup": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
