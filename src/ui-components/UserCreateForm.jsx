@@ -31,6 +31,7 @@ export default function UserCreateForm(props) {
   } = props;
   const initialValues = {
     id: "",
+    arn: "",
     name: "",
     profilePic: "",
     role: "",
@@ -38,6 +39,7 @@ export default function UserCreateForm(props) {
     isOnCall: false,
   };
   const [id, setId] = React.useState(initialValues.id);
+  const [arn, setArn] = React.useState(initialValues.arn);
   const [name, setName] = React.useState(initialValues.name);
   const [profilePic, setProfilePic] = React.useState(initialValues.profilePic);
   const [role, setRole] = React.useState(initialValues.role);
@@ -46,6 +48,7 @@ export default function UserCreateForm(props) {
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setId(initialValues.id);
+    setArn(initialValues.arn);
     setName(initialValues.name);
     setProfilePic(initialValues.profilePic);
     setRole(initialValues.role);
@@ -55,6 +58,7 @@ export default function UserCreateForm(props) {
   };
   const validations = {
     id: [{ type: "Required" }, { type: "Email" }],
+    arn: [{ type: "Required" }],
     name: [],
     profilePic: [],
     role: [{ type: "Required" }],
@@ -88,6 +92,7 @@ export default function UserCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           id,
+          arn,
           name,
           profilePic,
           role,
@@ -156,6 +161,7 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               id: value,
+              arn,
               name,
               profilePic,
               role,
@@ -176,6 +182,36 @@ export default function UserCreateForm(props) {
         {...getOverrideProps(overrides, "id")}
       ></TextField>
       <TextField
+        label="Arn"
+        isRequired={true}
+        isReadOnly={false}
+        value={arn}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              id,
+              arn: value,
+              name,
+              profilePic,
+              role,
+              needsHelp,
+              isOnCall,
+            };
+            const result = onChange(modelFields);
+            value = result?.arn ?? value;
+          }
+          if (errors.arn?.hasError) {
+            runValidationTasks("arn", value);
+          }
+          setArn(value);
+        }}
+        onBlur={() => runValidationTasks("arn", arn)}
+        errorMessage={errors.arn?.errorMessage}
+        hasError={errors.arn?.hasError}
+        {...getOverrideProps(overrides, "arn")}
+      ></TextField>
+      <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
@@ -185,6 +221,7 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name: value,
               profilePic,
               role,
@@ -214,6 +251,7 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name,
               profilePic: value,
               role,
@@ -243,6 +281,7 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name,
               profilePic,
               role: value,
@@ -283,6 +322,7 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name,
               profilePic,
               role,
@@ -312,6 +352,7 @@ export default function UserCreateForm(props) {
           if (onChange) {
             const modelFields = {
               id,
+              arn,
               name,
               profilePic,
               role,
