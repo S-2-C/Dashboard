@@ -133,6 +133,7 @@ export default function AgentManagement() {
                                     <div className="h-4 flex bg-agenman-agenmanyellow  items-center rounded-xl shadow-md"></div>
                                     <div className="flex bg-agenman-agenmansblue2 items-center rounded-xl" style={{ padding: '10px' }}>
                                         {activeUsers?.map((user, index) => (
+                                            <Link href={`/ManageCall/${user?.id}`}>
                                             <div>
                                                 <img
                                                         src={"images/AgentYellow.svg"}
@@ -143,6 +144,7 @@ export default function AgentManagement() {
                                                 {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
                                                 </p>
                                             </div>
+                                            </Link>
                                         ))}
                                     </div>
                                 </Flex>
@@ -170,6 +172,7 @@ export default function AgentManagement() {
                                 <div className="flex gap-2" style={{ paddingTop: '15px'}}>
                                         <div className="w-2/4 flex flex-col  bg-agenman-agenmansblue3 rounded-xl" style={{ padding: '10px' }}>
                                             {offlineUsers?.map((user, index) => (
+                                            <Link href={`/ManageCall/${user?.id}`}>
                                                 <div className="text-4xl flex items-center  h-10 w-10">
                                                 <img
                                                     src={"images/AgentBlue.svg"}
@@ -178,6 +181,7 @@ export default function AgentManagement() {
                                                 />
                                                 <p className=" text-white text-sm px-1"> {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}</p>
                                             </div>
+                                            </Link>
                                             ))}
                                            
                                         </div>
@@ -185,14 +189,16 @@ export default function AgentManagement() {
 
                                         <div className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl" style={{ padding: '10px' }}>
                                             {offlineSupervisors?.map((user, index) => (
+                                            <Link href={`/ManageCall/${user?.id}`}>
                                                 <div className="text-4xl flex items-center  h-10 w-10">
-                                                <img
-                                                    src={"images/AgentWhite.svg"}
-                                                    className="mx-auto h-20 w-20"
-                                                    alt="Agent"
-                                                />
-                                                <p className=" text-white text-sm px-1"> {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}</p>
-                                            </div>
+                                                    <img
+                                                        src={"images/AgentWhite.svg"}
+                                                        className="mx-auto h-20 w-20"
+                                                        alt="Agent"
+                                                    />
+                                                    <p className=" text-white text-sm px-1"> {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}</p>
+                                                </div>
+                                            </Link>
                                             ))}
                                         </div>
                                 </div>
