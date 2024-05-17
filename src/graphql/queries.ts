@@ -18,6 +18,54 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     needsHelp
     isOnCall
     Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -41,6 +89,46 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -63,6 +151,46 @@ export const getContact = /* GraphQL */ `query GetContact($id: ID!) {
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -88,6 +216,48 @@ export const listContacts = /* GraphQL */ `query ListContacts(
       phone
       callStart
       callEnd
+      user {
+        id
+        arn
+        name
+        profilePic
+        role
+        needsHelp
+        isOnCall
+        Contacts {
+          items {
+            phone
+            callStart
+            callEnd
+            user {
+              id
+              arn
+              name
+              profilePic
+              role
+              needsHelp
+              isOnCall
+              Contacts {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            id
+            createdAt
+            updatedAt
+            userContactsId
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       id
       createdAt
       updatedAt
@@ -164,6 +334,46 @@ export const usersByArn = /* GraphQL */ `query UsersByArn(
       role
       needsHelp
       isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
