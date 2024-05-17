@@ -4,14 +4,8 @@ import Home from "../NavBar";
 import { useEffect, useState } from "react";
 import { fetchAllAgents } from "@/fetching/fetchingDataFunctions";
 import Link from "next/link";
-import { Euphoria_Script } from "next/font/google";
-import {
-  GetContactQuery,
-  ListUsersQuery,
-  ListContactsQuery,
-  Contact,
-  User,
-} from "@/API";
+import { User } from "@/API";
+import useUserUpdates from "@/hooks/useUserUpdates";
 
 export default function AgentManagement() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
@@ -19,13 +13,41 @@ export default function AgentManagement() {
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
   const [offlineSupervisors, setOfflineSupervisors] = useState<User[]>([]);
 
+  const userChange = useUserUpdates(); // This will hold the latest user update
+  const addUserToState = (user: User, setter: any) => {
+    setter((prev: any) => [...(prev || []), user]);
+  };
+  const removeUserFromAllState = (user: User) => {
+    setAlertUsers((prev) => prev?.filter((u) => u.id !== user.id));
+    setActiveUsers((prev) => prev?.filter((u) => u.id !== user.id));
+    setOfflineUsers((prev) => prev?.filter((u) => u.id !== user.id));
+    setOfflineSupervisors((prev) => prev?.filter((u) => u.id !== user.id));
+  };
+
+  useEffect(() => {
+    if (userChange) {
+      removeUserFromAllState(userChange);
+      if (userChange?.needsHelp) {
+        console.log("User id", userChange.id, "needs help");
+        addUserToState(userChange, setAlertUsers);
+      } else if (userChange?.isOnCall) {
+        addUserToState(userChange, setActiveUsers);
+        console.log("User id", userChange.id, "just took a call");
+      } else if (!userChange?.isOnCall && userChange?.role == "AGENT") {
+        addUserToState(userChange, setOfflineUsers);
+        console.log("User id", userChange.id, "is now offline");
+      } else if (!userChange?.isOnCall && userChange?.role == "SUPERVISOR") {
+        addUserToState(userChange, setOfflineSupervisors);
+        console.log("Supervisor id", userChange.id, "is now offline");
+      }
+    }
+  }, [userChange]);
+
   useEffect(() => {
     async function fetchAgents() {
       const res = await fetchAllAgents();
 
       res?.items?.forEach((agent: User) => {
-        console.log(agent);
-
         if (agent?.needsHelp) {
           setAlertUsers((prev) => [...(prev || []), agent]);
         } else if (agent?.isOnCall) {
@@ -36,8 +58,6 @@ export default function AgentManagement() {
           setOfflineSupervisors((prev) => [...(prev || []), agent]);
         }
       });
-
-      console.log("res", res);
     }
     fetchAgents();
   }, []);
@@ -108,10 +128,7 @@ export default function AgentManagement() {
                     </div>
                   </div>
                   <div className="h-4 bg-agenman-agenmanred  items-center rounded-xl shadow-md"></div>
-                  <div
-                    id="alertUsers"
-                    className="flex w-full overflow-x-scroll no-scrollbar  bg-agenman-agenmansblue1 p-2.5 rounded-xl"
-                  >
+                  <div className="flex w-full overflow-x-scroll no-scrollbar  bg-agenman-agenmansblue1 p-2.5 rounded-xl">
                     {alertUsers?.map((user, index) => (
                       <div className=" w-min p-1" key={index}>
                         <Link href={`/ManageCall/${user?.id}`}>
@@ -145,12 +162,11 @@ export default function AgentManagement() {
                   </div>
                   <div className="h-4 flex bg-agenman-agenmanyellow  items-center rounded-xl shadow-md"></div>
                   <div
-                    id="activeUsers"
                     className="flex bg-agenman-agenmansblue2 items-center rounded-xl"
                     style={{ padding: "10px" }}
                   >
                     {activeUsers?.map((user, index) => (
-                      <Link href={`/ManageCall/${user?.id}`}>
+                      <Link key={index} href={`/ManageCall/${user?.id}`}>
                         <div>
                           <img
                             src={"images/AgentYellow.svg"}
@@ -200,12 +216,11 @@ export default function AgentManagement() {
 
                 <div className="flex gap-2" style={{ paddingTop: "15px" }}>
                   <div
-                    id="offlineUsers"
                     className="w-2/4 flex flex-col  bg-agenman-agenmansblue3 rounded-xl"
                     style={{ padding: "10px" }}
                   >
                     {offlineUsers?.map((user, index) => (
-                      <Link href={`/ManageCall/${user?.id}`}>
+                      <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div className="text-4xl flex items-center  h-10 w-10">
                           <img
                             src={"images/AgentBlue.svg"}
@@ -224,12 +239,11 @@ export default function AgentManagement() {
                   </div>
 
                   <div
-                    id="offlineSupervisors"
                     className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl"
                     style={{ padding: "10px" }}
                   >
                     {offlineSupervisors?.map((user, index) => (
-                      <Link href={`/ManageCall/${user?.id}`}>
+                      <Link key={index} href={`/ManageCall/${user?.id}`}>
                         <div className="text-4xl flex items-center  h-10 w-10">
                           <img
                             src={"images/AgentWhite.svg"}

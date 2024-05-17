@@ -50,8 +50,6 @@ export const fetchOneAgent = async (agentId: string) => {
   }
 };
 
-
-
 export const fetchAllAgents = async () => {
   const client = generateClient();
 
@@ -59,8 +57,6 @@ export const fetchAllAgents = async () => {
     const allAgents = (await client.graphql({
       query: listUsers,
     })) as ListUsersQuery;
-
-    console.log("allAgents", allAgents);
 
     //@ts-ignore
     return allAgents.data.listUsers;
