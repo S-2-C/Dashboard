@@ -12,7 +12,7 @@
     ],
     "detail": {
         "eventType": "DISCONNECTED",
-        "contactId": "4cf25e32-32a8-485c-89cd-fa864c0d66b7",
+        "contactId": "5a373a51-9638-4b27-82e1-a47c1013a279",
         "channel": "VOICE",
         "instanceArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597",
         "initiationMethod": "INBOUND",
@@ -22,7 +22,7 @@
             "queueType": "STANDARD"
         },
         "agentInfo": {
-            "agentArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/agent/ab454c37-6f3e-4c50-9b01-e0f262ad5336",
+            "agentArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/agent/6c730ba2-6a81-4a39-935e-fdef4f5935b6",
             "connectedToAgentTimestamp": "2024-04-24T22:32:56.440Z"
         },
         "initiationTimestamp": "2024-04-24T22:32:27.382Z",

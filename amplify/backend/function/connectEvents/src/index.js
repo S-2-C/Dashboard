@@ -19,6 +19,7 @@ const { sendAppSyncRequest } = require("./helpers/appSync.js");
 // function to handle calls being disconnected -> should update api with call end time
 async function updateCallEnd(event) {
     const contactId = event.detail.contactId;
+    const agentArn = event.detail.agentInfo.agentArn;
 
     const endCall = {
         query: `mutation CallEnd($contactId: ID!, $callEnd: AWSDateTime!) {
@@ -37,8 +38,56 @@ async function updateCallEnd(event) {
         },
     };
 
+    const getUserByArn = {
+        query: `query GetUserByArn($arn: String!) {
+            usersByArn(arn: $arn) {
+                items {
+                    id
+                    arn
+                    isOnCall
+                }
+            }
+        }`,
+        variables: {
+            arn: agentArn,
+        },
+    };
+
+    // get user by arn
+    let getUserByArnRes;
     try {
-        const endCallRes = await sendAppSyncRequest(
+        getUserByArnRes = await sendAppSyncRequest(
+            APPSYNCURL,
+            REGION,
+            "POST",
+            getUserByArn,
+            GQLAPIKEY
+        );
+        console.log(`Got user with arn ${agentArn} from the database`);
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify(`Could not get user by arn ${agentArn}. Error: ${error}`),
+        };
+    }
+    console.log(getUserByArnRes)
+    const setUserOffCall = {
+        query: `mutation SetUserOnCall($id: AWSEmail!, $isOnCall: Boolean!) {
+            updateUser(input: {id: $id, isOnCall: $isOnCall}) {
+                id
+                isOnCall
+            }
+        }`,
+        variables: {
+            id: getUserByArnRes.data.usersByArn.items[0].id,
+            isOnCall: false,
+        },
+    };
+
+    // update call end time
+    let endCallRes;
+    try {
+        endCallRes = await sendAppSyncRequest(
             APPSYNCURL,
             REGION,
             "POST",
@@ -47,17 +96,39 @@ async function updateCallEnd(event) {
         );
         console.log(`Updated call end time for contact with id ${contactId}`);
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify(endCallRes.data["endCall"]),
-        };
     } catch (error) {
         console.error(`Could not update call end time for contact with id ${contactId}`);
+        console.error(endCallRes);
         return {
             statusCode: 500,
             body: JSON.stringify(`Could not update call end time for contact with id ${contactId}. Error: ${error}`),
         };
     }
+
+    // set user off call
+    let setUserOffCallRes;
+    try {
+        setUserOffCallRes = await sendAppSyncRequest(
+            APPSYNCURL,
+            REGION,
+            "POST",
+            setUserOffCall,
+            GQLAPIKEY
+        );
+        console.log(`Updated user with arn ${agentArn} to be off call`);
+
+    } catch (error) {
+        console.error(`Could not set user off call with arn: ${agentArn}`);
+        return {
+            statusCode: 500,
+            body: JSON.stringify(`Could not set user off call with arn: ${agentArn}. Error: ${error}`),
+        };
+    }
+
+    return {
+        statusCode: 200,
+        body: JSON.stringify(endCallRes.data["endCall"], setUserOffCallRes.data["setUserOffCall"]),
+    };
 }
 
 exports.handler = async (event) => {

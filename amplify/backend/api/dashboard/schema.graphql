@@ -8,12 +8,21 @@ enum Role {
   SUPERVISOR
 }
 
+enum Urgency {
+  LOW
+  MEDIUM
+  HIGH
+  REGULAR
+}
+
 type User @model {
   id: AWSEmail!
+  arn: String! @index
   name: String
   profilePic: String
   role: Role!
   needsHelp: Boolean!
+  isOnCall: Boolean! @default(value: "false")
   Contacts: [Contact] @hasMany
 }
 
@@ -22,4 +31,11 @@ type Contact @model {
   callStart: AWSDateTime!
   callEnd: AWSDateTime
   user: User! @belongsTo
+}
+
+type Notification @model {
+  rule: String! # The rule that triggered the notification
+  action: String! # The suggestion by the backend (action)
+  description: String! # Text to display to the user
+  urgency: Urgency! @default(value: "REGULAR")
 }

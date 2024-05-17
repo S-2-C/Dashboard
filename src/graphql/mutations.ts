@@ -8,144 +8,281 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createSupervisor = /* GraphQL */ `mutation CreateSupervisor(
-  $input: CreateSupervisorInput!
-  $condition: ModelSupervisorConditionInput
+export const createUser = /* GraphQL */ `mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  createSupervisor(input: $input, condition: $condition) {
-    name
-    profilePic
-    email
+  createUser(input: $input, condition: $condition) {
     id
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateSupervisorMutationVariables,
-  APITypes.CreateSupervisorMutation
->;
-export const updateSupervisor = /* GraphQL */ `mutation UpdateSupervisor(
-  $input: UpdateSupervisorInput!
-  $condition: ModelSupervisorConditionInput
-) {
-  updateSupervisor(input: $input, condition: $condition) {
+    arn
     name
     profilePic
-    email
-    id
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateSupervisorMutationVariables,
-  APITypes.UpdateSupervisorMutation
->;
-export const deleteSupervisor = /* GraphQL */ `mutation DeleteSupervisor(
-  $input: DeleteSupervisorInput!
-  $condition: ModelSupervisorConditionInput
-) {
-  deleteSupervisor(input: $input, condition: $condition) {
-    name
-    profilePic
-    email
-    id
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteSupervisorMutationVariables,
-  APITypes.DeleteSupervisorMutation
->;
-export const createAgent = /* GraphQL */ `mutation CreateAgent(
-  $input: CreateAgentInput!
-  $condition: ModelAgentConditionInput
-) {
-  createAgent(input: $input, condition: $condition) {
-    name
-    profilePic
-    email
+    role
     needsHelp
-    calls {
+    isOnCall
+    Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
-    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateAgentMutationVariables,
-  APITypes.CreateAgentMutation
+  APITypes.CreateUserMutationVariables,
+  APITypes.CreateUserMutation
 >;
-export const updateAgent = /* GraphQL */ `mutation UpdateAgent(
-  $input: UpdateAgentInput!
-  $condition: ModelAgentConditionInput
+export const updateUser = /* GraphQL */ `mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  updateAgent(input: $input, condition: $condition) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    arn
     name
     profilePic
-    email
+    role
     needsHelp
-    calls {
+    isOnCall
+    Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
-    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateAgentMutationVariables,
-  APITypes.UpdateAgentMutation
+  APITypes.UpdateUserMutationVariables,
+  APITypes.UpdateUserMutation
 >;
-export const deleteAgent = /* GraphQL */ `mutation DeleteAgent(
-  $input: DeleteAgentInput!
-  $condition: ModelAgentConditionInput
+export const deleteUser = /* GraphQL */ `mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  deleteAgent(input: $input, condition: $condition) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    arn
     name
     profilePic
-    email
+    role
     needsHelp
-    calls {
+    isOnCall
+    Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
-    id
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteAgentMutationVariables,
-  APITypes.DeleteAgentMutation
+  APITypes.DeleteUserMutationVariables,
+  APITypes.DeleteUserMutation
 >;
-export const createCall = /* GraphQL */ `mutation CreateCall(
-  $input: CreateCallInput!
-  $condition: ModelCallConditionInput
+export const createContact = /* GraphQL */ `mutation CreateContact(
+  $input: CreateContactInput!
+  $condition: ModelContactConditionInput
 ) {
-  createCall(input: $input, condition: $condition) {
-    ARN
+  createContact(input: $input, condition: $condition) {
     phone
     callStart
     callEnd
-    agent {
+    user {
+      id
+      arn
       name
       profilePic
-      email
+      role
       needsHelp
-      id
+      isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -153,29 +290,70 @@ export const createCall = /* GraphQL */ `mutation CreateCall(
     id
     createdAt
     updatedAt
-    agentCallsId
+    userContactsId
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateCallMutationVariables,
-  APITypes.CreateCallMutation
+  APITypes.CreateContactMutationVariables,
+  APITypes.CreateContactMutation
 >;
-export const updateCall = /* GraphQL */ `mutation UpdateCall(
-  $input: UpdateCallInput!
-  $condition: ModelCallConditionInput
+export const updateContact = /* GraphQL */ `mutation UpdateContact(
+  $input: UpdateContactInput!
+  $condition: ModelContactConditionInput
 ) {
-  updateCall(input: $input, condition: $condition) {
-    ARN
+  updateContact(input: $input, condition: $condition) {
     phone
     callStart
     callEnd
-    agent {
+    user {
+      id
+      arn
       name
       profilePic
-      email
+      role
       needsHelp
-      id
+      isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -183,29 +361,70 @@ export const updateCall = /* GraphQL */ `mutation UpdateCall(
     id
     createdAt
     updatedAt
-    agentCallsId
+    userContactsId
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateCallMutationVariables,
-  APITypes.UpdateCallMutation
+  APITypes.UpdateContactMutationVariables,
+  APITypes.UpdateContactMutation
 >;
-export const deleteCall = /* GraphQL */ `mutation DeleteCall(
-  $input: DeleteCallInput!
-  $condition: ModelCallConditionInput
+export const deleteContact = /* GraphQL */ `mutation DeleteContact(
+  $input: DeleteContactInput!
+  $condition: ModelContactConditionInput
 ) {
-  deleteCall(input: $input, condition: $condition) {
-    ARN
+  deleteContact(input: $input, condition: $condition) {
     phone
     callStart
     callEnd
-    agent {
+    user {
+      id
+      arn
       name
       profilePic
-      email
+      role
       needsHelp
-      id
+      isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -213,11 +432,68 @@ export const deleteCall = /* GraphQL */ `mutation DeleteCall(
     id
     createdAt
     updatedAt
-    agentCallsId
+    userContactsId
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteCallMutationVariables,
-  APITypes.DeleteCallMutation
+  APITypes.DeleteContactMutationVariables,
+  APITypes.DeleteContactMutation
+>;
+export const createNotification = /* GraphQL */ `mutation CreateNotification(
+  $input: CreateNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  createNotification(input: $input, condition: $condition) {
+    rule
+    action
+    description
+    urgency
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateNotificationMutationVariables,
+  APITypes.CreateNotificationMutation
+>;
+export const updateNotification = /* GraphQL */ `mutation UpdateNotification(
+  $input: UpdateNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  updateNotification(input: $input, condition: $condition) {
+    rule
+    action
+    description
+    urgency
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateNotificationMutationVariables,
+  APITypes.UpdateNotificationMutation
+>;
+export const deleteNotification = /* GraphQL */ `mutation DeleteNotification(
+  $input: DeleteNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  deleteNotification(input: $input, condition: $condition) {
+    rule
+    action
+    description
+    urgency
+    id
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteNotificationMutationVariables,
+  APITypes.DeleteNotificationMutation
 >;
