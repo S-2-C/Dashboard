@@ -5,9 +5,18 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Notification } from "../models";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { Notification } from "../API.ts";
+export declare type EscapeHatchProps = {
+    [elementHierarchy: string]: Record<string, unknown>;
+} | null;
+export declare type VariantValues = {
+    [key: string]: string;
+};
+export declare type Variant = {
+    variantValues: VariantValues;
+    overrides: EscapeHatchProps;
+};
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -25,13 +34,13 @@ export declare type NotificationUpdateFormValidationValues = {
     description?: ValidationFunction<string>;
     urgency?: ValidationFunction<string>;
 };
-export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NotificationUpdateFormOverridesProps = {
-    NotificationUpdateFormGrid?: FormProps<GridProps>;
-    rule?: FormProps<TextFieldProps>;
-    action?: FormProps<TextFieldProps>;
-    description?: FormProps<TextFieldProps>;
-    urgency?: FormProps<SelectFieldProps>;
+    NotificationUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    rule?: PrimitiveOverrideProps<TextFieldProps>;
+    action?: PrimitiveOverrideProps<TextFieldProps>;
+    description?: PrimitiveOverrideProps<TextFieldProps>;
+    urgency?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type NotificationUpdateFormProps = React.PropsWithChildren<{
     overrides?: NotificationUpdateFormOverridesProps | undefined | null;
@@ -41,8 +50,7 @@ export declare type NotificationUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: NotificationUpdateFormInputValues) => NotificationUpdateFormInputValues;
     onSuccess?: (fields: NotificationUpdateFormInputValues) => void;
     onError?: (fields: NotificationUpdateFormInputValues, errorMessage: string) => void;
-    onCancel?: () => void;
     onChange?: (fields: NotificationUpdateFormInputValues) => NotificationUpdateFormInputValues;
     onValidate?: NotificationUpdateFormValidationValues;
-}>;
+} & React.CSSProperties>;
 export default function NotificationUpdateForm(props: NotificationUpdateFormProps): React.ReactElement;
