@@ -13,10 +13,17 @@
       "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-connectdashboard-staging-5ea37-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
+      "auth": {
+        "dashAuth": {}
+      },
       "function": {
         "callStart": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
           "s3Key": "amplify-builds/callStart-774951415669695a7242-build.zip"
+        },
+        "chatWebSocket": {
+          "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
+          "s3Key": "amplify-builds/chatWebSocket-6b784a66665934653646-build.zip"
         },
         "connectEvents": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
@@ -37,12 +44,6 @@
       },
       "storage": {
         "dashboardS3": {}
-      },
-      "api": {
-        "dashboard": {}
-      },
-      "auth": {
-        "dashAuth": {}
       }
     }
   }
