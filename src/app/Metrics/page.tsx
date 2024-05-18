@@ -3,14 +3,7 @@ import React from 'react';
 import Home from "../NavBar";
 import SearchBar from "../searchBar";
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
-import { fetchCurrentMetricData } from '@/fetching/fetchingGetCurrentMetricData';
 export default function Metrics() {
-    fetchCurrentMetricData().then(data => {
-        console.log(data);
-    }
-    ).catch(error => {
-        console.error("Error fetching data: ", error);
-    });
 
     return (
         <div className="flex h-screen bg-background text-foreground relative">

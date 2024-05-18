@@ -1,9 +1,5 @@
-// You may need to install node-fetch if using this in a Node.js environment
-// npm install node-fetch
-// import fetch from 'node-fetch';
-
-export async function fetchCurrentMetricData(queueId: string): Promise<any> {
-    const url = "http://localhost:3000/connect/GetCurrentMetricData?queueIds=" + queueId;
+export async function fetchListQueues(): Promise<any> {
+    const url = "http://localhost:3000/connect/ListQueues";
     try {
         const response = await fetch(url);
         if (!response.ok) {
