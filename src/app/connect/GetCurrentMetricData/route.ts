@@ -8,7 +8,8 @@ import { json } from "stream/consumers";
 
 async function getUserMetricData(
   client: ConnectClient,
-  InstanceId: string
+  InstanceId: string,
+  queueIdsArray: string[]
 ): Promise<any> {
   const input: GetCurrentMetricDataCommandInput = {
     InstanceId: InstanceId,
@@ -23,11 +24,7 @@ async function getUserMetricData(
       },
     ],
     Filters: {
-      Queues: [
-        "fe0bd989-c3d1-4959-a47c-b7d27def9a99",
-        "3f2a1212-1458-471f-8adb-04080c44f235",
-        "ab454c37-6f3e-4c50-9b01-e0f262ad5336",
-      ],
+      Queues: queueIdsArray,
       Channels: ["VOICE"],
     },
     Groupings: ["QUEUE", "CHANNEL"],
@@ -76,11 +73,25 @@ function arrangeMetricData(response: any): any[] {
 
 export async function GET(request: Request) {
   const config = make_config_json();
+  // Get the queueIDs from the request
+  const { searchParams } = new URL(request.url);
+  const queueIds = searchParams.get("queueIds") || undefined;
+
+  if (queueIds === undefined) {
+    return new Response(JSON.stringify({ message: "Please provide a queue ID" }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  const queueIdsArray = queueIds.split(",");
 
   const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
   const client = new ConnectClient(config as any);
 
-  const response = await getUserMetricData(client, InstanceId);
+  const response = await getUserMetricData(client, InstanceId, queueIdsArray);
 
   return Response.json({
     "message": "Current metric data retrieved successfully.",
