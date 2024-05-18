@@ -1,20 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import {
   ConnectClient,
   GetCurrentMetricDataCommand,
   GetCurrentMetricDataCommandInput,
 } from "@aws-sdk/client-connect";
-
-// Configuración del cliente (debes proporcionar esta configuración)
-function makeConfig(): any {
-  return {
-    region: process.env.AMAZON_REGION,
-    credentials: {
-      accessKeyId: process.env.CONNECT_ACCESS_KEY,
-      secretAccessKey: process.env.CONNECT_SECRET_ACCESS_KEY,
-    },
-  };
-}
+import { make_config_json } from "@/app/apis_library/connect";
+import { json } from "stream/consumers";
 
 async function getUserMetricData(
   client: ConnectClient,
@@ -51,28 +41,49 @@ async function getUserMetricData(
 
   const command = new GetCurrentMetricDataCommand(input);
   const response = await client.send(command);
+  // Print stringified response
+
   return response;
 }
 
-/*
-function arrangeMetricData(response: any): any {
-    const metricData = response.MetricResults;
-    const metricDataList = metricData.map((metric: any) => {
-        return {
-            MetricName: metric.MetricName,
-            MetricValue: metric.Value,
-        };
+function arrangeMetricData(response: any): any[] {
+  // Create an empty object to group metrics by Queue ID
+  const groupedByQueue: { [key: string]: any[] } = {};
+
+  // Iterate over each MetricResult and group metrics by Queue ID
+  response.MetricResults.forEach((result: any) => {
+    const queueId = result.Dimensions.Queue.Id; // Get the Queue ID
+    if (!groupedByQueue[queueId]) {
+      groupedByQueue[queueId] = []; // Initialize array if not already present
+    }
+
+    // Add each metric to the corresponding queue group
+    result.Collections.forEach((metric: any) => {
+      groupedByQueue[queueId].push({
+        Metric: metric.Metric.Name,
+        Value: metric.Value
+      });
     });
-    return metricDataList;
+  });
+
+  // Convert the grouped object into the desired array format
+  return Object.keys(groupedByQueue).map((queueId) => ({
+    queue: queueId,
+    queue_metrics: groupedByQueue[queueId]
+  }));
 }
-*/
+
 
 export async function GET(request: Request) {
-  const config = makeConfig();
+  const config = make_config_json();
+
   const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
   const client = new ConnectClient(config as any);
 
   const response = await getUserMetricData(client, InstanceId);
 
-  return Response.json(response);
+  return Response.json({
+    "message": "Current metric data retrieved successfully.",
+    "data": arrangeMetricData(response)
+  });
 }
