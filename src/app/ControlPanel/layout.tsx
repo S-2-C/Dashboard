@@ -1,4 +1,7 @@
+'use client';
 import React from "react";
+import { useEffect, useState } from "react";
+
 import { ReactNode } from "react";
 // import Home from '../NavBar'
 import SearchBar from "../searchBar";
@@ -25,7 +28,7 @@ export default function ControlPanelLayout({
   return (
     <>
       <div className="h-screen">
-        <div className="h-full flex ">
+        <div className="h-full flex flex-warp">
           <div className="flex-grow">{children}</div>
           <div className=" overflow-scroll  no-scrollbar">
             {/* Row for children and components */}
