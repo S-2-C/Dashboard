@@ -40,14 +40,14 @@ export default function Home2({ params }: { params: {id: string } }) {
     
     <div className="flex h-screen">
     
-      <div className={`${agent?.role == "SUPERVISOR" ? "bg-white" : "bg-blue"} h-full flex justify-center items-center w-3/5 flex-col`}>
+      <div className={`${agent?.role == "SUPERVISOR" ? "bg-white" : "bg-figma-figma7"} h-full flex justify-center items-center w-3/5 flex-col`}>
         <div className="h-1/2  w-full flex flex-row pl-20 pt-20">
           <img src="/images/S2C Figma1 Logo.svg" className=" w-16 h-auto pb-64" />
           <h1 className="text-figma-figma1 font-bold text-4xl pt-4 pl-4">S2C</h1>
 
         </div>
         <div className="h-1/2  w-full pl-20 ">
-          <Heading level={1} fontWeight="extrabold" className="mb-40">Welcome {agent?.role == "SUPERVISOR" ? "Supervisor" : "Agente"}</Heading>
+          <Heading level={1} fontWeight="extrabold" className="mb-40 text-white">Welcome {agent?.role == "SUPERVISOR" ? "Supervisor" : "Agente"}</Heading>
           <p className="text-figma-figma5 font-bold text-xl w-3/5 mt-12 mb-8">Dynamic, agile task management system leveraging real-time insights for efficiency</p>
 
           <Link href="/AgentManagement">
@@ -60,9 +60,9 @@ export default function Home2({ params }: { params: {id: string } }) {
       </div>
 
       <div className="w-1/5 h-full flex">
-        <div className="w-1/3 bg-figma-figma11 h-full"></div>
-        <div className="w-1/3 bg-figma-figma12 h-full"></div>
-        <div className="w-1/3 bg-figma-figma13 h-full"></div>
+        <div className={`${agent?.role == "SUPERVISOR" ? "bg-figma-figma11" : "bg-figma-figma14"} w-1/3  h-full`}></div>
+        <div className={`${agent?.role == "SUPERVISOR" ? "bg-figma-figma9" : "bg-figma-figma15"} w-1/3 h-full`}></div>
+        <div className={`${agent?.role == "SUPERVISOR" ? "bg-figma-figma13" : "bg-figma-figma16"} w-1/3 h-full`}></div>
 
       </div>
 
