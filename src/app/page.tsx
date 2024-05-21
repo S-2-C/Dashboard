@@ -60,7 +60,7 @@ export default function Home2({ params }: { params: { id: string } }) {
 
       <div className="w-1/5 h-full flex">
         <div className={`${agent?.role == "SUPERVISOR" ? "bg-figma-figma11" : "bg-figma-figma14"} w-1/3  h-full`}></div>
-        <div className={`${agent?.role == "SUPERVISOR" ? "bg-figma-figma9" : "bg-figma-figma15"} w-1/3 h-full`}></div>
+        <div className={`${agent?.role == "SUPERVISOR" ? "bg-figma-figma12" : "bg-figma-figma15"} w-1/3 h-full`}></div>
         <div className={`${agent?.role == "SUPERVISOR" ? "bg-figma-figma13" : "bg-figma-figma16"} w-1/3 h-full`}></div>
 
       </div>
