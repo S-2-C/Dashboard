@@ -1,0 +1,41 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+} # FOR TESTING ONLY!
+enum Role {
+  AGENT
+  SUPERVISOR
+}
+
+enum Urgency {
+  LOW
+  MEDIUM
+  HIGH
+  REGULAR
+}
+
+type User @model {
+  id: AWSEmail!
+  arn: String! @index
+  name: String
+  profilePic: String
+  role: Role!
+  needsHelp: Boolean!
+  isOnCall: Boolean! @default(value: "false")
+  Contacts: [Contact] @hasMany
+}
+
+type Contact @model {
+  phone: String!
+  callStart: AWSDateTime!
+  callEnd: AWSDateTime
+  user: User! @belongsTo
+}
+
+type Notification @model {
+  rule: String! # The rule that triggered the notification
+  action: String! # The suggestion by the backend (action)
+  description: String! # Text to display to the user
+  urgency: Urgency! @default(value: "REGULAR")
+}

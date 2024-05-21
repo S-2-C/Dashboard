@@ -65,12 +65,11 @@ export default function Home2({ params }: { params: { id: string } }) {
 
       </div>
 
-      <div className="w-1/5 bg-figma-figma1 pt-20 pl-40">
-        <img src="/images/Walmart logo.svg" className=" w-16 h-auto pb-64" />
+      <div className="w-1/5 bg-figma-figma1 pt-12  xl:pl-48 lg:pl-32 md:pl-20 sm:pl-12 pl-12  shrink-0">
+        <img src="/images/Walmart logo.svg" className=" w-16 h-auto pb-64 shrink-0" />
       </div>
 
     </div>
-
   );
 
 }

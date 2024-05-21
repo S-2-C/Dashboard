@@ -3,6 +3,7 @@ import {
     faTriangleExclamation,
     faUser
 } from '@fortawesome/free-solid-svg-icons';
+import SearchBar  from '../../searchBar'; //importing the SearchBar component
 export default async function SaturationSlot() {
     return (
         <div className="flex flex-col justify-start items-center h-full w-full pt-30 ">
