@@ -79,7 +79,7 @@ export default function AgentSlot() {
 
   return (
     <div
-      className="bg-blue-highlight rounded-lg p-8 shadow-md h-96 overflow-auto"
+      className="bg-blue-highlight rounded-lg p-8 shadow-md h-96 overflow-hidden"
       style={{ display: "inline-block" }}
     >
       <div className="bg-blue-highlight rounded-lg">

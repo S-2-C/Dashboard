@@ -38,7 +38,7 @@ export default function ControlPanelLayout({
             </div>
             <div className="flex h-4/5 justify-between pl-20 ">
               <div>
-                <div className="p-4">{Agent}</div>
+                <div className="p-4 flex-wrap">{Agent}</div>
                 <div className="p-4">{Metrics}</div>
               </div>
               <div>
