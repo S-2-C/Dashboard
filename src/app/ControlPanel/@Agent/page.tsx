@@ -10,6 +10,8 @@ import {
   User,
 } from "@/API";
 
+
+
 export default function AgentSlot() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
   const [alertUsers, setAlertUsers] = useState<User[]>([]);
@@ -39,9 +41,40 @@ export default function AgentSlot() {
     fetchAgents();
   }, []);
 
+  const combinedUsers = [
+    ...alertUsers.map(user => ({ ...user, status: 'alert' })),
+    ...activeUsers.map(user => ({ ...user, status: 'active' })),
+    ...offlineUsers.map(user => ({ ...user, status: 'offline' }))
+  ];
+
+  const getUserProperties = (status: string) => {
+    switch (status) {
+      case 'alert':
+        return {
+          imgSrc: "images/AgentRed.svg",
+          textClass: "text-red-500",
+        };
+      case 'active':
+        return {
+          imgSrc: "images/AgentYellow.svg",
+          textClass: "text-agenman-agenmanyellow",
+        };
+      case 'offline':
+        return {
+          imgSrc: "images/AgentBlue.svg",
+          textClass: "text-figma-figma1",
+        };
+      default:
+        return {
+          imgSrc: "",
+          textClass: "",
+        };
+    }
+  };
+
   return (
     <div
-      className="bg-blue-highlight rounded-lg p-8 shadow-md h-96"
+      className="bg-blue-highlight rounded-lg p-8 shadow-md h-96 border-2 border-blue-800"
       style={{ display: "inline-block" }}
     >
       <div className="bg-blue-highlight rounded-lg">
@@ -49,71 +82,26 @@ export default function AgentSlot() {
           <h1 className="text-4xl font-bold text-center ">Agents</h1>
         </Link>
       </div>
-      <div className="grid grid-cols-5 gap-x-16 gap-y-2 bg-blue-highlight p-4">
-        {alertUsers?.map((user, index) => (
-          <div className=" w-min p-1" key={index}>
-            <Link href={`/ManageCall/${user?.id}`}>
-              <div className="flex flex-col items-center w-20 ">
-                <img
-                  src="images/AgentRed.svg"
-                  className="h-auto w-10 mx-auto"
-                  alt="Agent"
-                />
-                <p className="text-center text-sm text-red-500">
-                  {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
-                </p>
-              </div>
-            </Link>
-          </div>
-        ))}
-        {activeUsers?.map((user, index) => (
-          <div className=" w-min p-1" key={index}>
-          <Link href={`/ManageCall/${user?.id}`}>
-          <div className="flex flex-col items-center w-20 ">
-              <img
-                src={"images/AgentYellow.svg"}
-                className="h-auto w-10 mx-auto"
-                alt="Agent"
-              />
-              <p className={"text-center text-sm text-agenman-agenmanyellow"}>
-                {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
-              </p>
+      <div className="h-full grid grid-cols-5 gap-x-16 gap-y-2 bg-blue-highlight p-4 overflow-y-auto">
+      {combinedUsers.map((user, index) => {
+          const { imgSrc, textClass } = getUserProperties(user.status);
+          return (
+            <div className="w-min p-1" key={index}>
+              <Link href={`/ManageCall/${user?.id}`}>
+                <div className="flex flex-col items-center w-20">
+                  <img
+                    src={imgSrc}
+                    className="h-auto w-10 mx-auto"
+                    alt="Agent"
+                  />
+                  <p className={`text-center text-sm ${textClass}`}>
+                    {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
+                  </p>
+                </div>
+              </Link>
             </div>
-          </Link>
-          </div>
-        ))}
-        {offlineUsers?.map((user, index) => (
-          <div className=" w-min p-1" key={index}>
-          <Link href={`/ManageCall/${user?.id}`}>
-            <div className="flex flex-col items-center w-20 ">
-              <img
-                src={"images/AgentBlue.svg"}
-                className="h-auto w-10 mx-auto"
-                alt="Agent"
-              />
-              <p className=" text-figma-figma1 text-sm px-1">
-                {" "}
-                {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}
-              </p>
-            </div>
-          </Link>
-          </div>
-        ))}
-
-        {/* {[...Array(20)].map((_, index) => (
-      <div key={index} className="rounded-lg flex flex-col items-center justify-center">
-        <div>
-          <img
-            src={index % 2 === 0 ? "images/AgentBlue.svg" : "images/AgentWhite.svg"}
-            alt="Agent"
-            className="w-10 h-auto mx-auto"
-          />
-          <p className={`text-center text-sm ${index % 2 === 0 ? "text-figma-figma1" : "text-white"}`}>
-            #12DAC
-          </p>
-        </div>
-      </div>
-    ))}  */}
+          );
+        })}
       </div>
     </div>
   );
