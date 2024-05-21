@@ -81,7 +81,6 @@ export default function Home() {
                   icon={faChartLine}
                   className="text-teal my-4 text-2xl"
                 />
-                {/* <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" /> */}
                 <FontAwesomeIcon
                   icon={faFileAlt}
                   className="text-teal my-4 text-2xl"
@@ -200,25 +199,6 @@ export default function Home() {
                     />
                     Performance Metrics
                     {hoveredItem === "Performance Metrics" && (
-                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
-                    )}
-                  </div>
-                </Link>
-              </li>
-              <li className="mt-1 flex items-center ml-4">
-                <Link
-                  href="Notifications"
-                  className={`text-teal hover:text-teal-highlight relative`}
-                  onMouseEnter={() => setHoveredItem("Notifications")}
-                  onMouseLeave={() => setHoveredItem(null)}
-                >
-                  <div className="w-max h-max p-2">
-                    <FontAwesomeIcon
-                      icon={faBell}
-                      className="text-teal hover:text-teal-highlight mr-2"
-                    />
-                    Notifications
-                    {hoveredItem === "Notifications" && (
                       <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
                     )}
                   </div>
