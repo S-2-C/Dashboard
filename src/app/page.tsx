@@ -43,7 +43,7 @@ export default function Home2({ params }: { params: { id: string } }) {
 
       <div className={`${agent?.role == "SUPERVISOR" ? "bg-white" : "bg-figma-figma7"} h-full flex justify-center items-center w-3/5 flex-col`}>
         <div className="h-1/2  w-full flex flex-row pl-20 pt-20">
-          <img src="/images/S2C Figma1 Logo.svg" className=" w-16 h-auto pb-64" />
+          <img src="/images/S2C Figma7 Logo.svg" className=" w-16 h-auto pb-64" />
           <h1 className="text-figma-figma1 font-bold text-4xl pt-4 pl-4">S2C</h1>
 
         </div>
