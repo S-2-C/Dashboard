@@ -136,8 +136,7 @@ export default function AgentManagement() {
                                             <Link href={`/ManageCall/${user?.id}`}>
                                             <div>
                                                 <img
-                                                        src={"images/AgentYellow.svg"}
-                                                        className="mx-auto h-10 w-10"
+                                                        src={"images/AgentYellow.svg"}                                                        className="mx-auto h-10 w-10"
                                                         alt="Agent"
                                                 />
                                                 <p className = {"text-center text-sm text-agenman-agenmanyellow"}>
