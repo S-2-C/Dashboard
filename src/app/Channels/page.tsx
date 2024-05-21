@@ -1,4 +1,6 @@
+"use client";
 import Home from "../NavBar" // Importing the NavBar component
+
 import { Button, Flex, Heading, Text } from "@aws-amplify/ui-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -29,17 +31,18 @@ import SearchBar  from '../searchBar'; //importing the SearchBar component
 
 export default function Notifications() {
     return (
-        <div>
-            <div className="h-screen flex w-full">
+        
+        <div className="h-full flex w-full ">
+            
                 <Home />
-                <div className="mt-12  flex-col ml-40 w-full">
+                <div className="mt-12  w-full flex-col ml-40  overflow-scroll  no-scrollbar">
                     {/* <div className="flex justify-end">
                         <SearchBar />
                     </div> */}
-                    <div className="h-12 p-4 m-1">
-                        <h1 className="text-figma-figma5 font-bold text-4xl">Channels</h1>
-                    </div>
-                    <div className="w-full h-screen overflow-y-auto">
+                    <Flex direction="column" gap="2rem">
+                    <Heading level={1} fontWeight="bold">Channels</Heading>
+                </Flex>
+                    <div className=" overflow-scroll  no-scrollbar ">
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Online Store
@@ -242,7 +245,7 @@ export default function Notifications() {
                         </Accordion>
                     </div>
                 </div>
-            </div>
+         
         </div>
 
     )
