@@ -79,7 +79,7 @@
 // });
 
 describe("S2C API Tests", function () {
-  const baseUrl = "http://localhost:3003/connect"; // Replace with the actual base URL
+  const baseUrl = "http://localhost:3000/connect"; // Replace with the actual base URL
 
   beforeEach(function () {
     cy.visit("/"); // Assuming you have some UI to go along with the API
@@ -153,7 +153,7 @@ describe("S2C API Tests", function () {
     });
   });
 
-  describe("Get User Metrics:", () => {
+  describe("Get Current Metrics:", () => {
     it("fetches user metrics successfully, response is correct", () => {
       cy.request(`${baseUrl}/GetCurrentMetricData`).then((response) => {
         expect(response.status).to.eq(200);
@@ -161,10 +161,165 @@ describe("S2C API Tests", function () {
     });
   });
 
-  describe("Get Current Metrics:", () => {
-    it("fetches current metrics successfully, response is correct", () => {
+  describe("Get Current Metrics 2:", () => {
+    it("returns data in the correct format", () => {
+      cy.request(`${baseUrl}/GetCurrentMetricData`).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.be.an("object");
+        expect(response.body).to.have.property("MetricResults"); // Adjust to the actual response property
+        expect(response.body.MetricResults).to.be.an("array");
+      });
+    });
+  });
+
+  describe("Get Current Metrics 3:", () => {
+    it("fetches user metrics successfully, response is correct", () => {
+      cy.request(`${baseUrl}/GetCurrentMetricData`).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body)
+          .to.have.property("MetricResults")
+          .that.is.an("array");
+
+        type MetricResult = {
+          Collections: {
+            Metric: {
+              Name: string;
+              Unit: string;
+            };
+            Value: number;
+          }[];
+          Dimensions: {
+            Queue: {
+              Id: string;
+              Arn: string;
+            };
+            Channel: string;
+          };
+        };
+
+        response.body.MetricResults.forEach((metric: MetricResult) => {
+          expect(metric).to.have.property("Collections").that.is.an("array");
+          metric.Collections.forEach((collection) => {
+            expect(collection).to.have.property("Metric").that.is.an("object");
+            expect(collection.Metric)
+              .to.have.property("Name")
+              .that.is.a("string");
+            expect(collection.Metric)
+              .to.have.property("Unit")
+              .that.is.a("string");
+            expect(collection).to.have.property("Value").that.is.a("number");
+          });
+
+          expect(metric).to.have.property("Dimensions").that.is.an("object");
+          expect(metric.Dimensions)
+            .to.have.property("Queue")
+            .that.is.an("object");
+          expect(metric.Dimensions.Queue)
+            .to.have.property("Id")
+            .that.is.a("string");
+          expect(metric.Dimensions.Queue)
+            .to.have.property("Arn")
+            .that.is.a("string");
+          expect(metric.Dimensions)
+            .to.have.property("Channel")
+            .that.is.a("string");
+        });
+      });
+    });
+  });
+
+  describe("Get Historic Metrics:", () => {
+    it("fetches historic metrics successfully, response is correct", () => {
       cy.request(`${baseUrl}/GetMetricDataV2`).then((response) => {
         expect(response.status).to.eq(200);
+      });
+    });
+  });
+
+  describe("Get Historic Metrics 2:", () => {
+    it("returns data in the correct format", () => {
+      cy.request(`${baseUrl}/GetMetricDataV2`).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.be.an("object");
+        expect(response.body).to.have.property("data1");
+        expect(response.body).to.have.property("data2");
+
+        expect(response.body.data1).to.be.an("object");
+        expect(response.body.data2).to.be.an("object");
+
+        expect(response.body.data1)
+          .to.have.property("MetricResults")
+          .that.is.an("array");
+
+        expect(response.body.data2)
+          .to.have.property("MetricResults")
+          .that.is.an("array");
+      });
+    });
+  });
+
+  describe("Get Historic Metrics 3:", () => {
+    it("fetches historic metrics successfully, response is correct", () => {
+      cy.request(`${baseUrl}/GetMetricDataV2`).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.have.property("data1").that.is.an("object");
+        expect(response.body).to.have.property("data2").that.is.an("object");
+
+        type MetricCollection = {
+          Metric: {
+            Name: string;
+          };
+          Value?: number;
+        };
+
+        type MetricResult = {
+          Collections: MetricCollection[];
+        };
+
+        expect(response.body.data1)
+          .to.have.property("MetricResults")
+          .that.is.an("array");
+        response.body.data1.MetricResults.forEach((metric: MetricResult) => {
+          expect(metric).to.have.property("Collections").that.is.an("array");
+          metric.Collections.forEach((collection) => {
+            expect(collection).to.have.property("Metric").that.is.an("object");
+            expect(collection.Metric)
+              .to.have.property("Name")
+              .that.is.a("string");
+            if (collection.Value !== undefined) {
+              expect(collection).to.have.property("Value").that.is.a("number");
+            }
+          });
+        });
+
+        expect(response.body.data2)
+          .to.have.property("MetricResults")
+          .that.is.an("array");
+        response.body.data2.MetricResults.forEach((metric: MetricResult) => {
+          expect(metric).to.have.property("Collections").that.is.an("array");
+          metric.Collections.forEach((collection) => {
+            expect(collection).to.have.property("Metric").that.is.an("object");
+            expect(collection.Metric)
+              .to.have.property("Name")
+              .that.is.a("string");
+            if (collection.Value !== undefined) {
+              expect(collection).to.have.property("Value").that.is.a("number");
+            }
+          });
+        });
+      });
+    });
+  });
+
+  describe("API Tests Chat Bot", () => {
+    it("Returns results for a valid question", () => {
+      cy.request({
+        method: "GET",
+        url: "http://localhost:3000/chatBot?question=delivery",
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.have.property("ragChainResult");
+        expect(response.body).to.have.property("retrievedDocs");
       });
     });
   });

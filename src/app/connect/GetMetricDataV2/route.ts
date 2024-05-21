@@ -28,7 +28,7 @@ export async function GET(req: Request, res: Response) {
 
   const inputAgent = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
-    StartTime: new Date("2024-03-28"),
+    StartTime: new Date("2024-04-28"),
     EndTime: new Date(),
     Filters: [
       {
@@ -52,7 +52,7 @@ export async function GET(req: Request, res: Response) {
 
   const inputQueue = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
-    StartTime: new Date("2024-03-28"),
+    StartTime: new Date("2024-04-28"),
     EndTime: new Date(),
     Filters: [
       {
