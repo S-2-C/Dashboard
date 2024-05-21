@@ -8,7 +8,7 @@ interface StoryProps {
 const Story: React.FC<StoryProps> = ({ img, username }) => {
     return (
         <div>
-            <div className="bg-gradient-to-tr from-yellow-500 to-red-600 p-[1.5px] rounded-full">
+            <div className="p-[1.5px] rounded-full" style={{ background: 'linear-gradient(to top right, #057dc7, #e2f0f9)' }}>
                 <div className="bg-white rounded-full p-1">
                     <img className="h-14 w-14 rounded-full" src={img} alt={username} />
                 </div>

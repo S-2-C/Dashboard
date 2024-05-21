@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Flex, Text, View } from '@aws-amplify/ui-react';
-import Home from '../NavBar'
+import Home from '../NavBar';
 import StoryTypeMenu from './StoryTypeMenu';
 
 interface ChatClientProps {
@@ -28,9 +28,9 @@ export const ChatClient: React.FC<ChatClientProps> = ({
     return (
         <Flex direction="column" style={{ height: '100vh', width: '100%' }}>
             <Flex direction="row" style={{ height: '100%', backgroundColor: '#FFFFFF' }}>
-                <Flex direction='column'><Home /></Flex>
-                <Flex direction="column" style={{ flex: '1', marginLeft: '65px', padding:'10px'}}>
-                    <Flex>
+                <Flex direction="column" style={{ zIndex: 10 }}><Home /></Flex>
+                <Flex direction="column" style={{ flex: '1', marginLeft: '65px', padding: '10px', position: 'relative', zIndex: 5 }}>
+                    <Flex style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                         <StoryTypeMenu />
                     </Flex>
                     <View style={{ overflowY: 'scroll', marginBottom: '20px' }}>
