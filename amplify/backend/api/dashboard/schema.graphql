@@ -38,4 +38,5 @@ type Notification @model {
   action: String! # The suggestion by the backend (action)
   description: String! # Text to display to the user
   urgency: Urgency! @default(value: "REGULAR")
+  agentArn: String
 }
