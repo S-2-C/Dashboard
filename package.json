@@ -12,7 +12,7 @@
     "test": "npx cypress run"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "^6.1.4",
+    "@aws-amplify/ui-react": "^6.1.11",
     "@aws-sdk/client-connect": "^3.556.0",
     "@aws-sdk/client-connect-contact-lens": "^3.556.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",

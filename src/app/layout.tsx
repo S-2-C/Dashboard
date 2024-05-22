@@ -28,9 +28,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {/* <WrappedAuthenticator> */}
-        {children}
-        {/* </WrappedAuthenticator> */}
+        <WrappedAuthenticator>
+          {children}
+        </WrappedAuthenticator>
         <div>
           <AIChatButton />
         </div>

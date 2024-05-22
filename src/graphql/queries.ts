@@ -8,72 +8,297 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getSupervisor = /* GraphQL */ `query GetSupervisor($id: ID!) {
-  getSupervisor(id: $id) {
-    name
-    profilePic
-    email
+export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
+  getUser(id: $id) {
     id
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetSupervisorQueryVariables,
-  APITypes.GetSupervisorQuery
->;
-export const listSupervisors = /* GraphQL */ `query ListSupervisors(
-  $filter: ModelSupervisorFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listSupervisors(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      name
-      profilePic
-      email
-      id
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListSupervisorsQueryVariables,
-  APITypes.ListSupervisorsQuery
->;
-export const getAgent = /* GraphQL */ `query GetAgent($id: ID!) {
-  getAgent(id: $id) {
+    arn
     name
     profilePic
-    email
+    role
     needsHelp
-    calls {
+    isOnCall
+    Contacts {
+      items {
+        phone
+        callStart
+        callEnd
+        user {
+          id
+          arn
+          name
+          profilePic
+          role
+          needsHelp
+          isOnCall
+          Contacts {
+            items {
+              phone
+              callStart
+              callEnd
+              user {
+                id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
+                isOnCall
+                createdAt
+                updatedAt
+                __typename
+              }
+              id
+              createdAt
+              updatedAt
+              userContactsId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        id
+        createdAt
+        updatedAt
+        userContactsId
+        __typename
+      }
       nextToken
       __typename
     }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;
+export const listUsers = /* GraphQL */ `query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      arn
+      name
+      profilePic
+      role
+      needsHelp
+      isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const getContact = /* GraphQL */ `query GetContact($id: ID!) {
+  getContact(id: $id) {
+    phone
+    callStart
+    callEnd
+    user {
+      id
+      arn
+      name
+      profilePic
+      role
+      needsHelp
+      isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    userContactsId
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetContactQueryVariables,
+  APITypes.GetContactQuery
+>;
+export const listContacts = /* GraphQL */ `query ListContacts(
+  $filter: ModelContactFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      phone
+      callStart
+      callEnd
+      user {
+        id
+        arn
+        name
+        profilePic
+        role
+        needsHelp
+        isOnCall
+        Contacts {
+          items {
+            phone
+            callStart
+            callEnd
+            user {
+              id
+              arn
+              name
+              profilePic
+              role
+              needsHelp
+              isOnCall
+              Contacts {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            id
+            createdAt
+            updatedAt
+            userContactsId
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      id
+      createdAt
+      updatedAt
+      userContactsId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListContactsQueryVariables,
+  APITypes.ListContactsQuery
+>;
+export const getNotification = /* GraphQL */ `query GetNotification($id: ID!) {
+  getNotification(id: $id) {
+    rule
+    action
+    description
+    urgency
     id
     createdAt
     updatedAt
     __typename
   }
 }
-` as GeneratedQuery<APITypes.GetAgentQueryVariables, APITypes.GetAgentQuery>;
-export const listAgents = /* GraphQL */ `query ListAgents(
-  $filter: ModelAgentFilterInput
+` as GeneratedQuery<
+  APITypes.GetNotificationQueryVariables,
+  APITypes.GetNotificationQuery
+>;
+export const listNotifications = /* GraphQL */ `query ListNotifications(
+  $filter: ModelNotificationFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listAgents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      name
-      profilePic
-      email
-      needsHelp
+      rule
+      action
+      description
+      urgency
       id
       createdAt
       updatedAt
@@ -84,52 +309,80 @@ export const listAgents = /* GraphQL */ `query ListAgents(
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListAgentsQueryVariables,
-  APITypes.ListAgentsQuery
+  APITypes.ListNotificationsQueryVariables,
+  APITypes.ListNotificationsQuery
 >;
-export const getCall = /* GraphQL */ `query GetCall($id: ID!) {
-  getCall(id: $id) {
-    ARN
-    phone
-    callStart
-    callEnd
-    agent {
-      name
-      profilePic
-      email
-      needsHelp
-      id
-      createdAt
-      updatedAt
-      __typename
-    }
-    id
-    createdAt
-    updatedAt
-    agentCallsId
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetCallQueryVariables, APITypes.GetCallQuery>;
-export const listCalls = /* GraphQL */ `query ListCalls(
-  $filter: ModelCallFilterInput
+export const usersByArn = /* GraphQL */ `query UsersByArn(
+  $arn: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listCalls(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  usersByArn(
+    arn: $arn
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
     items {
-      ARN
-      phone
-      callStart
-      callEnd
       id
+      arn
+      name
+      profilePic
+      role
+      needsHelp
+      isOnCall
+      Contacts {
+        items {
+          phone
+          callStart
+          callEnd
+          user {
+            id
+            arn
+            name
+            profilePic
+            role
+            needsHelp
+            isOnCall
+            Contacts {
+              items {
+                phone
+                callStart
+                callEnd
+                id
+                createdAt
+                updatedAt
+                userContactsId
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          id
+          createdAt
+          updatedAt
+          userContactsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
-      agentCallsId
       __typename
     }
     nextToken
     __typename
   }
 }
-` as GeneratedQuery<APITypes.ListCallsQueryVariables, APITypes.ListCallsQuery>;
+` as GeneratedQuery<
+  APITypes.UsersByArnQueryVariables,
+  APITypes.UsersByArnQuery
+>;
