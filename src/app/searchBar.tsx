@@ -2,8 +2,28 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
+import { GetUserQuery } from "@/API";
+import { useState, useEffect } from "react";
+import { fetchAuthSession } from 'aws-amplify/auth';
 
-const SearchBar = () => {
+const SearchBar = ({ params }: { params: { id: string } }) => {
+  const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
+  useEffect(() => {
+    async function fetchAgent() {
+      
+      const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
+      console.log(user);
+      const email = user?.tokens?.signInDetails?.loginId;
+      console.log(email)
+      const agent = await fetchOneAgent(email);
+      console.log("agent", agent);
+      setAgent(agent);
+      
+    }
+
+    fetchAgent();
+  }, []);
   return (
     <div className="flex items-center max-w-xl">
       <div className="relative w-full">
@@ -23,7 +43,7 @@ const SearchBar = () => {
         </div>
       </div>
       <div className="flex pl-16">
-        <Link href="/Profile">
+        <Link href={agent?.role=="SUPERVISOR" ? "/Profile" : "/ProfileAgent"}>
           <Button className="bg-blue hover:bg-blue-dark text-blue-dark hover:text-white font-bold text-base">
             My Profile
           </Button>
