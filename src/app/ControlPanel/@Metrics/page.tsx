@@ -28,10 +28,10 @@ export default function MetricsSlot() {
   }, []);
 
   return (
-    <div>
+    <div className="py-4">
       {agent?.role === "SUPERVISOR" ? (
         <>
-          <div className="py-4">
+          <div>
             <div className="bg-metrics rounded-lg shadow-md p-4">
               <h1 className="text-3xl font-bold text-center p-4">Metric 1</h1>
               <div className="h-full flex justify-center items-center text-white"></div>
@@ -39,8 +39,8 @@ export default function MetricsSlot() {
           </div>
         </>
       ) : (
-        <div className="py-4 overflow-hidden">
-        <button className="bg-red-500 hover:bg-blue-500 rounded-lg shadow-md p-4 overflow-hidden">
+        <div className="overflow-hidden">
+        <button className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden">
           <div className="flex items-center justify-center p-4">
             <FontAwesomeIcon
               icon={faQuestion}

@@ -128,15 +128,15 @@ export default function AgentSlot() {
       {agent?.role === "SUPERVISOR" ? (
         <>
           <div
-            className="bg-blue-highlight rounded-lg p-8 shadow-md h-96 overflow-hidden"
+            className="bg-blue-highlight rounded-lg p-8 shadow-md h-96"
             style={{ display: "inline-block" }}
           >
             <div className="rounded-lg">
               <Link href="/AgentManagement">
-                <h1 className="text-4xl font-bold text-center ">Agents</h1>
+                <h1 className="text-4xl font-bold text-center ">Agent</h1>
               </Link>
             </div>
-            <div className="h-full grid grid-cols-5 gap-x-16 gap-y-2 p-4 overflow-y-auto no-scrollbar">
+            <div className="h-5/6 grid grid-cols-5 gap-x-16 gap-y-2 p-2 overflow-scroll no-scrollbar">
               {combinedUsers.map((user, index) => {
                 const { imgSrc, textClass } = getUserProperties(user.status);
                 return (
@@ -163,7 +163,7 @@ export default function AgentSlot() {
         </>
       ) : (
         <div
-          className="bg-figma-figma1 rounded-lg p-8 shadow-md h-96 overflow-hidden"
+          className="bg-figma-figma1 rounded-lg p-8 shadow-md h-96 "
           style={{ display: "inline-block" }}
         >
           <h1 className="text-4xl text-center text-white ">

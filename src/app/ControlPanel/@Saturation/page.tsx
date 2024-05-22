@@ -90,7 +90,7 @@ export default function SaturationSlot() {
           </div>
         </>
       ) : (
-        <div className="bg-blue-dark flex flex-col rounded-lg shadow-md h-96">
+        <div className="bg-blue-dark flex flex-col rounded-lg shadow-md h-96 ">
           <Link href="/Channels">
             <div className="text-center p-4 bg-blue-darkhighlight rounded-lg shadow-md">
               <h1 className="text-3xl font-bold text-white text-center px-4 py-2">
