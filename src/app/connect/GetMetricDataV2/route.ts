@@ -1,10 +1,21 @@
 import { ConnectClient, GetMetricDataV2Command } from "@aws-sdk/client-connect";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { json } from "stream/consumers";
 
 export async function GET(req: Request, res: Response) {
   const { searchParams } = new URL(req.url);
   const queueIds = searchParams.get("queueIds") || undefined;
-  let metricDate : any = searchParams.get("metricDate") || undefined;
+  let metricDate: any = searchParams.get("metricDate") || undefined;
+  console.log("metricDate: ", metricDate);
+  console.log("queueIds: ", queueIds);
+
+
+  if (metricDate === undefined) {
+    metricDate = new Date();
+    // add timestamp
+  } else {
+    metricDate = new Date(metricDate);
+  }
 
   if (queueIds === undefined) {
     return new Response(
@@ -16,12 +27,9 @@ export async function GET(req: Request, res: Response) {
         },
       }
     );
-  }}
-
-  if (metricDate === undefined) {
-    metricDate = new Date();
-    // add timestamp
   }
+
+
 
   const queueIdsArray = queueIds.split(",");
   if (
@@ -50,7 +58,7 @@ export async function GET(req: Request, res: Response) {
 
   const inputAgent = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
-    StartTime: new Date(metricDate),
+    StartTime: metricDate,
     EndTime: new Date(),
     Filters: [
       {
@@ -74,7 +82,7 @@ export async function GET(req: Request, res: Response) {
 
   const inputQueue = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
-    StartTime: new Date(metricDate),
+    StartTime: metricDate,
     EndTime: new Date(),
     Filters: [
       {
@@ -92,9 +100,15 @@ export async function GET(req: Request, res: Response) {
     ],
   };
 
+  // Print stringified input
+  console.log("inputAgent: ", JSON.stringify(inputQueue));
+
+
+
   try {
     const responses = await Promise.all([
-      client.send(new GetMetricDataV2Command(inputAgent)),
+      //client.send(new GetMetricDataV2Command(inputAgent)),
+
       client.send(new GetMetricDataV2Command(inputQueue)),
     ]);
 
