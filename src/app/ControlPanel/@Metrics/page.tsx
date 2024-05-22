@@ -1,11 +1,15 @@
-'use client';
+"use client";
 import Link from "next/link";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { GetUserQuery } from "@/API";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+// import a question mark icon
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default  function MetricsSlot() {
+export default function MetricsSlot() {
   const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
 
   useEffect(() => {
@@ -23,33 +27,35 @@ export default  function MetricsSlot() {
     fetchAgent();
   }, []);
 
-    return (
-      <div> 
-         {agent?.role === "SUPERVISOR" ? (
+  return (
+    <div>
+      {agent?.role === "SUPERVISOR" ? (
         <>
-        <div className="py-4">
-      <div className="bg-metrics rounded-lg shadow-md p-4">
-          <h1 className="text-3xl font-bold text-center p-4">
-            Metric 1
-          </h1>
-        <div className="h-full flex justify-center items-center text-white">
-          
-        </div>
-      </div>
-      </div>
-      </>
-      ) : (
-        <div className="py-4">
-          <div className="bg-figma-figma2 rounded-lg shadow-md p-4">
-            <h1 className="text-3xl font-bold text-center p-4">
-             Ask for help
-            </h1>
-            <div className="h-full flex justify-center items-center text-white">
-              
+          <div className="py-4">
+            <div className="bg-metrics rounded-lg shadow-md p-4">
+              <h1 className="text-3xl font-bold text-center p-4">Metric 1</h1>
+              <div className="h-full flex justify-center items-center text-white"></div>
             </div>
           </div>
-        </div>
-      )}
+        </>
+      ) : (
+        <div className="py-4 overflow-hidden">
+        <button className="bg-figma-figma2 hover:bg-blue-500 rounded-lg shadow-md p-4 overflow-hidden">
+          <div className="flex items-center justify-center p-4">
+            <FontAwesomeIcon
+              icon={faQuestion}
+              className="text-black text-5xl mr-2"
+            />
+            <h1 className="text-3xl font-bold">Ask for help</h1>
+          </div>
+          <div className="items-center">
+            <span>Details</span>
+          </div>
+          </button>
       </div>
-    );
-  }
+      
+      
+      )}
+    </div>
+  );
+}
