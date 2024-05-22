@@ -9,20 +9,48 @@ import {
   Contact,
   User,
 } from "@/API";
+import useUserUpdates from "@/hooks/useUserUpdates";
 
 export default function AgentSlot() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
   const [alertUsers, setAlertUsers] = useState<User[]>([]);
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
   const [offlineSupervisors, setOfflineSupervisors] = useState<User[]>([]);
+  const userChange = useUserUpdates(); // This will hold the latest user update
+  const addUserToState = (user: User, setter: any) => {
+    setter((prev: any) => [...(prev || []), user]);
+  };
+  const removeUserFromAllState = (user: User) => {
+    setAlertUsers((prev) => prev?.filter((u) => u.id !== user.id));
+    setActiveUsers((prev) => prev?.filter((u) => u.id !== user.id));
+    setOfflineUsers((prev) => prev?.filter((u) => u.id !== user.id));
+    setOfflineSupervisors((prev) => prev?.filter((u) => u.id !== user.id));
+  };
+
+  useEffect(() => {
+    if (userChange) {
+      removeUserFromAllState(userChange);
+      if (userChange?.needsHelp) {
+        console.log("User id", userChange.id, "needs help");
+        addUserToState(userChange, setAlertUsers);
+      } else if (userChange?.isOnCall) {
+        addUserToState(userChange, setActiveUsers);
+        console.log("User id", userChange.id, "just took a call");
+      } else if (!userChange?.isOnCall && userChange?.role == "AGENT") {
+        addUserToState(userChange, setOfflineUsers);
+        console.log("User id", userChange.id, "is now offline");
+      } else if (!userChange?.isOnCall && userChange?.role == "SUPERVISOR") {
+        addUserToState(userChange, setOfflineSupervisors);
+        console.log("Supervisor id", userChange.id, "is now offline");
+      }
+    }
+  }, [userChange]);
 
   useEffect(() => {
     async function fetchAgents() {
       const res = await fetchAllAgents();
 
       res?.items?.forEach((agent: User) => {
-        console.log(agent);
-
         if (agent?.needsHelp) {
           setAlertUsers((prev) => [...(prev || []), agent]);
         } else if (agent?.isOnCall) {
@@ -33,8 +61,6 @@ export default function AgentSlot() {
           setOfflineSupervisors((prev) => [...(prev || []), agent]);
         }
       });
-
-      console.log("res", res);
     }
     fetchAgents();
   }, []);
