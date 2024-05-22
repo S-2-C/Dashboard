@@ -61,8 +61,6 @@ export const fetchAllAgents = async () => {
       query: listUsers,
     })) as ListUsersQuery;
 
-    console.log("allAgents", allAgents);
-
     //@ts-ignore
     return allAgents.data.listUsers;
   } catch (error) {
