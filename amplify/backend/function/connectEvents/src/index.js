@@ -9,7 +9,6 @@ Amplify Params - DO NOT EDIT */
 const REGION = process.env.AWS_REGION;
 const APPSYNCURL = process.env.API_DASHBOARD_GRAPHQLAPIENDPOINTOUTPUT;
 const GQLAPIKEY = process.env.API_DASHBOARD_GRAPHQLAPIKEYOUTPUT;
-const { rule } = require("postcss");
 const { sendAppSyncRequest } = require("./helpers/appSync.js");
 
 /**
@@ -132,28 +131,54 @@ async function updateCallEnd(event) {
 }
 
 // function to create a notification in the database
-async function createNotification(event, description, urgency = "REGULAR") {
+async function createNotification(event, description, urgency = "REGULAR", agentArn = null) {
     const rule = event.detail.ruleName;
 
-    const createNotificationQuery = {
-        query: `mutation CreateNotification($input: CreateNotificationInput!) {
-            createNotification(input: $input) {
-                id
-                rule
-                action
-                description
-                urgency
+    let createNotificationQuery;
+    if (agentArn) {
+        createNotificationQuery = {
+            query: `mutation CreateNotification($input: CreateNotificationInput!) {
+                createNotification(input: $input) {
+                    id
+                    rule
+                    action
+                    description
+                    urgency
+                    agentArn
+                }
+            }`,
+            variables: {
+                input: {
+                    rule: rule,
+                    action: event.detail.actionName,
+                    description: description,
+                    urgency: urgency,
+                    agentArn: agentArn
+                }
             }
-        }`,
-        variables: {
-            input: {
-                rule: rule,
-                action: event.detail.actionName,
-                description: description,
-                urgency: urgency
+        };
+
+    } else {
+        createNotificationQuery = {
+            query: `mutation CreateNotification($input: CreateNotificationInput!) {
+                createNotification(input: $input) {
+                    id
+                    rule
+                    action
+                    description
+                    urgency
+                }
+            }`,
+            variables: {
+                input: {
+                    rule: rule,
+                    action: event.detail.actionName,
+                    description: description,
+                    urgency: urgency
+                }
             }
-        }
-    };
+        };
+    }
 
     try {
         const createNotificationRes = await sendAppSyncRequest(
@@ -165,12 +190,14 @@ async function createNotification(event, description, urgency = "REGULAR") {
         );
 
         console.log(`Created notification for ${rule}`);
+
         return {
             statusCode: 200,
             body: JSON.stringify(createNotificationRes.data["createNotification"]),
         };
     } catch (error) {
         console.error(`Could not create notification for ${rule}`);
+
         return {
             statusCode: 500,
             body: JSON.stringify(`Could not create notification for ${rule}. Error: ${error}`),
@@ -182,7 +209,7 @@ exports.handler = async (event) => {
     console.log(`EVENT: ${JSON.stringify(event)}`);
 
     let eventType;
-    if (event["detail-type"] === "Metrics Rules Matched") {
+    if (event["detail-type"] === "Metrics Rules Matched" || event["detail-type"] === "Contact Lens Realtime Rules Matched") {
         eventType = event.detail.ruleName;
     } else {
         eventType = event.detail.eventType;
@@ -205,17 +232,11 @@ exports.handler = async (event) => {
         case "QUEUE_WAIT_TOO_LONG_PHYSICAL":
             return createNotification(event, "The wait time in the Walmart Physical Store queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
 
-        case "NO_AGENTS_DELIVERY":
-            return createNotification(event, "There are no agents available in the Walmart Delivery queue, please move agents to the queue to reduce wait time.", "HIGH");
+        case "NO_AGENTS_IN_QUEUE":
+            return createNotification(event, "There are no agents available in the queue, watch out for an increase in inbound calls.", "LOW");
 
-        case "NO_AGENTS_ONLINE":
-            return createNotification(event, "There are no agents available in the Walmart Online queue, please move agents to the queue to reduce wait time.", "HIGH");
-
-        case "NO_AGENTS_PASS":
-            return createNotification(event, "There are no agents available in the Walmart Pass queue, please move agents to the queue to reduce wait time.", "HIGH");
-
-        case "NO_AGENTS_PHYSICAL":
-            return createNotification(event, "There are no agents available in the Walmart Physical Store queue, please move agents to the queue to reduce wait time.", "HIGH");
+        case "NEGATIVE_SENTIMENT_CALL":
+            return createNotification(event, "A customer has expressed negative sentiment during a call, please chat.", "HIGH", event.detail.agentArn);
 
         default:
             return {
