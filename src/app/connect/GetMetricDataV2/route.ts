@@ -2,13 +2,16 @@ import { ConnectClient, GetMetricDataV2Command } from "@aws-sdk/client-connect";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { json } from "stream/consumers";
 
+
+
+
+
 export async function GET(req: Request, res: Response) {
   const { searchParams } = new URL(req.url);
   const queueIds = searchParams.get("queueIds") || undefined;
   let metricDate: any = searchParams.get("metricDate") || undefined;
   console.log("metricDate: ", metricDate);
   console.log("queueIds: ", queueIds);
-
 
   if (metricDate === undefined) {
     metricDate = new Date();
@@ -28,8 +31,6 @@ export async function GET(req: Request, res: Response) {
       }
     );
   }
-
-
 
   const queueIdsArray = queueIds.split(",");
   if (
@@ -103,8 +104,6 @@ export async function GET(req: Request, res: Response) {
   // Print stringified input
   console.log("inputAgent: ", JSON.stringify(inputQueue));
 
-
-
   try {
     const responses = await Promise.all([
       //client.send(new GetMetricDataV2Command(inputAgent)),
@@ -114,23 +113,27 @@ export async function GET(req: Request, res: Response) {
 
     const combinedResponse = {
       data1: responses[0],
-      data2: responses[1],
+      // data2: responses[1],
     };
-    return new Response(JSON.stringify(combinedResponse), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
+    return Response.json({
+      "message": "Current metric data retrieved successfully.",
+      "data": (responses)
     });
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ message: "Failed to fetch metrics" }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  //   return new Response(JSON.stringify(combinedResponse), {
+  //     status: 200,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  // } catch (error) {
+  //   return new Response(
+  //     JSON.stringify({ message: "Failed to fetch metrics" }),
+  //     {
+  //       status: 500,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
   }
 }
