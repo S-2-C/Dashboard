@@ -40,7 +40,7 @@ export default function MetricsSlot() {
         </>
       ) : (
         <div className="py-4 overflow-hidden">
-        <button className="bg-figma-figma2 hover:bg-blue-500 rounded-lg shadow-md p-4 overflow-hidden">
+        <button className="bg-red-500 hover:bg-blue-500 rounded-lg shadow-md p-4 overflow-hidden">
           <div className="flex items-center justify-center p-4">
             <FontAwesomeIcon
               icon={faQuestion}
