@@ -202,12 +202,7 @@ export default function AgentManagement() {
                                             ))}
                                         </div>
                                 </div>
-                                <div>
-                                    <AIChatButton/>
-                                </div>
-
                             </div>
-
                         </Flex>
                     </Flex>
                 </div>
