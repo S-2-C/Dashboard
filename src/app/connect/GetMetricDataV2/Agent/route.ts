@@ -4,32 +4,35 @@ import { make_config_json } from "@/app/apis_library/connect";
 
 async function getUserMetricData(
   client: ConnectClient,
-  queueIdsArray: string[],
+  agentIdsArray: string[],
   metricDate: Date
 ): Promise<any> {
   console.log(metricDate);
   console.log(new Date());
-  console.log("queueIdsArray: ", queueIdsArray);
+  console.log("agentIdsArray: ", agentIdsArray);
   const input = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
     StartTime: metricDate,
     EndTime: new Date(),
     Filters: [
       {
-        FilterKey: "QUEUE",
-        FilterValues: queueIdsArray,
+        FilterKey: "AGENT",
+        FilterValues: agentIdsArray,
       },
     ],
     Metrics: [
-      { Name: "CONTACTS_QUEUED" },
-      { Name: "AVG_RESOLUTION_TIME" },
-      { Name: "AVG_TALK_TIME" },
-      { Name: "AVG_QUEUE_ANSWER_TIME" },
-      { Name: "AVG_CASE_RESOLUTION_TIME" },
+      { Name: "AGENT_NON_RESPONSE" },
+      { Name: "AVG_CONTACT_DURATION" },
+      { Name: "AGENT_OCCUPANCY" },
+      { Name: "AVG_HANDLE_TIME" },
       { Name: "CONTACTS_HANDLED" },
+      { Name: "AGENT_ANSWER_RATE" },
+      { Name: "AVG_HOLD_TIME" },
+      { Name: "AVG_INTERRUPTIONS_AGENT" },
+      { Name: "CONTACTS_HANDLED" },
+      { Name: "SUM_NON_PRODUCTIVE_TIME_AGENT" },
     ],
   };
-  console.log(input);
 
   const command = new GetMetricDataV2Command(input);
   const response = await client.send(command);
@@ -50,10 +53,10 @@ function arrangeMetricData(response: any): any[] {
 export async function GET(request: Request) {
   const config = make_config_json();
   const { searchParams } = new URL(request.url);
-  const queueIds = searchParams.get("queueIds") || undefined;
+  const agentIds = searchParams.get("agentIds") || undefined;
   let metricDate: any = searchParams.get("metricDate") || undefined;
   console.log("metricDate: ", metricDate);
-  console.log("queueIds: ", queueIds);
+  console.log("agentIds: ", agentIds);
 
   if (!metricDate) {
     metricDate = new Date();
@@ -61,9 +64,9 @@ export async function GET(request: Request) {
     metricDate = new Date(metricDate);
   }
 
-  if (!queueIds) {
+  if (!agentIds) {
     return new Response(
-      JSON.stringify({ message: "Please provide a queue ID" }),
+      JSON.stringify({ message: "Please provide agent IDs" }),
       {
         status: 400,
         headers: {
@@ -73,11 +76,11 @@ export async function GET(request: Request) {
     );
   }
 
-  const queueIdsArray = queueIds.split(",");
+  const agentIdsArray = agentIds.split(",");
 
   const client = new ConnectClient(config as any);
 
-  const response = await getUserMetricData(client, queueIdsArray, metricDate);
+  const response = await getUserMetricData(client, agentIdsArray, metricDate);
   console.log("Response from GetMetricDataV2Command:", response);
 
   return new Response(
