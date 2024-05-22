@@ -23,6 +23,7 @@ export default function Home2({ params }: { params: { id: string } }) {
 
       const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
       console.log(user);
+      // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
       console.log(email)
       const agent = await fetchOneAgent(email);
