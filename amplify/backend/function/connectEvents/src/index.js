@@ -16,16 +16,6 @@ const { sendAppSyncRequest } = require("./helpers/appSync.js");
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 
-const CREATE_NOTIFICATION_QUERY = `mutation CreateNotification($input: CreateNotificationInput!) {
-    createNotification(input: $input) {
-        id
-        rule
-        action
-        description
-        urgency
-    }
-}`;
-
 // function to handle calls being disconnected -> should update api with call end time
 async function updateCallEnd(event) {
     const contactId = event.detail.contactId;
@@ -214,6 +204,18 @@ exports.handler = async (event) => {
 
         case "QUEUE_WAIT_TOO_LONG_PHYSICAL":
             return createNotification(event, "The wait time in the Walmart Physical Store queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
+
+        case "NO_AGENTS_DELIVERY":
+            return createNotification(event, "There are no agents available in the Walmart Delivery queue, please move agents to the queue to reduce wait time.", "HIGH");
+
+        case "NO_AGENTS_ONLINE":
+            return createNotification(event, "There are no agents available in the Walmart Online queue, please move agents to the queue to reduce wait time.", "HIGH");
+
+        case "NO_AGENTS_PASS":
+            return createNotification(event, "There are no agents available in the Walmart Pass queue, please move agents to the queue to reduce wait time.", "HIGH");
+
+        case "NO_AGENTS_PHYSICAL":
+            return createNotification(event, "There are no agents available in the Walmart Physical Store queue, please move agents to the queue to reduce wait time.", "HIGH");
 
         default:
             return {
