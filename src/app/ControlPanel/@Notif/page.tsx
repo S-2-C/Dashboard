@@ -1,22 +1,30 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import useNotificationCreations from "@/hooks/useNotificationCreations";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Notification } from "@/API";
 
 export default async function NotifSlot() {
+  const [notificationList, setNotificationList] = useState<Notification[]>([]);
+  const lastNotification = useNotificationCreations();
+
+  useEffect(() => {
+    if (lastNotification) {
+      setNotificationList((prev: Notification[]) => [
+        ...prev,
+        lastNotification,
+      ]);
+    }
+  }, [lastNotification]);
+
   return (
     <div className="bg-teal-background flex flex-col p-4 rounded-lg h-full">
       <h1 className="text-4xl font-bold text-white text-center p-4">
         Notifications
       </h1>
       <div className="overflow-scroll no-scrollbar h-full flex flex-col">
-        {/* <p className="text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p> */}
+
         <div className="bg-blue p-4 rounded-lg shadow-md mb-4">
           {" "}
           {/* Added mb-4 for margin-bottom */}
@@ -55,7 +63,6 @@ export default async function NotifSlot() {
           </text>
         </div>
         <div className="bg-blue-dark p-3 rounded-lg shadow-md mb-4 flex flex-col items-center justify-center">
-        
           {/* Added mb-4 for margin-bottom */}
           <div className="text-center mb-2 flex items-center">
             <img

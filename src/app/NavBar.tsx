@@ -130,7 +130,7 @@ export default function Home() {
               </li>
               <li className="mt-4 flex items-center ml-4">
                 <Link
-                  href="../ControlPanel"
+                  href="/ControlPanel"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Control Panel")}
                   onMouseLeave={() => setHoveredItem(null)}

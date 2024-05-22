@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { generateClient } from "aws-amplify/api";
 import * as subscriptions from "../graphql/subscriptions"; // Ensure this path matches your subscription imports
-import { User } from "@/API";
+import { Notification } from "@/API";
 
 const client = generateClient();
 
-const useUserUpdates = () => {
-  const [lastUserUpdate, setLastUserUpdate] = useState<any>(null);
+const useNotificationCreations = () => {
+  const [lastNotificationCreation, setLastNotificationCreation] =
+    useState<any>(null);
 
   useEffect(() => {
     const sub = client.graphql({
-      query: subscriptions.onUpdateUser,
+      query: subscriptions.onCreateNotification,
     });
     console.log("Subscribing to user updates");
     sub.subscribe({
       next: ({ data }: any) => {
-        if (data.onUpdateUser) {
-          setLastUserUpdate(data.onUpdateUser);
+        if (data.onCreateNotification) {
+          setLastNotificationCreation(data.onCreateNotification);
         }
       },
       error: (error: any) => {
@@ -29,7 +30,7 @@ const useUserUpdates = () => {
     };
   }, []);
 
-  return lastUserUpdate as User;
+  return lastNotificationCreation as Notification;
 };
 
-export default useUserUpdates;
+export default useNotificationCreations;
