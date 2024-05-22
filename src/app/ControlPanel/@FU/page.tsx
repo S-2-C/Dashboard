@@ -5,7 +5,7 @@ export default async function Frequently() {
   return (
       <div className="flex ">
         <div className="bg-teal-FU p-4 rounded-tl-lg rounded-bl-lg ">
-          <h1 className="text-4xl font-bold text-white">Frequently Used</h1>
+          <h1 className="text-4xl font-bold text-white">Quick Access</h1>
         </div>
         <div className="flex-grow flex  items-center  bg-teal-background rounded-tr-lg rounded-br-lg ">
           <div>

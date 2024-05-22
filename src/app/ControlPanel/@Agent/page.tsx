@@ -10,12 +10,17 @@ import {
   User,
 } from "@/API";
 import useUserUpdates from "@/hooks/useUserUpdates";
+import { fetchAuthSession } from "aws-amplify/auth";
+import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
+import { GetUserQuery } from "@/API";
 
 export default function AgentSlot() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
   const [alertUsers, setAlertUsers] = useState<User[]>([]);
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
   const [offlineSupervisors, setOfflineSupervisors] = useState<User[]>([]);
+  const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
+
   const userChange = useUserUpdates(); // This will hold the latest user update
   const addUserToState = (user: User, setter: any) => {
     setter((prev: any) => [...(prev || []), user]);
@@ -65,12 +70,26 @@ export default function AgentSlot() {
     fetchAgents();
   }, []);
 
+  useEffect(() => {
+    async function fetchAgent() {
+      const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
+      console.log(user);
+      // @ts-ignore
+      const email = user?.tokens?.signInDetails?.loginId;
+      console.log(email);
+      const agent = await fetchOneAgent(email);
+      console.log("agent", agent);
+      setAgent(agent);
+    }
+
+    fetchAgent();
+  }, []);
+
   const combinedUsers = [
     ...alertUsers.map((user) => ({ ...user, status: "alert" })),
     ...activeUsers.map((user) => ({ ...user, status: "active" })),
     ...offlineUsers.map((user) => ({ ...user, status: "offline" })),
     ...offlineSupervisors.map((user) => ({ ...user, status: "offlineSuper" })),
-
   ];
 
   const getUserProperties = (status: string) => {
@@ -90,11 +109,11 @@ export default function AgentSlot() {
           imgSrc: "images/AgentBlue.svg",
           textClass: "text-figma-figma1",
         };
-        case "offlineSuper":
-          return {
-            imgSrc: "images/AgentBlack.svg",
-            textClass: "text-black-500",
-          };
+      case "offlineSuper":
+        return {
+          imgSrc: "images/AgentBlack.svg",
+          textClass: "text-black-500",
+        };
       default:
         return {
           imgSrc: "",
@@ -104,38 +123,54 @@ export default function AgentSlot() {
   };
 
   return (
-    <div
-      className="bg-blue-highlight rounded-lg p-8 shadow-md h-96 overflow-hidden"
-      style={{ display: "inline-block" }}
-    >
-      <div className="bg-blue-highlight rounded-lg">
-        <Link href="/AgentManagement">
-          <h1 className="text-4xl font-bold text-center ">Agents</h1>
-        </Link>
-      </div>
-      <div className="h-full grid grid-cols-5 gap-x-16 gap-y-2 bg-blue-highlight p-4 overflow-y-auto  no-scrollbar">
-      {combinedUsers.map((user, index) => {
-          const { imgSrc, textClass } = getUserProperties(user.status);
-          return (
-            <div className="w-min p-1" key={index}>
-              <Link href={`/ManageCall/${user?.id}`}>
-                <div className="flex flex-col items-center w-20">
-                  <img
-                    src={imgSrc}
-                    className="h-auto w-10 mx-auto"
-                    alt="Agent"
-                  />
-                  <p className={`text-center text-sm ${textClass}`}>
-                    {user?.name
-                      ? user.name.split(" ")[0]
-                      : user.id.split("@")[0]}
-                  </p>
-                </div>
+    <div>
+      {agent?.role === "SUPERVISOR" ? (
+        <>
+          <div
+            className="bg-blue-highlight rounded-lg p-8 shadow-md h-96 overflow-hidden"
+            style={{ display: "inline-block" }}
+          >
+            <div className="rounded-lg">
+              <Link href="/AgentManagement">
+                <h1 className="text-4xl font-bold text-center ">Agents</h1>
               </Link>
             </div>
-          );
-        })}
-      </div>
+            <div className="h-full grid grid-cols-5 gap-x-16 gap-y-2 p-4 overflow-y-auto no-scrollbar">
+              {combinedUsers.map((user, index) => {
+                const { imgSrc, textClass } = getUserProperties(user.status);
+                return (
+                  <div className="w-min p-1" key={index}>
+                    <Link href={`/ManageCall/${user?.id}`}>
+                      <div className="flex flex-col items-center w-20">
+                        <img
+                          src={imgSrc}
+                          className="h-auto w-10 mx-auto"
+                          alt="Agent"
+                        />
+                        <p className={`text-center text-sm ${textClass}`}>
+                          {user?.name
+                            ? user.name.split(" ")[0]
+                            : user.id.split("@")[0]}
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div
+          className="bg-figma-figma1 rounded-lg p-8 shadow-md h-96 overflow-hidden"
+          style={{ display: "inline-block" }}
+        >
+          <h1 className="text-4xl text-center text-white ">
+            {" "}
+            Ongoing Call Time
+          </h1>
+        </div>
+      )}
     </div>
   );
 }
