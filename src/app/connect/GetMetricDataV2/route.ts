@@ -2,6 +2,28 @@ import { ConnectClient, GetMetricDataV2Command } from "@aws-sdk/client-connect";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export async function GET(req: Request, res: Response) {
+  const { searchParams } = new URL(req.url);
+  const queueIds = searchParams.get("queueIds") || undefined;
+  let metricDate : any = searchParams.get("metricDate") || undefined;
+
+  if (queueIds === undefined) {
+    return new Response(
+      JSON.stringify({ message: "Please provide a queue ID" }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }}
+
+  if (metricDate === undefined) {
+    metricDate = new Date();
+    // add timestamp
+  }
+
+  const queueIdsArray = queueIds.split(",");
   if (
     !process.env.REGION ||
     !process.env.CONNECT_ACCESS_KEY ||
@@ -28,7 +50,7 @@ export async function GET(req: Request, res: Response) {
 
   const inputAgent = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
-    StartTime: new Date("2024-03-28"),
+    StartTime: new Date(metricDate),
     EndTime: new Date(),
     Filters: [
       {
@@ -52,12 +74,12 @@ export async function GET(req: Request, res: Response) {
 
   const inputQueue = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
-    StartTime: new Date("2024-03-28"),
+    StartTime: new Date(metricDate),
     EndTime: new Date(),
     Filters: [
       {
         FilterKey: "QUEUE",
-        FilterValues: ["f617a7d6-2be6-4f9b-b365-600fd3fc8646"],
+        FilterValues: queueIdsArray,
       },
     ],
     Metrics: [
