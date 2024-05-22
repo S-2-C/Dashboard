@@ -6,11 +6,12 @@ import {
 import Home from "../NavBar" // Importing the NavBar component
 import SearchBar  from '../searchBar'; //importing the SearchBar component
 export default async function Documentation() {
+    
     return (
         <div>
             <div className="h-screen flex w-full">
                 <Home />
-                <div className="flex flex-col mt-12  flex-col ml-40 w-full mr-36">
+                <div className="flex flex-col mt-12 ml-40 w-full mr-36">
                     <div className="w-full flex text-left"> 
                         <SearchBar />
                     </div>
@@ -81,13 +82,8 @@ export default async function Documentation() {
                             <div className="text-sm text-left justify-end">Last Updated: 2024<div />
                             </div>
 
-                        </button>
-                        
-                 
-
-                       
+                        </button>                       
                     </div>
-
                 </div>
             </div>
 

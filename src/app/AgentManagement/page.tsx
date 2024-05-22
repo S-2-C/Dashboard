@@ -1,6 +1,7 @@
 "use client";
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import Home from "../NavBar";
+import AIChatButton from "@/components/ui/aiChatButton";
 
 
 export default function AgentManagement() {
@@ -225,6 +226,9 @@ export default function AgentManagement() {
                                                 <Text></Text>
                                             </div>
                                         </div>
+                                </div>
+                                <div>
+                                    <AIChatButton/>
                                 </div>
 
                             </div>

@@ -268,7 +268,6 @@ export default function Home() {
                 </div>
               </a>
             </li>
-
             {/* Add more navigation items as needed */}
           </ul>
         </nav>
