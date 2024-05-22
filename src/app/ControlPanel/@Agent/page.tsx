@@ -13,6 +13,7 @@ import useUserUpdates from "@/hooks/useUserUpdates";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { GetUserQuery } from "@/API";
+import { Flex } from "@aws-amplify/ui-react";
 
 export default function AgentSlot() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
@@ -169,6 +170,9 @@ export default function AgentSlot() {
             {" "}
             Ongoing Call Time
           </h1>
+          <Flex>
+
+          </Flex>
         </div>
       )}
     </div>

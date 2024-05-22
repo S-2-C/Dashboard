@@ -98,7 +98,7 @@ export default function SaturationSlot() {
               </h1>
             </div>
           </Link>
-          <div className="mt-3 flex flex-wrap h-full overflow-scroll no-scrollbar">
+          <div className="mt-3 px-2 flex flex-wrap h-full overflow-scroll no-scrollbar">
             {data.map((item, index) => (
               <button
                 key={index}
