@@ -35,7 +35,6 @@ export default function NotificationUpdateForm(props) {
     action: "",
     description: "",
     urgency: "",
-    agentArn: "",
   };
   const [rule, setRule] = React.useState(initialValues.rule);
   const [action, setAction] = React.useState(initialValues.action);
@@ -43,7 +42,6 @@ export default function NotificationUpdateForm(props) {
     initialValues.description
   );
   const [urgency, setUrgency] = React.useState(initialValues.urgency);
-  const [agentArn, setAgentArn] = React.useState(initialValues.agentArn);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = notificationRecord
@@ -53,7 +51,6 @@ export default function NotificationUpdateForm(props) {
     setAction(cleanValues.action);
     setDescription(cleanValues.description);
     setUrgency(cleanValues.urgency);
-    setAgentArn(cleanValues.agentArn);
     setErrors({});
   };
   const [notificationRecord, setNotificationRecord] = React.useState(
@@ -79,7 +76,6 @@ export default function NotificationUpdateForm(props) {
     action: [{ type: "Required" }],
     description: [{ type: "Required" }],
     urgency: [{ type: "Required" }],
-    agentArn: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -111,7 +107,6 @@ export default function NotificationUpdateForm(props) {
           action,
           description,
           urgency,
-          agentArn: agentArn ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -176,7 +171,6 @@ export default function NotificationUpdateForm(props) {
               action,
               description,
               urgency,
-              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.rule ?? value;
@@ -204,7 +198,6 @@ export default function NotificationUpdateForm(props) {
               action: value,
               description,
               urgency,
-              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.action ?? value;
@@ -232,7 +225,6 @@ export default function NotificationUpdateForm(props) {
               action,
               description: value,
               urgency,
-              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -260,7 +252,6 @@ export default function NotificationUpdateForm(props) {
               action,
               description,
               urgency: value,
-              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.urgency ?? value;
@@ -296,34 +287,6 @@ export default function NotificationUpdateForm(props) {
           {...getOverrideProps(overrides, "urgencyoption3")}
         ></option>
       </SelectField>
-      <TextField
-        label="Agent arn"
-        isRequired={false}
-        isReadOnly={false}
-        value={agentArn}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              rule,
-              action,
-              description,
-              urgency,
-              agentArn: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.agentArn ?? value;
-          }
-          if (errors.agentArn?.hasError) {
-            runValidationTasks("agentArn", value);
-          }
-          setAgentArn(value);
-        }}
-        onBlur={() => runValidationTasks("agentArn", agentArn)}
-        errorMessage={errors.agentArn?.errorMessage}
-        hasError={errors.agentArn?.hasError}
-        {...getOverrideProps(overrides, "agentArn")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
