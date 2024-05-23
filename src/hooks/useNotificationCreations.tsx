@@ -13,7 +13,7 @@ const useNotificationCreations = () => {
     const sub = client.graphql({
       query: subscriptions.onCreateNotification,
     });
-    console.log("Subscribing to user updates");
+    console.log("Subscribing to notifications");
     sub.subscribe({
       next: ({ data }: any) => {
         if (data.onCreateNotification) {
