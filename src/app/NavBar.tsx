@@ -152,7 +152,7 @@ export default function Home() {
               </li>
               <li className="mt-4 flex items-center ml-4">
                 <Link
-                  href="../ControlPanel"
+                  href="/ControlPanel"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Control Panel")}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -229,7 +229,7 @@ export default function Home() {
               </li>
               <li className="mt-1 flex items-center ml-4">
                 <Link
-                  href="ManageReports"
+                  href="/ManageReports"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Reports")}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -248,7 +248,7 @@ export default function Home() {
               </li>
               <li className="mt-1 flex items-center ml-4">
                 <Link
-                  href="Documentation"
+                  href="/Documentation"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Documentation")}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -267,7 +267,7 @@ export default function Home() {
               </li>
               <li className="mt-1 flex items-center ml-4">
                 <Link
-                  href="Channels"
+                  href="/Channels"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Channels")}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -289,25 +289,7 @@ export default function Home() {
                   OTHERS
                 </a>
               </li>
-              <li className="mt-4 flex items-center ml-4">
-                <a
-                  href="#"
-                  className={`text-teal hover:text-teal-highlight relative`}
-                  onMouseEnter={() => setHoveredItem("Settings")}
-                  onMouseLeave={() => setHoveredItem(null)}
-                >
-                  <div className="w-max h-max p-2">
-                    <FontAwesomeIcon
-                      icon={faCog}
-                      className="text-teal hover:text-teal-highlight mr-2"
-                    />
-                    Settings
-                    {hoveredItem === "Settings" && (
-                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
-                    )}
-                  </div>
-                </a>
-              </li>
+             
               <li className="mt-1 flex items-center ml-4">
                 <a
                   href="#"
