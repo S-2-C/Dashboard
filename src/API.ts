@@ -3,7 +3,7 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateUserInput = {
-  id: string,
+  id?: string | null,
   arn: string,
   name?: string | null,
   profilePic?: string | null,
@@ -28,8 +28,6 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelStringInput = {
@@ -145,8 +143,6 @@ export type ModelContactConditionInput = {
   and?: Array< ModelContactConditionInput | null > | null,
   or?: Array< ModelContactConditionInput | null > | null,
   not?: ModelContactConditionInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
   userContactsId?: ModelIDInput | null,
 };
 
@@ -202,8 +198,6 @@ export type ModelNotificationConditionInput = {
   and?: Array< ModelNotificationConditionInput | null > | null,
   or?: Array< ModelNotificationConditionInput | null > | null,
   not?: ModelNotificationConditionInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelUrgencyInput = {
@@ -242,8 +236,6 @@ export type ModelUserFilterInput = {
   role?: ModelRoleInput | null,
   needsHelp?: ModelBooleanInput | null,
   isOnCall?: ModelBooleanInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -259,9 +251,6 @@ export type ModelContactFilterInput = {
   phone?: ModelStringInput | null,
   callStart?: ModelStringInput | null,
   callEnd?: ModelStringInput | null,
-  id?: ModelIDInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
   and?: Array< ModelContactFilterInput | null > | null,
   or?: Array< ModelContactFilterInput | null > | null,
   not?: ModelContactFilterInput | null,
@@ -273,9 +262,6 @@ export type ModelNotificationFilterInput = {
   action?: ModelStringInput | null,
   description?: ModelStringInput | null,
   urgency?: ModelUrgencyInput | null,
-  id?: ModelIDInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
   and?: Array< ModelNotificationFilterInput | null > | null,
   or?: Array< ModelNotificationFilterInput | null > | null,
   not?: ModelNotificationFilterInput | null,
@@ -301,11 +287,8 @@ export type ModelSubscriptionUserFilterInput = {
   role?: ModelSubscriptionStringInput | null,
   needsHelp?: ModelSubscriptionBooleanInput | null,
   isOnCall?: ModelSubscriptionBooleanInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
-  userContactsId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -328,28 +311,10 @@ export type ModelSubscriptionBooleanInput = {
   eq?: boolean | null,
 };
 
-export type ModelSubscriptionIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
-};
-
 export type ModelSubscriptionContactFilterInput = {
   phone?: ModelSubscriptionStringInput | null,
   callStart?: ModelSubscriptionStringInput | null,
   callEnd?: ModelSubscriptionStringInput | null,
-  id?: ModelSubscriptionIDInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionContactFilterInput | null > | null,
   or?: Array< ModelSubscriptionContactFilterInput | null > | null,
 };
@@ -359,9 +324,6 @@ export type ModelSubscriptionNotificationFilterInput = {
   action?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   urgency?: ModelSubscriptionStringInput | null,
-  id?: ModelSubscriptionIDInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
   or?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
 };
