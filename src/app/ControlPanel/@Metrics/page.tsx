@@ -21,7 +21,7 @@ export default function MetricsSlot() {
           </div>
         </>
       ) : (
-        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-60 xl:h-96">
+        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-64 xl:h-96">
           <button className="w-full h-full flex flex-col items-center justify-center">
             <div className="flex items-center justify-center p-4">
               <FontAwesomeIcon
