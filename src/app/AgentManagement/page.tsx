@@ -6,7 +6,7 @@ import {  fetchAllAgents } from "@/fetching/fetchingDataFunctions";
 import Link from "next/link";
 import { Euphoria_Script } from "next/font/google";
 import { GetContactQuery, ListUsersQuery, ListContactsQuery, Contact, User } from "@/API";
-
+import AIChatButton from "@/components/ui/aiChatButton";
 
 export default function AgentManagement() {
     const [ activeUsers, setActiveUsers ] = useState<User[]>([]);
@@ -200,6 +200,9 @@ export default function AgentManagement() {
                                                 </div>
                                             </Link>
                                             ))}
+                                        </div>
+                                        <div>
+                                            <AIChatButton/>
                                         </div>
                                 </div>
                             </div>
