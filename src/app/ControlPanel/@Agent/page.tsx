@@ -128,7 +128,7 @@ export default function AgentSlot() {
       {agent?.role === "SUPERVISOR" ? (
         <>
           <div
-            className="bg-blue-highlight rounded-lg p-8 shadow-md h-96"
+            className="bg-blue-highlight rounded-lg sm:p-2 md:p-3 lg:p-4 xl:p-8 shadow-md h-96"
             style={{ display: "inline-block" }}
           >
             <div className="rounded-lg">
@@ -163,16 +163,13 @@ export default function AgentSlot() {
         </>
       ) : (
         <div
-          className="bg-figma-figma1 rounded-lg p-8 shadow-md h-96 "
+          className="bg-figma-figma1 rounded-lg sm:p-2 md:p-3 lg:p-4 xl:p-16 shadow-md h-96"
           style={{ display: "inline-block" }}
         >
           <h1 className="text-4xl text-center text-white ">
-            {" "}
-            Ongoing Call Time
-          </h1>
-          <Flex>
-
-          </Flex>
+              Ongoing Call Time
+            </h1>
+          
         </div>
       )}
     </div>

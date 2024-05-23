@@ -4,10 +4,6 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { GetUserQuery } from "@/API";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-// import a question mark icon
-import { faQuestion } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function MetricsSlot() {
   const [agent, setAgent] = useState<GetUserQuery["getUser"]>();

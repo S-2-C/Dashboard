@@ -39,22 +39,20 @@ export default function MetricsSlot() {
           </div>
         </>
       ) : (
-        <div className="overflow-hidden">
-        <button className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden">
-          <div className="flex items-center justify-center p-4">
-            <FontAwesomeIcon
-              icon={faQuestion}
-              className="text-black text-5xl mr-2"
-            />
-            <h1 className="text-3xl font-bold">Ask for help</h1>
-          </div>
-          <div className="items-center">
-            <span>Details</span>
-          </div>
+        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden">
+          <button className="w-full h-full flex flex-col items-center justify-center">
+            <div className="flex items-center justify-center p-4">
+              <FontAwesomeIcon
+                icon={faQuestion}
+                className="text-black text-5xl mr-2"
+              />
+              <h1 className="text-3xl font-bold">Ask for help</h1>
+            </div>
+            <div className="flex items-center justify-center">
+              <span>Details</span>
+            </div>
           </button>
-      </div>
-      
-      
+        </div>
       )}
     </div>
   );

@@ -63,27 +63,23 @@ export default function SaturationSlot() {
                 </h1>
               </div>
             </Link>
-            <div className=" overflow-scroll  no-scrollbar h-[65%]">
-              <div className=" justify-center items-center text-white w-[calc(60vw-32rem)]">
-                <div className="flex items-center px-8 py-7">
+            <div className="overflow-auto h-[65%] no-scrollbar">
+              <div className="text-white sm:w-full,px-2 md:w-full lg:w-[calc(60vw-32rem)],px-2 xl:w-[calc(60vw-32rem)] px-8 flex-wrap">
+                <div className="flex items-center justify-between py-4 md:py-7">
                   <span className="text-white text-xl">Physical Store</span>
-                  <div className="bg-figma-figma9 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-                  {/* <div className="w-3/4"></div> */}
+                  <div className="bg-figma-figma9 h-4 w-4 flex rounded-full ml-4 md:ml-8"></div>
                 </div>
-                <div className="flex items-center px-8 py-4">
+                <div className="flex items-center justify-between py-4 md:py-7">
                   <span className="text-white text-xl">Walmart®.com</span>
-                  <div className="bg-figma-figma10 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-                  {/* <div className="w-3/4"></div> */}
+                  <div className="bg-figma-figma10 h-4 w-4 flex rounded-full ml-4 md:ml-8"></div>
                 </div>
-                <div className="flex items-center px-8 py-4">
+                <div className="flex items-center justify-between py-4 md:py-7">
                   <span className="text-white text-xl">Walmart Express</span>
-                  <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-                  {/* <div className="w-3/4"></div> */}
+                  <div className="bg-figma-figma8 h-4 w-4 flex rounded-full ml-4 md:ml-8"></div>
                 </div>
-                <div className="flex items-center px-8 py-4">
+                <div className="flex items-center justify-between py-4 md:py-7">
                   <span className="text-white text-xl">Delivery</span>
-                  <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center mx-8"></div>
-                  {/* <div className="w-3/4"></div> */}
+                  <div className="bg-figma-figma8 h-4 w-4 flex rounded-full ml-4 md:ml-8"></div>
                 </div>
               </div>
             </div>
@@ -105,8 +101,12 @@ export default function SaturationSlot() {
                 className="bg-figma-figma4 h-32 w-full m-2 p-4 flex justify-between items-center rounded-2xl shadow-lg text-left hover:bg-blue"
               >
                 <div className="flex flex-col">
-                  <div className="text-3xl font-bold mb-2 text-blue-dark">{item.title}</div>
-                  <div className="font-bold mb-2 text-blue-dark">{item.description}</div>
+                  <div className="text-3xl font-bold mb-2 sm:mt-6 md:mt-6 lg:mt-4 xl:mt-0  text-blue-dark">
+                    {item.title}
+                  </div>
+                  <div className="font-bold mb-2 text-blue-dark">
+                    {item.description}
+                  </div>
                   <div className="text-sm text-left text-blue-dark">
                     Last Updated: {item.lastUpdated}
                   </div>
