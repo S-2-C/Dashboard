@@ -96,7 +96,7 @@ export default function ControlPanelLayout({
               <div className="p-4 ">{Saturation}</div>
               <div className="p-4 ">{Metrics2}</div>
             </div>
-            <div className="p-4 ">{Notif}</div>
+            <div className="p-4 w-1/2">{Notif}</div>
           </div>
         </div>
       </div>
