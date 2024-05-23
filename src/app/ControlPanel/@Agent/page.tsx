@@ -13,14 +13,14 @@ import useUserUpdates from "@/hooks/useUserUpdates";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { GetUserQuery } from "@/API";
-import { Flex } from "@aws-amplify/ui-react";
+import { useUserRole } from "@/hooks/useUserRole";
 
 export default function AgentSlot() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
   const [alertUsers, setAlertUsers] = useState<User[]>([]);
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
   const [offlineSupervisors, setOfflineSupervisors] = useState<User[]>([]);
-  const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
+  const agent = useUserRole();
 
   const userChange = useUserUpdates(); // This will hold the latest user update
   const addUserToState = (user: User, setter: any) => {
@@ -71,20 +71,6 @@ export default function AgentSlot() {
     fetchAgents();
   }, []);
 
-  useEffect(() => {
-    async function fetchAgent() {
-      const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
-      console.log(user);
-      // @ts-ignore
-      const email = user?.tokens?.signInDetails?.loginId;
-      console.log(email);
-      const agent = await fetchOneAgent(email);
-      console.log("agent", agent);
-      setAgent(agent);
-    }
-
-    fetchAgent();
-  }, []);
 
   const combinedUsers = [
     ...alertUsers.map((user) => ({ ...user, status: "alert" })),

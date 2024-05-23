@@ -1,31 +1,13 @@
 "use client";
 import Link from "next/link";
-import { fetchAuthSession } from "aws-amplify/auth";
-import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
-import { GetUserQuery } from "@/API";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 // import a question mark icon
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useUserRole } from "@/hooks/useUserRole";
 
 export default function MetricsSlot() {
-  const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
+  const agent = useUserRole();
 
-  useEffect(() => {
-    async function fetchAgent() {
-      const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
-      console.log(user);
-      // @ts-ignore
-      const email = user?.tokens?.signInDetails?.loginId;
-      console.log(email);
-      const agent = await fetchOneAgent(email);
-      console.log("agent", agent);
-      setAgent(agent);
-    }
-
-    fetchAgent();
-  }, []);
 
   return (
     <div className="py-4">
@@ -39,7 +21,7 @@ export default function MetricsSlot() {
           </div>
         </>
       ) : (
-        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden">
+        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-60 xl:h-96">
           <button className="w-full h-full flex flex-col items-center justify-center">
             <div className="flex items-center justify-center p-4">
               <FontAwesomeIcon
@@ -48,8 +30,8 @@ export default function MetricsSlot() {
               />
               <h1 className="text-3xl font-bold">Ask for help</h1>
             </div>
-            <div className="flex items-center justify-center">
-              <span>Details</span>
+            <div className="flex items-center justify-center px-3">
+              <text>Ask your supervisor for help with a call or anything needed.</text>
             </div>
           </button>
         </div>
