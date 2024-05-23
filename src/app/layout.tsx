@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google"
 import "./globals.css";
 import WrappedAuthenticator from "./authenticator";
 import { cn } from "@/lib/utils";
+import AIChatButtonWrapper from "@/components/ui/aiChatButtonWrapper";
 
 export const metadata: Metadata = {
   title: "Wallmart Dashboard",
@@ -28,8 +29,11 @@ export default function RootLayout({
         )}
       >
         <WrappedAuthenticator>
-        {children}
+          {children}
         </WrappedAuthenticator>
+        <div>
+          <AIChatButtonWrapper />
+        </div>
       </body>
     </html>
   );
