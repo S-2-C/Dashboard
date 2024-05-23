@@ -8,7 +8,7 @@ import { GetUserQuery } from "@/API";
 import { useState, useEffect } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
 
-const SearchBar = ({ params }: { params: { id: string } }) => {
+const SearchBar = () => {
   const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
   useEffect(() => {
     async function fetchAgent() {

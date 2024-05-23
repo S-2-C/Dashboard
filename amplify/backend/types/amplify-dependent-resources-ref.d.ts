@@ -1,63 +1,63 @@
 export type AmplifyDependentResourcesAttributes = {
-  "api": {
-    "dashboard": {
-      "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string",
-      "GraphQLAPIKeyOutput": "string"
-    }
-  },
-  "auth": {
-    "dashAuth": {
-      "AppClientID": "string",
-      "AppClientIDWeb": "string",
-      "IdentityPoolId": "string",
-      "IdentityPoolName": "string",
-      "UserPoolArn": "string",
-      "UserPoolId": "string",
-      "UserPoolName": "string"
-    }
-  },
-  "function": {
-    "callStart": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
+    "api": {
+        "dashboard": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
     },
-    "chatWebSocket": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
+    "auth": {
+        "dashAuth": {
+            "IdentityPoolId": "string",
+            "IdentityPoolName": "string",
+            "UserPoolId": "string",
+            "UserPoolArn": "string",
+            "UserPoolName": "string",
+            "AppClientIDWeb": "string",
+            "AppClientID": "string"
+        }
     },
-    "connectEvents": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
+    "function": {
+        "callStart": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
+        },
+        "connectEvents": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
+        },
+        "dashAuthPostConfirmation": {
+            "Name": "string",
+            "Arn": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string",
+            "Region": "string"
+        },
+        "dashAuthPreSignup": {
+            "Name": "string",
+            "Arn": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string",
+            "Region": "string"
+        },
+        "chatWebSocket": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
+        }
     },
-    "dashAuthPostConfirmation": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
-    "dashAuthPreSignup": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
+    "storage": {
+        "dashboardS3": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
-  },
-  "storage": {
-    "dashboardS3": {
-      "BucketName": "string",
-      "Region": "string"
-    }
-  }
 }

@@ -5,17 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-export declare type EscapeHatchProps = {
-    [elementHierarchy: string]: Record<string, unknown>;
-} | null;
-export declare type VariantValues = {
-    [key: string]: string;
-};
-export declare type Variant = {
-    variantValues: VariantValues;
-    overrides: EscapeHatchProps;
-};
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -26,20 +17,23 @@ export declare type NotificationCreateFormInputValues = {
     action?: string;
     description?: string;
     urgency?: string;
+    agentArn?: string;
 };
 export declare type NotificationCreateFormValidationValues = {
     rule?: ValidationFunction<string>;
     action?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     urgency?: ValidationFunction<string>;
+    agentArn?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NotificationCreateFormOverridesProps = {
-    NotificationCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    rule?: PrimitiveOverrideProps<TextFieldProps>;
-    action?: PrimitiveOverrideProps<TextFieldProps>;
-    description?: PrimitiveOverrideProps<TextFieldProps>;
-    urgency?: PrimitiveOverrideProps<SelectFieldProps>;
+    NotificationCreateFormGrid?: FormProps<GridProps>;
+    rule?: FormProps<TextFieldProps>;
+    action?: FormProps<TextFieldProps>;
+    description?: FormProps<TextFieldProps>;
+    urgency?: FormProps<SelectFieldProps>;
+    agentArn?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type NotificationCreateFormProps = React.PropsWithChildren<{
     overrides?: NotificationCreateFormOverridesProps | undefined | null;
@@ -48,7 +42,8 @@ export declare type NotificationCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: NotificationCreateFormInputValues) => NotificationCreateFormInputValues;
     onSuccess?: (fields: NotificationCreateFormInputValues) => void;
     onError?: (fields: NotificationCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: NotificationCreateFormInputValues) => NotificationCreateFormInputValues;
     onValidate?: NotificationCreateFormValidationValues;
-} & React.CSSProperties>;
+}>;
 export default function NotificationCreateForm(props: NotificationCreateFormProps): React.ReactElement;

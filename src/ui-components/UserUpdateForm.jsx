@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { User } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -14,29 +17,26 @@ import {
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { generateClient } from "aws-amplify/api";
-import { getUser } from "../graphql/queries";
-import { updateUser } from "../graphql/mutations";
-const client = generateClient();
+import { DataStore } from "aws-amplify";
 export default function UserUpdateForm(props) {
   const {
-    id: idProp,
-    user: userModelProp,
+    id,
+    user,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    id: "",
-    arn: "",
-    name: "",
-    profilePic: "",
-    role: "",
+    id: undefined,
+    arn: undefined,
+    name: undefined,
+    profilePic: undefined,
+    role: undefined,
     needsHelp: false,
     isOnCall: false,
   };
@@ -49,9 +49,7 @@ export default function UserUpdateForm(props) {
   const [isOnCall, setIsOnCall] = React.useState(initialValues.isOnCall);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = userRecord
-      ? { ...initialValues, ...userRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...userRecord };
     setId(cleanValues.id);
     setArn(cleanValues.arn);
     setName(cleanValues.name);
@@ -61,21 +59,14 @@ export default function UserUpdateForm(props) {
     setIsOnCall(cleanValues.isOnCall);
     setErrors({});
   };
-  const [userRecord, setUserRecord] = React.useState(userModelProp);
+  const [userRecord, setUserRecord] = React.useState(user);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp
-        ? (
-            await client.graphql({
-              query: getUser.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getUser
-        : userModelProp;
+      const record = id ? await DataStore.query(User, id) : user;
       setUserRecord(record);
     };
     queryData();
-  }, [idProp, userModelProp]);
+  }, [id, user]);
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
     id: [{ type: "Required" }, { type: "Email" }],
@@ -86,15 +77,7 @@ export default function UserUpdateForm(props) {
     needsHelp: [{ type: "Required" }],
     isOnCall: [{ type: "Required" }],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value =
-      currentValue && getDisplayValue
-        ? getDisplayValue(currentValue)
-        : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -114,8 +97,8 @@ export default function UserUpdateForm(props) {
         let modelFields = {
           id,
           arn,
-          name: name ?? null,
-          profilePic: profilePic ?? null,
+          name,
+          profilePic,
           role,
           needsHelp,
           isOnCall,
@@ -143,38 +126,28 @@ export default function UserUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value === "") {
-              modelFields[key] = null;
-            }
-          });
-          await client.graphql({
-            query: updateUser.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                id: userRecord.id,
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(
+            User.copyOf(userRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "UserUpdateForm")}
     >
       <TextField
         label="Id"
         isRequired={true}
-        isReadOnly={true}
-        value={id}
+        isReadOnly={false}
+        defaultValue={id}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -204,7 +177,7 @@ export default function UserUpdateForm(props) {
         label="Arn"
         isRequired={true}
         isReadOnly={false}
-        value={arn}
+        defaultValue={arn}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -234,7 +207,7 @@ export default function UserUpdateForm(props) {
         label="Name"
         isRequired={false}
         isReadOnly={false}
-        value={name}
+        defaultValue={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -264,7 +237,7 @@ export default function UserUpdateForm(props) {
         label="Profile pic"
         isRequired={false}
         isReadOnly={false}
-        value={profilePic}
+        defaultValue={profilePic}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -398,25 +371,23 @@ export default function UserUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || userModelProp)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
-        <Flex
-          gap="15px"
-          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
-        >
+        <Flex {...getOverrideProps(overrides, "RightAlignCTASubFlex")}>
+          <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
           <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || userModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

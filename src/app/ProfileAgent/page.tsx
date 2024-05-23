@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 //import { useEffect, useRef, useState, ChangeEvent, FormEvent } from "react";
 import Home from "../NavBar"
 import "@aws-amplify/ui-react/styles.css";
@@ -8,9 +9,12 @@ import { Separator } from "@/components/ui/separator"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Badge } from "@/components/ui/badge";
+import { fetchAuthSession } from 'aws-amplify/auth';
+import { fetchOneAgent } from '@/fetching/fetchingDataFunctions';
+import { User } from "@/API";
+import { formatDateToMexicanTimezone, timeDifference } from '@/functions/timeFunctions';
 
 // cambiar color del badge por status
-
 
 const profileData = {
     title: 'Agent Walmart® Call Center',
@@ -23,12 +27,45 @@ const profileData = {
     status: 'Available'
 };
 
-const performanceData = {
-    takenCalls: '183',
-    averageOnCall: '15 minutes'
-}
+
+
+    const performanceData = {
+        takenCalls: '183',
+        averageOnCall: '15 minutes'
+    }
 
 export default function Profile() {
+    const [agent, setAgent] = useState<User>();
+    const [averageCallTime, setAverageCallTime] = useState<number>(0);
+
+    useEffect(() => {
+        async function fetchAgent() {
+          // const res = await fetchOneAgent(params.id);
+          // console.log(res);
+    
+          const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
+          //@ts-ignore
+          const email = user?.tokens?.signInDetails?.loginId;
+          const agent = await fetchOneAgent(email);
+
+          let sum = 0
+
+          for (let x of agent.Contacts.items) {
+            console.log("x", x);
+            sum += timeDifference(x.callStart, x.callEnd);
+          }
+
+            setAverageCallTime( Math.ceil(sum / agent.Contacts.items.length));
+          setAgent(agent);
+        }
+    
+        fetchAgent();
+
+
+
+      }, []);
+
+    if (!agent) return null;
 
     return (
         <div className="flex h-screen bg-background text-foreground relative items-center">
@@ -47,80 +84,53 @@ export default function Profile() {
                     {/* Información personal */}
                     <div className="ml-20">
                         <div className='text-3xl font-bold m-5'>
-                            <label>{profileData.name}</label>
+                            <label>{ agent?.name}</label>
                         </div>
                         <Separator />
                         <div className="text-xl m-5">
-                            <label>{profileData.title}</label>
+                            <label>{agent?.role == "AGENT"? "Agent" : "Supervisor"}</label>
                         </div>
                         <div className='flex m-5'>
                             <FontAwesomeIcon icon={faEnvelope} className="w-5 h-7" />
-                            <label className='ml-3'> {profileData.email} </label>
+                            <label className='ml-3'> { agent?.id} </label>
                         </div >
                         <div className="m-5">
-                            <label>Location: {profileData.location}</label>
+                            <label>Location: Mexico City, Mexico</label>
                         </div>
                         <div className="m-5">
-                            <label>Employee ID: {profileData.ID}</label>
+                            <label>Employee ID: { agent?.arn.split("-").pop()}</label>
                         </div>
                         <div className="m-5 ml-10 ">
-                            <Badge variant="outline" className='text-lg transform w-3/4 justify-center bg-figma-figma8 text-white'>{profileData.status}</Badge>
+                            <Badge className={`text-lg transform w-3/4 justify-center ${agent?.isOnCall? "bg-red-800" : "bg-green-700"} text-white`}>{ agent?.isOnCall? "Occupied" : "Available"}</Badge>
                         </div>
                     </div>
                 </div>
                 {/* Sección inferior */}
                 <div className="flex ml-20 w-3/4 items-center">
                     {/* Agentes */}
-                    <div className=' p-5 w-1/2 bg-gray-100'>
-                        <div className='font-bold text-xl mb-2 '>Agents</div>
-                        <Separator />
+                    <div className=' p-5 w-1/2 bg-gray-100 mb-9'>
+                        <div className='font-bold text-xl mb-6'>Historic Calls</div>
                         <Accordion type="single" collapsible>
-                            <AccordionItem value="item-1" className='mt-2'>
-                                <AccordionTrigger className='ml-2'>Walmart®.com </AccordionTrigger>
-                                <AccordionContent className='bg-gray-300 p-5 hover:bg-gray-400'>
-                                    <div className='flex'>
-                                        <img
-                                            src={profileData.avatarImages}
-                                            alt="profile"
-                                            className="w-10 h-10 rounded-full object-cover" />
-                                        <label className='ml-3 mt-2'> Richard Hendricks </label>
-                                    </div>
-                                </AccordionContent>
-                                <AccordionContent className='bg-gray-300 p-5 hover:bg-gray-400'>
-                                    <div className='flex'>
-                                        <img
-                                            src={profileData.avatarImages}
-                                            alt="profile"
-                                            className="w-10 h-10 rounded-full object-cover" />
-                                        <label className='ml-3 mt-2'> Dinesh Chugtai </label>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem >
-                            <AccordionItem value="item-2" className='mt-2'>
-                                <AccordionTrigger className='ml-2'>Walmart® Express </AccordionTrigger>
-                                <AccordionContent className='bg-gray-300 p-5 hover:bg-gray-400'>
-                                    <div className='flex'>
-                                        <img
-                                            src={profileData.avatarImages}
-                                            alt="profile"
-                                            className="w-10 h-10 rounded-full object-cover" />
-                                        <label className='ml-3 mt-2'> Jared Dunn </label>
-                                    </div>
-                                </AccordionContent>
-                                <AccordionContent className='bg-gray-300 p-5 hover:bg-gray-400'>
-                                    <div className='flex'>
-                                        <img
-                                            src={profileData.avatarImages}
-                                            alt="profile"
-                                            className="w-10 h-10 rounded-full object-cover" />
-                                        <label className='ml-3 mt-2'> Monica Hall </label>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                            <AccordionItem value="item-3" className='mt-2'>
-                                <AccordionTrigger className='ml-2'>Walmart® Pass </AccordionTrigger>
-                            </AccordionItem>
+                        {agent?.Contacts?.items.map((call, index) => (
+                        <AccordionItem value={`item-${index}`} className='mt-2'>
+                            <AccordionTrigger className='ml-2'> {call?.id.split("-")[0]} </AccordionTrigger>
+                            <AccordionContent className='bg-gray-300 p-5 hover:bg-gray-400'>
+                                <div className='flex justify-between items-center'>
+                                    <img
+                                        src={profileData.avatarImages}
+                                        alt="profile"
+                                        className="w-10 h-10 rounded-full object-cover" />
+                                    <h3>{formatDateToMexicanTimezone(new Date(call?.createdAt ?? Date.now()))}</h3>
+                                    <h3 className={`${call?.callStart && call?.callEnd && (timeDifference(new Date(call.callStart), new Date(call.callEnd)) > 20)  ? "text-red-700" : "text-green-700" }`}>
+                                        {call?.callStart && call?.callEnd ? timeDifference(new Date(call.callStart), new Date(call.callEnd)) + "min" : 'N/A'}
+                                    </h3>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem >
+                        ))} 
                         </Accordion>
+
+                        
                     </div>
                     <div>
                         {/* Performance */}
@@ -128,12 +138,12 @@ export default function Profile() {
                             <div className='ml-10 w-80 h-40 bg-gray-100 flex flex-col justify-center items-center shadow-md'>
                                 
                                 <label className='text-2xl font-bold p-3'> Taken Calls:</label>
-                                <label className='text-4xl font-bold text-figma-figma1'> {performanceData.takenCalls}</label>
+                                <label className='text-4xl font-bold text-figma-figma1'> {agent?.Contacts?.items.length}</label>
                             </div>
                             <div className='ml-10 mt-5 w-80 h-40 bg-gray-100 flex flex-col justify-center items-center shadow-top-md'>
                                 
                                 <label className='text-2xl font-bold p-3'>Average on Call:</label>
-                                <label className='text-3xl font-bold text-figma-figma8'> {performanceData.averageOnCall}</label>
+                                <label className='text-3xl font-bold text-figma-figma8'> {averageCallTime} min</label>
                             </div>
                         </div>
                     </div>

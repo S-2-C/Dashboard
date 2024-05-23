@@ -1,0 +1,19 @@
+{
+    "version": "0",
+    "id": "51be38bb-f5ae-7f9e-f392-383a4ce92ccc",
+    "detail-type": "Metrics Rules Matched",
+    "source": "aws.connect",
+    "account": "905418190753",
+    "time": "2024-05-14T16:46:14Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+        "ruleName": "QUEUE_WAIT_TOO_LONG_DELIVERY",
+        "actionName": "MOVE_AGENTS_TO_QUEUE_DELIVERY",
+        "instanceArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597",
+        "version": "1.0",
+        "contactArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/contact/*",
+        "agentArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/agent/*",
+        "queueArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/queue/*"
+    }
+}
