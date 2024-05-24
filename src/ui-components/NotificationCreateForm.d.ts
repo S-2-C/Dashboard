@@ -17,14 +17,12 @@ export declare type NotificationCreateFormInputValues = {
     action?: string;
     description?: string;
     urgency?: string;
-    agentArn?: string;
 };
 export declare type NotificationCreateFormValidationValues = {
     rule?: ValidationFunction<string>;
     action?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     urgency?: ValidationFunction<string>;
-    agentArn?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NotificationCreateFormOverridesProps = {
@@ -33,7 +31,6 @@ export declare type NotificationCreateFormOverridesProps = {
     action?: FormProps<TextFieldProps>;
     description?: FormProps<TextFieldProps>;
     urgency?: FormProps<SelectFieldProps>;
-    agentArn?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type NotificationCreateFormProps = React.PropsWithChildren<{
     overrides?: NotificationCreateFormOverridesProps | undefined | null;

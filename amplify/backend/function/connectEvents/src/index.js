@@ -9,7 +9,6 @@ Amplify Params - DO NOT EDIT */
 const REGION = process.env.AWS_REGION;
 const APPSYNCURL = process.env.API_DASHBOARD_GRAPHQLAPIENDPOINTOUTPUT;
 const GQLAPIKEY = process.env.API_DASHBOARD_GRAPHQLAPIKEYOUTPUT;
-const { rule } = require("postcss");
 const { sendAppSyncRequest } = require("./helpers/appSync.js");
 
 /**
@@ -147,98 +146,24 @@ async function updateCallEnd(event) {
   };
 }
 
-// function to create a notification in the database
-async function createNotification(event, description, urgency = "REGULAR", agentArn = null) {
-    const rule = event.detail.ruleName;
-
-    let createNotificationQuery;
-    if (agentArn) {
-        createNotificationQuery = {
-            query: `mutation CreateNotification($input: CreateNotificationInput!) {
-                createNotification(input: $input) {
-                    id
-                    rule
-                    action
-                    description
-                    urgency
-                    agentArn
-                }
-            }`,
-            variables: {
-                input: {
-                    rule: rule,
-                    action: event.detail.actionName,
-                    description: description,
-                    urgency: urgency,
-                    agentArn: agentArn
-                }
-            }
-        };
-    } else {
-        createNotificationQuery = {
-            query: `mutation CreateNotification($input: CreateNotificationInput!) {
-                createNotification(input: $input) {
-                    id
-                    rule
-                    action
-                    description
-                    urgency
-                }
-            }`,
-            variables: {
-                input: {
-                    rule: rule,
-                    action: event.detail.actionName,
-                    description: description,
-                    urgency: urgency
-                }
-            }
-        };
-    }
-
-    try {
-        const createNotificationRes = await sendAppSyncRequest(
-            APPSYNCURL,
-            REGION,
-            "POST",
-            createNotificationQuery,
-            GQLAPIKEY
-        );
-
-        console.log(`Created notification for ${rule}`);
-        return {
-            statusCode: 200,
-            body: JSON.stringify(createNotificationRes.data["createNotification"]),
-        };
-    } catch (error) {
-        console.error(`Could not create notification for ${rule}`);
-        return {
-            statusCode: 500,
-            body: JSON.stringify(`Could not create notification for ${rule}. Error: ${error}`),
-        };
-    }
-}
-
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
 
-    const eventType = event.detail.eventType;
+  const eventType = event.detail.eventType;
 
   switch (eventType) {
     case "DISCONNECTED":
       return updateCallEnd(event);
 
-        default:
-            return {
-                statusCode: 200,
-                //  Uncomment below to enable CORS requests
-                //  headers: {
-                //      "Access-Control-Allow-Origin": "*",
-                //      "Access-Control-Allow-Headers": "*"
-                //  },
-                body: JSON.stringify('No action for this event type.'),
-            };
-
-    }
-
+    default:
+      return {
+        statusCode: 200,
+        //  Uncomment below to enable CORS requests
+        //  headers: {
+        //      "Access-Control-Allow-Origin": "*",
+        //      "Access-Control-Allow-Headers": "*"
+        //  },
+        body: JSON.stringify("No action for this event type."),
+      };
+  }
 };
