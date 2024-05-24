@@ -1,4 +1,4 @@
-describe("Authenticator:", function () {
+describe("TS_Sessions", function () {
   // Step 1: setup the application state
   beforeEach(function () {
     cy.visit("/");

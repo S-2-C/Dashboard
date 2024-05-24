@@ -1,5 +1,5 @@
-"use client";
-// searchBar.tsx
+
+'use client';// searchBar.tsx
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -14,6 +14,7 @@ const SearchBar = () => {
     async function fetchAgent() {
       const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
       console.log(user);
+      // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
       console.log(email);
       const agent = await fetchOneAgent(email);
