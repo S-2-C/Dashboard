@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { Notification } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -13,26 +16,24 @@ import {
   SelectField,
   TextField,
 } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { generateClient } from "aws-amplify/api";
-import { createNotification } from "../graphql/mutations";
-const client = generateClient();
+import { DataStore } from "aws-amplify";
 export default function NotificationCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    rule: "",
-    action: "",
-    description: "",
-    urgency: "",
+    rule: undefined,
+    action: undefined,
+    description: undefined,
+    urgency: undefined,
   };
   const [rule, setRule] = React.useState(initialValues.rule);
   const [action, setAction] = React.useState(initialValues.action);
@@ -54,15 +55,7 @@ export default function NotificationCreateForm(props) {
     description: [{ type: "Required" }],
     urgency: [{ type: "Required" }],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value =
-      currentValue && getDisplayValue
-        ? getDisplayValue(currentValue)
-        : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -108,19 +101,7 @@ export default function NotificationCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value === "") {
-              modelFields[key] = null;
-            }
-          });
-          await client.graphql({
-            query: createNotification.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(new Notification(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -129,19 +110,17 @@ export default function NotificationCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
-      {...getOverrideProps(overrides, "NotificationCreateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "NotificationCreateForm")}
     >
       <TextField
         label="Rule"
         isRequired={true}
         isReadOnly={false}
-        value={rule}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -168,7 +147,6 @@ export default function NotificationCreateForm(props) {
         label="Action"
         isRequired={true}
         isReadOnly={false}
-        value={action}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -195,7 +173,6 @@ export default function NotificationCreateForm(props) {
         label="Description"
         isRequired={true}
         isReadOnly={false}
-        value={description}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -273,16 +250,18 @@ export default function NotificationCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
-        <Flex
-          gap="15px"
-          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
-        >
+        <Flex {...getOverrideProps(overrides, "RightAlignCTASubFlex")}>
+          <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
           <Button
             children="Submit"
             type="submit"
