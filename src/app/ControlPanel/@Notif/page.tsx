@@ -1,17 +1,11 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import useNotificationCreations from "@/hooks/useNotificationCreations";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Notification } from "@/API";
-
-import { fetchAuthSession } from "aws-amplify/auth";
-import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
-import { GetUserQuery } from "@/API";
-import { useEffect, useState } from "react";
 import { useUserRole } from "@/hooks/useUserRole";
 
-export default async function NotifSlot() {
+export default function NotifSlot() {
   const agent = useUserRole();
   const [notificationList, setNotificationList] = useState<Notification[]>([]);
   const lastNotification = useNotificationCreations();
@@ -24,6 +18,7 @@ export default async function NotifSlot() {
       ]);
     }
   }, [lastNotification]);
+
   return (
     <div
       className={`flex flex-col p-4 rounded-lg h-full ${
