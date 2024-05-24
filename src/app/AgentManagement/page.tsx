@@ -145,11 +145,6 @@ export default function AgentManagement() {
                     <div className="h-full bg-agenman-agenmanred rounded-xl" style={{width: `${(alertUsers.length/totalCalls)*100}%` }}/>
                   </div>
                   <div className="flex w-full overflow-x-scroll no-scrollbar bg-agenman-agenmansblue1 p-2.5 rounded-xl">
-                  <div className="h-4 bg-agenman-agenmanred  items-center rounded-xl shadow-md"></div>
-                  <div
-                    id="alertUsers"
-                    className="flex w-full overflow-x-scroll no-scrollbar  bg-agenman-agenmansblue1 p-2.5 rounded-xl"
-                  >
                     {alertUsers?.map((user, index) => (
                       <div className="w-min p-1" key={index}>
                         <Link href={`/ManageCall/${user?.id}`}>
@@ -180,12 +175,6 @@ export default function AgentManagement() {
                     <div className="h-full bg-agenman-agenmanyellow rounded-xl" style={{width: `${(activeUsers.length/totalCalls)*100}%` }}/>
                   </div>
                   <div className="flex bg-agenman-agenmansblue2 items-center rounded-xl" style={{ padding: "10px" }}>
-                  <div className="h-4 flex bg-agenman-agenmanyellow  items-center rounded-xl shadow-md"></div>
-                  <div
-                    id="activeUsers"
-                    className="flex bg-agenman-agenmansblue2 items-center rounded-xl"
-                    style={{ padding: "10px" }}
-                  >
                     {activeUsers?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div>
@@ -229,11 +218,6 @@ export default function AgentManagement() {
 
                 <div className="flex gap-2" style={{ paddingTop: "15px" }}>
                   <div className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl" style={{ padding: "10px" }}>
-                  <div
-                    id="offlineUsers"
-                    className="w-2/4 flex flex-col  bg-agenman-agenmansblue3 rounded-xl"
-                    style={{ padding: "10px" }}
-                  >
                     {offlineUsers?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div className="text-4xl flex items-center h-10 w-10">
@@ -248,7 +232,7 @@ export default function AgentManagement() {
                         </div>
                       </Link>
                     ))}
-                  </div>
+                    </div>
 
                   <div className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl" style={{ padding: "10px" }}>
                     {offlineSupervisors?.map((user, index) => (
