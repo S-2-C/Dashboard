@@ -43,6 +43,10 @@ async function updateCallEnd(event) {
                 items {
                     id
                     arn
+                    name
+                    profilePic
+                    role
+                    needsHelp
                     isOnCall
                 }
             }
@@ -74,6 +78,11 @@ async function updateCallEnd(event) {
         query: `mutation SetUserOnCall($id: AWSEmail!, $isOnCall: Boolean!) {
             updateUser(input: {id: $id, isOnCall: $isOnCall}) {
                 id
+                arn
+                name
+                profilePic
+                role
+                needsHelp
                 isOnCall
             }
         }`,
@@ -144,6 +153,7 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     action
                     description
                     urgency
+                    timestamp
                     agentArn
                 }
             }`,
@@ -167,6 +177,8 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     action
                     description
                     urgency
+                    timestamp
+                    agentArn
                 }
             }`,
             variables: {
