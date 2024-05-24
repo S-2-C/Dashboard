@@ -27,7 +27,7 @@
         },
         "connectEvents": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/connectEvents-72563972626643447279-build.zip"
+          "s3Key": "amplify-builds/connectEvents-6a3352666c4656746238-build.zip"
         },
         "dashAuthPostConfirmation": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
