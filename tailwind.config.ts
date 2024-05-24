@@ -59,6 +59,9 @@ const config = {
           figma11: "hsl(var(--figma-figma11))",
           figma12: "hsl(var(--figma-figma12))",
           figma13: "hsl(var(--figma-figma13))",
+          figma14: "hsl(var(--figma-figma14))",
+          figma15: "hsl(var(--figma-figma15))",
+          figma16: "hsl(var(--figma-figma16))",
         },
 
         metrics: {

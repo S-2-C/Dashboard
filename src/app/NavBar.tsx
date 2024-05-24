@@ -24,12 +24,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import { fetchAuthSession } from "aws-amplify/auth";
+import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
+import { GetUserQuery } from "@/API";
+
 
 export default function Home() {
   const { signOut } = useAuthenticator((context) => [context.signOut]);
   const [isNavOpen, setIsNavOpen] = useState(false);
   // const [hoveredItem, setHoveredItem] = useState(null); // Track hovered item
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
 
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +51,26 @@ export default function Home() {
     }
   }, [isNavOpen]);
 
+
+  useEffect(() => {
+    async function fetchAgent() {
+      const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
+      console.log(user);
+      // @ts-ignore
+      const email = user?.tokens?.signInDetails?.loginId;
+      console.log(email);
+      const agent = await fetchOneAgent(email);
+      console.log("agent", agent);
+      setAgent(agent);
+    }
+
+    fetchAgent();
+  }, []);
+
   return (
     <div className="h-screen">
+        {agent?.role === "SUPERVISOR" ? (
+        <>
       <div className="flex h-full bg-background text-foreground relative">
         {/* Blue line (Clickable area to show the nav bar) */}
         <div
@@ -81,7 +104,6 @@ export default function Home() {
                   icon={faChartLine}
                   className="text-teal my-4 text-2xl"
                 />
-                {/* <FontAwesomeIcon icon={faBell} className="text-teal my-4 text-2xl" /> */}
                 <FontAwesomeIcon
                   icon={faFileAlt}
                   className="text-teal my-4 text-2xl"
@@ -207,26 +229,7 @@ export default function Home() {
               </li>
               <li className="mt-1 flex items-center ml-4">
                 <Link
-                  href="Notifications"
-                  className={`text-teal hover:text-teal-highlight relative`}
-                  onMouseEnter={() => setHoveredItem("Notifications")}
-                  onMouseLeave={() => setHoveredItem(null)}
-                >
-                  <div className="w-max h-max p-2">
-                    <FontAwesomeIcon
-                      icon={faBell}
-                      className="text-teal hover:text-teal-highlight mr-2"
-                    />
-                    Notifications
-                    {hoveredItem === "Notifications" && (
-                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
-                    )}
-                  </div>
-                </Link>
-              </li>
-              <li className="mt-1 flex items-center ml-4">
-                <Link
-                  href="ManageReports"
+                  href="/ManageReports"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Reports")}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -245,7 +248,7 @@ export default function Home() {
               </li>
               <li className="mt-1 flex items-center ml-4">
                 <Link
-                  href="Documentation"
+                  href="/Documentation"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Documentation")}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -264,7 +267,7 @@ export default function Home() {
               </li>
               <li className="mt-1 flex items-center ml-4">
                 <Link
-                  href="Channels"
+                  href="/Channels"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Channels")}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -286,25 +289,7 @@ export default function Home() {
                   OTHERS
                 </a>
               </li>
-              <li className="mt-4 flex items-center ml-4">
-                <a
-                  href="#"
-                  className={`text-teal hover:text-teal-highlight relative`}
-                  onMouseEnter={() => setHoveredItem("Settings")}
-                  onMouseLeave={() => setHoveredItem(null)}
-                >
-                  <div className="w-max h-max p-2">
-                    <FontAwesomeIcon
-                      icon={faCog}
-                      className="text-teal hover:text-teal-highlight mr-2"
-                    />
-                    Settings
-                    {hoveredItem === "Settings" && (
-                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
-                    )}
-                  </div>
-                </a>
-              </li>
+             
               <li className="mt-1 flex items-center ml-4">
                 <a
                   href="#"
@@ -335,6 +320,165 @@ export default function Home() {
 
         {/* Main Content */}
       </div>
+      </>
+      ) : (
+        <div className="flex h-full bg-background text-foreground relative">
+        {/* Blue line (Clickable area to show the nav bar) */}
+        <div
+          className=" min-h-full w-20 bg-blue absolute left-0 flex flex-col justify-start items-center"
+          onMouseEnter={() => setIsNavOpen(true)}
+          onMouseLeave={() => setIsNavOpen(false)}
+          style={{ paddingTop: "2rem" }} // Added padding from the top
+        >
+          {isNavOpen ? null : (
+            <div className="text-white flex flex-col justify-between h-full">
+              {/* Upper column with only the logo */}
+              <div className="flex flex-col items-center justify-center">
+                <img
+                  src="images/S2C Logo.svg"
+                  alt="Logo"
+                  className="w-12 h-12"
+                />
+                <FontAwesomeIcon
+                  icon={faChartBar}
+                  className="text-teal my-4 text-2xl"
+                />
+                <FontAwesomeIcon
+                  icon={faComments}
+                  className="text-teal my-4 text-2xl"
+                />
+                <FontAwesomeIcon
+                  icon={faBook}
+                  className="text-teal my-4 text-2xl"
+                />
+                
+              </div>
+              {/* Lowest column with only sign out */}
+              <div className="flex items-center justify-center pb-8">
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  className="text-teal text-2xl"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Navigation Bar (conditionally rendered based on isNavOpen state) */}
+        {isNavOpen && (
+          <nav
+            ref={navRef}
+            className={`h-full bg-blue-highlight px-6 py-8 absolute left-0 transition-all ${
+              isNavOpen
+                ? "transform translate-x-0"
+                : "transform -translate-x-full"
+            }`}
+            onMouseEnter={() => setIsNavOpen(true)}
+            onMouseLeave={() => setIsNavOpen(false)}
+          >
+            <ul>
+              <li className="mt-8 flex items-center">
+                <Link href="/" className="text-teal-dark">
+                  HOME
+                </Link>
+              </li>
+              <li className="mt-4 flex items-center ml-4">
+                <Link
+                  href="/ControlPanel"
+                  className={`text-teal hover:text-teal-highlight relative`}
+                  onMouseEnter={() => setHoveredItem("Control Panel")}
+                  onMouseLeave={() => setHoveredItem(null)}
+                >
+                  <div className="w-max h-max p-2">
+                    <FontAwesomeIcon
+                      icon={faChartBar}
+                      className="text-teal hover:text-teal-highlight mr-2"
+                    />
+                    Control Panel
+                    {hoveredItem === "Control Panel" && (
+                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                    )}
+                  </div>
+                </Link>
+              </li>
+              <li className="mt-1 flex items-center ml-4">
+                <Link
+                  href="/Chat"
+                  className={`text-teal hover:text-teal-highlight relative`}
+                  onMouseEnter={() => setHoveredItem("Chat")}
+                  onMouseLeave={() => setHoveredItem(null)}
+                >
+                  <div className="w-max h-max p-2">
+                    <FontAwesomeIcon
+                      icon={faComments}
+                      className="text-teal hover:text-teal-highlight mr-2"
+                    />
+                    Chat
+                    {hoveredItem === "Chat" && (
+                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                    )}
+                  </div>
+                </Link>
+              </li>
+
+              
+              <li className="mt-1 flex items-center ml-4">
+                <Link
+                  href="/DocumentationAgent"
+                  className={`text-teal hover:text-teal-highlight relative`}
+                  onMouseEnter={() => setHoveredItem("Documentation")}
+                  onMouseLeave={() => setHoveredItem(null)}
+                >
+                  <div className="w-max h-max p-2">
+                    <FontAwesomeIcon
+                      icon={faBook}
+                      className="text-teal hover:text-teal-highlight mr-2"
+                    />
+                    Documentation
+                    {hoveredItem === "Documentation" && (
+                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                    )}
+                  </div>
+                </Link>
+              </li>
+              
+              <li className="mt-6 flex items-center">
+                <a href="#" className="text-teal-dark">
+                  OTHERS
+                </a>
+              </li>
+              
+              <li className="mt-1 flex items-center ml-4">
+                <a
+                  href="#"
+                  className={`text-teal hover:text-teal-highlight relative`}
+                  onMouseEnter={() => setHoveredItem("Logout")}
+                  onMouseLeave={() => setHoveredItem(null)}
+                >
+                  <button
+                    className="w-max h-max p-2 text-teal hover:text-teal-highlight relative"
+                    onClick={signOut}
+                  >
+                    <FontAwesomeIcon
+                      icon={faSignOutAlt}
+                      className="text-teal hover:text-teal-highlight mr-2"
+                    />
+                    Logout
+                    {hoveredItem === "Logout" && (
+                      <div className="absolute inset-0 bg-teal-highlight opacity-30 rounded-lg w-52 h-10"></div>
+                    )}
+                  </button>
+                </a>
+              </li>
+
+              {/* Add more navigation items as needed */}
+            </ul>
+          </nav>
+        )}
+
+        {/* Main Content */}
+      </div>
+      )}
     </div>
   );
 }

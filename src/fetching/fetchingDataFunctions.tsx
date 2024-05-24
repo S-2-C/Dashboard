@@ -1,4 +1,5 @@
 import { generateClient } from "aws-amplify/api";
+
 import {
   getContact,
   getUser,
@@ -42,6 +43,8 @@ export const fetchOneAgent = async (agentId: string) => {
         id: agentId,
       },
     })) as GetUserQuery;
+
+    console.log(agentData);
 
     //@ts-ignore
     return agentData.data.getUser;

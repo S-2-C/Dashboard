@@ -84,7 +84,7 @@ export default function AgentManagement() {
                       Richard Hendricks
                     </span>
                     <br />
-                    <span className="text-xs">Walmart®.com</span>
+                    <span className="text-xs">Walmart®️.com</span>
                   </div>
                   <div className="w-1/6 flex items-center justify-center">
                     <img
@@ -104,7 +104,7 @@ export default function AgentManagement() {
                       Dinesh Chugtai
                     </span>
                     <br />
-                    <span className="text-xs">Walmart®.com</span>
+                    <span className="text-xs">Walmart®️.com</span>
                   </div>
                   <div className="w-1/6 flex items-center justify-center">
                     <img
@@ -170,7 +170,7 @@ export default function AgentManagement() {
                     style={{ padding: "10px" }}
                   >
                     {activeUsers?.map((user, index) => (
-                      <Link key={index} href={`/ManageCall/${user?.id}`}>
+                      <Link href={`/ManageCall/${user?.id}`}>
                         <div>
                           <img
                             src={"images/AgentYellow.svg"}
@@ -225,7 +225,7 @@ export default function AgentManagement() {
                     style={{ padding: "10px" }}
                   >
                     {offlineUsers?.map((user, index) => (
-                      <Link href={`/ManageCall/${user?.id}`} key={index}>
+                      <Link href={`/ManageCall/${user?.id}`}>
                         <div className="text-4xl flex items-center  h-10 w-10">
                           <img
                             src={"images/AgentBlue.svg"}
@@ -249,7 +249,7 @@ export default function AgentManagement() {
                     style={{ padding: "10px" }}
                   >
                     {offlineSupervisors?.map((user, index) => (
-                      <Link key={index} href={`/ManageCall/${user?.id}`}>
+                      <Link href={`/ManageCall/${user?.id}`}>
                         <div className="text-4xl flex items-center  h-10 w-10">
                           <img
                             src={"images/AgentWhite.svg"}
