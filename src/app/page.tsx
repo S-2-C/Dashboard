@@ -18,21 +18,11 @@ export default function Home2({ params }: { params: { id: string } }) {
   const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
   useEffect(() => {
     async function fetchAgent() {
-      // const res = await fetchOneAgent(params.id);
-      // console.log(res);
-
       const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
-      console.log(user);
       // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
-      console.log(email);
       const agent = await fetchOneAgent(email);
-      console.log("agent", agent);
       setAgent(agent);
-      // // {agent?.role == "SUPERVISOR" ? (
-      // //   <Text fontWeight="bold">Supervisor</Text>
-      // // )
-      // console.log(agent);
     }
 
     fetchAgent();
@@ -72,19 +62,19 @@ export default function Home2({ params }: { params: { id: string } }) {
             for efficiency
           </p>
           {agent?.role === "SUPERVISOR" ? (
-        <>
-          <Link href="/AgentManagement">
-            <Button className="w-48 h-12 bg-gradient-to-b from-figma-figma6 to-figma-figma1 hover:bg-figma-figma9 focus:bg-figma-figma10 active:bg-figma-figma10 text-background font-bold py-2 px-4 rounded-xl">
-              Get started
-            </Button>
-          </Link>
-          </>
-           ) : (
+            <>
+              <Link href="/AgentManagement">
+                <Button className="w-48 h-12 bg-gradient-to-b from-figma-figma6 to-figma-figma1 hover:bg-figma-figma9 focus:bg-figma-figma10 active:bg-figma-figma10 text-background font-bold py-2 px-4 rounded-xl">
+                  Get started
+                </Button>
+              </Link>
+            </>
+          ) : (
             <Link href="/ControlPanel">
-            <Button className="w-48 h-12 bg-gradient-to-b from-figma-figma6 to-figma-figma1 hover:bg-figma-figma9 focus:bg-figma-figma10 active:bg-figma-figma10 text-background font-bold py-2 px-4 rounded-xl">
-              Get started
-            </Button>
-          </Link>
+              <Button className="w-48 h-12 bg-gradient-to-b from-figma-figma6 to-figma-figma1 hover:bg-figma-figma9 focus:bg-figma-figma10 active:bg-figma-figma10 text-background font-bold py-2 px-4 rounded-xl">
+                Get started
+              </Button>
+            </Link>
           )}
         </div>
       </div>

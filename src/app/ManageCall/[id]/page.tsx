@@ -19,30 +19,47 @@ export default function ManageCall({ params }: { params: { id: string } }) {
   const [isOnCall, setIsOnCall] = useState<null | Contact>(null);
   const [transcript, setTranscript] = useState<any>(null);
 
-  //create a polling function to fetch data every 5 seconds
+  // Function to fetch agent data
+  async function fetchAgent() {
+    const res = await fetchOneAgent(params.id);
+    setAgent(res);
+  }
+
+  // Polling function to fetch data every 5 seconds
   useEffect(() => {
     const interval = setInterval(async () => {
-      const agentCalls = agent?.Contacts?.items;
+      const updatedAgent = await fetchOneAgent(params.id); // Refetch the agent status
+      setAgent(updatedAgent);
+
+      const isAgentOnCall = updatedAgent?.isOnCall;
+      console.log(isAgentOnCall);
+      if (!isAgentOnCall) {
+        setIsOnCall(null);
+        console.log("Agent is not on call");
+        return;
+      }
+
+      const agentCalls = updatedAgent?.Contacts?.items;
+      console.log(agentCalls);
       const currentCall = agentCalls?.find(
-        (call) => call?.callEnd === null
+        (call: any) => call?.callEnd === null
       ) as Contact;
-      if (!currentCall) return;
+      if (!currentCall) {
+        console.log("No ongoing call");
+        setIsOnCall(null);
+        return;
+      }
       if (!isOnCall) setIsOnCall(currentCall);
 
       const res = await fetchRealTimeData(currentCall?.id);
-      console.log(res.data);
       setTranscript(res.data);
-    }, 2000);
+    }, 5000);
+
     return () => clearInterval(interval);
   }, [agent]);
 
+  // Initial fetch of agent data
   useEffect(() => {
-    async function fetchAgent() {
-      const res = await fetchOneAgent(params.id);
-      console.log(res);
-      setAgent(res);
-    }
-
     fetchAgent();
   }, []);
 
@@ -245,7 +262,6 @@ export default function ManageCall({ params }: { params: { id: string } }) {
               <div className="flex flex-col gap-2 h-96 overflow-y-scroll">
                 {transcript &&
                   transcript.map((t: any, index: any) => {
-                    //   console.log(t);
                     if (!t.Transcript) return;
                     return (
                       <div

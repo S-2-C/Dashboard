@@ -44,8 +44,6 @@ export const fetchOneAgent = async (agentId: string) => {
       },
     })) as GetUserQuery;
 
-    console.log(agentData);
-
     //@ts-ignore
     return agentData.data.getUser;
   } catch (error) {
