@@ -21,18 +21,17 @@ import Timer from "@/components/timer";
 const formatDateToMexicanTimezone = (timestamp: any) => {
   const date = new Date(timestamp);
   const options: Intl.DateTimeFormatOptions = {
-    timeZone: 'America/Mexico_City',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true
+    timeZone: "America/Mexico_City",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
   };
-  return date.toLocaleString('es-MX', options);
+  return date.toLocaleString("es-MX", options);
 };
-
 
 export default function ManageCall({ params }: { params: { id: string } }) {
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
@@ -40,30 +39,47 @@ export default function ManageCall({ params }: { params: { id: string } }) {
   const [isOnCall, setIsOnCall] = useState<null | Contact>(null);
   const [transcript, setTranscript] = useState<any>(null);
 
-  //create a polling function to fetch data every 5 seconds
+  // Function to fetch agent data
+  async function fetchAgent() {
+    const res = await fetchOneAgent(params.id);
+    setAgent(res);
+  }
+
+  // Polling function to fetch data every 5 seconds
   useEffect(() => {
     const interval = setInterval(async () => {
-      const agentCalls = agent?.Contacts?.items;
+      const updatedAgent = await fetchOneAgent(params.id); // Refetch the agent status
+      setAgent(updatedAgent);
+
+      const isAgentOnCall = updatedAgent?.isOnCall;
+      console.log(isAgentOnCall);
+      if (!isAgentOnCall) {
+        setIsOnCall(null);
+        console.log("Agent is not on call");
+        return;
+      }
+
+      const agentCalls = updatedAgent?.Contacts?.items;
+      console.log(agentCalls);
       const currentCall = agentCalls?.find(
-        (call) => call?.callEnd === null
+        (call: any) => call?.callEnd === null
       ) as Contact;
-      if (!currentCall) return;
+      if (!currentCall) {
+        console.log("No ongoing call");
+        setIsOnCall(null);
+        return;
+      }
       if (!isOnCall) setIsOnCall(currentCall);
 
       const res = await fetchRealTimeData(currentCall?.id);
-      console.log(res.data);
       setTranscript(res.data);
-    }, 2000);
+    }, 5000);
+
     return () => clearInterval(interval);
   }, [agent]);
 
+  // Initial fetch of agent data
   useEffect(() => {
-    async function fetchAgent() {
-      const res = await fetchOneAgent(params.id);
-      console.log("lllllll", res);
-      setAgent(res);
-    }
-
     fetchAgent();
   }, []);
 
@@ -83,18 +99,16 @@ export default function ManageCall({ params }: { params: { id: string } }) {
           <div className="flex">
             <Heading level={3} fontWeight="bold">
               {/* {agent?.id} - Walmart®.com */}
-              {agent?.name || agent?.id.split("@")[0] + "- Walmart®.com"} 
+              {agent?.name || agent?.id.split("@")[0] + "- Walmart®.com"}
             </Heading>
 
             {agent?.needsHelp && (
               <div className=" bg-red-500 shadow-lg shadow-red-600 rounded-full py-2 px-3 font-bold text-white justify-center items-center flex ml-5 text-xs">
                 <p>Asking for help</p>
               </div>
-                )}
-
+            )}
           </div>
 
-          
           {agent?.role == "SUPERVISOR" ? (
             <Text fontWeight="bold">Supervisor</Text>
           ) : (
@@ -174,57 +188,59 @@ export default function ManageCall({ params }: { params: { id: string } }) {
             )}
           </Popover>
 
-            <Flex direction="column" gap="0.5rem" >
-              <View
-                backgroundColor="#CAE5F4"
-                style={{
-                  ...commonShadowStyle,
-                  flex: 1,
-                  borderRadius: "8px",
-                  margin: "0.5rem",
-                  minHeight: "300px",
-                  width: "400px",
-                }}
-              >
-                <Text padding="1rem" fontWeight="bold">
-                  Sentiment Analysis Grade
-                </Text>
-              </View>
-              <View
-                backgroundColor="#8BC4E6"
-                style={{
-                  ...commonShadowStyle,
-                  flex: 1,
-                  borderRadius: "8px",
-                  margin: "0.5rem",
-                  minHeight: "350px",
-                }}
-              >
-                <div className=" p-5 w-full h-full">
-                  {!isOnCall ? (
-                    <div className="h-full flex flex-col justify-between">
-                      <div>
-                        <h1 className="font-bold pb-5 text-3xl">Current call</h1>
-                        <Timer startTime={"2024-05-23T22:30:50.133Z"} />
-                      </div>
-                      <div>
-                        <h3 className="">{ agent?.Contacts?.items[0]?.phone}</h3>
-                        <h3 className=" text-sm">{formatDateToMexicanTimezone("2024-05-23T20:25:20.133Z")}</h3>
-                      </div>
-                    </div>
-                  ) : (
+          <Flex direction="column" gap="0.5rem">
+            <View
+              backgroundColor="#CAE5F4"
+              style={{
+                ...commonShadowStyle,
+                flex: 1,
+                borderRadius: "8px",
+                margin: "0.5rem",
+                minHeight: "300px",
+                width: "400px",
+              }}
+            >
+              <Text padding="1rem" fontWeight="bold">
+                Sentiment Analysis Grade
+              </Text>
+            </View>
+            <View
+              backgroundColor="#8BC4E6"
+              style={{
+                ...commonShadowStyle,
+                flex: 1,
+                borderRadius: "8px",
+                margin: "0.5rem",
+                minHeight: "350px",
+              }}
+            >
+              <div className=" p-5 w-full h-full">
+                {!isOnCall ? (
+                  <div className="h-full flex flex-col justify-between">
                     <div>
-                      <h1 className=" font-bold">Not in call</h1>
+                      <h1 className="font-bold pb-5 text-3xl">Current call</h1>
+                      <Timer startTime={"2024-05-23T22:30:50.133Z"} />
                     </div>
-                  )}
-                </div>
-              </View>
-            </Flex>
-            
+                    <div>
+                      <h3 className="">{agent?.Contacts?.items[0]?.phone}</h3>
+                      <h3 className=" text-sm">
+                        {formatDateToMexicanTimezone(
+                          "2024-05-23T20:25:20.133Z"
+                        )}
+                      </h3>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <h1 className=" font-bold">Not in call</h1>
+                  </div>
+                )}
+              </div>
+            </View>
+          </Flex>
 
           <Flex
             direction="column"
-
             gap="0.5rem"
             marginRight="0.5rem"
             width="400px"
@@ -232,13 +248,10 @@ export default function ManageCall({ params }: { params: { id: string } }) {
             <Heading level={5} fontWeight={"bold"} style={{ margin: "0.5rem" }}>
               Documentation Resources
             </Heading>
-            <div className=" bg-neutral-50 shadow-inner overflow-y-scroll px-4 pt-4 h-64 w-full rounded-sm no-scrollbar"> 
-            {documents.map((doc, index) => {
-              return (
-                <TextReader key={index} content={doc} index={index} />
-              );
-            }
-            )}
+            <div className=" bg-neutral-50 shadow-inner overflow-y-scroll px-4 pt-4 h-64 w-full rounded-sm no-scrollbar">
+              {documents.map((doc, index) => {
+                return <TextReader key={index} content={doc} index={index} />;
+              })}
             </div>
 
             <Heading level={5} fontWeight={"bold"} style={{ margin: "0.5rem" }}>
@@ -255,7 +268,6 @@ export default function ManageCall({ params }: { params: { id: string } }) {
               <div className="flex flex-col gap-2 h-90 overflow-y-scroll">
                 {transcript &&
                   transcript.map((t: any, index: any) => {
-                    //   console.log(t);
                     if (!t.Transcript) return;
                     return (
                       <div
@@ -286,6 +298,3 @@ export default function ManageCall({ params }: { params: { id: string } }) {
     </div>
   );
 }
-
-
-

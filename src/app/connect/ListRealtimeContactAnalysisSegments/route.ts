@@ -1,6 +1,4 @@
 import { ConnectContactLensClient, ListRealtimeContactAnalysisSegmentsCommand } from "@aws-sdk/client-connect-contact-lens"
-import { Contact } from "lucide-react";
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { make_config_json } from "@/app/apis_library/connect";
 
 export async function GET(request: Request) {
