@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
+import { fetchByPath, validateField } from "./utils";
+import { Notification } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -13,28 +16,25 @@ import {
   SelectField,
   TextField,
 } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { generateClient } from "aws-amplify/api";
-import { getNotification } from "../graphql/queries";
-import { updateNotification } from "../graphql/mutations";
-const client = generateClient();
+import { DataStore } from "aws-amplify";
 export default function NotificationUpdateForm(props) {
   const {
-    id: idProp,
-    notification: notificationModelProp,
+    id,
+    notification,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    rule: "",
-    action: "",
-    description: "",
-    urgency: "",
+    rule: undefined,
+    action: undefined,
+    description: undefined,
+    urgency: undefined,
   };
   const [rule, setRule] = React.useState(initialValues.rule);
   const [action, setAction] = React.useState(initialValues.action);
@@ -44,32 +44,24 @@ export default function NotificationUpdateForm(props) {
   const [urgency, setUrgency] = React.useState(initialValues.urgency);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = notificationRecord
-      ? { ...initialValues, ...notificationRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...notificationRecord };
     setRule(cleanValues.rule);
     setAction(cleanValues.action);
     setDescription(cleanValues.description);
     setUrgency(cleanValues.urgency);
     setErrors({});
   };
-  const [notificationRecord, setNotificationRecord] = React.useState(
-    notificationModelProp
-  );
+  const [notificationRecord, setNotificationRecord] =
+    React.useState(notification);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp
-        ? (
-            await client.graphql({
-              query: getNotification.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getNotification
-        : notificationModelProp;
+      const record = id
+        ? await DataStore.query(Notification, id)
+        : notification;
       setNotificationRecord(record);
     };
     queryData();
-  }, [idProp, notificationModelProp]);
+  }, [id, notification]);
   React.useEffect(resetStateValues, [notificationRecord]);
   const validations = {
     rule: [{ type: "Required" }],
@@ -77,15 +69,7 @@ export default function NotificationUpdateForm(props) {
     description: [{ type: "Required" }],
     urgency: [{ type: "Required" }],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value =
-      currentValue && getDisplayValue
-        ? getDisplayValue(currentValue)
-        : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -131,38 +115,28 @@ export default function NotificationUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value === "") {
-              modelFields[key] = null;
-            }
-          });
-          await client.graphql({
-            query: updateNotification.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                id: notificationRecord.id,
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(
+            Notification.copyOf(notificationRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
-      {...getOverrideProps(overrides, "NotificationUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "NotificationUpdateForm")}
     >
       <TextField
         label="Rule"
         isRequired={true}
         isReadOnly={false}
-        value={rule}
+        defaultValue={rule}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -189,7 +163,7 @@ export default function NotificationUpdateForm(props) {
         label="Action"
         isRequired={true}
         isReadOnly={false}
-        value={action}
+        defaultValue={action}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -216,7 +190,7 @@ export default function NotificationUpdateForm(props) {
         label="Description"
         isRequired={true}
         isReadOnly={false}
-        value={description}
+        defaultValue={description}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -294,25 +268,23 @@ export default function NotificationUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || notificationModelProp)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
-        <Flex
-          gap="15px"
-          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
-        >
+        <Flex {...getOverrideProps(overrides, "RightAlignCTASubFlex")}>
+          <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
           <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || notificationModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
