@@ -1,3 +1,4 @@
+'use client'
 import Home from "../NavBar" // Importing the NavBar component
 import { Button, Flex, Heading, Text } from "@aws-amplify/ui-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,11 +24,53 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import SearchBar  from '../searchBar'; //importing the SearchBar component
+import SearchBar from '../searchBar'; //importing the SearchBar component
+import { useEffect } from "react";
+import { useState } from "react";
+import { fetchListQueues } from "@/fetching/fetchingListQueues";
+import { fetchCurrentMetricData } from "@/fetching/fetchingGetCurrentMetricData";
 
-
-
+function getChannelsQueues(channels: any, data: any) {
+    let getChannelsQueues = []
+    for (let i = 0; i < channels.length; i++) {
+        for (let j = 0; j < data.data.length; j++) {
+            if (channels[i] === data.data[j].Name) {
+                getChannelsQueues.push(data.data[j])
+            }
+        }
+    }
+    return getChannelsQueues
+}
 export default function Notifications() {
+    // Make a useState for the data
+    const [QueueMetrics, setQueueMetrics] = useState([]);
+
+    useEffect(() => {
+        const channels = ["Walmart Pass", "Walmart Physical Store", "Walmart Online", "Walmart Delivery"]
+        const fetchData = async () => {
+            const data = await fetchListQueues();
+            const channelsQueues = getChannelsQueues(channels, data)
+
+            localStorage.setItem("queueData", JSON.stringify(channelsQueues)); // Saving data to local storage
+            // Get all queues 
+            const QueueIds = channelsQueues.map((queue: any) => queue.Id)
+            // Join the QueueIds to a string
+            const QueueIdsString = QueueIds.join(",")
+
+            // Fetch the current metric data
+            const currentMetricData = await fetchCurrentMetricData(QueueIdsString);
+
+            // Set the state of the data
+            setQueueMetrics(currentMetricData.data);
+
+
+
+        };
+        fetchData();
+    }, []);
+
+    console.log(QueueMetrics)
+
     return (
         <div>
             <div className="h-screen flex w-full">
@@ -43,8 +86,8 @@ export default function Notifications() {
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Online Store
-                                <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-2/4 "></div>
+                                    <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
+                                    <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma8 rounded-full w-1/2"></div>
@@ -93,8 +136,8 @@ export default function Notifications() {
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Fisical Store
-                                <div className="bg-figma-figma9 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-2/4 "></div>
+                                    <div className="bg-figma-figma9 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
+                                    <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma9 rounded-full w-3/5"></div>
@@ -143,8 +186,8 @@ export default function Notifications() {
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Walmart Express
-                                <div className="bg-figma-figma10 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-2/4 "></div>
+                                    <div className="bg-figma-figma10 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
+                                    <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma10 rounded-full w-3/4"></div>
@@ -193,8 +236,8 @@ export default function Notifications() {
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
                                 <AccordionTrigger className="flex items-center">Delivery
-                                <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
-                               <div className="w-2/4 "></div>
+                                    <div className="bg-figma-figma8 h-4 w-4 flex justify-end rounded-2xl items-center m-1"></div>
+                                    <div className="w-2/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className="h-4 bg-figma-figma8 rounded-full w-1/3"></div>
