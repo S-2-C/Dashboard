@@ -47,7 +47,7 @@ const Timer: React.FC<TimerProps> = ({ startTime }) => {
   };
 
   return (
-    <div className='text-5xl font-sans' style={{ color: getColor(timeElapsed), fontWeight: 'bold' }}>
+    <div className='text-3xl font-sans' style={{ color: getColor(timeElapsed), fontWeight: 'bold' }}>
       {formatTime(timeElapsed)}
     </div>
   );
