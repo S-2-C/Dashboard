@@ -421,7 +421,7 @@ export default function Home() {
               
               <li className="mt-1 flex items-center ml-4">
                 <Link
-                  href="/DocumentationAgent"
+                  href="/Documentation"
                   className={`text-teal hover:text-teal-highlight relative`}
                   onMouseEnter={() => setHoveredItem("Documentation")}
                   onMouseLeave={() => setHoveredItem(null)}
