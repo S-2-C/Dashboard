@@ -44,11 +44,14 @@ function getChannelsQueues(channels: any, data: any) {
 export default function Notifications() {
     // Make a useState for the data
     const [QueueMetrics, setQueueMetrics] = useState([]);
+    const [CurrentMetricData, setMetricData] = useState([]);
+    //I need to create a set for currentMetricData
 
     useEffect(() => {
         const channels = ["Walmart Pass", "Walmart Physical Store", "Walmart Online", "Walmart Delivery"]
         const fetchData = async () => {
             const data = await fetchListQueues();
+           
             const channelsQueues = getChannelsQueues(channels, data)
 
             localStorage.setItem("queueData", JSON.stringify(channelsQueues)); // Saving data to local storage
@@ -59,9 +62,13 @@ export default function Notifications() {
 
             // Fetch the current metric data
             const currentMetricData = await fetchCurrentMetricData(QueueIdsString);
-
+            console.log("queue",currentMetricData);
+            // Set the state of the data
+            setMetricData(currentMetricData.data);
             // Set the state of the data
             setQueueMetrics(currentMetricData.data);
+
+            //Need to create a set for currentMetric data
 
 
 
@@ -69,7 +76,7 @@ export default function Notifications() {
         fetchData();
     }, []);
 
-    console.log(QueueMetrics)
+    console.log("helo",QueueMetrics)
 
     return (
         <div>
@@ -81,6 +88,9 @@ export default function Notifications() {
                     </div> */}
                     <div className="h-12 p-4 m-1">
                         <h1 className="text-figma-figma5 font-bold text-4xl">Channels</h1>
+                        <h1 className="text-figma-figma5 font-bold text-4xl">
+    {QueueMetrics.length > 0 && QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value}
+</h1>
                     </div>
                     <div className="w-full h-screen overflow-y-auto">
                         <Accordion className="" type="single" collapsible>
@@ -112,7 +122,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>
@@ -125,7 +135,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value}</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,7 +172,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[1].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[1].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>
@@ -175,7 +185,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && QueueMetrics[1].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value}</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -212,7 +222,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>
@@ -225,7 +235,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value}</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -262,7 +272,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[3].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[3].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>
@@ -275,7 +285,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">5</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && QueueMetrics[3].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value}</b>
                                                 </div>
                                             </div>
                                         </div>
