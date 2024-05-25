@@ -13,6 +13,7 @@ import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { Contact, GetUserQuery } from "@/API";
 import { fetchRealTimeData } from "@/fetching/transcript";
 import { documents } from "@/app/content/relevantFiles";
+import Link from "next/link";
 
 //S2C components
 import TextReader from "@/components/textReader";
@@ -71,15 +72,20 @@ export default function ManageCall({ params }: { params: { id: string } }) {
       let customerSentiment = 0;
 
       for (let val of res.data) {
-        if (!val.Transcript) break;
-        if (val.Transcript.ParticipantRole === "AGENT") {
-          agentSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
-        } else {
-          customerSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
-        }
+        if (val.Transcript) {
+          if (val.Transcript.ParticipantRole === "AGENT") {
+            agentSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
+          } else {
+            customerSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
+          }
 
-        totalSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
+          totalSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
+        }      
       }
+
+      console.log("Total sentiment: ", totalSentiment);
+      console.log("Agent sentiment: ", agentSentiment);
+      console.log("Customer sentiment: ", customerSentiment);
 
       setTotalSentiment(totalSentiment);
       setAgentSentiment(agentSentiment);
@@ -109,10 +115,12 @@ export default function ManageCall({ params }: { params: { id: string } }) {
             Manage Call
           </Heading>
           <div className="flex">
-            <Heading level={3} fontWeight="bold">
+             <Link href={`/ProfileAgent/${agent?.id}`} >
               {/* {agent?.id} - Walmart®.com */}
-              {agent?.name || agent?.id.split("@")[0] + "- Walmart®.com"}
-            </Heading>
+                <h1 className=" text-3xl font-bold hover:underline hover:text-blue-400">
+                  {agent?.name || agent?.id.split("@")[0] + "- Walmart®.com"} 
+                </h1>
+            </Link>
 
             {agent?.needsHelp && (
               <div className=" bg-red-500 shadow-lg shadow-red-600 rounded-full py-2 px-3 font-bold text-white justify-center items-center flex ml-5 text-xs">
@@ -229,7 +237,7 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                       // </div>
                       <>
                       <div className="flex flex-col justify-center  gap-2">
-                        <div className=" flex w-full py-2 items-center" style={{  color: getSentimentColor(totalSentiment).color }}>
+                        <div className=" flex w-full py-2 items-center" style={{ backgroundColor: getSentimentColor(totalSentiment).color }}>
                           <h1 className="font-bold text-lg text-black pl-5 pr-3" >Sentiment analysis: </h1>
                           <h3 className="text-lg" style={{ color: "black" }}> {getSentimentColor(totalSentiment).text}</h3>
                         </div>
@@ -343,3 +351,4 @@ export default function ManageCall({ params }: { params: { id: string } }) {
     </div>
   );
 }
+

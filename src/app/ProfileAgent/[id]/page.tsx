@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 //import { useEffect, useRef, useState, ChangeEvent, FormEvent } from "react";
-import Home from "../NavBar"
+import Home from "../../NavBar"
 import "@aws-amplify/ui-react/styles.css";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator"
@@ -34,19 +34,15 @@ const profileData = {
         averageOnCall: '15 minutes'
     }
 
-export default function Profile() {
+export default function Profile({ params }: { params: { id: string } }) {
     const [agent, setAgent] = useState<User>();
     const [averageCallTime, setAverageCallTime] = useState<number>(0);
 
     useEffect(() => {
         async function fetchAgent() {
           // const res = await fetchOneAgent(params.id);
-          // console.log(res);
-    
-          const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
-          //@ts-ignore
-          const email = user?.tokens?.signInDetails?.loginId;
-          const agent = await fetchOneAgent(email);
+ 
+          const agent = await fetchOneAgent(params.id);
 
           let sum = 0
 
