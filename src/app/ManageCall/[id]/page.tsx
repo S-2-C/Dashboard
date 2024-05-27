@@ -13,31 +13,24 @@ import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { Contact, GetUserQuery } from "@/API";
 import { fetchRealTimeData } from "@/fetching/transcript";
 import { documents } from "@/app/content/relevantFiles";
+import Link from "next/link";
 
 //S2C components
 import TextReader from "@/components/textReader";
 import Timer from "@/components/timer";
+import { formatDateToMexicanTimezone, getSentimentColor } from "@/functions/timeFunctions";
 
-const formatDateToMexicanTimezone = (timestamp: any) => {
-  const date = new Date(timestamp);
-  const options: Intl.DateTimeFormatOptions = {
-    timeZone: "America/Mexico_City",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  };
-  return date.toLocaleString("es-MX", options);
-};
+
 
 export default function ManageCall({ params }: { params: { id: string } }) {
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
   const [agent, setAgent] = useState<GetUserQuery["getUser"] | null>(null);
   const [isOnCall, setIsOnCall] = useState<null | Contact>(null);
   const [transcript, setTranscript] = useState<any>(null);
+
+  const [totalSentiment, setTotalSentiment] = useState(0);
+  const [agentSentiment, setAgentSentiment] = useState(0);
+  const [customerSentiment, setCustomerSentiment] = useState(0);
 
   // Function to fetch agent data
   async function fetchAgent() {
@@ -71,9 +64,34 @@ export default function ManageCall({ params }: { params: { id: string } }) {
       }
       if (!isOnCall) setIsOnCall(currentCall);
 
-      const res = await fetchRealTimeData(currentCall?.id);
+      const res = await fetchRealTimeData(currentCall?.id); 
       setTranscript(res.data);
-    }, 5000);
+
+      let totalSentiment = 0;
+      let agentSentiment = 0;
+      let customerSentiment = 0;
+
+      for (let val of res.data) {
+        if (val.Transcript) {
+          if (val.Transcript.ParticipantRole === "AGENT") {
+            agentSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
+          } else {
+            customerSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
+          }
+
+          totalSentiment += val.Transcript.Sentiment == "POSITIVE" ? 1 : val.Transcript.Sentiment == "NEGATIVE" ? -1 : 0;
+        }      
+      }
+
+      console.log("Total sentiment: ", totalSentiment);
+      console.log("Agent sentiment: ", agentSentiment);
+      console.log("Customer sentiment: ", customerSentiment);
+
+      setTotalSentiment(totalSentiment);
+      setAgentSentiment(agentSentiment);
+      setCustomerSentiment(customerSentiment);
+
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [agent]);
@@ -97,10 +115,12 @@ export default function ManageCall({ params }: { params: { id: string } }) {
             Manage Call
           </Heading>
           <div className="flex">
-            <Heading level={3} fontWeight="bold">
+             <Link href={`/ProfileAgent/${agent?.id}`} >
               {/* {agent?.id} - Walmart®.com */}
-              {agent?.name || agent?.id.split("@")[0] + "- Walmart®.com"}
-            </Heading>
+                <h1 className=" text-3xl font-bold hover:underline hover:text-blue-400">
+                  {agent?.name || agent?.id.split("@")[0] + "- Walmart®.com"} 
+                </h1>
+            </Link>
 
             {agent?.needsHelp && (
               <div className=" bg-red-500 shadow-lg shadow-red-600 rounded-full py-2 px-3 font-bold text-white justify-center items-center flex ml-5 text-xs">
@@ -189,10 +209,76 @@ export default function ManageCall({ params }: { params: { id: string } }) {
           </Popover>
 
           <Flex direction="column" gap="0.5rem">
-            <View
-              backgroundColor="#CAE5F4"
+            <View 
+              backgroundColor="#8BC4E6"
               style={{
                 ...commonShadowStyle,
+                flex: 1,
+                borderRadius: "8px",
+                margin: "0.5rem",
+                height: "350px",
+              }}
+            >
+              <div className=" py-5 w-full h-full">
+                {isOnCall ? (
+                  <div className="h-full flex flex-col justify-between">
+                    <div>
+                      <div className="flex ">
+                        <h1 className="font-bold pb-5 px-5 text-3xl pr-3">Current call </h1>
+                        <Timer startTime={isOnCall?.callStart} />
+                      </div>
+                      {
+                      // <div className="flex justify-center items-center gap-2">
+                      //   <h3 className="font-bold pb-5 text-3xl" style={{ color: getSentimentColor(totalSentiment).color}}>{getSentimentColor(totalSentiment).text}</h3>
+                      //   <div>
+                      //     <h3 className="font-bold pb-5 text-3xl" style={{ color: getSentimentColor(agentSentiment).color}}>{getSentimentColor(agentSentiment).text}</h3>
+                      //     <h3 className="font-bold pb-5 text-3xl" style={{ color: getSentimentColor(customerSentiment).color}}>{getSentimentColor(customerSentiment).text}</h3>
+                      //   </div>
+                      // </div>
+                      <>
+                      <div className="flex flex-col justify-center  gap-2">
+                        <div className=" flex w-full py-2 items-center" style={{ backgroundColor: getSentimentColor(totalSentiment).color }}>
+                          <h1 className="font-bold text-lg text-black pl-5 pr-3" >Sentiment analysis: </h1>
+                          <h3 className="text-lg" style={{ color: "black" }}> {getSentimentColor(totalSentiment).text}</h3>
+                        </div>
+                        <div className="flex  flex-col">
+                          <div className=" px-10 py-2">
+                            <h1 className="font-light text-sm text-neutral-500">Agent</h1>
+                            <div className="flex items-center">
+                              <h3 className="font-bold text-lg pr-3" style={{ color: getSentimentColor(agentSentiment).color }}>{getSentimentColor(agentSentiment).text} </h3>
+                              {getSentimentColor(agentSentiment).icon}
+                            </div>
+                          </div>
+                          <div className=" px-10 py-2">
+                            <h1 className="font-light text-sm text-neutral-500">Customer</h1>
+                            <div className="flex items-center">
+                              <h3 className="font-bold text-lg pr-3" style={{ color: getSentimentColor(customerSentiment).color }}>{getSentimentColor(customerSentiment).text}</h3>
+                              {getSentimentColor(customerSentiment).icon}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </>
+                      }
+                    </div>
+                    <div className="justify-end items-end flex flex-col px-5">
+                      <h3 className="">{agent?.Contacts?.items[0]?.phone}</h3>
+                      <h3 className=" text-sm">
+                        {formatDateToMexicanTimezone(
+                          isOnCall?.callStart
+                        )}
+                      </h3>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <h1 className=" font-bold pl-5">Not in call</h1>
+                  </div>
+                )}
+              </div>
+            </View>
+            <View
+              style={{
                 flex: 1,
                 borderRadius: "8px",
                 margin: "0.5rem",
@@ -200,52 +286,7 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                 width: "400px",
               }}
             >
-              <Text padding="1rem" fontWeight="bold">
-                Sentiment Analysis Grade
-              </Text>
-            </View>
-            <View
-              backgroundColor="#8BC4E6"
-              style={{
-                ...commonShadowStyle,
-                flex: 1,
-                borderRadius: "8px",
-                margin: "0.5rem",
-                minHeight: "350px",
-              }}
-            >
-              <div className=" p-5 w-full h-full">
-                {!isOnCall ? (
-                  <div className="h-full flex flex-col justify-between">
-                    <div>
-                      <h1 className="font-bold pb-5 text-3xl">Current call</h1>
-                      <Timer startTime={"2024-05-23T22:30:50.133Z"} />
-                    </div>
-                    <div>
-                      <h3 className="">{agent?.Contacts?.items[0]?.phone}</h3>
-                      <h3 className=" text-sm">
-                        {formatDateToMexicanTimezone(
-                          "2024-05-23T20:25:20.133Z"
-                        )}
-                      </h3>
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <h1 className=" font-bold">Not in call</h1>
-                  </div>
-                )}
-              </div>
-            </View>
-          </Flex>
-
-          <Flex
-            direction="column"
-            gap="0.5rem"
-            marginRight="0.5rem"
-            width="400px"
-          >
-            <Heading level={5} fontWeight={"bold"} style={{ margin: "0.5rem" }}>
+              <Heading level={5} fontWeight={"bold"} style={{ margin: "0.5rem" }}>
               Documentation Resources
             </Heading>
             <div className=" bg-neutral-50 shadow-inner overflow-y-scroll px-4 pt-4 h-64 w-full rounded-sm no-scrollbar">
@@ -253,7 +294,10 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                 return <TextReader key={index} content={doc} index={index} />;
               })}
             </div>
+            </View>
+          </Flex>
 
+          <div className=" flex  h-[85%] w-96 flex-col justify-center items-center">
             <Heading level={5} fontWeight={"bold"} style={{ margin: "0.5rem" }}>
               Transcript
             </Heading>
@@ -262,39 +306,49 @@ export default function ManageCall({ params }: { params: { id: string } }) {
               style={{
                 ...commonShadowStyle,
                 borderRadius: "8px",
-                minHeight: "300px",
+                height: "100%",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div className="flex flex-col gap-2 h-90 overflow-y-scroll">
+              <div className="flex flex-col w-full gap-2 h-[600px]  overflow-y-scroll no-scrollbar">
                 {transcript &&
                   transcript.map((t: any, index: any) => {
+
                     if (!t.Transcript) return;
                     return (
                       <div
                         key={index}
-                        className={`flex rounded-lg  flex-col ${
+                        className={`flex rounded-lg flex-col ${
                           t.Transcript.ParticipantRole == "AGENT"
                             ? "items-end text-end"
                             : "items-start text-start"
-                        } ${
-                          t.Transcript.Sentiment == "NEGATIVE"
-                            ? "bg-red-300"
-                            : t.Transcript.Sentiment == "POSITIVE"
-                            ? "bg-green-200"
-                            : "bg-gray-300"
-                        }
-                  `}
-                      >
-                        <Text>{t.Transcript.ParticipantRole}</Text>
-                        <Text>{t.Transcript.Content}</Text>
+                        } `}
+                            >
+                              <div className={` w-2/3 px-2
+                              ${
+                                t.Transcript.ParticipantRole == "AGENT"
+                                  ? " rounded-s-2xl"
+                                  : "rounded-e-2xl"
+                              } 
+                                ${
+                                t.Transcript.Sentiment == "NEGATIVE"
+                                  ? "bg-red-300"
+                                  : t.Transcript.Sentiment == "POSITIVE"
+                                  ? "bg-green-200"
+                                  : "bg-gray-300"
+                              }`}>
+                                  <h1 className=" font-bold">{t.Transcript.ParticipantRole}</h1>
+                                  <h1>{t.Transcript.Content}</h1>
+                                </div>
                       </div>
                     );
                   })}
               </div>
             </View>
+            </div>
           </Flex>
-        </Flex>
       </div>
     </div>
   );
 }
+
