@@ -25,7 +25,7 @@ const Stories: React.FC = () => {
                 className="flex space-x-2 overflow-x-scroll scroll-smooth scrollbar-hide rounded-full"
                 style={{ 
                     backgroundColor: '#ECECEC', 
-                    padding: '10px 20px 10px 20px', 
+                    padding: '12px 20px 12px 20px', 
                     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Sombra en el borde inferior
                     maxWidth: '100%',
                     overflowY: 'hidden' // Bloquea el desplazamiento vertical

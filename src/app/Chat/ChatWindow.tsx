@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Resizable } from 're-resizable'; 
 interface ChatWindowProps {
     chatRows: React.ReactNode[];
     onSendMessage: (message: string) => void;
@@ -16,7 +16,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatRows, onSendMessage }) => {
     };
 
     return (
-        <div style={{ height: '80vh', flex: 1, display: 'flex', flexDirection: 'column', padding: '10px', borderLeft: '1px solid #ccc' }}>
+        <div style={{ height: '80vh', flex: 1, display: 'flex', flexDirection: 'column', padding: '10px', borderLeft: '1px solid #ccc'}}>
             <div style={{ borderBottom: '1px solid #ccc', paddingBottom: '30px',paddingTop:'15px', marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
                 <img src="https://via.placeholder.com/50" alt="User" style={{ borderRadius: '50%', marginRight: '10px' }} />
                 <div>

@@ -36,8 +36,10 @@
     "mochawesome-report-generator": "^6.2.0",
     "next": "14.1.0",
     "openai": "^4.38.2",
+    "re-resizable": "^6.9.16",
     "react": "^18",
     "react-dom": "^18",
+    "react-resizable": "^3.0.5",
     "tailwind-merge": "^2.2.2",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7"

@@ -1,0 +1,52 @@
+[
+    {
+        "name": "George Bluth",
+        "lastMessage": "Thank you for your help",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    {
+        "name": "Janet Weaver",
+        "lastMessage": "Problem resolved.",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    {
+        "name": "Emma Wong",
+        "lastMessage": "Still in trouble, may I seek your support?",
+        "avatar": "https://randomuser.me/api/portraits/women/3.jpg"
+    },
+    {
+        "name": "Eve Holt",
+        "lastMessage": "Can't find resources.",
+        "avatar": "https://randomuser.me/api/portraits/women/4.jpg"
+    },
+    {
+        "name": "Charles Morris",
+        "lastMessage": "I require some assistance, please.",
+        "avatar": "https://randomuser.me/api/portraits/men/5.jpg"
+    },
+    {
+        "name": "Tracey Ramos",
+        "lastMessage": "I greatly appreciate your help",
+        "avatar": "https://randomuser.me/api/portraits/women/6.jpg"
+    },
+    {
+        "name": "Michael Lawson",
+        "lastMessage": "Can we discuss this further?",
+        "avatar": "https://randomuser.me/api/portraits/men/7.jpg"
+    },
+    {
+        "name": "Lindsay Ferguson",
+        "lastMessage": "I'll get back to you.",
+        "avatar": "https://randomuser.me/api/portraits/women/8.jpg"
+    },
+    {
+        "name": "Tobias Funke",
+        "lastMessage": "Let's meet tomorrow.",
+        "avatar": "https://randomuser.me/api/portraits/men/9.jpg"
+    },
+    {
+        "name": "Byron Fields",
+        "lastMessage": "Thanks for the update.",
+        "avatar": "https://randomuser.me/api/portraits/men/10.jpg"
+    }
+]
