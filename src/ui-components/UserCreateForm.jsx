@@ -6,9 +6,6 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { fetchByPath, validateField } from "./utils";
-import { User } from "../models";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
   Flex,
@@ -17,25 +14,27 @@ import {
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
-import { DataStore } from "aws-amplify";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { generateClient } from "aws-amplify/api";
+import { createUser } from "../graphql/mutations";
+const client = generateClient();
 export default function UserCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    id: undefined,
-    arn: undefined,
-    name: undefined,
-    profilePic: undefined,
-    role: undefined,
+    id: "",
+    arn: "",
+    name: "",
+    profilePic: "",
+    role: "",
     needsHelp: false,
     isOnCall: false,
   };
@@ -66,7 +65,15 @@ export default function UserCreateForm(props) {
     needsHelp: [{ type: "Required" }],
     isOnCall: [{ type: "Required" }],
   };
-  const runValidationTasks = async (fieldName, value) => {
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -115,7 +122,19 @@ export default function UserCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          await DataStore.save(new User(modelFields));
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
+            }
+          });
+          await client.graphql({
+            query: createUser.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -124,17 +143,19 @@ export default function UserCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
-      {...rest}
       {...getOverrideProps(overrides, "UserCreateForm")}
+      {...rest}
     >
       <TextField
         label="Id"
         isRequired={true}
         isReadOnly={false}
+        value={id}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -164,6 +185,7 @@ export default function UserCreateForm(props) {
         label="Arn"
         isRequired={true}
         isReadOnly={false}
+        value={arn}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -193,6 +215,7 @@ export default function UserCreateForm(props) {
         label="Name"
         isRequired={false}
         isReadOnly={false}
+        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -222,6 +245,7 @@ export default function UserCreateForm(props) {
         label="Profile pic"
         isRequired={false}
         isReadOnly={false}
+        value={profilePic}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -355,18 +379,16 @@ export default function UserCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={resetStateValues}
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
-        <Flex {...getOverrideProps(overrides, "RightAlignCTASubFlex")}>
-          <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
+        <Flex
+          gap="15px"
+          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
+        >
           <Button
             children="Submit"
             type="submit"
