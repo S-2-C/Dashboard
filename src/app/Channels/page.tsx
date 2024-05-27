@@ -93,6 +93,7 @@ export default function Notifications() {
         const agentsOnCall = queueMetrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0;
         const agentsAvailable = queueMetrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0;
         const totalAgents = agentsOnCall + agentsAvailable;
+        // console.log("Calculating percentage", totalAgents > 0 ? (agentsOnCall / totalAgents) * 100 : 0)
         return totalAgents > 0 ? (agentsOnCall / totalAgents) * 100 : 0;
     };
 
@@ -117,7 +118,7 @@ export default function Notifications() {
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
                                     })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-2/4 "></div>
+                                    <div className="w-1/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
@@ -141,13 +142,13 @@ export default function Notifications() {
                                             </div>
                                         </div>
                                         <div className="mr-4  p-2 w-1/3">
-                                            <div>Total Agents</div>
+                                            <div>Agents on Call</div>
                                             <div className="flex">
                                                 <div className="pr-4 w-1/3">
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) }</b>
                                                 </div>
 
                                             </div>
@@ -177,7 +178,7 @@ export default function Notifications() {
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
                                     })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-2/4 "></div>
+                                    <div className="w-1/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
@@ -201,13 +202,13 @@ export default function Notifications() {
                                             </div>
                                         </div>
                                         <div className="mr-4  p-2 w-1/3">
-                                            <div>Total Agents</div>
+                                            <div>Agents on Call</div>
                                             <div className="flex">
                                                 <div className="pr-4 w-1/3">
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[1].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[1].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[1].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>
@@ -237,7 +238,7 @@ export default function Notifications() {
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
                                     })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-2/4 "></div>
+                                    <div className="w-1/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
@@ -261,13 +262,13 @@ export default function Notifications() {
                                             </div>
                                         </div>
                                         <div className="mr-4  p-2 w-1/3">
-                                            <div>Total Agents</div>
+                                            <div>Agents on Call</div>
                                             <div className="flex">
                                                 <div className="pr-4 w-1/3">
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) }</b>
                                                 </div>
 
                                             </div>
@@ -297,7 +298,7 @@ export default function Notifications() {
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
                                     })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-2/4 "></div>
+                                    <div className="w-1/4 "></div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
@@ -321,13 +322,13 @@ export default function Notifications() {
                                             </div>
                                         </div>
                                         <div className="mr-4  p-2 w-1/3">
-                                            <div>Total Agents</div>
+                                            <div>Agents on Call</div>
                                             <div className="flex">
                                                 <div className="pr-4 w-1/3">
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[3].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) + (QueueMetrics[3].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0)}</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[3].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>
