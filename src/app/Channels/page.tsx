@@ -30,6 +30,15 @@ import { useState } from "react";
 import { fetchListQueues } from "@/fetching/fetchingListQueues";
 import { fetchCurrentMetricData } from "@/fetching/fetchingGetCurrentMetricData";
 
+interface Metric {
+    Metric: string;
+    Value: number;
+}
+
+interface QueueMetric {
+    queue_metrics: Metric[];
+}
+
 function getChannelsQueues(channels: any, data: any) {
     let getChannelsQueues = []
     for (let i = 0; i < channels.length; i++) {
@@ -43,9 +52,9 @@ function getChannelsQueues(channels: any, data: any) {
 }
 export default function Notifications() {
     // Make a useState for the data
-    const [QueueMetrics, setQueueMetrics] = useState([]);
-    const [CurrentMetricData, setMetricData] = useState([]);
-    //I need to create a set for currentMetricData
+    const [QueueMetrics, setQueueMetrics] = useState<QueueMetric[]>([]);
+    // const [CurrentMetricData, setMetricData] = useState([]);
+    // //I need to create a set for currentMetricData
 
     useEffect(() => {
         const channels = ["Walmart Pass", "Walmart Physical Store", "Walmart Online", "Walmart Delivery"]
@@ -64,7 +73,7 @@ export default function Notifications() {
             const currentMetricData = await fetchCurrentMetricData(QueueIdsString);
             console.log("queue",currentMetricData);
             // Set the state of the data
-            setMetricData(currentMetricData.data);
+            // setMetricData(currentMetricData.data);
             // Set the state of the data
             setQueueMetrics(currentMetricData.data);
 
@@ -88,9 +97,6 @@ export default function Notifications() {
                     </div> */}
                     <div className="h-12 p-4 m-1">
                         <h1 className="text-figma-figma5 font-bold text-4xl">Channels</h1>
-                        <h1 className="text-figma-figma5 font-bold text-4xl">
-    {QueueMetrics.length > 0 && QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value}
-</h1>
                     </div>
                     <div className="w-full h-screen overflow-y-auto">
                         <Accordion className="" type="single" collapsible>
