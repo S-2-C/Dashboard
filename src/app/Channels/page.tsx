@@ -50,6 +50,10 @@ function getChannelsQueues(channels: any, data: any) {
     }
     return getChannelsQueues
 }
+
+function sortQueues(data: any[]) {
+    return data.sort((a, b) => a.queue.localeCompare(b.queue));
+}
 export default function Notifications() {
     // Make a useState for the data
     const [QueueMetrics, setQueueMetrics] = useState<QueueMetric[]>([]);
@@ -60,33 +64,31 @@ export default function Notifications() {
         const channels = ["Walmart Pass", "Walmart Physical Store", "Walmart Online", "Walmart Delivery"]
 
         const fetchData = async () => {
-            const data = await fetchListQueues();
 
-            const channelsQueues = getChannelsQueues(channels, data)
+            const QueueIdsString = "fe0bd989-c3d1-4959-a47c-b7d27def9a99,f617a7d6-2be6-4f9b-b365-600fd3fc8646,4948d5e2-1434-44dd-a78f-37cbeb96d1d9,46bf33f7-3381-4db1-a3f7-85eafdf04578"
 
-            localStorage.setItem("queueData", JSON.stringify(channelsQueues)); // Saving data to local storage
-            // Get all queues 
-            const QueueIds = channelsQueues.map((queue: any) => queue.Id)
-            // Join the QueueIds to a string
-            const QueueIdsString = QueueIds.join(",")
 
             // Fetch the current metric data
             const currentMetricData = await fetchCurrentMetricData(QueueIdsString);
-            console.log("queue", currentMetricData);
+
+            // sort the queues
+            const sortedQueues = sortQueues(currentMetricData.data);
+
             // Set the state of the data
             // setMetricData(currentMetricData.data);
             // Set the state of the data
-            setQueueMetrics(currentMetricData.data);
+            setQueueMetrics(sortedQueues);
+            console.log("QueueMetrics", sortedQueues)
         };
 
         fetchData(); // Fetch data immediately on component mount
 
-        const intervalId = setInterval(fetchData, 1000); // Fetch data every 2 seconds
+        const intervalId = setInterval(fetchData, 10000); // Fetch data every 2 seconds
 
         return () => clearInterval(intervalId); // Clear interval on component unmount
     }, []);
 
-    console.log("helo", QueueMetrics)
+
 
     //Calculates percentage of agents that are busy.
     const calculateAgentsOnCallPercentage = (queueMetrics: Metric[]) => {
@@ -148,7 +150,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) }</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[0].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>
@@ -268,7 +270,7 @@ export default function Notifications() {
                                                     <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
                                                 </div>
                                                 <div className=" pt-4 w-2/3 flex justify-center">
-                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0) }</b>
+                                                    <b className="text-xl">{QueueMetrics.length > 0 && (QueueMetrics[2].queue_metrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0)}</b>
                                                 </div>
 
                                             </div>

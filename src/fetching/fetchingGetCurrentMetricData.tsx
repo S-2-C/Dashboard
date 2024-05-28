@@ -3,7 +3,9 @@
 // import fetch from 'node-fetch';
 
 export async function fetchCurrentMetricData(queueId: string): Promise<any> {
-    const url = "http://localhost:3000/connect/GetCurrentMetricData?queueIds=" + queueId;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+    const url = baseUrl + "connect/GetCurrentMetricData?queueIds=" + queueId;
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -11,6 +13,7 @@ export async function fetchCurrentMetricData(queueId: string): Promise<any> {
         }
         return await response.json(); // Parses the JSON response
     } catch (error) {
+
         console.error("Fetching error: ", error);
         return null; // Handle errors or return a default value
     }
