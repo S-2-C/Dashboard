@@ -40,6 +40,9 @@
       },
       "storage": {
         "dashboardS3": {}
+      },
+      "api": {
+        "dashboard": {}
       }
     }
   }

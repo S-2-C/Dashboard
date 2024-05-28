@@ -1,15 +1,23 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import useNotificationCreations from "@/hooks/useNotificationCreations";
 import Link from "next/link";
-import { fetchAuthSession } from "aws-amplify/auth";
-import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
-import { GetUserQuery } from "@/API";
 import { useEffect, useState } from "react";
+import { Notification } from "@/API";
 import { useUserRole } from "@/hooks/useUserRole";
 
 export default function NotifSlot() {
   const agent = useUserRole();
+  const [notificationList, setNotificationList] = useState<Notification[]>([]);
+  const lastNotification = useNotificationCreations();
 
+  useEffect(() => {
+    if (lastNotification) {
+      setNotificationList((prev: Notification[]) => [
+        ...prev,
+        lastNotification,
+      ]);
+    }
+  }, [lastNotification]);
 
   return (
     <div
