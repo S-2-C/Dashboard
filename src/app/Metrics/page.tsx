@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Home from "../NavBar";
 import SearchBar from "../searchBar";
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
-import { fetchMetricDataV2Queue } from "@/fetching/fetchingMetricDatav2Queue";
+import { fetchMetricDataV2Queue } from "@/fetching/fetchingMetricDataV2Queue";
 
 export default function Metrics() {
   useEffect(() => {
