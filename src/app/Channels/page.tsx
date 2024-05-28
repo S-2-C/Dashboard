@@ -58,6 +58,7 @@ export default function Notifications() {
 
     useEffect(() => {
         const channels = ["Walmart Pass", "Walmart Physical Store", "Walmart Online", "Walmart Delivery"]
+
         const fetchData = async () => {
             const data = await fetchListQueues();
 
@@ -76,14 +77,13 @@ export default function Notifications() {
             // setMetricData(currentMetricData.data);
             // Set the state of the data
             setQueueMetrics(currentMetricData.data);
-
-
-            //Need to create a set for currentMetric data
-
-
-
         };
-        fetchData();
+
+        fetchData(); // Fetch data immediately on component mount
+
+        const intervalId = setInterval(fetchData, 1000); // Fetch data every 2 seconds
+
+        return () => clearInterval(intervalId); // Clear interval on component unmount
     }, []);
 
     console.log("helo", QueueMetrics)
@@ -126,8 +126,8 @@ export default function Notifications() {
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[0].queue_metrics) : 0}%` }}></div>
-                                </div>  
+                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{ width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[0].queue_metrics) : 0}%` }}></div>
+                                </div>
                                 <AccordionContent>
                                     <div className="h-20 p-1 bg-figma-figma6 flex w-full rounded-2xl shadow-md mt-2">
                                         <div className="mr-4  p-2 w-1/3">
@@ -171,7 +171,7 @@ export default function Notifications() {
                         </Accordion>
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
-                            <AccordionTrigger className="flex items-center">Physical Store
+                                <AccordionTrigger className="flex items-center">Physical Store
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics);
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
@@ -186,8 +186,8 @@ export default function Notifications() {
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics) : 0}%` }}></div>
-                                </div>  
+                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{ width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics) : 0}%` }}></div>
+                                </div>
                                 <AccordionContent>
                                     <div className="h-20 p-1 bg-figma-figma6 flex w-full rounded-2xl shadow-md mt-2">
                                         <div className="mr-4  p-2 w-1/3">
@@ -231,7 +231,7 @@ export default function Notifications() {
                         </Accordion>
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
-                            <AccordionTrigger className="flex items-center">Walmart Express
+                                <AccordionTrigger className="flex items-center">Walmart Express
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[2].queue_metrics);
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
@@ -246,8 +246,8 @@ export default function Notifications() {
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[2].queue_metrics) : 0}%` }}></div>
-                                </div>  
+                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{ width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[2].queue_metrics) : 0}%` }}></div>
+                                </div>
                                 <AccordionContent>
                                     <div className="h-20 p-1 bg-figma-figma6 flex w-full rounded-2xl shadow-md mt-2">
                                         <div className="mr-4  p-2 w-1/3">
@@ -291,7 +291,7 @@ export default function Notifications() {
                         </Accordion>
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
-                            <AccordionTrigger className="flex items-center">Walmart Delivery
+                                <AccordionTrigger className="flex items-center">Walmart Delivery
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[3].queue_metrics);
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
@@ -306,8 +306,8 @@ export default function Notifications() {
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
                                             percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
                                                 'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[3].queue_metrics) : 0}%` }}></div>
-                                </div>  
+                                    })() : 'bg-figma-figma8'} h-4 rounded-full `} style={{ width: `${QueueMetrics.length > 0 ? calculateAgentsOnCallPercentage(QueueMetrics[3].queue_metrics) : 0}%` }}></div>
+                                </div>
                                 <AccordionContent>
                                     <div className="h-20 p-1 bg-figma-figma6 flex w-full rounded-2xl shadow-md mt-2">
                                         <div className="mr-4  p-2 w-1/3">
