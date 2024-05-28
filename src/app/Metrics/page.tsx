@@ -4,13 +4,14 @@ import Home from "../NavBar";
 import SearchBar from "../searchBar";
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import { fetchMetricDataV2Queue } from "@/fetching/fetchingMetricDataV2Queue";
+import { fetchMetricDataV2Agent } from "@/fetching/fetchingMetricDataV2Agent";
 
 export default function Metrics() {
   useEffect(() => {
     const fetchData = async () => {
       const queueId =
         "4948d5e2-1434-44dd-a78f-37cbeb96d1d9,46bf33f7-3381-4db1-a3f7-85eafdf04578,1c2614e0-66db-45a2-8186-31f3c70654ff";
-      const date = "2024-05-03";
+      const date = "2024-05-02";
       const res = await fetchMetricDataV2Queue(queueId, date);
       console.log(res);
     };
