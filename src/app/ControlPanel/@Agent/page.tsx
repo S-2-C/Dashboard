@@ -14,6 +14,8 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { GetUserQuery } from "@/API";
 import { useUserRole } from "@/hooks/useUserRole";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 import Timer from "@/components/timer";
 
 export default function AgentSlot() {
@@ -149,15 +151,19 @@ export default function AgentSlot() {
         </>
       ) : (
         <div
-          className="bg-figma-figma1 rounded-lg sm:p-2 md:p-3 lg:p-24 xl:p-32 shadow-md h-full"
+          className="bg-figma-figma1 rounded-lg sm:p-2 md:p-3 lg:p-24 xl:p-20 p-4 shadow-md h-full"
           style={{ display: "inline-block" }}
         >
-          <h1 className="xl:text-4xl lg:text-2xl  md:text-2xl sm:text-2xl text-center text-white items-align-top whitespace-nowrap">
+          <div className="flex">
+          <FontAwesomeIcon icon={faClock} className='text-white w-8 h-8 pr-3 pt-1' />
+          <h1 className="xl:text-4xl lg:text-2xl  md:text-2xl sm:text-2xl text-center text-white font-bold items-align-top whitespace-nowrap pb-4">
             Ongoing Call Time
           </h1>
-
+          </div>
+          <div className="flex justify-center items-center">
           <div style={{ display: "inline-block" }}>
             <Timer startTime={"2024-05-23T22:30:50.133Z"} />
+          </div>
           </div>
         </div>
       )}
