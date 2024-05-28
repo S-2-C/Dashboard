@@ -9,15 +9,16 @@ import { fetchAllNotifications } from "@/fetching/fetchingDataFunctions";
 export default function NotifSlot() {
   const agent = useUserRole();
   const [notificationList, setNotificationList] = useState<Notification[]>([]);
+  const [filteredNotifications, setFilteredNotifications] = useState<
+    Notification[]
+  >([]);
+  const [filterUrgency, setFilterUrgency] = useState<string>("");
   const lastNotification = useNotificationCreations();
 
   useEffect(() => {
-    // define a function to fetch all notifications
     const fetchNotifications = async () => {
-      // fetch all notifications
       const notifs = await fetchAllNotifications();
       console.log("Notifications", notifs);
-      // set the notifications to the state
       setNotificationList(notifs);
     };
     fetchNotifications();
@@ -25,12 +26,37 @@ export default function NotifSlot() {
 
   useEffect(() => {
     if (lastNotification) {
-      setNotificationList((prev: Notification[]) => [
-        ...prev,
-        lastNotification,
-      ]);
+      setNotificationList((prev: Notification[]) => {
+        const updatedList = [...prev, lastNotification];
+        return sortNotifications(updatedList);
+      });
     }
   }, [lastNotification]);
+
+  useEffect(() => {
+    setFilteredNotifications(applyFilters(notificationList));
+  }, [notificationList, filterUrgency]);
+
+  const sortNotifications = (notifications: Notification[]) => {
+    return notifications.sort((a, b) => {
+      const timeComparison =
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      if (timeComparison !== 0) return timeComparison;
+      const urgencyOrder = ["HIGH", "MEDIUM", "LOW", "REGULAR"];
+      return urgencyOrder.indexOf(a.urgency) - urgencyOrder.indexOf(b.urgency);
+    });
+  };
+
+  const applyFilters = (notifications: Notification[]) => {
+    if (!filterUrgency) return notifications;
+    return notifications.filter((notif) => notif.urgency === filterUrgency);
+  };
+
+  const handleUrgencyFilterChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setFilterUrgency(e.target.value);
+  };
 
   const handleNotificationClick = (action: string) => {
     console.log("Notification action", action);
@@ -67,8 +93,24 @@ export default function NotifSlot() {
 
       {agent?.role === "SUPERVISOR" && (
         <div className="overflow-scroll no-scrollbar h-full flex flex-col">
-          {/* Map over notifications here */}
-          {notificationList.map((notif) => (
+          <div className="mb-4">
+            <label htmlFor="urgencyFilter" className="text-white mr-2">
+              Filter by urgency:
+            </label>
+            <select
+              id="urgencyFilter"
+              value={filterUrgency}
+              onChange={handleUrgencyFilterChange}
+              className="p-2 rounded-lg"
+            >
+              <option value="">All</option>
+              <option value="HIGH">High</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="LOW">Low</option>
+              <option value="REGULAR">Regular</option>
+            </select>
+          </div>
+          {filteredNotifications.map((notif) => (
             <div
               key={notif.id}
               onClick={() => handleNotificationClick(notif.action)}
@@ -76,7 +118,6 @@ export default function NotifSlot() {
               ${notif.action && "cursor-pointer"}
                ${notif.urgency === "HIGH" ? "text-white" : "text-blue-dark"}
                 ${
-                  // Low, Medium, High, Regular enum
                   notif.urgency === "HIGH"
                     ? "bg-blue-dark"
                     : notif.urgency === "MEDIUM"
