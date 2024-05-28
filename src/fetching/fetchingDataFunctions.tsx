@@ -3,13 +3,13 @@ import { generateClient } from "aws-amplify/api";
 import {
   getContact,
   getUser,
-  listContacts,
+  listNotifications,
   listUsers,
 } from "@/graphql/queries";
 import {
   GetContactQuery,
   GetUserQuery,
-  ListContactsQuery,
+  ListNotificationsQuery,
   ListUsersQuery,
 } from "@/API";
 
@@ -81,15 +81,17 @@ export const fetchAllUsers = async () => {
   }
 };
 
-// export const fetchAgentData = async (agentId: string) => {
-//     const client = generateClient();
+export const fetchAllNotifications = async () => {
+  const client = generateClient();
 
-//     const agentData = await client.graphql({
-//         query: getAgentData,
-//         variables: {
-//         id: agentId,
-//         },
-//     });
+  try {
+    const allNotifications = (await client.graphql({
+      query: listNotifications,
+    })) as ListNotificationsQuery;
 
-//     return agentData.data.getAgent;
-//     }
+    //@ts-ignore
+    return allNotifications.data.listNotifications.items;
+  } catch (error) {
+    console.error(error);
+  }
+};
