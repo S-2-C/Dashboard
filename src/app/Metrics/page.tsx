@@ -1,11 +1,50 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Home from "../NavBar";
 import SearchBar from "../searchBar";
-import { Flex, Heading, Text } from "@aws-amplify/ui-react";
-import useQueueMetrics from "@/hooks/useDataMetricV2";
+import { Flex, Heading, Text, Button } from "@aws-amplify/ui-react";
+import { useQueueMetrics, useAgentMetrics } from "@/hooks/useDataMetricV2"; // Updated import
+import { fetchListUsers } from "@/fetching/fetchingListAgent";
+import Modal from "@/components/ui/Modal"; // Import your Modal component
+
+interface Agent {
+  Id: string;
+  Username: string;
+}
 
 export default function Metrics() {
+  const [agents, setAgents] = useState<Agent[]>([]);
+  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const [weeksAgo, setWeeksAgo] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchListUsers();
+      setAgents(response.data);
+      console.log("Agents", response.data);
+    };
+
+    fetchData();
+  }, []);
+
+  const handleWeeksChange = (weeks: number) => {
+    setWeeksAgo(weeks);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleAgentSelect = (agent: Agent) => {
+    setSelectedAgent(agent);
+    setIsModalOpen(false);
+  };
+
   const channelIds = {
     walmartDelivery: "46bf33f7-3381-4db1-a3f7-85eafdf04578",
     walmartOnline: "4948d5e2-1434-44dd-a78f-37cbeb96d1d9",
@@ -14,15 +53,24 @@ export default function Metrics() {
   };
 
   const { getMetricValue: getMetricValueWalmartDelivery } = useQueueMetrics(
-    channelIds.walmartDelivery
+    channelIds.walmartDelivery,
+    weeksAgo * 7
   );
   const { getMetricValue: getMetricValueWalmartOnline } = useQueueMetrics(
-    channelIds.walmartOnline
+    channelIds.walmartOnline,
+    weeksAgo * 7
   );
   const { getMetricValue: getMetricValueWalmartPhysicalStore } =
-    useQueueMetrics(channelIds.walmartPhysicalStore);
+    useQueueMetrics(channelIds.walmartPhysicalStore, weeksAgo * 7);
+
   const { getMetricValue: getMetricValueWalmartPass } = useQueueMetrics(
-    channelIds.walmartPass
+    channelIds.walmartPass,
+    weeksAgo * 7
+  );
+
+  const { getMetricValue: getMetricValueAgent } = useAgentMetrics(
+    selectedAgent ? selectedAgent.Id : null,
+    weeksAgo * 7
   );
 
   return (
@@ -37,6 +85,13 @@ export default function Metrics() {
             <SearchBar />
           </div>
         </div>
+        <div className="mb-6">
+          <Button onClick={() => handleWeeksChange(1)}>1 Week</Button>
+          <Button onClick={() => handleWeeksChange(2)}>2 Weeks</Button>
+          <Button onClick={() => handleWeeksChange(3)}>3 Weeks</Button>
+          <Button onClick={() => handleWeeksChange(4)}>4 Weeks</Button>
+        </div>
+
         <Text className="text-sans mb-6">Here are some metrics</Text>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 flex-1">
           {/* Average Talk Time */}
@@ -135,6 +190,74 @@ export default function Metrics() {
             </p>
           </div>
         </div>
+
+        <div className="mt-6">
+          <Button onClick={handleOpenModal}>Show Agents</Button>
+        </div>
+
+        {selectedAgent && (
+          <div className="mt-6">
+            <Text className="text-lg">
+              Selected Agent: {selectedAgent.Username}
+            </Text>
+            <div className="bg-metrics rounded-xl p-4 shadow-md flex flex-col mt-4">
+              <p className="text-xl font-bold mb-2">Agent Metrics</p>
+              <p className="text-lg">
+                Average Contact Duration:{" "}
+                {getMetricValueAgent("AVG_CONTACT_DURATION")}
+              </p>
+              <p className="text-lg">
+                Average Handle Time: {getMetricValueAgent("AVG_HANDLE_TIME")}
+              </p>
+              <p className="text-lg">
+                Contacts Handled: {getMetricValueAgent("CONTACTS_HANDLED")}
+              </p>
+              <p className="text-lg">
+                Average Hold Time: {getMetricValueAgent("AVG_HOLD_TIME")}
+              </p>
+              <p className="text-lg">
+                Average Interruptions Agent:{" "}
+                {getMetricValueAgent("AVG_INTERRUPTIONS_AGENT")}
+              </p>
+              <p className="text-lg">
+                Agent Occupancy: {getMetricValueAgent("AGENT_OCCUPANCY")}
+              </p>
+              <p className="text-lg">
+                Sum Non-Productive Time Agent:{" "}
+                {getMetricValueAgent("SUM_NON_PRODUCTIVE_TIME_AGENT")}
+              </p>
+              <p className="text-lg">
+                Agent Non-Response: {getMetricValueAgent("AGENT_NON_RESPONSE")}
+              </p>
+              <p className="text-lg">
+                Agent Answer Rate: {getMetricValueAgent("AGENT_ANSWER_RATE")}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {isModalOpen && (
+          <Modal onClose={handleCloseModal}>
+            <Heading level={2} fontWeight="Bold">
+              Agents
+            </Heading>
+            <ul>
+              {agents.map((agent) => (
+                <li key={agent.Id} className="text-lg">
+                  <label>
+                    <input
+                      type="radio"
+                      name="agent"
+                      value={agent.Id}
+                      onChange={() => handleAgentSelect(agent)}
+                    />
+                    {agent.Username}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </Modal>
+        )}
       </div>
     </div>
   );
