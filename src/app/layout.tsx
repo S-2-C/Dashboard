@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google"
 import "./globals.css";
 import WrappedAuthenticator from "./authenticator";
 import { cn } from "@/lib/utils";
+import AgentConnectPopupContainer from "@/components/agentConnectPopupContainer";
 
 export const metadata: Metadata = {
   title: "Wallmart Dashboard",
@@ -28,8 +29,9 @@ export default function RootLayout({
         )}
       >
         <WrappedAuthenticator>
-        {children}
+          {children}
         </WrappedAuthenticator>
+        <AgentConnectPopupContainer  children={null}/>
       </body>
     </html>
   );

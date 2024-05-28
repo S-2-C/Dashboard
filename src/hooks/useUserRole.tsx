@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { GetUserQuery } from "@/API";
 import { fetchAuthSession } from "aws-amplify/auth";
