@@ -65,13 +65,14 @@ export default function NotifSlot() {
         Notifications
       </h1>
 
-      <div className="overflow-scroll no-scrollbar h-full flex flex-col">
-        {/* Map over notifications here */}
-        {notificationList.map((notif) => (
-          <div
-            key={notif.id}
-            onClick={() => handleNotificationClick(notif.action)}
-            className={`p-4 rounded-lg shadow-md mb-4 flex flex-row font-bold 
+      {agent?.role === "SUPERVISOR" && (
+        <div className="overflow-scroll no-scrollbar h-full flex flex-col">
+          {/* Map over notifications here */}
+          {notificationList.map((notif) => (
+            <div
+              key={notif.id}
+              onClick={() => handleNotificationClick(notif.action)}
+              className={`p-4 rounded-lg shadow-md mb-4 flex flex-row font-bold 
               ${notif.action && "cursor-pointer"}
                ${notif.urgency === "HIGH" ? "text-white" : "text-blue-dark"}
                 ${
@@ -84,21 +85,22 @@ export default function NotifSlot() {
                     ? "bg-blue"
                     : "bg-white"
                 }`}
-          >
-            {notif.urgency === "HIGH" && (
-              <img
-                src="images/Warning.svg"
-                className="w-40 h-auto mx-auto"
-                alt="Agent"
-              />
-            )}
-            <div className="flex flex-wrap flex-col">
-              <span>{new Date(notif.createdAt).toLocaleString()}</span>{" "}
-              <span>{notif.description}</span>
+            >
+              {notif.urgency === "HIGH" && (
+                <img
+                  src="images/Warning.svg"
+                  className="w-40 h-auto mx-auto"
+                  alt="Agent"
+                />
+              )}
+              <div className="flex flex-wrap flex-col">
+                <span>{new Date(notif.createdAt).toLocaleString()}</span>{" "}
+                <span>{notif.description}</span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
