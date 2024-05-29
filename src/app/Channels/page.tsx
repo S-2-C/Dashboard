@@ -94,8 +94,13 @@ export default function Notifications() {
     const calculateAgentsOnCallPercentage = (queueMetrics: Metric[]) => {
         const agentsOnCall = queueMetrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0;
         const agentsAvailable = queueMetrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0;
+        const queueLength = queueMetrics.find(metric => metric.Metric === 'CONTACTS_IN_QUEUE')?.Value || 0;
         const totalAgents = agentsOnCall + agentsAvailable;
-        // console.log("Calculating percentage", totalAgents > 0 ? (agentsOnCall / totalAgents) * 100 : 0)
+        if (queueLength > agentsAvailable && queueLength > 0) {
+            // console.log("checking length, agents", queueLength, agentsAvailable)
+            return 100;
+        }
+        // console.log("not 100")
         return totalAgents > 0 ? (agentsOnCall / totalAgents) * 100 : 0;
     };
 
@@ -113,7 +118,7 @@ export default function Notifications() {
                     <div className="w-full h-screen overflow-y-auto">
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Online Store
+                                <AccordionTrigger className="flex items-center">Walmart Delivery
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[0].queue_metrics);
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
@@ -173,7 +178,7 @@ export default function Notifications() {
                         </Accordion>
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Physical Store
+                                <AccordionTrigger className="flex items-center">Walmart Online
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics);
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
@@ -233,7 +238,7 @@ export default function Notifications() {
                         </Accordion>
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Walmart Express
+                                <AccordionTrigger className="flex items-center">Physical Store
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[2].queue_metrics);
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
@@ -293,7 +298,7 @@ export default function Notifications() {
                         </Accordion>
                         <Accordion className="" type="single" collapsible>
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Walmart Delivery
+                                <AccordionTrigger className="flex items-center">Walmart Pass
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[3].queue_metrics);
                                         return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
