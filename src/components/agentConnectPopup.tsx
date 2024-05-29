@@ -116,6 +116,7 @@ const AgentConnectPopup: React.FC = () => {
                                         incomingContact?.getAgentConnection().destroy()
                                         setIsContactAccepted(false)
                                         setIncomingContact(null)
+                                        setAgentState('Available')
                                     }}
                                     className="px-3 text-center text-white text-sm bg-red-500 border border-red-600 rounded-lg shadow-lg py-1 cursor-pointer hover:bg-red-600 transition duration-200"
                                 >
