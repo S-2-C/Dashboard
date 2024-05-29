@@ -34,7 +34,7 @@ export const fetchOneAgent = async (agentId: string) => {
   const client = generateClient();
 
   // %40 is the URL encoded version of @, replace it with @
-  agentId = agentId.replace("%40", "@");
+  if (agentId) agentId = agentId.replace("%40", "@");
 
   try {
     const agentData = (await client.graphql({
@@ -43,8 +43,6 @@ export const fetchOneAgent = async (agentId: string) => {
         id: agentId,
       },
     })) as GetUserQuery;
-
-    console.log(agentData);
 
     //@ts-ignore
     return agentData.data.getUser;

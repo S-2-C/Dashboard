@@ -13,10 +13,16 @@ export default function AgentManagement() {
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
   const [offlineSupervisors, setOfflineSupervisors] = useState<User[]>([]);
 
+  const [activeWarnings, setActiveWarnings] = useState<User[]>([]);
+
+  const [totalCalls, setTotalCalls] = useState<number>(0);
+
   const userChange = useUserUpdates(); // This will hold the latest user update
+
   const addUserToState = (user: User, setter: any) => {
     setter((prev: any) => [...(prev || []), user]);
   };
+
   const removeUserFromAllState = (user: User) => {
     setAlertUsers((prev) => prev?.filter((u) => u.id !== user.id));
     setActiveUsers((prev) => prev?.filter((u) => u.id !== user.id));
@@ -28,17 +34,13 @@ export default function AgentManagement() {
     if (userChange) {
       removeUserFromAllState(userChange);
       if (userChange?.needsHelp) {
-        console.log("User id", userChange.id, "needs help");
         addUserToState(userChange, setAlertUsers);
       } else if (userChange?.isOnCall) {
         addUserToState(userChange, setActiveUsers);
-        console.log("User id", userChange.id, "just took a call");
       } else if (!userChange?.isOnCall && userChange?.role == "AGENT") {
         addUserToState(userChange, setOfflineUsers);
-        console.log("User id", userChange.id, "is now offline");
       } else if (!userChange?.isOnCall && userChange?.role == "SUPERVISOR") {
         addUserToState(userChange, setOfflineSupervisors);
-        console.log("Supervisor id", userChange.id, "is now offline");
       }
     }
   }, [userChange]);
@@ -47,11 +49,15 @@ export default function AgentManagement() {
     async function fetchAgents() {
       const res = await fetchAllAgents();
 
+      setTotalCalls(res?.items?.length || 0);
+
       res?.items?.forEach((agent: User) => {
         if (agent?.needsHelp) {
           setAlertUsers((prev) => [...(prev || []), agent]);
+          setActiveWarnings((prev) => [...(prev || []), agent]);
         } else if (agent?.isOnCall) {
           setActiveUsers((prev) => [...(prev || []), agent]);
+          setActiveWarnings((prev) => [...(prev || []), agent]);
         } else if (!agent?.isOnCall && agent?.role == "AGENT") {
           setOfflineUsers((prev) => [...(prev || []), agent]);
         } else if (!agent?.isOnCall && agent?.role == "SUPERVISOR") {
@@ -59,8 +65,25 @@ export default function AgentManagement() {
         }
       });
     }
+
     fetchAgents();
   }, []);
+
+  // Function to format the date to Mexican timezone
+  const formatDateToMexicanTimezone = (timestamp: any) => {
+    const date = new Date(timestamp);
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: 'America/Mexico_City',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    };
+    return date.toLocaleString('es-MX', options);
+  };
 
   return (
     <div className="flex h-screen bg-background text-foreground relative">
@@ -75,48 +98,39 @@ export default function AgentManagement() {
           <Flex direction="column" gap="2rem">
             <Flex gap="2rem">
               <div className="w-2/4">
-                <div className="flex gap-2 h-16 bg-agenman rounded-xl">
-                  <div className="w-1/6 flex items-center justify-center">
-                    <Text>Col1</Text>
+                {activeWarnings.length > 0 && activeWarnings.map((user, index) => (
+                  <div className="grid gap-2 my-1 grid-cols-12 h-16 bg-agenman-agenmangray rounded-xl transition-colors ease-in hover:bg-neutral-300" key={index}>
+                    <div className=" m-0 order-1 col-span-2  flex items-center justify-center">
+                      <h1 className="m-0">{user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}</h1>
+                    </div>
+                    <div className=" order-2 col-span-3 " style={{ padding: "8px" }}>
+                      <span className="font-bold">
+                        {user?.id ? user.id.split("@")[0] : " No ID "}
+                      </span>
+                      <br />
+                      <span className="text-xs">Walmart®️.com</span>
+                    </div>
+                    <div className="order-3 col-span-4 flex items-center ">
+                      {user?.needsHelp ? (
+                        <img
+                          src={"images/Warning.svg"}
+                          className="h-10 w-10"
+                          alt="Agent"
+                        />
+                      ) : (
+                        <img
+                          src={"images/AgentYellow.svg"}
+                          className="h-10 w-10"
+                          alt="Agent"
+                        />
+                      )}
+                      <h1>{user?.needsHelp ? "Needs help" : "Ongoing call"}</h1>
+                    </div>
+                    <div className="order-4 col-span-2 flex items-center text-xs">
+                      <h1>{formatDateToMexicanTimezone(user.updatedAt)}</h1>
+                    </div>
                   </div>
-                  <div className="w-2/6 " style={{ padding: "8px" }}>
-                    <span className="font-bold text-m mt-8">
-                      Richard Hendricks
-                    </span>
-                    <br />
-                    <span className="text-xs">Walmart®️.com</span>
-                  </div>
-                  <div className="w-1/6 flex items-center justify-center">
-                    <img
-                      src={"images/Warning.svg"}
-                      className="mx-auto h-10 w-10"
-                      alt="Agent"
-                    />
-                  </div>
-                  <div className="w-3/6  flex items-center text-xs">Hello</div>
-                </div>
-                <div className="flex gap-2 h-16 bg-agenman-agenmangray rounded-xl">
-                  <div className="w-1/6 flex items-center justify-center">
-                    <Text>Col1</Text>
-                  </div>
-                  <div className="w-2/6 " style={{ padding: "8px" }}>
-                    <span className="font-bold text-m mt-8">
-                      Dinesh Chugtai
-                    </span>
-                    <br />
-                    <span className="text-xs">Walmart®️.com</span>
-                  </div>
-                  <div className="w-1/6 flex items-center justify-center">
-                    <img
-                      src={"images/OnCall.svg"}
-                      className="mx-auto h-10 w-10"
-                      alt="Agent"
-                    />
-                  </div>
-                  <div className="w-3/6  flex items-center text-xs">
-                    <Text>Ongoing Call</Text>
-                  </div>
-                </div>
+                ))}
               </div>
 
               <div className="w-2/4">
@@ -127,24 +141,21 @@ export default function AgentManagement() {
                       <Text>Alert for Agent in Call</Text>
                     </div>
                   </div>
-                  <div className="h-4 bg-agenman-agenmanred  items-center rounded-xl shadow-md"></div>
-                  <div
-                    id="alertUsers"
-                    className="flex w-full overflow-x-scroll no-scrollbar  bg-agenman-agenmansblue1 p-2.5 rounded-xl"
-                  >
+                  <div className="h-4 flex bg-neutral-300 items-center rounded-xl shadow-md">
+                    <div className="h-full bg-agenman-agenmanred rounded-xl" style={{width: `${(alertUsers.length/totalCalls)*100}%` }}/>
+                  </div>
+                  <div className="flex w-full overflow-x-scroll no-scrollbar bg-agenman-agenmansblue1 p-2.5 rounded-xl">
                     {alertUsers?.map((user, index) => (
-                      <div className=" w-min p-1" key={index}>
+                      <div className="w-min p-1" key={index}>
                         <Link href={`/ManageCall/${user?.id}`}>
-                          <div className="flex flex-col items-center w-20 ">
+                          <div className="flex flex-col items-center w-20">
                             <img
                               src="images/AgentRed.svg"
                               className="h-20 w-20 mx-auto"
                               alt="Agent"
                             />
                             <p className="text-center text-sm text-red-500">
-                              {user?.name
-                                ? user.name.split(" ")[0]
-                                : user.id.split("@")[0]}
+                              {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
                             </p>
                           </div>
                         </Link>
@@ -154,37 +165,26 @@ export default function AgentManagement() {
                 </Flex>
 
                 <Flex direction="column">
-                  <div
-                    className="flex items-center"
-                    style={{ paddingTop: "30px" }}
-                  >
+                  <div className="flex items-center" style={{ paddingTop: "30px" }}>
                     <div className="h-6 w-6 bg-agenman-agenmanyellow rounded-full mr-2"></div>
                     <div className="text-2xl">
                       <Text>Agent on Call</Text>
                     </div>
                   </div>
-                  <div className="h-4 flex bg-agenman-agenmanyellow  items-center rounded-xl shadow-md"></div>
-                  <div
-                    id="activeUsers"
-                    className="flex bg-agenman-agenmansblue2 items-center rounded-xl"
-                    style={{ padding: "10px" }}
-                  >
+                  <div className="h-4 flex bg-neutral-300 items-center rounded-xl shadow-md">
+                    <div className="h-full bg-agenman-agenmanyellow rounded-xl" style={{width: `${(activeUsers.length/totalCalls)*100}%` }}/>
+                  </div>
+                  <div className="flex bg-agenman-agenmansblue2 items-center rounded-xl" style={{ padding: "10px" }}>
                     {activeUsers?.map((user, index) => (
-                      <Link href={`/ManageCall/${user?.id}`}>
+                      <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div>
                           <img
                             src={"images/AgentYellow.svg"}
                             className="mx-auto h-10 w-10"
                             alt="Agent"
                           />
-                          <p
-                            className={
-                              "text-center text-sm text-agenman-agenmanyellow"
-                            }
-                          >
-                            {user?.name
-                              ? user.name.split(" ")[0]
-                              : user.id.split("@")[0]}
+                          <p className={"text-center text-sm text-agenman-agenmanyellow"}>
+                            {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
                           </p>
                         </div>
                       </Link>
@@ -193,19 +193,13 @@ export default function AgentManagement() {
                 </Flex>
 
                 <div className="flex gap-2">
-                  <div
-                    className="w-2/4 flex items-center"
-                    style={{ paddingTop: "30px", paddingBottom: "15px" }}
-                  >
+                  <div className="w-2/4 flex items-center" style={{ paddingTop: "30px", paddingBottom: "15px" }}>
                     <div className="h-6 w-6 bg-agenman-agenmanblue rounded-full mr-2"></div>
                     <div className="text-xl">
                       <Text>Agent Available</Text>
                     </div>
                   </div>
-                  <div
-                    className="w-2/4 flex items-center"
-                    style={{ paddingTop: "30px", paddingBottom: "15px" }}
-                  >
+                  <div className="w-2/4 flex items-center" style={{ paddingTop: "30px", paddingBottom: "15px" }}>
                     <div className="h-6 w-6 bg-agenman-agenmandarkblue rounded-full mr-2"></div>
                     <div className="text-xl">
                       <Text>Supervisor Available</Text>
@@ -214,53 +208,43 @@ export default function AgentManagement() {
                 </div>
 
                 <div className="flex gap-2">
-                  <div className="w-2/4 h-4 flex bg-agenman-agenmanblue items-center rounded-xl shadow-md"></div>
-                  <div className="w-2/4 h-4 flex bg-agenman-agenmandarkblue items-center rounded-xl shadow-md"></div>
+                  <div className="w-2/4 h-4 flex bg-neutral-400 items-center rounded-xl shadow-md">
+                    <div className="h-full bg-agenman-agenmandarkblue rounded-xl" style={{width: `${(offlineUsers.length/totalCalls)*100}%` }}/>
+                  </div>
+                  <div className="w-2/4 h-4 flex bg-neutral-400 items-center rounded-xl shadow-md">
+                    <div className="h-full bg-agenman-agenmandarkblue rounded-xl" style={{width: `${(offlineSupervisors.length/totalCalls)*100}%` }}/>
+                  </div>
                 </div>
 
                 <div className="flex gap-2" style={{ paddingTop: "15px" }}>
-                  <div
-                    id="offlineUsers"
-                    className="w-2/4 flex flex-col  bg-agenman-agenmansblue3 rounded-xl"
-                    style={{ padding: "10px" }}
-                  >
+                  <div className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl" style={{ padding: "10px" }}>
                     {offlineUsers?.map((user, index) => (
-                      <Link href={`/ManageCall/${user?.id}`}>
-                        <div className="text-4xl flex items-center  h-10 w-10">
+                      <Link href={`/ManageCall/${user?.id}`} key={index}>
+                        <div className="text-4xl flex items-center h-10 w-10">
                           <img
                             src={"images/AgentBlue.svg"}
                             className="mx-auto h-10 w-10"
                             alt="Agent"
                           />
-                          <p className=" text-white text-sm px-1">
-                            {" "}
-                            {user?.name
-                              ? user?.name.split(" ")[0]
-                              : user.id.split("@")[0]}
+                          <p className="text-white text-sm px-1">
+                            {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}
                           </p>
                         </div>
                       </Link>
                     ))}
-                  </div>
+                    </div>
 
-                  <div
-                    id="offlineSupervisors"
-                    className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl"
-                    style={{ padding: "10px" }}
-                  >
+                  <div className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl" style={{ padding: "10px" }}>
                     {offlineSupervisors?.map((user, index) => (
-                      <Link href={`/ManageCall/${user?.id}`}>
-                        <div className="text-4xl flex items-center  h-10 w-10">
+                      <Link href={`/ManageCall/${user?.id}`} key={index}>
+                        <div className="text-4xl flex items-center h-10 w-10">
                           <img
                             src={"images/AgentWhite.svg"}
                             className="mx-auto h-20 w-20"
                             alt="Agent"
                           />
-                          <p className=" text-white text-sm px-1">
-                            {" "}
-                            {user?.name
-                              ? user?.name.split(" ")[0]
-                              : user.id.split("@")[0]}
+                          <p className="text-white text-sm px-1">
+                            {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}
                           </p>
                         </div>
                       </Link>

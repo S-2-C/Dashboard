@@ -14,6 +14,7 @@ import { fetchAuthSession } from "aws-amplify/auth";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { GetUserQuery } from "@/API";
 import { useUserRole } from "@/hooks/useUserRole";
+import Timer from "@/components/timer";
 
 export default function AgentSlot() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
@@ -70,7 +71,6 @@ export default function AgentSlot() {
     }
     fetchAgents();
   }, []);
-
 
   const combinedUsers = [
     ...alertUsers.map((user) => ({ ...user, status: "alert" })),
@@ -149,13 +149,16 @@ export default function AgentSlot() {
         </>
       ) : (
         <div
-          className="bg-figma-figma1 rounded-lg sm:p-2 md:p-3 lg:p-4 xl:p-16 shadow-md h-96"
+          className="bg-figma-figma1 rounded-lg sm:p-2 md:p-3 lg:p-24 xl:p-32 shadow-md h-full"
           style={{ display: "inline-block" }}
         >
-          <h1 className="text-4xl text-center text-white ">
-              Ongoing Call Time
-            </h1>
-          
+          <h1 className="xl:text-4xl lg:text-2xl  md:text-2xl sm:text-2xl text-center text-white items-align-top whitespace-nowrap">
+            Ongoing Call Time
+          </h1>
+
+          <div style={{ display: "inline-block" }}>
+            <Timer startTime={"2024-05-23T22:30:50.133Z"} />
+          </div>
         </div>
       )}
     </div>

@@ -13,12 +13,9 @@ const SearchBar = () => {
   useEffect(() => {
     async function fetchAgent() {
       const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
-      console.log(user);
       // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
-      console.log(email);
       const agent = await fetchOneAgent(email);
-      console.log("agent", agent);
       setAgent(agent);
     }
 

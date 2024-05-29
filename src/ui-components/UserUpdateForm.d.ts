@@ -5,18 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
+import { User } from "../models";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { User } from "../API.ts";
-export declare type EscapeHatchProps = {
-    [elementHierarchy: string]: Record<string, unknown>;
-} | null;
-export declare type VariantValues = {
-    [key: string]: string;
-};
-export declare type Variant = {
-    variantValues: VariantValues;
-    overrides: EscapeHatchProps;
-};
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -40,16 +31,16 @@ export declare type UserUpdateFormValidationValues = {
     needsHelp?: ValidationFunction<boolean>;
     isOnCall?: ValidationFunction<boolean>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserUpdateFormOverridesProps = {
-    UserUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    id?: PrimitiveOverrideProps<TextFieldProps>;
-    arn?: PrimitiveOverrideProps<TextFieldProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    profilePic?: PrimitiveOverrideProps<TextFieldProps>;
-    role?: PrimitiveOverrideProps<SelectFieldProps>;
-    needsHelp?: PrimitiveOverrideProps<SwitchFieldProps>;
-    isOnCall?: PrimitiveOverrideProps<SwitchFieldProps>;
+    UserUpdateFormGrid?: FormProps<GridProps>;
+    id?: FormProps<TextFieldProps>;
+    arn?: FormProps<TextFieldProps>;
+    name?: FormProps<TextFieldProps>;
+    profilePic?: FormProps<TextFieldProps>;
+    role?: FormProps<SelectFieldProps>;
+    needsHelp?: FormProps<SwitchFieldProps>;
+    isOnCall?: FormProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserUpdateFormOverridesProps | undefined | null;
@@ -59,7 +50,8 @@ export declare type UserUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: UserUpdateFormInputValues) => UserUpdateFormInputValues;
     onSuccess?: (fields: UserUpdateFormInputValues) => void;
     onError?: (fields: UserUpdateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: UserUpdateFormInputValues) => UserUpdateFormInputValues;
     onValidate?: UserUpdateFormValidationValues;
-} & React.CSSProperties>;
+}>;
 export default function UserUpdateForm(props: UserUpdateFormProps): React.ReactElement;
