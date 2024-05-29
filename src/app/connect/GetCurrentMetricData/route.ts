@@ -22,6 +22,10 @@ async function getUserMetricData(
         Name: "AGENTS_ON_CALL",
         Unit: "COUNT",
       },
+      {
+        Name: "CONTACTS_IN_QUEUE",
+        Unit: "COUNT"
+      }
     ],
     Filters: {
       Queues: queueIdsArray,
