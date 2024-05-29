@@ -78,6 +78,29 @@ const AgentConnectPopup: React.FC = () => {
         });
     };
 
+    const [callTime, setCallTime] = React.useState<number>(0); // Estado para almacenar el tiempo de llamada
+
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+        if (isContactAccepted) {
+            intervalId = setInterval(() => {
+                setCallTime(prevTime => prevTime + 1); // Incrementa el tiempo cada segundo
+            }, 1000);
+        } else {
+            setCallTime(0); // Resetea el tiempo cuando la llamada no está aceptada
+        }
+
+        return () => {
+            clearInterval(intervalId); // Limpia el intervalo cuando el componente se desmonta o cambia el estado de aceptación
+        };
+    }, [isContactAccepted]);
+
+    const formatTime = (totalSeconds: number) => {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
+
     return (
         <>
             <div className={`absolute transition-all duration-300 ${incomingContact ? "top-3" : "-top-16"} left-1/2 transform -translate-x-1/2`}>
@@ -109,7 +132,8 @@ const AgentConnectPopup: React.FC = () => {
                         </> : (incomingContact && isContactAccepted) ?
                             <>
                                 <h1 className="text-lg font-semibold text-gray-800 mr-6">
-                                    Call Accepted
+                                    Call Accepted &nbsp;
+                                    <span className="text-gray-400">({formatTime(callTime)})</span>
                                 </h1>
                                 <button
                                     onClick={() => {
@@ -134,8 +158,13 @@ const AgentConnectPopup: React.FC = () => {
                     <div className="flex flex-col justify-center items-center">
                         {agentState === 'Available' ?
                             <div
-                                onClick={() => changeAgentState('Offline')}
-                                className="px-3 mb-2 text-center text-gray-800 text-sm border border-blue-200 rounded-lg shadow-lg py-1 cursor-pointer flex items-center bg-blue-100 hover:bg-blue-200 transition duration-200 hover:text-blue-800 hover:border-blue-300 hover:shadow-md"
+                                onClick={() => {
+                                    if (incomingContact && isContactAccepted) {
+                                        return;
+                                    }
+                                    changeAgentState('Offline')
+                                }}
+                                className={`px-3 mb-2 text-center text-sm border rounded-lg shadow-lg py-1 flex items-center ${(incomingContact && isContactAccepted) ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'cursor-pointer hover:border-blue-300 hover:shadow-md bg-blue-100 hover:bg-blue-200 transition duration-200 hover:text-blue-800 border-blue-200 text-gray-800'}`}
                             >
                                 Go Offline
                                 <span className="text-red-500 text-2xl ml-2">
@@ -143,8 +172,13 @@ const AgentConnectPopup: React.FC = () => {
                                 </span>
                             </div> :
                             <div
-                                onClick={() => changeAgentState('Available')}
-                                className="px-3 mb-2 text-center text-gray-800 text-sm bg-blue-100 border border-blue-200 rounded-lg shadow-lg py-1 cursor-pointer flex items-center hover:bg-blue-200 transition duration-200 hover:text-blue-800 hover:border-blue-300 hover:shadow-md"
+                                onClick={() => {
+                                    if (incomingContact && isContactAccepted) {
+                                        return;
+                                    }
+                                    changeAgentState('Available')
+                                }}
+                                className={`px-3 mb-2 text-center text-sm border rounded-lg shadow-lg py-1 flex items-center ${(incomingContact && isContactAccepted) ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'cursor-pointer hover:border-blue-300 hover:shadow-md bg-blue-100 hover:bg-blue-200 transition duration-200 hover:text-blue-800 border-blue-200 text-gray-800'}`}
                             >
                                 Go Available
                                 <span className="text-green-500 text-2xl ml-2">
