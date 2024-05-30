@@ -90,7 +90,7 @@ export default function ControlPanelLayout({
               <div className="flex h-5/6 justify-between pl-20 ">
                 <div>
                   <div className="pl-4 pt-4">{Agent}</div>
-                  <div className="pl-4 ">{Metrics2}</div>
+                  {/* <div className="pl-4 ">{Metrics2}</div> */}
                   <div className="pl-4 ">{Metrics}</div>
                 </div>
                 <div>
