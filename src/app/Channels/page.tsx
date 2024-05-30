@@ -108,7 +108,7 @@ export default function Notifications() {
         <div>
             <div className="h-screen flex w-full">
                 <Home />
-                <div className="mt-12  flex-col ml-40 w-full">
+                <div className="mt-12  w-full flex-col ml-40  overflow-scroll  no-scrollbar">
                     {/* <div className="flex justify-end">
                         <SearchBar />
                     </div> */}
