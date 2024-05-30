@@ -39,7 +39,7 @@ interface QueueMetric {
     queue_metrics: Metric[];
 }
 
-function getChannelsQueues(channels: any, data: any) {
+export function getChannelsQueues(channels: any, data: any) {
     let getChannelsQueues = []
     for (let i = 0; i < channels.length; i++) {
         for (let j = 0; j < data.data.length; j++) {
@@ -51,7 +51,7 @@ function getChannelsQueues(channels: any, data: any) {
     return getChannelsQueues
 }
 
-function sortQueues(data: any[]) {
+export function sortQueues(data: any[]) {
     return data.sort((a, b) => a.queue.localeCompare(b.queue));
 }
 export default function Notifications() {
