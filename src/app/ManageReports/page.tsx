@@ -1,101 +1,82 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from "../NavBar";
 import SearchBar from "../searchBar";
-import { Card, Flex, Heading, Text } from "@aws-amplify/ui-react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { fetchMetricDataV2Agent } from '@/fetching/fetchingMetricDataV2Agent';
+import { fetchMetricDataV2Queue } from '@/fetching/fetchingMetricDataV2Queue';
+import NewReport from '@/components/newReport';
 
+const ManageReports = () => {
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [allReports, setAllReports] = useState<any>([]);
 
-// Nav Bar not Move Add
-// Connect Back
-// PDF Download
-// Add Filters
+  useEffect(() => {
+    async function fetchAgent() {
+      const metricData = await fetchMetricDataV2Agent("4f608bad-bbf2-493c-80d4-120e134d90bf", "2024-05-20");
+      console.log("metricData", metricData);
 
+      const metricDataQueue = await fetchMetricDataV2Queue("4f608bad-bbf2-493c-80d4-120e134d90bf", "2024-05-20");
+      console.log("metricDataQueue", metricDataQueue);
+    }
+    fetchAgent();
 
-interface ReportCardProps {
-  title: string;
-  lastUpdated: string;
-  uploadedBy: string;
-}
+    // Load reports from local storage
+    const storedReports = JSON.parse(localStorage.getItem('reports') || '[]');
+    setAllReports(storedReports);
+  }, []);
 
-const ReportCard = ({ title, lastUpdated, uploadedBy }: ReportCardProps) => {
-  const commonShadowStyle = {
-    // boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#F7FAFC',
-    minWidth: '340px',
-    minHeight: '200px',
-  };
+  const saveReportsToLocalStorage = (reports: any) => {
+    localStorage.setItem('reports', JSON.stringify(reports));
+  }
 
-  return (
+  const createReport = () => {
+    const newReport = {
+      index: allReports.length,
+      title: "New Report",
+      uploadedBy: "Admin",
+      date: new Date().toDateString(),
+      description: "This is a new report",
+    };
+
+    const updatedReports = [...allReports, newReport];
+    setAllReports(updatedReports);
+    saveReportsToLocalStorage(updatedReports);
+  }
+
+  const handleSave = (updatedReport: any) => {
+    const updatedReports = allReports.map((report: any) => report.index === updatedReport.index ? updatedReport : report);
+    setAllReports(updatedReports);
+    saveReportsToLocalStorage(updatedReports);
+    };
     
-    <Card style={commonShadowStyle}>
-      <Flex direction="column" gap="0.5rem">
-        <Text fontSize="large" fontWeight="bold">{title}</Text>
-        <Text color="#4F7396">Last Updated {lastUpdated}</Text>
-        <Text color="#4F7396">Uploaded By: {uploadedBy}</Text>
-        <Flex justifyContent="flex-end" marginTop="auto">
-          <FontAwesomeIcon icon={faFilePdf} size="2x" />
-        </Flex>
-      </Flex>
-    </Card>
+    const handleDelete = (reportIndex: number) => {
+    const updatedReports = allReports.filter((report: any) => report.index !== reportIndex);
+    setAllReports(updatedReports);
+    saveReportsToLocalStorage(updatedReports);
+    };
     
-  );
-};
-
-export default function ManageReports() {
-  // The individual report cards data
-  const reportData1 = {
-    title: 'Monthly Performance',
-    lastUpdated: '30/03/2024',
-    uploadedBy: 'Jane Doe'
-  };
-  const reportData2 = {
-    title: 'Quarterly Sales',
-    lastUpdated: '15/04/2024',
-    uploadedBy: 'John Smith'
-  };
-  const reportData3 = {
-    title: 'Annual Review',
-    lastUpdated: '01/01/2024',
-    uploadedBy: 'Alice Johnson'
-  };
-  const reportData4 = {
-    title: 'Monthly Performance',
-    lastUpdated: '30/03/2024',
-    uploadedBy: 'Jane Doe'
-  };
-  const reportData5 = {
-    title: 'Quarterly Sales',
-    lastUpdated: '15/04/2024',
-    uploadedBy: 'John Smith'
-  };
-  const reportData6 = {
-    title: 'Annual Review',
-    lastUpdated: '01/01/2024',
-    uploadedBy: 'Alice Johnson'
-  };
-
-  return (
+    return (
     <div className="flex h-screen bg-background text-foreground relative">
-      <Home />
-      <div className="flex flex-col flex-1 p-10 ml-20">
-      <div className="flex justify-end  px-16 pt-4">
-              <SearchBar />
-            </div>
-        <Flex direction="column" gap="2rem">
-          <Heading level={1} fontWeight="bold">Manage Reports</Heading>
-          <Text className="text-sans" fontSize="28px">&nbsp;&nbsp;&nbsp;&nbsp;Browse by Category</Text>
-          <Flex wrap="wrap" gap="1rem">
-            <ReportCard {...reportData1} />
-            <ReportCard {...reportData2} />
-            <ReportCard {...reportData3} />
-            <ReportCard {...reportData4} />
-            <ReportCard {...reportData5} />
-            <ReportCard {...reportData6} />
-          </Flex>
-        </Flex>
-      </div>
+    <Home />
+    <div className="flex flex-col flex-1 p-10 ml-20">
+    <div className="flex justify-end px-16 pt-4">
+    <SearchBar />
     </div>
-  );
-}
+    <div className='h-full w-full border border-red-500'>
+    <h1 className='text-5xl font-semibold p-4'>Create reports</h1>
+    <div className='flex w-full p-4 items-center'>
+    {allReports.map((report: any) => (
+    <NewReport key={report.index} props={report} onSave={handleSave} onDelete={() => handleDelete(report.index)} />
+    ))}
+    <button onClick={createReport} className='text-white text-2xl h-12 flex justify-center items-center bg-slate-400 rounded-lg p-5'>
+    New
+    </button>
+    </div>
+    </div>
+    </div>
+    </div>
+    );
+    }
+    
+    export default ManageReports;
+    
