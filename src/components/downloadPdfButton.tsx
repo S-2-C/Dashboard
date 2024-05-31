@@ -1,19 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { saveAs } from 'file-saver';
 import { generatePdfTemplate } from './generatePdfTemplate';
+import { fetchMetricDataV2Queue } from '@/fetching/fetchingMetricDataV2Queue';
+import { fetchMetricDataV2Agent } from '@/fetching/fetchingMetricDataV2Agent';
+import { AIReportMaker } from '@/fetching/reportAICreator';
 
-const DownloadPdfButton = ({title, description, date, relevantKPI, rangeDate} : any) => {
+const DownloadPdfButton = ({title, description, date, siQueue, specifiesQueue, specifiesAgent, relevantKPI, rangeDate} : any) => {
+
+
   const handleDownload = async () => {
-    const headerContent = "This is the header";
-    const footerContent = "This is the footer";
-    const sections = [
-      { title: "Section 1", content: "Content for section 1" },
-      { title: "Section 2", content: "Content for section 2" },
-    ];
+
+    // const metricData = await fetchMetricDataV2Agent("4f608bad-bbf2-493c-80d4-120e134d90bf", "2024-05-20");
+    // console.log("metricData", metricData);
+
+    let cleanContent = "";
+
+    if (siQueue && specifiesQueue) {
+      const metricDataQueue = await fetchMetricDataV2Queue(specifiesQueue.id, rangeDate.startDate, rangeDate.endDate);
+
+      let cleanMetricDataQueue = metricDataQueue.data.filter((metricData: any) => relevantKPI.includes(metricData.Metric));
+
+      //convert object into a string
+
+      cleanMetricDataQueue = JSON.stringify(cleanMetricDataQueue);
+
+      console.log("cleanMetricDataQueue", cleanMetricDataQueue);
+
+      const AIContent = await AIReportMaker(cleanMetricDataQueue);
+
+      console.log("AIContent", AIContent.ragChainResult.kwargs.content);
+
+      cleanContent = specifiesQueue.name + "\n\n" + AIContent.ragChainResult.kwargs.content
+
+    } else if(specifiesAgent) {
+      console.log("specifiesAgent", specifiesAgent);
+      const metricDataAgent = await fetchMetricDataV2Agent(specifiesAgent.arn, rangeDate.startDate, rangeDate.endDate);
+
+      console.log("metricDataAgent", metricDataAgent);
+
+      let cleanMetricDataAgent = metricDataAgent.data.filter((metricData: any) => relevantKPI.includes(metricData.Metric));
+
+      //convert object into a string
+
+      cleanMetricDataAgent = JSON.stringify(cleanMetricDataAgent);
+
+      console.log("cleanMetricDataAgent", cleanMetricDataAgent);
+
+      const AIContent = await AIReportMaker(cleanMetricDataAgent);
+
+      console.log("AIContent", AIContent.ragChainResult.kwargs.content);
+
+      cleanContent = specifiesAgent.name + "\n\n" + AIContent.ragChainResult.kwargs.content
+    }
+
+
     const imageUrl1 = '/images/Logo design.png'; // Path to your first image in the public folder
     const imageUrl2 = '/images/Walmart-Logo.png'; // Path to your second image in the public folder
 
-    const pdfBytes = await generatePdfTemplate({ headerContent: date, footerContent, sections, content: "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum ", imageUrl1, imageUrl2, centeredTitle: title, smallDescription: description});
+    const pdfBytes = await generatePdfTemplate({ headerContent: date, content: cleanContent, imageUrl1, imageUrl2, centeredTitle: title, smallDescription: description});
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     saveAs(blob, 'document.pdf');
   };

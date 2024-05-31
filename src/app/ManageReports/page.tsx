@@ -11,15 +11,6 @@ const ManageReports = () => {
   const [allReports, setAllReports] = useState<any>([]);
 
   useEffect(() => {
-    async function fetchAgent() {
-      const metricData = await fetchMetricDataV2Agent("4f608bad-bbf2-493c-80d4-120e134d90bf", "2024-05-20");
-      console.log("metricData", metricData);
-
-      const metricDataQueue = await fetchMetricDataV2Queue("4f608bad-bbf2-493c-80d4-120e134d90bf", "2024-05-20");
-      console.log("metricDataQueue", metricDataQueue);
-    }
-    fetchAgent();
-
     // Load reports from local storage
     const storedReports = JSON.parse(localStorage.getItem('reports') || '[]');
     setAllReports(storedReports);

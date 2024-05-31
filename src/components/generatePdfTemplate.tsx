@@ -24,6 +24,15 @@ const wrapText = (text: any, font: any, fontSize: any, maxWidth: any) => {
   return lines;
 };
 
+const parseContent = (content: string) => {
+  const cleanedContent = content.replace(/[*#]/g, '');
+  const sections = cleanedContent.split('\n\n').map(section => {
+    const [header, ...body] = section.split('\n');
+    return { header, body: body.join(' ') };
+  });
+  return sections;
+};
+
 export const generatePdfTemplate = async ({ headerContent, content, imageUrl1, imageUrl2, centeredTitle, smallDescription }: any) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([600, 800]);
@@ -31,9 +40,7 @@ export const generatePdfTemplate = async ({ headerContent, content, imageUrl1, i
 
   // Load fonts
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
-  const fontSize = 24; // Adjust this value to change the size of the text
-  const textWidth = font.widthOfTextAtSize(centeredTitle, fontSize);
+  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
   // Fetch and embed images
   const pictureBytes1 = await fetchImageAsBytes(imageUrl1);
@@ -65,11 +72,13 @@ export const generatePdfTemplate = async ({ headerContent, content, imageUrl1, i
   });
 
   // Add title
+  const titleFontSize = 24;
+  const textWidth = boldFont.widthOfTextAtSize(centeredTitle, titleFontSize);
   page.drawText(centeredTitle, {
     x: width / 2 - (textWidth / 2), // Adjust as necessary to center
     y: height - 150,
-    size: 24,
-    font,
+    size: titleFontSize,
+    font: boldFont,
     color: rgb(0, 0, 0),
   });
 
@@ -90,18 +99,35 @@ export const generatePdfTemplate = async ({ headerContent, content, imageUrl1, i
     color: rgb(0, 0, 0),
   });
 
-  // Wrap and draw content text
-  const wrappedText = wrapText(content, font, 12, width - 100);
+  // Parse and draw content sections
+  const sections = parseContent(content);
   let yPosition = height - 240;
-  wrappedText.forEach(line => {
-    page.drawText(line, {
+  sections.forEach(section => {
+    // Draw section header
+    page.drawText(section.header, {
       x: 50,
       y: yPosition,
       size: 12,
-      font,
+      font: boldFont,
       color: rgb(0, 0, 0),
     });
     yPosition -= 15;
+
+    // Draw section body
+    const wrappedText = wrapText(section.body, font, 12, width - 100);
+    wrappedText.forEach(line => {
+      page.drawText(line, {
+        x: 50,
+        y: yPosition,
+        size: 10,
+        font,
+        color: rgb(0, 0, 0),
+      });
+      yPosition -= 10;
+    });
+
+    // Add extra space after each section
+    yPosition -= 10;
   });
 
   // Add footer

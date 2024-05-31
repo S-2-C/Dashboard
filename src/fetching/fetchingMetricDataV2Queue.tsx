@@ -4,9 +4,10 @@
 
 export async function fetchMetricDataV2Queue(
   queueId: string, // The queue ID
-  metricDate: string // The metric date
+  metricDate: string, // The metric date
+  currentMetricData: string // The current metric data
 ): Promise<any> {
-  const url = `http://localhost:3000/connect/GetMetricDataV2/Queue?queueIds=${queueId}&metricDate=${metricDate}`;
+  const url = `http://localhost:3000/connect/GetMetricDataV2/Queue?queueIds=${queueId}&metricDate=${metricDate}&currentMetricData=${currentMetricData}`;
   try {
     const response = await fetch(url);
     if (!response.ok) {

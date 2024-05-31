@@ -5,15 +5,13 @@ import { make_config_json } from "@/app/apis_library/connect";
 async function getUserMetricData(
   client: ConnectClient,
   agentIdsArray: string[],
-  metricDate: Date
+  metricDate: Date,
+  currentMetricData: Date
 ): Promise<any> {
-  console.log(metricDate);
-  console.log(new Date());
-  console.log("agentIdsArray: ", agentIdsArray);
   const input = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
     StartTime: metricDate,
-    EndTime: new Date(),
+    EndTime: currentMetricData,
     Filters: [
       {
         FilterKey: "AGENT",
@@ -55,13 +53,16 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const agentIds = searchParams.get("agentIds") || undefined;
   let metricDate: any = searchParams.get("metricDate") || undefined;
+  let currentMetricData: any = searchParams.get("currentMetricData") || undefined;
   console.log("metricDate: ", metricDate);
   console.log("agentIds: ", agentIds);
 
-  if (!metricDate) {
+  if (!metricDate && !currentMetricData) {
     metricDate = new Date();
+    currentMetricData = new Date();
   } else {
     metricDate = new Date(metricDate);
+    currentMetricData = new Date(currentMetricData);
   }
 
   if (!agentIds) {
@@ -80,7 +81,7 @@ export async function GET(request: Request) {
 
   const client = new ConnectClient(config as any);
 
-  const response = await getUserMetricData(client, agentIdsArray, metricDate);
+  const response = await getUserMetricData(client, agentIdsArray, metricDate, currentMetricData);
   console.log("Response from GetMetricDataV2Command:", response);
 
   return new Response(

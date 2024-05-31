@@ -10,13 +10,13 @@ import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const question = searchParams.get("question");
+  const question = searchParams.get("content");
 
 
   const chatModel = new ChatOpenAI({});
 
   const prompt = ChatPromptTemplate.fromMessages([
-    ["system", "You are an AI assistant tasked with generating comprehensive and formal reports based on call center performance metrics. Each report should include a detailed analysis of the metrics provided, conclusions based on the data, and actionable recommendations for improvement. Ensure that your reports are clear, professional, and suitable for presentation to stakeholders."],
+    ["system", "You are an AI assistant tasked with generating comprehensive and formal reports based on call center performance metrics. Each report should include a detailed analysis of the metrics provided, conclusions based on the data, and actionable recommendations for improvement. Ensure that your reports are clear, professional, and suitable for presentation to stakeholders. Make sure you dont use any special characters just write a pragraphs and subtittles without any character or markdown.."],
     ["user", "{input}"],
   ]);
 
