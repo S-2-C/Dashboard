@@ -51,6 +51,8 @@ export async function GET(request: Request) {
   const config = make_config_json();
   const { searchParams } = new URL(request.url);
   const queueIds = searchParams.get("queueIds") || undefined;
+  console.log("QUEUE IDS");
+  console.log(searchParams, queueIds);
   let metricDate: any = searchParams.get("metricDate") || undefined;
   console.log("metricDate: ", metricDate);
   console.log("queueIds: ", queueIds);
