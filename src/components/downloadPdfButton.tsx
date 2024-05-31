@@ -10,33 +10,21 @@ const DownloadPdfButton = ({title, description, date, siQueue, specifiesQueue, s
 
   const handleDownload = async () => {
 
-    // const metricData = await fetchMetricDataV2Agent("4f608bad-bbf2-493c-80d4-120e134d90bf", "2024-05-20");
-    // console.log("metricData", metricData);
-
     let cleanContent = "";
-
     if (siQueue && specifiesQueue) {
-      const metricDataQueue = await fetchMetricDataV2Queue(specifiesQueue.id, rangeDate.startDate, rangeDate.endDate);
+        const metricDataQueue = await fetchMetricDataV2Queue(specifiesQueue.id, rangeDate.startDate, rangeDate.endDate);
 
-      let cleanMetricDataQueue = metricDataQueue.data.filter((metricData: any) => relevantKPI.includes(metricData.Metric));
+        let cleanMetricDataQueue = metricDataQueue.data.filter((metricData: any) => relevantKPI.includes(metricData.Metric));
+        //convert object into a string
 
-      //convert object into a string
+        cleanMetricDataQueue = JSON.stringify(cleanMetricDataQueue);
 
-      cleanMetricDataQueue = JSON.stringify(cleanMetricDataQueue);
+        const AIContent = await AIReportMaker(cleanMetricDataQueue);
 
-      console.log("cleanMetricDataQueue", cleanMetricDataQueue);
-
-      const AIContent = await AIReportMaker(cleanMetricDataQueue);
-
-      console.log("AIContent", AIContent.ragChainResult.kwargs.content);
-
-      cleanContent = specifiesQueue.name + "\n\n" + AIContent.ragChainResult.kwargs.content
+        cleanContent = specifiesQueue.name + "\n\n" + AIContent.ragChainResult.kwargs.content
 
     } else if(specifiesAgent) {
-      console.log("specifiesAgent", specifiesAgent);
       const metricDataAgent = await fetchMetricDataV2Agent(specifiesAgent.arn, rangeDate.startDate, rangeDate.endDate);
-
-      console.log("metricDataAgent", metricDataAgent);
 
       let cleanMetricDataAgent = metricDataAgent.data.filter((metricData: any) => relevantKPI.includes(metricData.Metric));
 
@@ -44,11 +32,7 @@ const DownloadPdfButton = ({title, description, date, siQueue, specifiesQueue, s
 
       cleanMetricDataAgent = JSON.stringify(cleanMetricDataAgent);
 
-      console.log("cleanMetricDataAgent", cleanMetricDataAgent);
-
       const AIContent = await AIReportMaker(cleanMetricDataAgent);
-
-      console.log("AIContent", AIContent.ragChainResult.kwargs.content);
 
       cleanContent = specifiesAgent.name + "\n\n" + AIContent.ragChainResult.kwargs.content
     }
