@@ -19,7 +19,7 @@
       "function": {
         "callStart": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/callStart-374a5a6e3858374a7a44-build.zip"
+          "s3Key": "amplify-builds/callStart-774951415669695a7242-build.zip"
         },
         "chatWebSocket": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
@@ -27,7 +27,7 @@
         },
         "connectEvents": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/connectEvents-62414849415073726547-build.zip"
+          "s3Key": "amplify-builds/connectEvents-5758357843306764676b-build.zip"
         },
         "dashAuthPostConfirmation": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",

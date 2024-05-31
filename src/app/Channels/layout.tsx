@@ -1,37 +1,39 @@
 import React from "react";
 import { ReactNode } from "react";
 // import Home from '../NavBar'
-import SearchBar from '../searchBar';
+import SearchBar from "../searchBar";
+import NotifSlot from '@/app/ControlPanel/@Notif/page';
 
 export default function ControlPanelLayout({
   children,
   SmartNotif,
+  Notif,
 }: // Home
-  {
-    children: ReactNode;
-    SmartNotif: ReactNode;
-    Home: ReactNode;
-  }) {
+{
+  children: ReactNode;
+  SmartNotif: ReactNode;
+  Notif: ReactNode;
+  Home: ReactNode;
+}) {
   return (
     <>
-      <div className="h-full flex h-screen">
+      <div className="flex h-screen">
         {/* First column for children */}
-        {/* <div className="h-full flex-col">
-          Header
-        </div> */}
-        <div className="h-full flex-col w-3/5">
-          {children}
-        </div>
+        <div className="flex-col w-3/5">{children}</div>
 
-        {/* Second column for Agent, Notif, and Saturation */}
-        <div className="flex-col">
-          <div className="flex justify-end mt-8  m-12">
+        {/* Second column container */}
+        <div className="flex-col w-2/5 p-8">
+          {/* Fixed position for SearchBar */}
+          <div className="flex justify-end mt-8 m-12 fixed right-0 top-0">
             <SearchBar />
           </div>
-          <div className="mt-20 ">
-            {SmartNotif}
-          </div>
 
+          {/* Scrollable content below SearchBar */}
+          <div className="mt-24 h-4/5">
+            {/* <div className="mt-20"> */}
+              <NotifSlot />
+            {/* </div> */}
+          </div>
         </div>
       </div>
 
