@@ -26,12 +26,16 @@ export declare type NotificationCreateFormInputValues = {
     action?: string;
     description?: string;
     urgency?: string;
+    timestamp?: string;
+    agentArn?: string;
 };
 export declare type NotificationCreateFormValidationValues = {
     rule?: ValidationFunction<string>;
     action?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     urgency?: ValidationFunction<string>;
+    timestamp?: ValidationFunction<string>;
+    agentArn?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NotificationCreateFormOverridesProps = {
@@ -40,6 +44,8 @@ export declare type NotificationCreateFormOverridesProps = {
     action?: PrimitiveOverrideProps<TextFieldProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
     urgency?: PrimitiveOverrideProps<SelectFieldProps>;
+    timestamp?: PrimitiveOverrideProps<TextFieldProps>;
+    agentArn?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type NotificationCreateFormProps = React.PropsWithChildren<{
     overrides?: NotificationCreateFormOverridesProps | undefined | null;
