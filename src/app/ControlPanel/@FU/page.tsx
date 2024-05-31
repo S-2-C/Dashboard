@@ -25,17 +25,12 @@ export default function Frequently() {
                   Agent Management
                 </button>
               </Link>
-              <Link href="/Notifications">
-                <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
-                  Notifications
-                </button>
-              </Link>
               <Link href="/Metrics">
                 <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
                   Metrics
                 </button>
               </Link>
-              <Link href="/Reports">
+              <Link href="/ManageReports">
                 <button className="bg-background focus:bg-blue-teal active:bg-blue-teal text-gray focus:text-background active:text-background font-bold py-2 px-4 rounded ml-8">
                   Reports
                 </button>
