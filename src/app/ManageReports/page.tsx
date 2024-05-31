@@ -62,7 +62,7 @@ const ManageReports = () => {
     <div className="flex justify-end px-16 pt-4">
     <SearchBar />
     </div>
-    <div className='h-full w-full border border-red-500'>
+    <div className='h-full w-full'>
     <h1 className='text-5xl font-semibold p-4'>Create reports</h1>
     <div className='flex w-full p-4 items-center'>
     {allReports.map((report: any) => (
