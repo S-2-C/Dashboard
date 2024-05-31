@@ -5,15 +5,13 @@ import { make_config_json } from "@/app/apis_library/connect";
 async function getUserMetricData(
   client: ConnectClient,
   queueIdsArray: string[],
-  metricDate: Date
+  metricDate: Date,
+  currentMetricData: Date
 ): Promise<any> {
-  console.log(metricDate);
-  console.log(new Date());
-  console.log("queueIdsArray: ", queueIdsArray);
   const input = {
     ResourceArn: process.env.CONNECT_INSTANCE_ARN,
     StartTime: metricDate,
-    EndTime: new Date(),
+    EndTime: currentMetricData,
     Filters: [
       {
         FilterKey: "QUEUE",
@@ -51,14 +49,17 @@ export async function GET(request: Request) {
   const config = make_config_json();
   const { searchParams } = new URL(request.url);
   const queueIds = searchParams.get("queueIds") || undefined;
+  console.log("QUEUE IDS");
+  console.log(searchParams, queueIds);
   let metricDate: any = searchParams.get("metricDate") || undefined;
-  console.log("metricDate: ", metricDate);
-  console.log("queueIds: ", queueIds);
+  let currentMetricData: any = searchParams.get("currentMetricData") || undefined;
 
-  if (!metricDate) {
+  if (!metricDate && !currentMetricData) {
     metricDate = new Date();
+    currentMetricData = new Date();
   } else {
     metricDate = new Date(metricDate);
+    currentMetricData = new Date(currentMetricData);
   }
 
   if (!queueIds) {
@@ -77,7 +78,7 @@ export async function GET(request: Request) {
 
   const client = new ConnectClient(config as any);
 
-  const response = await getUserMetricData(client, queueIdsArray, metricDate);
+  const response = await getUserMetricData(client, queueIdsArray, metricDate, currentMetricData);
   console.log("Response from GetMetricDataV2Command:", response);
 
   return new Response(

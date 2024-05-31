@@ -1,63 +1,73 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from "../NavBar";
-import { Card, Flex, Heading, Text } from "@aws-amplify/ui-react";
+import SearchBar from "../searchBar";
+import { fetchMetricDataV2Agent } from '@/fetching/fetchingMetricDataV2Agent';
+import { fetchMetricDataV2Queue } from '@/fetching/fetchingMetricDataV2Queue';
+import NewReport from '@/components/newReport';
 
-interface ReportCardProps {
-  title: string;
-  lastUpdated: string;
-  uploadedBy: string;
-}
+const ManageReports = () => {
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [allReports, setAllReports] = useState<any>([]);
 
-const ReportCard = ({ title, lastUpdated, uploadedBy }: ReportCardProps) => {
-  const commonShadowStyle = {
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)'
-  };
+  useEffect(() => {
+    // Load reports from local storage
+    const storedReports = JSON.parse(localStorage.getItem('reports') || '[]');
+    setAllReports(storedReports);
+  }, []);
 
-  return (
-    // Apply the commonShadowStyle directly to the Card component
-    <Card variation="outlined" style={commonShadowStyle}>
-      <Flex direction="column" gap="0.5rem">
-        <Text fontWeight="semibold">{title}</Text>
-        <Text fontSize="small">Last Updated {lastUpdated}</Text>
-        <Text fontSize="small">Uploaded By: {uploadedBy}</Text>
-      </Flex>
-    </Card>
-  );
-};
+  const saveReportsToLocalStorage = (reports: any) => {
+    localStorage.setItem('reports', JSON.stringify(reports));
+  }
 
-export default function ManageReports() {
-  // The individual report cards data
-  const reportData1 = {
-    title: 'Monthly Performance',
-    lastUpdated: '30/03/2024',
-    uploadedBy: 'Jane Doe'
-  };
-  const reportData2 = {
-    title: 'Quarterly Sales',
-    lastUpdated: '15/04/2024',
-    uploadedBy: 'John Smith'
-  };
-  const reportData3 = {
-    title: 'Annual Review',
-    lastUpdated: '01/01/2024',
-    uploadedBy: 'Alice Johnson'
-  };
+  const createReport = () => {
+    const newReport = {
+      index: allReports.length,
+      title: "New Report",
+      uploadedBy: "Admin",
+      date: new Date().toDateString(),
+      description: "This is a new report",
+    };
 
-  return (
+    const updatedReports = [...allReports, newReport];
+    setAllReports(updatedReports);
+    saveReportsToLocalStorage(updatedReports);
+  }
+
+  const handleSave = (updatedReport: any) => {
+    const updatedReports = allReports.map((report: any) => report.index === updatedReport.index ? updatedReport : report);
+    setAllReports(updatedReports);
+    saveReportsToLocalStorage(updatedReports);
+    };
+    
+    const handleDelete = (reportIndex: number) => {
+    const updatedReports = allReports.filter((report: any) => report.index !== reportIndex);
+    setAllReports(updatedReports);
+    saveReportsToLocalStorage(updatedReports);
+    };
+    
+    return (
     <div className="flex h-screen bg-background text-foreground relative">
-      <Home />
-      <div className="flex flex-col flex-1 p-10 ml-20">
-        <Flex direction="column" gap="2rem">
-          <Heading level={1}>Manage Reports</Heading>
-          <Text className="text-sans">Browse by Category</Text>
-          <Flex wrap="wrap" gap="1rem">
-            <ReportCard {...reportData1} />
-            <ReportCard {...reportData2} />
-            <ReportCard {...reportData3} />
-          </Flex>
-        </Flex>
-      </div>
+    <Home />
+    <div className="flex flex-col flex-1 p-10 ml-20">
+    <div className="flex justify-end px-16 pt-4">
+    <SearchBar />
     </div>
-  );
-}
+    <div className='h-full w-full'>
+    <h1 className='text-5xl font-semibold p-4'>Create reports</h1>
+    <div className='flex w-full p-4 items-center'>
+    {allReports.map((report: any) => (
+    <NewReport key={report.index} props={report} onSave={handleSave} onDelete={() => handleDelete(report.index)} />
+    ))}
+    <button onClick={createReport} className='text-white text-2xl h-12 flex justify-center items-center bg-slate-400 rounded-lg p-5'>
+    New
+    </button>
+    </div>
+    </div>
+    </div>
+    </div>
+    );
+    }
+    
+    export default ManageReports;
+    

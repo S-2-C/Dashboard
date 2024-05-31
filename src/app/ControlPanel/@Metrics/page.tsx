@@ -21,17 +21,17 @@ export default function MetricsSlot() {
           </div>
         </>
       ) : (
-        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-64 xl:h-96">
-          <button className="w-full h-full flex flex-col items-center justify-center">
+        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-64 xl:h-full">
+          <button className="w-full flex flex-col items-center justify-center">
             <div className="flex items-center justify-center p-4">
               <FontAwesomeIcon
                 icon={faQuestion}
-                className="text-black text-5xl mr-2"
+                className="text-white text-4xl mr-4"
               />
-              <h1 className="text-3xl font-bold">Ask for help</h1>
+              <h1 className="text-4xl font-bold text-white">Ask for help</h1>
             </div>
             <div className="flex items-center justify-center px-3">
-              <text>Ask your supervisor for help with a call or anything needed.</text>
+              <text className="text-white">Ask your supervisor for help with a call or anything needed.</text>
             </div>
           </button>
         </div>

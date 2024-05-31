@@ -33,6 +33,8 @@ export default function NotificationCreateForm(props) {
     action: "",
     description: "",
     urgency: "",
+    timestamp: "",
+    agentArn: "",
   };
   const [rule, setRule] = React.useState(initialValues.rule);
   const [action, setAction] = React.useState(initialValues.action);
@@ -40,12 +42,16 @@ export default function NotificationCreateForm(props) {
     initialValues.description
   );
   const [urgency, setUrgency] = React.useState(initialValues.urgency);
+  const [timestamp, setTimestamp] = React.useState(initialValues.timestamp);
+  const [agentArn, setAgentArn] = React.useState(initialValues.agentArn);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setRule(initialValues.rule);
     setAction(initialValues.action);
     setDescription(initialValues.description);
     setUrgency(initialValues.urgency);
+    setTimestamp(initialValues.timestamp);
+    setAgentArn(initialValues.agentArn);
     setErrors({});
   };
   const validations = {
@@ -53,6 +59,8 @@ export default function NotificationCreateForm(props) {
     action: [{ type: "Required" }],
     description: [{ type: "Required" }],
     urgency: [{ type: "Required" }],
+    timestamp: [{ type: "Required" }],
+    agentArn: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -71,6 +79,23 @@ export default function NotificationCreateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
   return (
     <Grid
       as="form"
@@ -84,6 +109,8 @@ export default function NotificationCreateForm(props) {
           action,
           description,
           urgency,
+          timestamp,
+          agentArn,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -150,6 +177,8 @@ export default function NotificationCreateForm(props) {
               action,
               description,
               urgency,
+              timestamp,
+              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.rule ?? value;
@@ -177,6 +206,8 @@ export default function NotificationCreateForm(props) {
               action: value,
               description,
               urgency,
+              timestamp,
+              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.action ?? value;
@@ -204,6 +235,8 @@ export default function NotificationCreateForm(props) {
               action,
               description: value,
               urgency,
+              timestamp,
+              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -231,6 +264,8 @@ export default function NotificationCreateForm(props) {
               action,
               description,
               urgency: value,
+              timestamp,
+              agentArn,
             };
             const result = onChange(modelFields);
             value = result?.urgency ?? value;
@@ -266,6 +301,66 @@ export default function NotificationCreateForm(props) {
           {...getOverrideProps(overrides, "urgencyoption3")}
         ></option>
       </SelectField>
+      <TextField
+        label="Timestamp"
+        isRequired={true}
+        isReadOnly={false}
+        type="datetime-local"
+        value={timestamp && convertToLocal(new Date(timestamp))}
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          if (onChange) {
+            const modelFields = {
+              rule,
+              action,
+              description,
+              urgency,
+              timestamp: value,
+              agentArn,
+            };
+            const result = onChange(modelFields);
+            value = result?.timestamp ?? value;
+          }
+          if (errors.timestamp?.hasError) {
+            runValidationTasks("timestamp", value);
+          }
+          setTimestamp(value);
+        }}
+        onBlur={() => runValidationTasks("timestamp", timestamp)}
+        errorMessage={errors.timestamp?.errorMessage}
+        hasError={errors.timestamp?.hasError}
+        {...getOverrideProps(overrides, "timestamp")}
+      ></TextField>
+      <TextField
+        label="Agent arn"
+        isRequired={false}
+        isReadOnly={false}
+        value={agentArn}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              rule,
+              action,
+              description,
+              urgency,
+              timestamp,
+              agentArn: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.agentArn ?? value;
+          }
+          if (errors.agentArn?.hasError) {
+            runValidationTasks("agentArn", value);
+          }
+          setAgentArn(value);
+        }}
+        onBlur={() => runValidationTasks("agentArn", agentArn)}
+        errorMessage={errors.agentArn?.errorMessage}
+        hasError={errors.agentArn?.hasError}
+        {...getOverrideProps(overrides, "agentArn")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

@@ -3,13 +3,13 @@ import { generateClient } from "aws-amplify/api";
 import {
   getContact,
   getUser,
-  listContacts,
+  listNotifications,
   listUsers,
 } from "@/graphql/queries";
 import {
   GetContactQuery,
   GetUserQuery,
-  ListContactsQuery,
+  ListNotificationsQuery,
   ListUsersQuery,
 } from "@/API";
 
@@ -34,7 +34,7 @@ export const fetchOneAgent = async (agentId: string) => {
   const client = generateClient();
 
   // %40 is the URL encoded version of @, replace it with @
-  agentId = agentId.replace("%40", "@");
+  if (agentId) agentId = agentId.replace("%40", "@");
 
   try {
     const agentData = (await client.graphql({
@@ -43,8 +43,6 @@ export const fetchOneAgent = async (agentId: string) => {
         id: agentId,
       },
     })) as GetUserQuery;
-
-    console.log(agentData);
 
     //@ts-ignore
     return agentData.data.getUser;
@@ -83,15 +81,17 @@ export const fetchAllUsers = async () => {
   }
 };
 
-// export const fetchAgentData = async (agentId: string) => {
-//     const client = generateClient();
+export const fetchAllNotifications = async () => {
+  const client = generateClient();
 
-//     const agentData = await client.graphql({
-//         query: getAgentData,
-//         variables: {
-//         id: agentId,
-//         },
-//     });
+  try {
+    const allNotifications = (await client.graphql({
+      query: listNotifications,
+    })) as ListNotificationsQuery;
 
-//     return agentData.data.getAgent;
-//     }
+    //@ts-ignore
+    return allNotifications.data.listNotifications.items;
+  } catch (error) {
+    console.error(error);
+  }
+};

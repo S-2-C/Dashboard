@@ -6,6 +6,7 @@ const config = {
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],

@@ -1,5 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 "use client";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import {
   faTriangleExclamation,
@@ -7,30 +8,43 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Home from "../NavBar"; // Importing the NavBar component
 import SearchBar from "../searchBar"; //importing the SearchBar component
-export default async function Documentation() {
-  const data = [
-    {
-      title: "Sentiment Analysis",
-      description: "How to use the sentiment analysis tool",
-      lastUpdated: "2024",
-    },
-    {
-      title: "Sentiment Analysis",
-      description: "How to use the sentiment analysis tool",
-      lastUpdated: "2024",
-    },
-    {
-        title: "Sentiment Analysis",
-        description: "How to use the sentiment analysis tool",
-        lastUpdated: "2024",
-      },
-      {
-        title: "Sentiment Analysis",
-        description: "How to use the sentiment analysis tool",
-        lastUpdated: "2024",
-      },
-    // Add more items as needed
-  ];
+import { documents } from "@/app/content/relevantFiles";
+import DocumentReader from "@/components/documentReader";
+
+const ITEMS_PER_PAGE = 8;
+
+export default function Documentation() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterType, setFilterType] = useState("All");
+
+  const filteredDocuments =
+    filterType === "All"
+      ? documents
+      : documents.filter((doc) => doc.type === filterType);
+
+  const totalPages = Math.ceil(filteredDocuments.length / ITEMS_PER_PAGE);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleFilterChange = (type: any) => {
+    setFilterType(type);
+    setCurrentPage(1); // Reset to the first page when filter changes
+  };
+
+  const currentDocuments = filteredDocuments.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <div>
@@ -48,38 +62,40 @@ export default async function Documentation() {
             </Flex>
           </div>
           <div className="h-14 flex pt-4 justify-between px-2">
-            <button className="w-36 bg-blue p-2 text-figma-figma1 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6">
-              All
-            </button>
-            <button className="w-36 bg-blue p-2 text-figma-figma1 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6">
-              Sales
-            </button>
-            <button className="w-36 bg-blue p-2 text-figma-figma1 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6">
-              Walmart.com
-            </button>
-            <button className="w-36 bg-blue p-2 text-figma-figma1 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6">
-              Walmart Express
-            </button>
-            <button className="w-36 bg-blue p-2 text-figma-figma1 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6">
-              Agent Training
-            </button>
-            <button className="w-36 bg-blue p-2 text-figma-figma1 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6">
-              FAQ
-            </button>
-          </div>
-          <div className="mt-8 flex flex-wrap">
-            {data.map((item, index) => (
+            {["All", "Sales", "Walmart.com", "Walmart Express", "Agent Training", "FAQ"].map((type) => (
               <button
-                key={index}
-                className="bg-figma-figma4 h-60 w-72 m-2 p-4 flex flex-col justify-center items-center rounded-2xl shadow-lg text-center hover:bg-blue"
+                key={type}
+                className={`w-36 p-2 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6 ${
+                  filterType === type
+                    ? "bg-figma-figma1 text-blue"
+                    : "bg-blue text-figma-figma1"
+                }`}
+                onClick={() => handleFilterChange(type)}
               >
-                <div className="text-3xl font-bold mb-2">{item.title}</div>
-                <div className="font-bold mb-2">{item.description}</div>
-                <div className="text-sm text-left justify-end">
-                  Last Updated: {item.lastUpdated}
-                </div>
+                {type}
               </button>
             ))}
+          </div>
+          <div className="mt-8 flex flex-wrap">
+            {currentDocuments.map((item, index) => (
+              <DocumentReader content={item} index={index} key={index} />
+            ))}
+          </div>
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+              className="bg-gray-300 p-2 rounded disabled:opacity-0"
+            >
+              Previous
+            </button>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="bg-gray-300 p-2 rounded mr-10 disabled:opacity-0"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
