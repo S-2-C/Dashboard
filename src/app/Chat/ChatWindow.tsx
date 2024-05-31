@@ -16,9 +16,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatRows, onSendMessage }) => {
     };
 
     return (
-        <div style={{ height: '80vh', flex: 1, display: 'flex', flexDirection: 'column', padding: '10px', borderLeft: '1px solid #ccc'}}>
-            <div style={{ borderBottom: '1px solid #ccc', paddingBottom: '30px',paddingTop:'15px', marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-                <img src="https://via.placeholder.com/50" alt="User" style={{ borderRadius: '50%', marginRight: '10px' }} />
+        <div className='rounded-lg' style={{ height: '80vh', flex: 1, display: 'flex', flexDirection: 'column', padding: '10px', backgroundColor: '#ECECEC'}}>
+            <div style={{ borderBottom: '1px solid #ccc', paddingBottom: '30px',paddingTop:'15px', marginBottom: '10px', display: 'flex', alignItems: 'center', paddingLeft:'15px' }}>
+                <img className="h-14 w-14 rounded-full" src="https://randomuser.me/api/portraits/women/8.jpg" alt="Lindsay Ferguson" style={{ borderRadius: '50%', marginRight: '10px' }} />
                 <div>
                     <p style={{ margin: 0, fontWeight: 'bold' }}>Jaxon Elridge</p>
                     <p style={{ margin: 0, color: '#e74c3c' }}>On call</p>
