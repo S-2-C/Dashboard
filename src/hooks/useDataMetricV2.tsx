@@ -24,7 +24,7 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
       );
       console.log("queue", metricDataV2Queue);
 
-      setQueueMetrics(metricDataV2Queue.data);
+      setQueueMetrics(metricDataV2Queue?.data);
     };
 
     fetchData();
@@ -53,7 +53,7 @@ export const useAgentMetrics = (
       pastDate.setDate(today.getDate() - daysAgo);
       const date = pastDate.toISOString().split("T")[0]; // Format the date as 'YYYY-MM-DD'
 
-      const metricDataV2Agent = await fetchMetricDataV2Agent(agentIds, date);
+      const metricDataV2Agent = await fetchMetricDataV2Agent(agentIds, date, today.toISOString());
       setAgentMetrics(metricDataV2Agent.data);
     };
 

@@ -77,7 +77,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
       description,
       attributes: selectedAttributes,
       channel: isTypeQueue ? channelIds.find(channel => channel.id === selectedChannel.id) : null,
-      selectedAgent: !isTypeQueue ? { id: selectedAgent.id, name: selectedAgent.name } : null,
+      selectedAgent: !isTypeQueue ? { id: selectedAgent?.id, name: selectedAgent?.name } : null,
       isTypeQueue,
       date: new Date().toDateString(), // Set the date to the current date
       dateRange: value,

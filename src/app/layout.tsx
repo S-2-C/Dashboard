@@ -31,7 +31,7 @@ export default function RootLayout({
         <WrappedAuthenticator>
           {children}
         </WrappedAuthenticator>
-        <AgentConnectPopupContainer  children={null}/>
+        <AgentConnectPopupContainer children={null}/>
       </body>
     </html>
   );
