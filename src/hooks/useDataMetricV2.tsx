@@ -17,7 +17,11 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
       pastDate.setDate(today.getDate() - daysAgo);
       const date = pastDate.toISOString().split("T")[0]; // Format the date as 'YYYY-MM-DD'
 
-      const metricDataV2Queue = await fetchMetricDataV2Queue(channelIds, date);
+      const metricDataV2Queue = await fetchMetricDataV2Queue(
+        channelIds,
+        date,
+        today.toISOString()
+      );
       console.log("queue", metricDataV2Queue);
 
       setQueueMetrics(metricDataV2Queue.data);
