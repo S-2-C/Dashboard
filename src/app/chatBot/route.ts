@@ -1,17 +1,12 @@
 import { Pinecone } from "@pinecone-database/pinecone";
 import { OpenAIEmbeddings, ChatOpenAI } from "@langchain/openai";
 import { PineconeStore } from "@langchain/pinecone";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { StringOutputParser } from "@langchain/core/output_parsers";
-import { pull } from "langchain/hub";
-import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
-
 
 async function getEmbed(
   query: string,
   indexName: string,
   k = 2,
-  threshold = null
+  threshold = 0.5
 ) {
   if (!process.env.PINCONE_API_KEY) {
     console.log("Pinecone API key is missing!");
@@ -43,24 +38,34 @@ async function getEmbed(
     { pineconeIndex, namespace: "preguntas_con_respuestas" }
   );
 
-  const retriever = vectorStore.asRetriever();
-  const prompt = await pull<ChatPromptTemplate>("rlm/rag-prompt");
-  const retrievedDocs = await retriever.getRelevantDocuments(query);
-  console.log("Retrieved documents:", retrievedDocs);
-  
-  const ragChain = await createStuffDocumentsChain({
-    llm,
-    prompt,
-    outputParser: new StringOutputParser(),
+  const resultsWithScore = await vectorStore.similaritySearchWithScore(
+    query,
+    k
+  );
+
+  let filteredResults = resultsWithScore;
+
+  // Filter results to only include those with a score >= threshold
+  if (threshold) {
+    filteredResults = resultsWithScore.filter(
+      ([_, score]) => score >= threshold
+    );
+  }
+
+  const input = JSON.stringify({
+    query: query,
+    context: filteredResults,
   });
 
+  console.log("Input:", input);
 
-  console.log("Invoking ragChain...");
-  const ragChainResult = await ragChain.invoke({ question: query, context: retrievedDocs});
-  console.log(query);
-  console.log("RagChain result:", ragChainResult);
+  const ragChainResult = await llm.invoke(input).then((response) => {
+    return response.content;
+  });
 
-  return { ragChainResult, retrievedDocs };
+  console.log("RagChain Result:", ragChainResult);
+
+  return { ragChainResult, retrievedDocs: filteredResults };
 }
 
 export async function GET(request: Request) {
@@ -73,8 +78,11 @@ export async function GET(request: Request) {
 
   try {
     console.log("Fetching response...");
-    const { ragChainResult, retrievedDocs } = await getEmbed(question, "faq", 5);
-    console.log("Response:", ragChainResult);
+    const { ragChainResult, retrievedDocs } = await getEmbed(
+      question,
+      "faq",
+      5
+    );
     return Response.json({ ragChainResult, retrievedDocs });
   } catch (error) {
     console.error("Error occurred:", error);
