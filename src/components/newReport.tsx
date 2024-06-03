@@ -16,13 +16,15 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
   useEffect(() => {
     const fetchAgents = async () => {
       const agents = await fetchAllAgents();
-      console.log("agents", agents);
 
       setAllAgents(agents.items);
     };
 
     fetchAgents();
+
+    console.log("PROPS", props);
   }, []);
+
 
   const [allAgents, setAllAgents] = useState<any[]>([]);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -33,7 +35,14 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAttributes, setSelectedAttributes] = useState<string[]>(props.attributes || []);
   const [selectedChannel, setSelectedChannel] = useState<{ id: string; name: string; }>(props.channel || { id: "46bf33f7-3381-4db1-a3f7-85eafdf04578", name: "Walmart Delivery" });
-  const [selectedAgent, setSelectedAgent] = useState<{ id: string; name: string; }>(props.selectedAgent || null);
+  const [selectedAgent, setSelectedAgent] = useState<{ id: string; name: string, arn: string }>(props.selectedAgent || null);
+
+
+  useEffect(() => {
+    console.log("VALUE", selectedAgent);
+
+  }, [selectedAgent]);
+
 
   const handleValueChange = (newValue: any) => {
     setValue(newValue);
@@ -46,9 +55,6 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
     "AVG_TALK_TIME",
     "AVG_RESOLUTION_TIME",
     "CONTACTS_QUEUED",
-    "AGENT_OCCUPANCY",
-    "AGENT_NON_PRODUCTIVE_TIME_AGENT",
-    "AGENT_NON_RESPONSE",
   ];
 
   const agentAttributes = [
@@ -77,7 +83,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
       description,
       attributes: selectedAttributes,
       channel: isTypeQueue ? channelIds.find(channel => channel.id === selectedChannel.id) : null,
-      selectedAgent: !isTypeQueue ? { id: selectedAgent?.id, name: selectedAgent?.name } : null,
+      selectedAgent: !isTypeQueue ? { id: selectedAgent?.id, name: selectedAgent?.name, arn: selectedAgent.arn } : null,
       isTypeQueue,
       date: new Date().toDateString(), // Set the date to the current date
       dateRange: value,
@@ -131,7 +137,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                   {/* create button to switch between queue mode */}
                   <button
                     className={`text-lg ${isTypeQueue ? 'text-green-500' : 'text-gray-500'}`}
-                    onClick={() => setIsTypeQueue(!isTypeQueue)}
+                    onClick={() => {setIsTypeQueue(!isTypeQueue), setSelectedAttributes([])}}
                   >
                     {isTypeQueue ? "Queue Report" : "Agent Report"}
                   </button>

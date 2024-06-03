@@ -26,7 +26,12 @@ const DownloadPdfButton = ({title, description, date, siQueue, specifiesQueue, s
     } else if(specifiesAgent) {
       const metricDataAgent = await fetchMetricDataV2Agent(specifiesAgent.arn, rangeDate.startDate, rangeDate.endDate);
 
+      console.log(metricDataAgent);
+
       let cleanMetricDataAgent = metricDataAgent.data.filter((metricData: any) => relevantKPI.includes(metricData.Metric));
+
+      console.log(relevantKPI)
+      console.log(cleanMetricDataAgent);
 
       //convert object into a string
 
