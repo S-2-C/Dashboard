@@ -138,8 +138,18 @@ const AgentConnectPopup: React.FC = () => {
                                 <button
                                     onClick={() => {
                                         incomingContact?.getAgentConnection().destroy()
+
+                                        // end contact
+                                        incomingContact?.destroy()
+                                        console.log("incomingContact: ", incomingContact);
+
                                         setIsContactAccepted(false)
                                         setIncomingContact(null)
+
+
+                                        setIsContactAccepted(false)
+                                        setIncomingContact(null)
+
                                         // wait for 1 second before changing the agent state
                                         setTimeout(() => {
                                             changeAgentState('Available')
@@ -153,7 +163,7 @@ const AgentConnectPopup: React.FC = () => {
                     }
                 </div>
             </div>
-            <div className="absolute bottom-1 right-1">
+            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2">
                 {currentAgent ?
                     <div className="flex flex-col justify-center items-center">
                         {agentState === 'Available' ?
