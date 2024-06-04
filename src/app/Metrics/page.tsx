@@ -12,6 +12,13 @@ interface Agent {
   Username: string;
 }
 
+const formatDecimals = (value:any, decimal:any, unit:any) => {
+  if (value !== undefined && value !== null && !isNaN(value)) {
+    return `${Number(value).toFixed(decimal)} ${unit}`;
+  }
+  return value; // Return NaN or other invalid values as is, without the unit
+};
+
 export default function Metrics() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
@@ -78,19 +85,19 @@ export default function Metrics() {
     {
       title: "Average Talk Time",
       values: {
-        "Walmart Delivery": getMetricValueWalmartDelivery("AVG_TALK_TIME"),
-        "Walmart Online": getMetricValueWalmartOnline("AVG_TALK_TIME"),
-        "Walmart Physical Store": getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),
-        "Walmart Pass": getMetricValueWalmartPass("AVG_TALK_TIME"),
+        "Walmart Delivery": formatDecimals(getMetricValueWalmartDelivery("AVG_TALK_TIME"),2,"s"),
+        "Walmart Online": formatDecimals(getMetricValueWalmartOnline("AVG_TALK_TIME"),2,"s"),
+        "Walmart Physical Store": formatDecimals(getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),2,"s"),
+        "Walmart Pass": formatDecimals(getMetricValueWalmartPass("AVG_TALK_TIME"),2,"s"),
       },
     },
     {
       title: "Average Resolution Time",
       values: {
-        "Walmart Delivery": getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),
-        "Walmart Online": getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),
-        "Walmart Physical Store": getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),
-        "Walmart Pass": getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),
+        "Walmart Delivery": formatDecimals(getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),2,"s"),
+        "Walmart Online": formatDecimals(getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),2,"s"),
+        "Walmart Physical Store": formatDecimals(getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),2,"s"),
+        "Walmart Pass": formatDecimals(getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),2,"s"),
       },
     },
     {
@@ -114,13 +121,20 @@ export default function Metrics() {
     {
       title: "Average Queue Answer Time",
       values: {
-        "Walmart Delivery": getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),
-        "Walmart Online": getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),
-        "Walmart Physical Store": getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),
-        "Walmart Pass": getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),
+        "Walmart Delivery": formatDecimals(getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),2,"s"),
+        "Walmart Online": formatDecimals(getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),2,"s"),
+        "Walmart Physical Store": formatDecimals(getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),2,"s"),
+        "Walmart Pass": formatDecimals(getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),2,"s"),
+       
       },
     },
   ];
+  // const formatDecimals = (value:any, decimal:any, unit:any) => {
+  //   if (value !== undefined && value !== null && !isNaN(value)) {
+  //     return `${Number(value).toFixed(decimal)} ${unit}`;
+  //   }
+  //   return value; // Return NaN or other invalid values as is, without the unit
+  // };
   
   return (
     <div className="flex h-screen bg-background text-foreground relative ">
@@ -135,11 +149,11 @@ export default function Metrics() {
       </div>
     </div>
     <div className="flex flex-col " style={{height: 'calc(100vh - 130px)'}}>
-      <Text className="text-sans mb-6">Here are some metrics</Text>
+      {/* <Text className="text-sans mb-6">Here are some metrics</Text> */}
       
       <div className="flex mb-6">
         <div className="flex-1">
-          <Button onClick={() => handleWeeksChange(1)}>1 Week</Button>
+          <Button className= "w-36 p-2 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6" onClick={() => handleWeeksChange(1)}>1 Week</Button>
           <Button onClick={() => handleWeeksChange(2)}>2 Weeks</Button>
           <Button onClick={() => handleWeeksChange(3)}>3 Weeks</Button>
           <Button onClick={() => handleWeeksChange(4)}>4 Weeks</Button>
@@ -179,23 +193,23 @@ export default function Metrics() {
                 <p className="text-xl font-bold mb-2">Agent Metrics</p>
                 <p className="text-lg">
                   Average Contact Duration:{" "}
-                  {getMetricValueAgent("AVG_CONTACT_DURATION")}
+                  {formatDecimals(getMetricValueAgent("AVG_CONTACT_DURATION"),2, "s")} 
                 </p>
                 <p className="text-lg">
-                  Average Handle Time: {getMetricValueAgent("AVG_HANDLE_TIME")}
+                  Average Handle Time: {formatDecimals(getMetricValueAgent("AVG_HANDLE_TIME"),2,"s")} 
                 </p>
                 <p className="text-lg">
-                  Contacts Handled: {getMetricValueAgent("CONTACTS_HANDLED")}
+                  Contacts Handled: {formatDecimals(getMetricValueAgent("CONTACTS_HANDLED"),0,"")} 
                 </p>
                 <p className="text-lg">
-                  Average Hold Time: {getMetricValueAgent("AVG_HOLD_TIME")}
+                  Average Hold Time: {formatDecimals(getMetricValueAgent("AVG_HOLD_TIME"),1,"s")} 
                 </p>
                 <p className="text-lg">
                   Average Interruptions Agent:{" "}
                   {getMetricValueAgent("AVG_INTERRUPTIONS_AGENT")}
                 </p>
                 <p className="text-lg">
-                  Agent Occupancy: {getMetricValueAgent("AGENT_OCCUPANCY")}
+                  Agent Occupancy: {formatDecimals(getMetricValueAgent("AGENT_OCCUPANCY"),4,"%")} 
                 </p>
                 <p className="text-lg">
                   Sum Non-Productive Time Agent:{" "}
@@ -203,10 +217,10 @@ export default function Metrics() {
                 </p>
                 <p className="text-lg">
                   Agent Non-Response:{" "}
-                  {getMetricValueAgent("AGENT_NON_RESPONSE")}
+                  {getMetricValueAgent("AGENT_NON_RESPONSE")} 
                 </p>
                 <p className="text-lg">
-                  Agent Answer Rate: {getMetricValueAgent("AGENT_ANSWER_RATE")}
+                  Agent Answer Rate: {formatDecimals(getMetricValueAgent("AGENT_ANSWER_RATE"),4,"%")} 
                 </p>
               </div>
             </div>
