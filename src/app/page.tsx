@@ -51,28 +51,29 @@ export default function Home2({ params }: { params: { id: string } }) {
               agent?.role == "SUPERVISOR" ? "text-black" : "text-white"
             } font-extrabold  text-4xl xl:text-5xl lg:text-5xl md:text-5xl sm:text-4xl`}
           >
-            Welcome {agent?.role == "SUPERVISOR" ? "Supervisor" : "Agente"}{" "}
+            Bienvenido {agent?.role == "SUPERVISOR" ? "Supervisor" : "Agente"}{" "}
           </h1>
           <p
             className={`${
               agent?.role == "SUPERVISOR" ? "text-black" : "text-white"
             } font-bold text-pink text-xl w-3/5 mt-12 mb-8`}
           >
-            Dynamic, agile task management system leveraging real-time insights
-            for efficiency
+            {agent?.role == "SUPERVISOR"
+              ? "Gestiona a tus agentes y monitorea su rendimiento"
+              : "Atiende a tus clientes de la mejor manera posible"}
           </p>
           {agent?.role === "SUPERVISOR" ? (
             <>
               <Link href="/AgentManagement">
                 <Button className="w-48 h-12 bg-gradient-to-b from-figma-figma6 to-figma-figma1 hover:bg-figma-figma9 focus:bg-figma-figma10 active:bg-figma-figma10 text-background font-bold py-2 px-4 rounded-xl">
-                  Get started
+                  Gestionar Agentes
                 </Button>
               </Link>
             </>
           ) : (
             <Link href="/ControlPanel">
               <Button className="w-48 h-12 bg-gradient-to-b from-figma-figma6 to-figma-figma1 hover:bg-figma-figma9 focus:bg-figma-figma10 active:bg-figma-figma10 text-background font-bold py-2 px-4 rounded-xl">
-                Get started
+                Ir al Panel de Control
               </Button>
             </Link>
           )}
