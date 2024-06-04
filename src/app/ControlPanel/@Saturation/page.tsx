@@ -62,13 +62,13 @@ export default function SaturationSlot() {
   //Calculates percentage of agents that are busy.
   const calculateAgentsOnCallPercentage = (queueMetrics: Metric[]) => {
     const agentsOnCall =
-      queueMetrics.find((metric) => metric.Metric === "AGENTS_ON_CALL")
+      queueMetrics?.find((metric) => metric.Metric === "AGENTS_ON_CALL")
         ?.Value || 0;
     const agentsAvailable =
-      queueMetrics.find((metric) => metric.Metric === "AGENTS_AVAILABLE")
+      queueMetrics?.find((metric) => metric.Metric === "AGENTS_AVAILABLE")
         ?.Value || 0;
     const queueLength =
-      queueMetrics.find((metric) => metric.Metric === "CONTACTS_IN_QUEUE")
+      queueMetrics?.find((metric) => metric.Metric === "CONTACTS_IN_QUEUE")
         ?.Value || 0;
     const totalAgents = agentsOnCall + agentsAvailable;
     if (queueLength > agentsAvailable && queueLength > 0) {

@@ -92,9 +92,9 @@ export default function Notifications() {
 
     //Calculates percentage of agents that are busy.
     const calculateAgentsOnCallPercentage = (queueMetrics: Metric[]) => {
-        const agentsOnCall = queueMetrics.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0;
-        const agentsAvailable = queueMetrics.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0;
-        const queueLength = queueMetrics.find(metric => metric.Metric === 'CONTACTS_IN_QUEUE')?.Value || 0;
+        const agentsOnCall = queueMetrics?.find(metric => metric.Metric === 'AGENTS_ON_CALL')?.Value || 0;
+        const agentsAvailable = queueMetrics?.find(metric => metric.Metric === 'AGENTS_AVAILABLE')?.Value || 0;
+        const queueLength = queueMetrics?.find(metric => metric.Metric === 'CONTACTS_IN_QUEUE')?.Value || 0;
         const totalAgents = agentsOnCall + agentsAvailable;
         if (queueLength > agentsAvailable && queueLength > 0) {
             // console.log("checking length, agents", queueLength, agentsAvailable)
