@@ -152,14 +152,15 @@ export default function Metrics() {
       {/* <Text className="text-sans mb-6">Here are some metrics</Text> */}
       
       <div className="flex mb-6">
-        <div className="flex-1">
-          <Button className= "w-36 p-2 rounded-2xl shadow-md mr-2 flex justify-center items-center hover:bg-figma-figma6" onClick={() => handleWeeksChange(1)}>1 Week</Button>
-          <Button onClick={() => handleWeeksChange(2)}>2 Weeks</Button>
-          <Button onClick={() => handleWeeksChange(3)}>3 Weeks</Button>
-          <Button onClick={() => handleWeeksChange(4)}>4 Weeks</Button>
+        <div className="flex ">
+          <button className= " mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center  hover:bg-figma-figma6 bg-blue text-figma-figma1" onClick={() => handleWeeksChange(1)}>1 Week</button>
+          <button className= " mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1" onClick={() => handleWeeksChange(2)}>2 Weeks</button>
+          <button className= " mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1" onClick={() => handleWeeksChange(3)}>3 Weeks</button>
+          <button className= " mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1" onClick={() => handleWeeksChange(4)}>4 Weeks</button>
+          
         </div>
-        <div className="flex-1">
-          <Button onClick={handleOpenModal}>Show Agents</Button>
+        <div className="flex">
+          <button className= " mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1" onClick={handleOpenModal}>Show Agents</button>
         </div>
       </div>
       
