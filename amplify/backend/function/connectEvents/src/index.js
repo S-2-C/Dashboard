@@ -235,17 +235,8 @@ exports.handler = async (event) => {
         case "DISCONNECTED":
             return updateCallEnd(event);
 
-        case "QUEUE_WAIT_TOO_LONG_DELIVERY":
-            return createNotification(event, "The wait time in the Walmart Delivery queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
-
-        case "QUEUE_WAIT_TOO_LONG_ONLINE":
-            return createNotification(event, "The wait time in the Walmart Online queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
-
-        case "QUEUE_WAIT_TOO_LONG_PASS":
-            return createNotification(event, "The wait time in the Walmart Pass queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
-
-        case "QUEUE_WAIT_TOO_LONG_PHYSICAL":
-            return createNotification(event, "The wait time in the Walmart Physical Store queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
+        case "QUEUE_WAIT_TOO_LONG":
+            return createNotification(event, "The wait time in the queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
 
         case "NO_AGENTS_IN_QUEUE":
             return createNotification(event, "There are no agents available in the queue, watch out for an increase in inbound calls.", "LOW");
