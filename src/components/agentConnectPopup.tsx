@@ -3,7 +3,8 @@
 import React, { useEffect } from 'react';
 import 'amazon-connect-streams';
 import "./agentConnectPopup.css";
-
+import { MicOff, Mic, Phone, PhoneCall, PhoneOff } from 'lucide-react';
+ 
 // Extendiendo la interfaz Window para incluir 'connect'
 declare global {
     interface Window {
@@ -53,6 +54,23 @@ const AgentConnectPopup: React.FC = () => {
             setIncomingContact(contact);
         });
     }, []);
+
+    const MuteButton = () => {
+        const [isMuted, setIsMuted] = React.useState<boolean>(false);
+
+        const handleMuteToggle = () => {
+            setIsMuted(!isMuted);
+        };
+
+        return (
+            <button
+                onClick={handleMuteToggle}
+                className="px-3 text-center text-white text-sm bg-gray-400 border border-grey-500 rounded-full shadow-lg py-3 cursor-pointer hover:bg-gray-300 transition duration-200"
+            >
+                {isMuted ? <MicOff /> : <Mic />}
+            </button>
+        );
+    } 
 
 
     const changeAgentState = (targetState: string) => {
@@ -104,7 +122,7 @@ const AgentConnectPopup: React.FC = () => {
     return (
         <>
             <div className={`absolute transition-all duration-300 ${incomingContact ? "top-3" : "-top-16"} left-1/2 transform -translate-x-1/2`}>
-                <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 flex flex-row space-x-2 items-center">
+                <div className="bg-white bg-opacity-90 border border-gray-200 rounded-lg shadow-lg p-3 flex flex-row space-x-4 items-center">
                     {(!isContactAccepted) ?
                         <>
                             <h1 className="text-lg font-semibold text-gray-800 mr-6">
@@ -115,9 +133,9 @@ const AgentConnectPopup: React.FC = () => {
                                     incomingContact?.accept()
                                     setIsContactAccepted(true)
                                 }}
-                                className="px-3 text-center text-white text-sm bg-blue-500 border border-blue-600 rounded-lg shadow-lg py-1 cursor-pointer hover:bg-blue-600 transition duration-200"
+                                className="px-3 text-center text-white text-sm bg-green-800 border border-green-900 rounded-full shadow-lg py-3 cursor-pointer hover:bg-green-600 hover:animate-none transition duration-200"
                             >
-                                Accept
+                            <PhoneCall className='animate-wiggle'/>
                             </button>
                             <button
                                 onClick={() => {
@@ -125,9 +143,9 @@ const AgentConnectPopup: React.FC = () => {
                                     setIsContactAccepted(false)
                                     setIncomingContact(null)
                                 }}
-                                className="px-3 text-center text-white text-sm bg-red-500 border border-red-600 rounded-lg shadow-lg py-1 cursor-pointer hover:bg-red-600 transition duration-200"
+                                className="px-3 text-center text-white text-sm bg-red-500 border border-red-600 rounded-full shadow-lg py-3 cursor-pointer hover:bg-red-600 transition duration-200"
                             >
-                                Reject
+                            <Phone className='animate-spinBackAndForth'/>
                             </button>
                         </> : (incomingContact && isContactAccepted) ?
                             <>
@@ -135,6 +153,7 @@ const AgentConnectPopup: React.FC = () => {
                                     Call Accepted &nbsp;
                                     <span className="text-gray-400">({formatTime(callTime)})</span>
                                 </h1>
+                                <MuteButton />
                                 <button
                                     onClick={() => {
                                         incomingContact?.getAgentConnection().destroy()
@@ -145,9 +164,9 @@ const AgentConnectPopup: React.FC = () => {
                                             changeAgentState('Available')
                                         }, 1000);
                                     }}
-                                    className="px-3 text-center text-white text-sm bg-red-500 border border-red-600 rounded-lg shadow-lg py-1 cursor-pointer hover:bg-red-600 transition duration-200"
+                                    className="px-3 text-center text-white text-sm bg-red-500 border border-red-600 rounded-full shadow-lg py-3 cursor-pointer hover:bg-red-600 transition duration-200"
                                 >
-                                    Hang Up
+                                <Phone className='animate-spinBackAndForth'/>
                                 </button>
                             </> : null
                     }
