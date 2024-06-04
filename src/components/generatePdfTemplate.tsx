@@ -159,14 +159,14 @@ export const generatePdfTemplate = async ({ headerContent, content, imageUrl1, i
   // Parse and draw content sections
   const sections = parseContent(content);
   let yPosition = height - 240;
-  const bottomMargin = 100; // Margin at the bottom of the page
+  const bottomMargin = 200; // Margin at the bottom of the page
   const topMargin = 140; // Starting position for new page content
   const lineHeight = 10; // Line height for text
 
   sections.forEach((section) => {
     // Draw section header
     if (section.header) {
-      if (yPosition < bottomMargin) { // Add threshold
+      if (yPosition - lineHeight < bottomMargin) { // Add threshold
         page = addNewPage();
         yPosition = height - topMargin; // Reset yPosition for new page
       }
