@@ -30,7 +30,7 @@ export default function RootLayout({
         )}
       >
         <WrappedAuthenticator>{children}</WrappedAuthenticator>
-        <AgentConnectPopupContainer children={null} />
+        <AgentConnectPopupContainer />
         <div>
           <AIChatButtonWrapper />
         </div>
