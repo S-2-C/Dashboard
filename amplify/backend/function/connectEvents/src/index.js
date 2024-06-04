@@ -9,6 +9,7 @@ Amplify Params - DO NOT EDIT */
 const REGION = process.env.AWS_REGION;
 const APPSYNCURL = process.env.API_DASHBOARD_GRAPHQLAPIENDPOINTOUTPUT;
 const GQLAPIKEY = process.env.API_DASHBOARD_GRAPHQLAPIKEYOUTPUT;
+const { time } = require("console");
 const { sendAppSyncRequest } = require("./helpers/appSync.js");
 
 /**
@@ -163,6 +164,7 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     action: event.detail.actionName,
                     description: description,
                     urgency: urgency,
+                    timestamp: new Date().toISOString(),
                     agentArn: agentArn
                 }
             }
@@ -186,7 +188,8 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     rule: rule,
                     action: event.detail.actionName,
                     description: description,
-                    urgency: urgency
+                    urgency: urgency,
+                    timestamp: new Date().toISOString()
                 }
             }
         };
@@ -208,7 +211,7 @@ async function createNotification(event, description, urgency = "REGULAR", agent
             body: JSON.stringify(createNotificationRes.data["createNotification"]),
         };
     } catch (error) {
-        console.error(`Could not create notification for ${rule}`);
+        console.error(`Could not create notification for ${rule}. Error: ${error}`);
 
         return {
             statusCode: 500,
@@ -248,7 +251,7 @@ exports.handler = async (event) => {
             return createNotification(event, "There are no agents available in the queue, watch out for an increase in inbound calls.", "LOW");
 
         case "NEGATIVE_SENTIMENT_CALL":
-            return createNotification(event, "A customer has expressed negative sentiment during a call, please chat.", "HIGH", event.detail.agentArn);
+            return createNotification(event, "A customer or agent has expressed negative sentiment during a call, please reassign the agent or intervene.", "HIGH", event.detail.agentArn);
 
         default:
             return {
