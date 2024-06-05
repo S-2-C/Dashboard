@@ -46,6 +46,24 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
     setValue(newValue);
   };
 
+  const textAttributes : any = {
+    "CONTACTS_HANDLED": "Contacts Handled",
+    "AVG_CASE_RESOLUTION_TIME": "Average Case Resolution Time",
+    "AVG_QUEUE_ANSWER_TIME": "Average Queue Answer Time",
+    "AVG_TALK_TIME": "Average Talk Time",
+    "AVG_RESOLUTION_TIME": "Average Resolution Time",
+    "CONTACTS_QUEUED": "Contacts Queued",
+    "AGENT_ANSWER_RATE": "Agent Answer Rate",
+    "AVG_CONTACT_DURATION": "Average Contact Duration",
+    "AVG_HANDLE_TIME": "Average Handle Time",
+    "AVG_HOLD_TIME": "Average Hold Time",
+    "AVG_INTERRUPTIONS_AGENT": "Average Agent Interruptions",
+    "AGENT_OCCUPANCY": "Agent Occupancy",
+    "SUM_NON_PRODUCTIVE_TIME_AGENT": "Total Non-Productive Time (Agent)",
+    "AGENT_NON_RESPONSE": "Agent Non-Response"
+  };
+
+
   const queueAttributes = [
     "CONTACTS_HANDLED",
     "AVG_CASE_RESOLUTION_TIME",
@@ -207,7 +225,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                     <div className="mb-4 overflow-y-scroll h-28">
                       {filteredQueueAttributes.map(attr => (
                         <div key={attr} className="flex justify-between items-center mb-2">
-                          <span>{attr}</span>
+                          <span>{textAttributes[attr]}</span>
                           <button
                             className="ml-2 p-1 bg-green-500 text-white rounded"
                             onClick={() => handleAttributeSelect(attr)}
@@ -221,7 +239,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                     <div className="mb-4 overflow-y-scroll h-28">
                       {filteredAgentAttributes.map(attr => (
                         <div key={attr} className="flex justify-between items-center mb-2">
-                          <span>{attr}</span>
+                          <span>{textAttributes[attr]}</span>
                           <button
                             className="ml-2 p-1 bg-green-500 text-white rounded"
                             onClick={() => handleAttributeSelect(attr)}
@@ -237,7 +255,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                     <div className="h-28 overflow-y-scroll">
                       {selectedAttributes.map(attr => (
                         <div key={attr} className="flex justify-between items-center mb-2">
-                          <span>{attr}</span>
+                          <span>{textAttributes[attr]}</span>
                           <button
                             className="ml-2 p-1 bg-red-500 text-white rounded"
                             onClick={() => handleAttributeRemove(attr)}
@@ -261,7 +279,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                     <h2 className="text-lg font-bold">Selected Attributes:</h2>
                     {selectedAttributes.map(attr => (
                       <div key={attr} className="flex justify-between items-center mb-2">
-                        <span>{attr}</span>
+                        <span>{textAttributes[attr]}</span>
                       </div>
                     ))}
                   </div>
