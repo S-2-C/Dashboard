@@ -55,7 +55,11 @@ const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
 
       const metricsData = await Promise.all(
         agentIds.map((agentId) =>
-          fetchMetricDataV2Agent(agentId, date, today.toISOString())
+          fetchMetricDataV2Agent(
+            agentId,
+            date,
+            today.toISOString().split("T")[0]
+          )
         )
       );
 

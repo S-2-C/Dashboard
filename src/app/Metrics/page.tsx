@@ -318,7 +318,10 @@ export default function Metrics() {
                       >
                         Average Contact Duration:{" "}
                         {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AVG_CONTACT_DURATION"),
+                          getMetricValueAgent(
+                            agent.Id,
+                            "AVG_CONTACT_DURATION"
+                          ) || "N/A",
                           2,
                           "s"
                         )}
@@ -336,7 +339,8 @@ export default function Metrics() {
                       >
                         Average Handle Time:{" "}
                         {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AVG_HANDLE_TIME"),
+                          getMetricValueAgent(agent.Id, "AVG_HANDLE_TIME") ||
+                            "N/A",
                           2,
                           "s"
                         )}
@@ -354,7 +358,8 @@ export default function Metrics() {
                       >
                         Contacts Handled:{" "}
                         {formatDecimals(
-                          getMetricValueAgent(agent.Id, "CONTACTS_HANDLED"),
+                          getMetricValueAgent(agent.Id, "CONTACTS_HANDLED") ||
+                            "N/A",
                           0,
                           ""
                         )}
@@ -372,7 +377,8 @@ export default function Metrics() {
                       >
                         Average Hold Time:{" "}
                         {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AVG_HOLD_TIME"),
+                          getMetricValueAgent(agent.Id, "AVG_HOLD_TIME") ||
+                            "N/A",
                           1,
                           "s"
                         )}
@@ -410,7 +416,8 @@ export default function Metrics() {
                       >
                         Agent Occupancy:{" "}
                         {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AGENT_OCCUPANCY"),
+                          getMetricValueAgent(agent.Id, "AGENT_OCCUPANCY") ||
+                            "N/A",
                           4,
                           "%"
                         )}
@@ -463,7 +470,8 @@ export default function Metrics() {
                       >
                         Agent Answer Rate:{" "}
                         {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AGENT_ANSWER_RATE"),
+                          getMetricValueAgent(agent.Id, "AGENT_ANSWER_RATE") ||
+                            "N/A",
                           4,
                           "%"
                         )}

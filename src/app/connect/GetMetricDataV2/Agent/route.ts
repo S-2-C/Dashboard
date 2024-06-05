@@ -53,9 +53,11 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const agentIds = searchParams.get("agentIds") || undefined;
   let metricDate: any = searchParams.get("metricDate") || undefined;
-  let currentMetricData: any = searchParams.get("currentMetricData") || undefined;
+  let currentMetricData: any =
+    searchParams.get("currentMetricData") || undefined;
   console.log("metricDate: ", metricDate);
   console.log("agentIds: ", agentIds);
+  console.log("currentMetricData: ", currentMetricData);
 
   if (!metricDate && !currentMetricData) {
     metricDate = new Date();
@@ -81,7 +83,12 @@ export async function GET(request: Request) {
 
   const client = new ConnectClient(config as any);
 
-  const response = await getUserMetricData(client, agentIdsArray, metricDate, currentMetricData);
+  const response = await getUserMetricData(
+    client,
+    agentIdsArray,
+    metricDate,
+    currentMetricData
+  );
   console.log("Response from GetMetricDataV2Command:", response);
 
   return new Response(
