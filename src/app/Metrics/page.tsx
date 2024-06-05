@@ -5,12 +5,10 @@ import SearchBar from "../searchBar";
 import { Flex, Heading, Text, Button } from "@aws-amplify/ui-react";
 import { useQueueMetrics, Metric } from "@/hooks/useDataMetricV2"; // Updated import
 import { fetchListUsers } from "@/fetching/fetchingListAgent";
-
-import { fetchMetricDataV2Agent } from "@/fetching/fetchingMetricDataV2Agent";
-import Modal from "@/components/ui/Modal"; // Import your Modal component
+import Modal from "@/components/ui/Modal";
 import BarChartSeconds from "@/components/barChart";
 import { LucideTableCellsMerge } from "lucide-react";
-
+import { fetchMetricDataV2Agent } from "@/fetching/fetchingMetricDataV2Agent";
 
 interface Agent {
   Id: string;
@@ -379,28 +377,58 @@ export default function Metrics() {
       },
     },
   ];
-
   // const formatDecimals = (value:any, decimal:any, unit:any) => {
   //   if (value !== undefined && value !== null && !isNaN(value)) {
   //     return `${Number(value).toFixed(decimal)} ${unit}`;
   //   }
   //   return value; // Return NaN or other invalid values as is, without the unit
   // };
+
   // const  WalmartDelivery=[1.5,4,5,7,4];
 
-  const  WalmartDelivery=[getMetricValueWalmartDelivery("AVG_TALK_TIME"),getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"), getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME")  ];
-  const  WalmartOnline=[getMetricValueWalmartOnline("AVG_TALK_TIME"),getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),  getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME")];
-  const  WalmartPhysicalStore=[getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"), getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME")];
-  const  WalmartPass=[getMetricValueWalmartPass("AVG_TALK_TIME"),getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),   getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME")  ];
-  const label=["Avg. Call Length", "Avg. Resolution Time", "Avg. Queue Wait Time"];
+  const WalmartDelivery = [
+    getMetricValueWalmartDelivery("AVG_TALK_TIME"),
+    getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),
+    getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),
+  ];
+  const WalmartOnline = [
+    getMetricValueWalmartOnline("AVG_TALK_TIME"),
+    getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),
+    getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),
+  ];
+  const WalmartPhysicalStore = [
+    getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),
+    getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),
+    getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),
+  ];
+  const WalmartPass = [
+    getMetricValueWalmartPass("AVG_TALK_TIME"),
+    getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),
+    getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),
+  ];
+  const label = [
+    "Avg. Call Length",
+    "Avg. Resolution Time",
+    "Avg. Queue Wait Time",
+  ];
 
-  const  WalmartDeliveryCount=[getMetricValueWalmartDelivery("CONTACTS_QUEUED"),getMetricValueWalmartDelivery("CONTACTS_HANDLED")];
-  const  WalmartOnlineCount=[getMetricValueWalmartOnline("CONTACTS_QUEUED"),getMetricValueWalmartOnline("CONTACTS_HANDLED")];
-  const  WalmartPhysicalStoreCount=[getMetricValueWalmartPhysicalStore("CONTACTS_QUEUED"),getMetricValueWalmartPhysicalStore("CONTACTS_HANDLED")];
-  const  WalmartPassCount=[getMetricValueWalmartPass("CONTACTS_QUEUED"),getMetricValueWalmartPass("CONTACTS_HANDLED")];
-  const labelCount=["Calls Queued", "Calls Handled"];
-
-
+  const WalmartDeliveryCount = [
+    getMetricValueWalmartDelivery("CONTACTS_QUEUED"),
+    getMetricValueWalmartDelivery("CONTACTS_HANDLED"),
+  ];
+  const WalmartOnlineCount = [
+    getMetricValueWalmartOnline("CONTACTS_QUEUED"),
+    getMetricValueWalmartOnline("CONTACTS_HANDLED"),
+  ];
+  const WalmartPhysicalStoreCount = [
+    getMetricValueWalmartPhysicalStore("CONTACTS_QUEUED"),
+    getMetricValueWalmartPhysicalStore("CONTACTS_HANDLED"),
+  ];
+  const WalmartPassCount = [
+    getMetricValueWalmartPass("CONTACTS_QUEUED"),
+    getMetricValueWalmartPass("CONTACTS_HANDLED"),
+  ];
+  const labelCount = ["Calls Queued", "Calls Handled"];
 
   return (
     <div className="flex h-screen bg-background text-foreground relative ">
@@ -414,20 +442,11 @@ export default function Metrics() {
             <SearchBar />
           </div>
         </div>
-
         <div
           className="flex flex-col "
           style={{ height: "calc(100vh - 130px)" }}
         >
           {/* <Text className="text-sans mb-6">Here are some metrics</Text> */}
-          <div className="flex justify-end">
-            <button
-              className=" mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1"
-              onClick={handleOpenGuideModal}
-            >
-              Metric Guide
-            </button>
-          </div>
 
           <div className="flex mb-6">
             <div className="flex ">
@@ -455,33 +474,6 @@ export default function Metrics() {
               >
                 4 Weeks
               </button>
-
-      </div>
-      
-      <div className="flex-1 grid grid-cols-2 gap-4 overflow-hidden">
-        {/* General Metrics */}
-        <div className="flex-1  overflow-scroll no-scrollbar">
-        <div className="flex-1  overflow-scroll">
-        <BarChartSeconds WalmartDelivery={WalmartDelivery} WalmartOnline={WalmartOnline} WalmartPhysicalStore={WalmartPhysicalStore} WalmartPass={WalmartPass} label={label} title={'Time Metrics'} />
-        <BarChartSeconds WalmartDelivery={WalmartDeliveryCount} WalmartOnline={WalmartOnlineCount} WalmartPhysicalStore={WalmartPhysicalStoreCount} WalmartPass={WalmartPassCount} label={labelCount} title={'Count Metrics'} /> 
-     
-      <div className="h-full overflow-scroll 0 mt-4">
-        {metrics.map((metric, index) => (
-          <div key={index} className="bg-figma-figma13 rounded-xl p-4 shadow-md flex flex-col mb-4">
-            <p className="text-xl font-bold mb-2">{metric.title}</p>
-            {Object.entries(metric.values).map(([key, value], idx) => (
-              <p key={idx} className="text-lg">
-                {key}: {value}
-              </p>
-            ))}
-          </div>
-        ))}
-       
-      </div>
-    </div>
-</div>
-
-
             </div>
 
             <div className="flex">
@@ -492,6 +484,14 @@ export default function Metrics() {
                 Show Agents
               </button>
             </div>
+            <div className="flex justify-end ml-auto">
+              <button
+                className="mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1"
+                onClick={handleOpenGuideModal}
+              >
+                Metric Guide
+              </button>
+            </div>
 
             <div className="flex"></div>
           </div>
@@ -500,7 +500,24 @@ export default function Metrics() {
             {/* General Metrics */}
             <div className="flex-1  overflow-scroll no-scrollbar">
               <div className="flex-1  overflow-scroll">
-                <div className="h-full overflow-scroll 0">
+                <BarChartSeconds
+                  WalmartDelivery={WalmartDelivery}
+                  WalmartOnline={WalmartOnline}
+                  WalmartPhysicalStore={WalmartPhysicalStore}
+                  WalmartPass={WalmartPass}
+                  label={label}
+                  title={"Time Metrics"}
+                />
+                <BarChartSeconds
+                  WalmartDelivery={WalmartDeliveryCount}
+                  WalmartOnline={WalmartOnlineCount}
+                  WalmartPhysicalStore={WalmartPhysicalStoreCount}
+                  WalmartPass={WalmartPassCount}
+                  label={labelCount}
+                  title={"Count Metrics"}
+                />
+
+                <div className="h-full overflow-scroll 0 mt-4">
                   {metrics.map((metric, index) => (
                     <div
                       key={index}
