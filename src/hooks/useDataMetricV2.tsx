@@ -7,7 +7,7 @@ interface Metric {
   Value: number;
 }
 
-export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
+const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   const [queueMetrics, setQueueMetrics] = useState<Metric[]>([]);
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   }, [channelIds, daysAgo]);
 
   const getMetricValue = (metricName: string) => {
+    if (!queueMetrics) return console.error("No metrics found for queue");
     const metric = queueMetrics.find((m) => m.Metric === metricName);
     return metric ? metric.Value : "N/A";
   };
@@ -38,7 +39,7 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   return { queueMetrics, getMetricValue };
 };
 
-export const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
+const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
   const [agentMetrics, setAgentMetrics] = useState<Record<string, Metric[]>>(
     {}
   );
@@ -71,6 +72,7 @@ export const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
 
   const getMetricValue = (agentId: string, metricName: string) => {
     const metrics = agentMetrics[agentId] || [];
+    if (!metrics) return console.error("No metrics found for agent", agentId);
     const metric = metrics.find((m) => m.Metric === metricName);
     return metric ? metric.Value : "N/A";
   };
@@ -78,5 +80,4 @@ export const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
   return { agentMetrics, getMetricValue };
 };
 
-export default useQueueMetrics;
-useAgentMetrics;
+export { useQueueMetrics, useAgentMetrics };

@@ -395,7 +395,7 @@ export default function Metrics() {
                         {getMetricValueAgent(
                           agent.Id,
                           "AVG_INTERRUPTIONS_AGENT"
-                        )}
+                        ) || "N/A"}
                       </p>
                       <p
                         className="text-lg"
@@ -433,7 +433,7 @@ export default function Metrics() {
                         {getMetricValueAgent(
                           agent.Id,
                           "SUM_NON_PRODUCTIVE_TIME_AGENT"
-                        )}
+                        ) || "N/A"}
                       </p>
                       <p
                         className="text-lg"
@@ -447,7 +447,8 @@ export default function Metrics() {
                         }}
                       >
                         Agent Non-Response:{" "}
-                        {getMetricValueAgent(agent.Id, "AGENT_NON_RESPONSE")}
+                        {getMetricValueAgent(agent.Id, "AGENT_NON_RESPONSE") ||
+                          "N/A"}
                       </p>
                       <p
                         className="text-lg"
