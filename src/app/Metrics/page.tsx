@@ -137,13 +137,13 @@ export default function Metrics() {
   const  WalmartOnline=[getMetricValueWalmartOnline("AVG_TALK_TIME"),getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),  getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME")];
   const  WalmartPhysicalStore=[getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"), getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME")];
   const  WalmartPass=[getMetricValueWalmartPass("AVG_TALK_TIME"),getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),   getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME")  ];
-  const label=["AVG_TALK_TIME", "AVG. RESOLUTION_TIME", "AVG_QUEUE_ANSWER_TIME"];
+  const label=["Avg. Call Length", "Avg. Resolution Time", "Avg. Queue Wait Time"];
 
   const  WalmartDeliveryCount=[getMetricValueWalmartDelivery("CONTACTS_QUEUED"),getMetricValueWalmartDelivery("CONTACTS_HANDLED")];
   const  WalmartOnlineCount=[getMetricValueWalmartOnline("CONTACTS_QUEUED"),getMetricValueWalmartOnline("CONTACTS_HANDLED")];
   const  WalmartPhysicalStoreCount=[getMetricValueWalmartPhysicalStore("CONTACTS_QUEUED"),getMetricValueWalmartPhysicalStore("CONTACTS_HANDLED")];
   const  WalmartPassCount=[getMetricValueWalmartPass("CONTACTS_QUEUED"),getMetricValueWalmartPass("CONTACTS_HANDLED")];
-  const labelCount=["CONTACTS QUEUED", "CONTACTS HANDLED"];
+  const labelCount=["Calls Queued", "Calls Handled"];
 
 
   return (
