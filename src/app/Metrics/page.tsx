@@ -6,6 +6,8 @@ import { Flex, Heading, Text, Button } from "@aws-amplify/ui-react";
 import { useQueueMetrics, useAgentMetrics } from "@/hooks/useDataMetricV2"; // Updated import
 import { fetchListUsers } from "@/fetching/fetchingListAgent";
 import Modal from "@/components/ui/Modal"; // Import your Modal component
+import BarChartSeconds from "@/components/barChart";
+import { LucideTableCellsMerge } from "lucide-react";
 
 interface Agent {
   Id: string;
@@ -129,13 +131,21 @@ export default function Metrics() {
       },
     },
   ];
-  // const formatDecimals = (value:any, decimal:any, unit:any) => {
-  //   if (value !== undefined && value !== null && !isNaN(value)) {
-  //     return `${Number(value).toFixed(decimal)} ${unit}`;
-  //   }
-  //   return value; // Return NaN or other invalid values as is, without the unit
-  // };
-  
+  // const  WalmartDelivery=[1.5,4,5,7,4];
+
+  const  WalmartDelivery=[getMetricValueWalmartDelivery("AVG_TALK_TIME"),getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"), getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME")  ];
+  const  WalmartOnline=[getMetricValueWalmartOnline("AVG_TALK_TIME"),getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),  getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME")];
+  const  WalmartPhysicalStore=[getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"), getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME")];
+  const  WalmartPass=[getMetricValueWalmartPass("AVG_TALK_TIME"),getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),   getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME")  ];
+  const label=["AVG_TALK_TIME", "AVG. RESOLUTION_TIME", "AVG_QUEUE_ANSWER_TIME"];
+
+  const  WalmartDeliveryCount=[getMetricValueWalmartDelivery("CONTACTS_QUEUED"),getMetricValueWalmartDelivery("CONTACTS_HANDLED")];
+  const  WalmartOnlineCount=[getMetricValueWalmartOnline("CONTACTS_QUEUED"),getMetricValueWalmartOnline("CONTACTS_HANDLED")];
+  const  WalmartPhysicalStoreCount=[getMetricValueWalmartPhysicalStore("CONTACTS_QUEUED"),getMetricValueWalmartPhysicalStore("CONTACTS_HANDLED")];
+  const  WalmartPassCount=[getMetricValueWalmartPass("CONTACTS_QUEUED"),getMetricValueWalmartPass("CONTACTS_HANDLED")];
+  const labelCount=["CONTACTS QUEUED", "CONTACTS HANDLED"];
+
+
   return (
     <div className="flex h-screen bg-background text-foreground relative ">
   <Home />
@@ -168,6 +178,9 @@ export default function Metrics() {
         {/* General Metrics */}
         <div className="flex-1  overflow-scroll no-scrollbar">
         <div className="flex-1  overflow-scroll">
+        <BarChartSeconds WalmartDelivery={WalmartDelivery} WalmartOnline={WalmartOnline} WalmartPhysicalStore={WalmartPhysicalStore} WalmartPass={WalmartPass} label={label} title={'Seconds'} />
+        <BarChartSeconds WalmartDelivery={WalmartDeliveryCount} WalmartOnline={WalmartOnlineCount} WalmartPhysicalStore={WalmartPhysicalStoreCount} WalmartPass={WalmartPassCount} label={labelCount} title={'Countlolo'} /> 
+     
       <div className="h-full overflow-scroll 0">
         {metrics.map((metric, index) => (
           <div key={index} className="bg-figma-figma13 rounded-xl p-4 shadow-md flex flex-col mb-4">
@@ -179,6 +192,7 @@ export default function Metrics() {
             ))}
           </div>
         ))}
+       
       </div>
     </div>
 </div>
