@@ -18,7 +18,7 @@ const ChatList: React.FC<ChatListProps> = ({ members }) => {
     }, [searchTerm, members]);
 
     return (
-        <div className='scroll-smooth scrollbar-hide rounded-lg' style={{ width: '100%', padding: '10px', overflowY: 'auto', height: '53vh', backgroundColor: '#ECECEC'}}>
+        <div className='scroll-smooth scrollbar-hide rounded-lg' style={{ width: '100%', padding: '10px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column',  backgroundColor: '#ECECEC'}}>
             <input
                 className='rounded-lg'
                 type="text"

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Resizable } from 're-resizable'; 
 interface ChatWindowProps {
     chatRows: React.ReactNode[];
     onSendMessage: (message: string) => void;

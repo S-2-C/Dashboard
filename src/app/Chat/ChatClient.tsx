@@ -6,7 +6,7 @@ import ChatList from './ChatList'; // Import ChatList component
 import ChatWindow from './ChatWindow'; // Import ChatWindow component
 import members from './ChatListDummy.json'; // Import dummy data
 import { useEffect, useState } from 'react';
-import { fetchListUsers } from '../../fetching/fetchingDataFunctions';
+import { fetchAllUsers } from '../../fetching/fetchingDataFunctions';
 
 interface ChatClientProps {
     isConnected: boolean;
@@ -36,7 +36,7 @@ export const ChatClient: React.FC<ChatClientProps> = ({
 
 
     const fetchData = async () => {
-        const response = await fetchListUsers();
+        const response = await fetchAllUsers();
         setAgents(response.data);
         console.log("Agents", response.data);
     };
@@ -50,7 +50,7 @@ export const ChatClient: React.FC<ChatClientProps> = ({
                     <Text style={{ fontWeight: 600, fontSize: 25, marginLeft: '10px' }}>Messages</Text>
                     <Text style={{ fontWeight: 500, fontSize: 17, marginLeft: '10px' }}>Agents</Text>
                     <Flex style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-                        <Flex direction="column" style={{ width: '36vw', marginRight: '20px' }}>
+                        <Flex direction="column" style={{ width: '36vw', marginRight: '20px', height: '80vh' }}>
                             <StoryTypeMenu />
                             <Text style={{ fontWeight: 500, fontSize: 17, marginLeft: '10px' }}>Conversation</Text>
                             <ChatList members={members} />
