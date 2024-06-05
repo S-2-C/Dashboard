@@ -58,23 +58,15 @@ export default function NotifSlot() {
     setFilterUrgency(e.target.value);
   };
 
-  const handleNotificationClick = (action: string) => {
+  const handleNotificationClick = (action: string, email?: string | null ) => {
     console.log("Notification action", action);
     switch (action) {
-      case "MOVE_AGENTS_TO_QUEUE_DELIVERY":
-        console.log("Moving agents to queue delivery");
-        break;
-      case "MOVE_AGENTS_TO_QUEUE_ONLINE":
-        console.log("Moving agents to queue online");
-        break;
-      case "MOVE_AGENTS_TO_QUEUE_PHYSICAL":
-        console.log("Moving agents to queue physical");
-        break;
-      case "MOVE_AGENTS_TO_QUEUE_PASS":
-        console.log("Moving agents to queue pass");
+      case "MOVE_AGENTS_TO_QUEUE":
+        console.log("Moving agents");
         break;
       case "REASSIGN_OR_CHAT_WITH_AGENT":
-        console.log("Reassign or chat with agent");
+        console.log("Reassign or chat with agent, redirecting: " + `/ManageCall/${email}`);
+        window.location.href = `/ManageCall/${email}`;
         break;
       default:
         break;
@@ -113,7 +105,7 @@ export default function NotifSlot() {
           {filteredNotifications.map((notif) => (
             <div
               key={notif.id}
-              onClick={() => handleNotificationClick(notif.action)}
+              onClick={() => handleNotificationClick(notif.action, notif.agentEmail)}
               className={`p-4 rounded-lg shadow-md mb-4 flex flex-row font-bold 
               ${notif.action && "cursor-pointer"}
                ${notif.urgency === "HIGH" ? "text-white" : "text-blue-dark"}

@@ -27,9 +27,11 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
 import { GetUserQuery } from "@/API";
+import { useCCP } from "@/context/ccp";
 
 export default function Home() {
   const { signOut } = useAuthenticator((context) => [context.signOut]);
+  const { logOut } = useCCP();
   const [isNavOpen, setIsNavOpen] = useState(false);
   // const [hoveredItem, setHoveredItem] = useState(null); // Track hovered item
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -55,12 +57,23 @@ export default function Home() {
       const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
       // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
+      // @ts-ignore
       const agent = await fetchOneAgent(email);
       setAgent(agent);
     }
 
     fetchAgent();
   }, []);
+
+  const handleSignOut = async () => {
+    signOut(); // Amplify sign out
+    await logOut(); // ccp connect logout
+
+    console.log("Signing out...");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 2000);
+  };
 
   return (
     <div className="h-screen">
@@ -294,15 +307,7 @@ export default function Home() {
                     >
                       <button
                         className="w-max h-max p-2 text-teal hover:text-teal-highlight relative"
-                        onClick={() => {
-                          signOut();
-                          // clear local storage
-                          localStorage.clear();
-                          // wait for 1 second before redirecting to root
-                          setTimeout(() => {
-                            window.location.href = "/";
-                          }, 1000);
-                        }}
+                        onClick={() => handleSignOut()}
                       >
                         <FontAwesomeIcon
                           icon={faSignOutAlt}
@@ -458,7 +463,7 @@ export default function Home() {
                   >
                     <button
                       className="w-max h-max p-2 text-teal hover:text-teal-highlight relative"
-                      onClick={signOut}
+                      onClick={() => handleSignOut()}
                     >
                       <FontAwesomeIcon
                         icon={faSignOutAlt}

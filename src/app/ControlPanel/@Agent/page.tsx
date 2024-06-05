@@ -2,23 +2,18 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchAllAgents } from "@/fetching/fetchingDataFunctions";
-import {
-  GetContactQuery,
-  ListUsersQuery,
-  ListContactsQuery,
-  Contact,
-  User,
-} from "@/API";
+import { User } from "@/API";
 import useUserUpdates from "@/hooks/useUserUpdates";
-import { fetchAuthSession } from "aws-amplify/auth";
-import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
-import { GetUserQuery } from "@/API";
+
 import { useUserRole } from "@/hooks/useUserRole";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Timer from "@/components/timer";
+import { useCCP } from "@/context/ccp";
 
 export default function AgentSlot() {
+  const { callStartTime } = useCCP();
+
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
   const [alertUsers, setAlertUsers] = useState<User[]>([]);
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
@@ -155,15 +150,18 @@ export default function AgentSlot() {
           style={{ display: "inline-block" }}
         >
           <div className="flex">
-          <FontAwesomeIcon icon={faClock} className='text-white w-8 h-8 pr-3 pt-1' />
-          <h1 className="xl:text-4xl lg:text-2xl  md:text-2xl sm:text-2xl text-center text-white font-bold items-align-top whitespace-nowrap pb-4">
-            Ongoing Call Time
-          </h1>
+            <FontAwesomeIcon
+              icon={faClock}
+              className="text-white w-8 h-8 pr-3 pt-1"
+            />
+            <h1 className="xl:text-4xl lg:text-2xl  md:text-2xl sm:text-2xl text-center text-white font-bold items-align-top whitespace-nowrap pb-4">
+              {callStartTime ? "Ongoing Call Time" : "Not in a Call"}
+            </h1>
           </div>
           <div className="flex justify-center items-center">
-          <div style={{ display: "inline-block" }}>
-            <Timer startTime={"2024-05-23T22:30:50.133Z"} />
-          </div>
+            <div style={{ display: "inline-block" }}>
+              {callStartTime && <Timer startTime={callStartTime} />}
+            </div>
           </div>
         </div>
       )}
