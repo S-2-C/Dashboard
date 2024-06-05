@@ -23,6 +23,7 @@ interface CCPContextType {
   rejectContact: () => void;
   hangUpContact: () => void;
   incomingContact: connect.Contact | null;
+  logOut: () => Promise<void>;
 }
 
 const CCPContext = createContext<CCPContextType | null>(null);
@@ -153,6 +154,25 @@ export const CCPContextProvider = ({
     }, 1000);
   };
 
+  const logOut = async () => {
+    // https://ss2cc.awsapps.com/connect/logout
+
+    await fetch("https://ss2cc.my.connect.aws/connect/logout", {
+      method: "GET",
+      mode: "no-cors",
+      credentials: "include",
+    })
+      .then((response) => {
+        console.log("response: ", response);
+      })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
+
+    window.connect.core.terminate();
+    // window.location.href = "https://ss2cc.my.connect.aws/connect/logout";
+  };
+
   return (
     <CCPContext.Provider
       value={{
@@ -166,6 +186,7 @@ export const CCPContextProvider = ({
         rejectContact,
         hangUpContact,
         incomingContact,
+        logOut,
       }}
     >
       {children}
