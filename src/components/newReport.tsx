@@ -6,38 +6,63 @@ import DownloadPdfButton from "./downloadPdfButton";
 import { fetchAllAgents } from "@/fetching/fetchingDataFunctions";
 
 const NewReport = ({ props, onSave, onDelete }: any) => {
+  const today = new Date();
+  const twoMonthsAgo = new Date();
+  twoMonthsAgo.setMonth(today.getMonth() - 2);
+
   const [value, setValue] = useState<DateRangeType>(
     props.dateRange || {
       startDate: new Date(),
-      endDate: new Date(new Date().setMonth(11)),
+      endDate: twoMonthsAgo,
     }
   );
 
   useEffect(() => {
     const fetchAgents = async () => {
       const agents = await fetchAllAgents();
-      console.log("agents", agents);
-
       setAllAgents(agents.items);
     };
 
     fetchAgents();
+    console.log("PROPS", props);
   }, []);
 
   const [allAgents, setAllAgents] = useState<any[]>([]);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isTypeQueue, setIsTypeQueue] = useState(props.isTypeQueue || false);
   const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState(props.title);
-  const [description, setDescription] = useState(props.description);
+  const [title, setTitle] = useState(props.title || "");
+  const [description, setDescription] = useState(props.description || "");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAttributes, setSelectedAttributes] = useState<string[]>(props.attributes || []);
-  const [selectedChannel, setSelectedChannel] = useState<{ id: string; name: string; }>(props.channel || { id: "46bf33f7-3381-4db1-a3f7-85eafdf04578", name: "Walmart Delivery" });
-  const [selectedAgent, setSelectedAgent] = useState<{ id: string; name: string; }>(props.selectedAgent || null);
+  const [selectedChannel, setSelectedChannel] = useState<{ id: string; name: string; }>(props.channel || null);
+  const [selectedAgent, setSelectedAgent] = useState<{ id: string; name: string, arn: string }>(props.selectedAgent || null);
+
+  useEffect(() => {
+    console.log("VALUE", selectedAgent);
+  }, [selectedAgent]);
 
   const handleValueChange = (newValue: any) => {
     setValue(newValue);
   };
+
+  const textAttributes : any = {
+    "CONTACTS_HANDLED": "Contacts Handled",
+    "AVG_CASE_RESOLUTION_TIME": "Average Case Resolution Time",
+    "AVG_QUEUE_ANSWER_TIME": "Average Queue Answer Time",
+    "AVG_TALK_TIME": "Average Talk Time",
+    "AVG_RESOLUTION_TIME": "Average Resolution Time",
+    "CONTACTS_QUEUED": "Contacts Queued",
+    "AGENT_ANSWER_RATE": "Agent Answer Rate",
+    "AVG_CONTACT_DURATION": "Average Contact Duration",
+    "AVG_HANDLE_TIME": "Average Handle Time",
+    "AVG_HOLD_TIME": "Average Hold Time",
+    "AVG_INTERRUPTIONS_AGENT": "Average Agent Interruptions",
+    "AGENT_OCCUPANCY": "Agent Occupancy",
+    "SUM_NON_PRODUCTIVE_TIME_AGENT": "Total Non-Productive Time (Agent)",
+    "AGENT_NON_RESPONSE": "Agent Non-Response"
+  };
+
 
   const queueAttributes = [
     "CONTACTS_HANDLED",
@@ -46,9 +71,6 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
     "AVG_TALK_TIME",
     "AVG_RESOLUTION_TIME",
     "CONTACTS_QUEUED",
-    "AGENT_OCCUPANCY",
-    "AGENT_NON_PRODUCTIVE_TIME_AGENT",
-    "AGENT_NON_RESPONSE",
   ];
 
   const agentAttributes = [
@@ -71,19 +93,21 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
   ];
 
   const handleSave = () => {
-    onSave({
-      ...props,
-      title,
-      description,
-      attributes: selectedAttributes,
-      channel: isTypeQueue ? channelIds.find(channel => channel.id === selectedChannel.id) : null,
-      selectedAgent: !isTypeQueue ? { id: selectedAgent?.id, name: selectedAgent?.name } : null,
-      isTypeQueue,
-      date: new Date().toDateString(), // Set the date to the current date
-      dateRange: value,
-    });
-    setIsEditing(false);
-    setIsReportModalOpen(false);
+    if (title && description && selectedAttributes.length > 0 && (isTypeQueue ? selectedChannel : selectedAgent)) {
+      onSave({
+        ...props,
+        title,
+        description,
+        attributes: selectedAttributes,
+        channel: isTypeQueue ? channelIds.find(channel => channel.id === selectedChannel.id) : null,
+        selectedAgent: !isTypeQueue ? { id: selectedAgent?.id, name: selectedAgent?.name, arn: selectedAgent.arn } : null,
+        isTypeQueue,
+        date: new Date().toDateString(),
+        dateRange: value,
+      });
+      setIsEditing(false);
+      setIsReportModalOpen(false);
+    }
   };
 
   const handleAttributeSelect = (attribute: string) => {
@@ -111,10 +135,10 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
         onClick={() => setIsReportModalOpen(true)}
       >
         <div className="text-3xl font-bold mb-2">
-          {props.title.length > 10 ? props.title.substring(0, 25) + "..." : props.title}
+          {props.title?.length > 10 ? props.title.substring(0, 25) + "..." : props.title}
         </div>
         <div className="font-bold mb-2">
-          {props.description.length > 30 ? props.description.substring(0, 50) + "..." : props.description}
+          {props.description?.length > 30 ? props.description.substring(0, 50) + "..." : props.description}
         </div>
         <div className="text-sm text-left justify-end">
           Last Updated: {props.date}
@@ -128,30 +152,37 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
             <div className="sticky -top-10 pb-5 bg-stone-200">
               {isEditing ? (
                 <div className="flex flex-col">
-                  {/* create button to switch between queue mode */}
-                  <button
-                    className={`text-lg ${isTypeQueue ? 'text-green-500' : 'text-gray-500'}`}
-                    onClick={() => setIsTypeQueue(!isTypeQueue)}
-                  >
-                    {isTypeQueue ? "Queue Report" : "Agent Report"}
-                  </button>
+                  <div className=" justify-end w-full flex">
+                    <button
+                      className={` ${isTypeQueue ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}  p-2 rounded-s-md`}
+                      onClick={() => { setIsTypeQueue(!isTypeQueue), setSelectedAttributes([]) }}
+                    >
+                      Queue
+                    </button>
+                    <button
+                      className={` ${!isTypeQueue ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'} p-2 rounded-e-md`}
+                      onClick={() => { setIsTypeQueue(!isTypeQueue), setSelectedAttributes([]) }}
+                    >
+                      Agent
+                    </button>
+                  </div>
                   <p className="text-base font-extralight pb-1">
                     {new Date().toDateString()}
                   </p>
                   <input
-                    className="text-2xl font-bold"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   <br />
                   <textarea
-                    className="text-base font-extralight pb-1"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
                   <div className="py-3">
                     <h2>Select range</h2>
-                    <Datepicker value={value} onChange={handleValueChange} />
+                    <Datepicker value={value} onChange={handleValueChange} maxDate={today} minDate={twoMonthsAgo} />
                   </div>
                   {isTypeQueue ? (
                     <>
@@ -160,7 +191,8 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                         {channelIds.map(channel => (
                           <button
                             key={channel.id}
-                            className={`flex w-full border border-black justify-center items-center mb-2 ${selectedChannel.id === channel.id ? 'bg-neutral-300 shadow-md' : 'bg-neutral-100'}`}
+                            className={`flex w-full border border-black justify-center items-center mb-2 ${selectedChannel?.id === channel.id ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'
+                              }`}
                             onClick={() => setSelectedChannel(channel)}
                           >
                             <span>{channel.name}</span>
@@ -175,6 +207,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                         value={selectedAgent ? selectedAgent.id : ""}
                         onChange={(e) => setSelectedAgent(allAgents.find(agent => agent.id === e.target.value))}
                       >
+                        <option value="" disabled>Select an agent</option>
                         {allAgents.map(agent => (
                           <option key={agent.id} value={agent.id}>{agent.name}</option>
                         ))}
@@ -186,43 +219,43 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                     placeholder="Search attributes"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="mb-2 p-2 border border-gray-300 rounded"
+                    className="bg-gray-50 border mb-3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                   {isTypeQueue ? (
-                  <div className="mb-4 overflow-y-scroll h-28">
-                    {filteredQueueAttributes.map(attr => (
-                      <div key={attr} className="flex justify-between items-center mb-2">
-                        <span>{attr}</span>
-                        <button
-                          className="ml-2 p-1 bg-green-500 text-white rounded"
-                          onClick={() => handleAttributeSelect(attr)}
-                        >
-                          Add
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                    <div className="mb-4 overflow-y-scroll h-28">
+                      {filteredQueueAttributes.map(attr => (
+                        <div key={attr} className="flex justify-between items-center mb-2">
+                          <span>{textAttributes[attr]}</span>
+                          <button
+                            className="ml-2 p-1 bg-green-500 text-white rounded"
+                            onClick={() => handleAttributeSelect(attr)}
+                          >
+                            Add
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   ) : (
-                  <div className="mb-4 overflow-y-scroll h-28">
-                    {filteredAgentAttributes.map(attr => (
-                      <div key={attr} className="flex justify-between items-center mb-2">
-                        <span>{attr}</span>
-                        <button
-                          className="ml-2 p-1 bg-green-500 text-white rounded"
-                          onClick={() => handleAttributeSelect(attr)}
-                        >
-                          Add
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                    <div className="mb-4 overflow-y-scroll h-28">
+                      {filteredAgentAttributes.map(attr => (
+                        <div key={attr} className="flex justify-between items-center mb-2">
+                          <span>{textAttributes[attr]}</span>
+                          <button
+                            className="ml-2 p-1 bg-green-500 text-white rounded"
+                            onClick={() => handleAttributeSelect(attr)}
+                          >
+                            Add
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   )}
                   <div>
                     <h2 className="text-lg font-bold">Selected Attributes:</h2>
                     <div className="h-28 overflow-y-scroll">
                       {selectedAttributes.map(attr => (
                         <div key={attr} className="flex justify-between items-center mb-2">
-                          <span>{attr}</span>
+                          <span>{textAttributes[attr]}</span>
                           <button
                             className="ml-2 p-1 bg-red-500 text-white rounded"
                             onClick={() => handleAttributeRemove(attr)}
@@ -238,27 +271,31 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                 <>
                   <h1 className="text-2xl font-bold">{props.title}</h1>
                   <p className="text-base font-extralight pb-1">{props.description}</p>
-                  <h2 className="font-bold text-lg">{isTypeQueue? "Queue:" : "Agent: "}</h2>
-                  <p className="text-base font-extralight pb-1">{isTypeQueue? props.channel?.name : props.selectedAgent?.name}</p>
+                  <h2 className="font-bold text-lg">{isTypeQueue ? "Queue:" : "Agent: "}</h2>
+                  <p className="text-base font-extralight pb-1">{isTypeQueue ? props.channel?.name : props.selectedAgent?.name}</p>
                   <h2 className="font-bold text-lg">Date Range:</h2>
                   <p className="text-base font-extralight pb-3">{value?.startDate?.toString()} - {value?.endDate?.toString()}</p>
                   <div>
                     <h2 className="text-lg font-bold">Selected Attributes:</h2>
                     {selectedAttributes.map(attr => (
                       <div key={attr} className="flex justify-between items-center mb-2">
-                        <span>{attr}</span>
+                        <span>{textAttributes[attr]}</span>
                       </div>
                     ))}
                   </div>
                   <p className="text-base font-extralight pb-1">Last updated at: {props.date}</p>
 
-                  <DownloadPdfButton  rangeDate={value} siQueue={isTypeQueue} specifiesAgent={selectedAgent} specifiesQueue={selectedChannel} relevantKPI={selectedAttributes} title={props.title} description={props.description} date={props.date} />
+                  <DownloadPdfButton rangeDate={value} siQueue={isTypeQueue} specifiesAgent={selectedAgent} specifiesQueue={selectedChannel} relevantKPI={selectedAttributes} title={props.title} description={props.description} date={props.date} />
                 </>
               )}
             </div>
             <div className="flex justify-between items-center">
               {isEditing ? (
-                <button className="text-lg rounded-sm bg-slate-500 p-2 text-white hover:scale-105 ease-in transition-all" onClick={handleSave}>
+                <button
+                  className="text-lg rounded-sm bg-slate-500 p-2 text-white hover:scale-105 ease-in transition-all"
+                  onClick={handleSave}
+                  disabled={!title || !description || selectedAttributes.length === 0 || (!isTypeQueue && !selectedAgent) || (isTypeQueue && !selectedChannel)}
+                >
                   Save
                 </button>
               ) : (
