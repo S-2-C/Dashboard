@@ -109,7 +109,7 @@ export default function ManageCall({ params }: { params: { id: string } }) {
   return (
     <div className="flex h-screen bg-background text-foreground relative">
       <Home />
-      <div className="flex flex-col flex-1 p-10 ml-20">
+      <div className="flex flex-col flex-1 p-10 ml-20 overflow-auto">
         <Flex direction="column" gap="2rem">
           <Heading level={1} fontWeight="bold">
             Manage Call
