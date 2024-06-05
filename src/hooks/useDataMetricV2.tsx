@@ -38,14 +38,13 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   return { queueMetrics, getMetricValue };
 };
 
-export const useAgentMetrics = (
-  agentIds: string | null,
-  daysAgo: number = 7
-) => {
-  const [agentMetrics, setAgentMetrics] = useState<Metric[]>([]);
+export const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
+  const [agentMetrics, setAgentMetrics] = useState<Record<string, Metric[]>>(
+    {}
+  );
 
   useEffect(() => {
-    if (!agentIds) return;
+    if (!agentIds || agentIds.length === 0) return;
 
     const fetchData = async () => {
       const today = new Date();
@@ -53,15 +52,26 @@ export const useAgentMetrics = (
       pastDate.setDate(today.getDate() - daysAgo);
       const date = pastDate.toISOString().split("T")[0]; // Format the date as 'YYYY-MM-DD'
 
-      const metricDataV2Agent = await fetchMetricDataV2Agent(agentIds, date, today.toISOString());
-      setAgentMetrics(metricDataV2Agent.data);
+      const metricsData = await Promise.all(
+        agentIds.map((agentId) =>
+          fetchMetricDataV2Agent(agentId, date, today.toISOString())
+        )
+      );
+
+      const newAgentMetrics = agentIds.reduce((acc, agentId, index) => {
+        acc[agentId] = metricsData[index].data;
+        return acc;
+      }, {} as Record<string, Metric[]>);
+
+      setAgentMetrics(newAgentMetrics);
     };
 
     fetchData();
   }, [agentIds, daysAgo]);
 
-  const getMetricValue = (metricName: string) => {
-    const metric = agentMetrics.find((m) => m.Metric === metricName);
+  const getMetricValue = (agentId: string, metricName: string) => {
+    const metrics = agentMetrics[agentId] || [];
+    const metric = metrics.find((m) => m.Metric === metricName);
     return metric ? metric.Value : "N/A";
   };
 
