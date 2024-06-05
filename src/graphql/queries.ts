@@ -278,6 +278,8 @@ export const getNotification = /* GraphQL */ `query GetNotification($id: ID!) {
     action
     description
     urgency
+    timestamp
+    agentEmail
     id
     createdAt
     updatedAt
@@ -299,6 +301,8 @@ export const listNotifications = /* GraphQL */ `query ListNotifications(
       action
       description
       urgency
+      timestamp
+      agentEmail
       id
       createdAt
       updatedAt
