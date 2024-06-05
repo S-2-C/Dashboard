@@ -89,7 +89,7 @@ export async function GET(request: Request) {
     metricDate,
     currentMetricData
   );
-  console.log("Response from GetMetricDataV2Command:", response);
+  console.log("Response from GetMetricDataV2Command AGENT:", response);
 
   return new Response(
     JSON.stringify({

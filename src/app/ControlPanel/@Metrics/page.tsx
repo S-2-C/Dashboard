@@ -4,7 +4,7 @@ import Link from "next/link";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUserRole } from "@/hooks/useUserRole";
-import { useQueueMetrics, useAgentMetrics } from "@/hooks/useDataMetricV2"; // Updated import
+import { useQueueMetrics } from "@/hooks/useDataMetricV2"; // Updated import
 import { fetchListUsers } from "@/fetching/fetchingListAgent";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -53,11 +53,6 @@ export default function MetricsSlot() {
 
   const { getMetricValue: getMetricValueWalmartPass } = useQueueMetrics(
     channelIds.walmartPass,
-    weeksAgo * 7
-  );
-
-  const { getMetricValue: getMetricValueAgent } = useAgentMetrics(
-    selectedAgent ? selectedAgent.Id : null,
     weeksAgo * 7
   );
 

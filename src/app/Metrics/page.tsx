@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import Home from "../NavBar";
 import SearchBar from "../searchBar";
 import { Flex, Heading, Text, Button } from "@aws-amplify/ui-react";
-import { useQueueMetrics, useAgentMetrics } from "@/hooks/useDataMetricV2"; // Updated import
+import { useQueueMetrics, Metric } from "@/hooks/useDataMetricV2"; // Updated import
 import { fetchListUsers } from "@/fetching/fetchingListAgent";
 import Modal from "@/components/ui/Modal";
+import { fetchMetricDataV2Agent } from "@/fetching/fetchingMetricDataV2Agent";
 
 interface Agent {
   Id: string;
@@ -49,6 +50,12 @@ export default function Metrics() {
   const [weeksAgo, setWeeksAgo] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAgents, setSelectedAgents] = useState<Agent[]>([]);
+  const [agentMetricsData, setAgentMetricsData] = useState<any>({});
+  const [agentMetrics, setAgentMetrics] = useState<Record<string, Metric[]>>(
+    {}
+  );
+  const daysAgo = weeksAgo * 7;
+  const [agentIds, setAgentIds] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +66,163 @@ export default function Metrics() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // Set agentIds to the selected agents' IDs
+    setAgentIds(selectedAgents.map((agent) => agent.Id));
+  }, [selectedAgents]);
+
+  useEffect(() => {
+    if (!agentIds || agentIds.length === 0) return;
+
+    const fetchData = async () => {
+      const today = new Date();
+      const pastDate = new Date(today);
+      pastDate.setDate(today.getDate() - daysAgo);
+      const date = pastDate.toISOString().split("T")[0]; // Format the date as 'YYYY-MM-DD'
+
+      const metricsData = await Promise.all(
+        agentIds.map((agentId) =>
+          fetchMetricDataV2Agent(
+            agentId,
+            date,
+            today.toISOString().split("T")[0]
+          )
+        )
+      );
+
+      const newAgentMetrics = agentIds.reduce((acc, agentId, index) => {
+        acc[agentId] = metricsData[index].data;
+        return acc;
+      }, {} as Record<string, Metric[]>);
+
+      setAgentMetrics(newAgentMetrics);
+    };
+
+    fetchData();
+  }, [agentIds, daysAgo]);
+
+  useEffect(() => {
+    console.log("Selected agents changed", selectedAgents);
+    const fetchAgentMetricsData = async () => {
+      if (selectedAgents.length > 0) {
+        const data = {} as any;
+
+        for (const agent of selectedAgents) {
+          data[agent.Id] = {
+            avgContactDuration: {
+              threshold: {
+                low: 180,
+                mid: 300,
+                isHigh: false,
+              },
+              value: formatDecimals(
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "AVG_CONTACT_DURATION"
+                )?.Value || "N/A",
+                2,
+                "s"
+              ),
+            },
+            avgHandleTime: {
+              threshold: {
+                low: 300,
+                mid: 600,
+                isHigh: false,
+              },
+              value:
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "AVG_HANDLE_TIME"
+                )?.Value || "N/A",
+            },
+            contactsHandled: {
+              threshold: {
+                low: 10,
+                mid: 5,
+                isHigh: true,
+              },
+              value:
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "CONTACTS_HANDLED"
+                )?.Value || "N/A",
+            },
+            avgHoldTime: {
+              threshold: {
+                low: 30,
+                mid: 90,
+                isHigh: false,
+              },
+              value:
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "AVG_HOLD_TIME"
+                )?.Value || "N/A",
+            },
+            avgInterruptionsAgent: {
+              threshold: {
+                low: 8,
+                mid: 3,
+                isHigh: false,
+              },
+              value:
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "AVG_INTERRUPTIONS_AGENT"
+                )?.Value || "N/A",
+            },
+            agentOccupancy: {
+              threshold: {
+                low: 90,
+                mid: 60,
+                isHigh: true,
+              },
+              value:
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "AGENT_OCCUPANCY"
+                )?.Value || "N/A",
+            },
+            sumNonProductiveTimeAgent: {
+              threshold: {
+                low: 300,
+                mid: 600,
+                isHigh: false,
+              },
+              value:
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "SUM_NON_PRODUCTIVE_TIME_AGENT"
+                )?.Value || "N/A",
+            },
+            agentNonResponse: {
+              threshold: {
+                low: 3,
+                mid: 7,
+                isHigh: false,
+              },
+              value:
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "AGENT_NON_RESPONSE"
+                )?.Value || "N/A",
+            },
+            agentAnswerRate: {
+              threshold: {
+                low: 85,
+                mid: 60,
+                isHigh: true,
+              },
+              value: formatDecimals(
+                agentMetrics[agent.Id]?.find(
+                  (m) => m.Metric === "AGENT_ANSWER_RATE"
+                )?.Value || "N/A",
+                4,
+                "%"
+              ),
+            },
+          };
+        }
+        setAgentMetricsData(data);
+      }
+    };
+
+    fetchAgentMetricsData();
+  }, [selectedAgents, weeksAgo]);
 
   const handleWeeksChange = (weeks: number) => {
     setWeeksAgo(weeks);
@@ -92,11 +256,6 @@ export default function Metrics() {
 
   const { getMetricValue: getMetricValueWalmartPass } = useQueueMetrics(
     channelIds.walmartPass,
-    weeksAgo * 7
-  );
-
-  const { getMetricValue: getMetricValueAgent } = useAgentMetrics(
-    selectedAgents.map((agent) => agent.Id),
     weeksAgo * 7
   );
 
@@ -302,7 +461,29 @@ export default function Metrics() {
                     </Text>
                     <div className="bg-figma-figma11 rounded-xl p-4 shadow-md flex flex-col mt-4">
                       <p className="text-xl font-bold mb-2">Agent Metrics</p>
-                      <p
+                      {agentMetricsData && agentMetricsData[agent.Id] ? (
+                        Object.entries(agentMetricsData[agent.Id]).map(
+                          ([key, value], idx) => (
+                            <p
+                              key={idx}
+                              className="text-lg"
+                              style={{
+                                color: getMetricColor(
+                                  value.value,
+                                  value.threshold.low,
+                                  value.threshold.mid,
+                                  value.threshold.isHigh
+                                ),
+                              }}
+                            >
+                              {key}: {value.value}
+                            </p>
+                          )
+                        )
+                      ) : (
+                        <Text className="text-lg">No data</Text>
+                      )}
+                      {/* <p
                         className="text-lg"
                         style={{
                           color: getMetricColor(
@@ -325,157 +506,7 @@ export default function Metrics() {
                           2,
                           "s"
                         )}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(agent.Id, "AVG_HANDLE_TIME"),
-                            300,
-                            600,
-                            false
-                          ),
-                        }}
-                      >
-                        Average Handle Time:{" "}
-                        {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AVG_HANDLE_TIME") ||
-                            "N/A",
-                          2,
-                          "s"
-                        )}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(agent.Id, "CONTACTS_HANDLED"),
-                            10,
-                            5,
-                            true
-                          ),
-                        }}
-                      >
-                        Contacts Handled:{" "}
-                        {formatDecimals(
-                          getMetricValueAgent(agent.Id, "CONTACTS_HANDLED") ||
-                            "N/A",
-                          0,
-                          ""
-                        )}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(agent.Id, "AVG_HOLD_TIME"),
-                            300,
-                            90,
-                            false
-                          ),
-                        }}
-                      >
-                        Average Hold Time:{" "}
-                        {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AVG_HOLD_TIME") ||
-                            "N/A",
-                          1,
-                          "s"
-                        )}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(
-                              agent.Id,
-                              "AVG_INTERRUPTIONS_AGENT"
-                            ),
-                            8,
-                            3,
-                            false
-                          ),
-                        }}
-                      >
-                        Average Interruptions Agent:{" "}
-                        {getMetricValueAgent(
-                          agent.Id,
-                          "AVG_INTERRUPTIONS_AGENT"
-                        ) || "N/A"}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(agent.Id, "AGENT_OCCUPANCY"),
-                            90,
-                            60,
-                            true
-                          ),
-                        }}
-                      >
-                        Agent Occupancy:{" "}
-                        {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AGENT_OCCUPANCY") ||
-                            "N/A",
-                          4,
-                          "%"
-                        )}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(
-                              agent.Id,
-                              "SUM_NON_PRODUCTIVE_TIME_AGENT"
-                            ),
-                            300,
-                            600,
-                            false
-                          ),
-                        }}
-                      >
-                        Sum Non-Productive Time Agent:{" "}
-                        {getMetricValueAgent(
-                          agent.Id,
-                          "SUM_NON_PRODUCTIVE_TIME_AGENT"
-                        ) || "N/A"}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(agent.Id, "AGENT_NON_RESPONSE"),
-                            3,
-                            7,
-                            false
-                          ),
-                        }}
-                      >
-                        Agent Non-Response:{" "}
-                        {getMetricValueAgent(agent.Id, "AGENT_NON_RESPONSE") ||
-                          "N/A"}
-                      </p>
-                      <p
-                        className="text-lg"
-                        style={{
-                          color: getMetricColor(
-                            getMetricValueAgent(agent.Id, "AGENT_ANSWER_RATE"),
-                            85,
-                            60,
-                            true
-                          ),
-                        }}
-                      >
-                        Agent Answer Rate:{" "}
-                        {formatDecimals(
-                          getMetricValueAgent(agent.Id, "AGENT_ANSWER_RATE") ||
-                            "N/A",
-                          4,
-                          "%"
-                        )}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 ))

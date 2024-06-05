@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchMetricDataV2Queue } from "@/fetching/fetchingMetricDataV2Queue";
 import { fetchMetricDataV2Agent } from "@/fetching/fetchingMetricDataV2Agent";
 
-interface Metric {
+export interface Metric {
   Metric: string;
   Value: number;
 }
@@ -44,35 +44,7 @@ const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
     {}
   );
 
-  useEffect(() => {
-    if (!agentIds || agentIds.length === 0) return;
 
-    const fetchData = async () => {
-      const today = new Date();
-      const pastDate = new Date(today);
-      pastDate.setDate(today.getDate() - daysAgo);
-      const date = pastDate.toISOString().split("T")[0]; // Format the date as 'YYYY-MM-DD'
-
-      const metricsData = await Promise.all(
-        agentIds.map((agentId) =>
-          fetchMetricDataV2Agent(
-            agentId,
-            date,
-            today.toISOString().split("T")[0]
-          )
-        )
-      );
-
-      const newAgentMetrics = agentIds.reduce((acc, agentId, index) => {
-        acc[agentId] = metricsData[index].data;
-        return acc;
-      }, {} as Record<string, Metric[]>);
-
-      setAgentMetrics(newAgentMetrics);
-    };
-
-    fetchData();
-  }, [agentIds, daysAgo]);
 
   const getMetricValue = (agentId: string, metricName: string) => {
     const metrics = agentMetrics[agentId] || [];
@@ -84,4 +56,4 @@ const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
   return { agentMetrics, getMetricValue };
 };
 
-export { useQueueMetrics, useAgentMetrics };
+export { useQueueMetrics };
