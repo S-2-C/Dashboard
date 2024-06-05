@@ -178,10 +178,10 @@ export default function Metrics() {
         {/* General Metrics */}
         <div className="flex-1  overflow-scroll no-scrollbar">
         <div className="flex-1  overflow-scroll">
-        <BarChartSeconds WalmartDelivery={WalmartDelivery} WalmartOnline={WalmartOnline} WalmartPhysicalStore={WalmartPhysicalStore} WalmartPass={WalmartPass} label={label} title={'Seconds'} />
-        <BarChartSeconds WalmartDelivery={WalmartDeliveryCount} WalmartOnline={WalmartOnlineCount} WalmartPhysicalStore={WalmartPhysicalStoreCount} WalmartPass={WalmartPassCount} label={labelCount} title={'Countlolo'} /> 
+        <BarChartSeconds WalmartDelivery={WalmartDelivery} WalmartOnline={WalmartOnline} WalmartPhysicalStore={WalmartPhysicalStore} WalmartPass={WalmartPass} label={label} title={'Time Metrics'} />
+        <BarChartSeconds WalmartDelivery={WalmartDeliveryCount} WalmartOnline={WalmartOnlineCount} WalmartPhysicalStore={WalmartPhysicalStoreCount} WalmartPass={WalmartPassCount} label={labelCount} title={'Count Metrics'} /> 
      
-      <div className="h-full overflow-scroll 0">
+      <div className="h-full overflow-scroll 0 mt-4">
         {metrics.map((metric, index) => (
           <div key={index} className="bg-figma-figma13 rounded-xl p-4 shadow-md flex flex-col mb-4">
             <p className="text-xl font-bold mb-2">{metric.title}</p>
