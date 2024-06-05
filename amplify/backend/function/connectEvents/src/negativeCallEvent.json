@@ -13,7 +13,7 @@
         "instanceArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597",
         "version": "1.0",
         "contactArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/contact/0326dfb7-0595-4dc5-99a8-0916d57e4d85",
-        "agentArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/agent/13753b2e-1fe1-416f-ad30-0d4c5327f6cc",
+        "agentArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/agent/1c2614e0-66db-45a2-8186-31f3c70654ff",
         "queueArn": "arn:aws:connect:us-east-1:905418190753:instance/96cb63e2-25a1-4014-8f3c-e3919415d597/queue/4948d5e2-1434-44dd-a78f-37cbeb96d1d9"
     }
 }

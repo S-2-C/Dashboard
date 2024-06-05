@@ -449,6 +449,8 @@ export const createNotification = /* GraphQL */ `mutation CreateNotification(
     action
     description
     urgency
+    timestamp
+    agentEmail
     id
     createdAt
     updatedAt
@@ -468,6 +470,8 @@ export const updateNotification = /* GraphQL */ `mutation UpdateNotification(
     action
     description
     urgency
+    timestamp
+    agentEmail
     id
     createdAt
     updatedAt
@@ -487,6 +491,8 @@ export const deleteNotification = /* GraphQL */ `mutation DeleteNotification(
     action
     description
     urgency
+    timestamp
+    agentEmail
     id
     createdAt
     updatedAt
