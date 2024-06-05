@@ -7,7 +7,7 @@ import AgentConnectPopupContainer from "@/components/agentConnectPopupContainer"
 import AIChatButtonWrapper from "@/components/ui/aiChatButtonWrapper";
 
 export const metadata: Metadata = {
-  title: "Wallmart Dashboard",
+  title: "Walmart Dashboard",
   description: "For Amazon Connect Supervisors and Agents",
 };
 

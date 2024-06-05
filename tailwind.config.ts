@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config = {
+  
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -22,6 +23,9 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
+      fontSize: {
+        "2xs": "0.600rem",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -141,7 +145,11 @@ const config = {
       
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require('tailwind-scroll-behavior')(),
+    require('tailwind-scrollbar-hide')
+  ],
 } satisfies Config;
 
 export default config;

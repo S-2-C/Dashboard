@@ -20,13 +20,14 @@ type User @model {
   arn: String! @index
   name: String
   profilePic: String
-  role: Role!
+  email: AWSEmail!
   needsHelp: Boolean!
   isOnCall: Boolean! @default(value: "false")
   Contacts: [Contact] @hasMany
 }
 
-type Contact @model {
+type Call @model {
+  ARN: String!
   phone: String!
   callStart: AWSDateTime!
   callEnd: AWSDateTime

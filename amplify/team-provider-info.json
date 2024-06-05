@@ -1,16 +1,16 @@
 {
-  "staging": {
+  "production": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-connectdashboard-staging-5ea37-authRole",
-      "UnauthRoleArn": "arn:aws:iam::905418190753:role/amplify-connectdashboard-staging-5ea37-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::905418190753:role/amplify-connectdashboard-staging-5ea37-authRole",
+      "AuthRoleName": "amplify-connectdashboard-production-d4b08-authRole",
+      "UnauthRoleArn": "arn:aws:iam::905418190753:role/amplify-connectdashboard-production-d4b08-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::905418190753:role/amplify-connectdashboard-production-d4b08-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-      "UnauthRoleName": "amplify-connectdashboard-staging-5ea37-unauthRole",
-      "StackName": "amplify-connectdashboard-staging-5ea37",
-      "StackId": "arn:aws:cloudformation:us-east-1:905418190753:stack/amplify-connectdashboard-staging-5ea37/65050eb0-feb5-11ee-ad17-12a2c66487c1",
+      "DeploymentBucketName": "amplify-connectdashboard-production-d4b08-deployment",
+      "UnauthRoleName": "amplify-connectdashboard-production-d4b08-unauthRole",
+      "StackName": "amplify-connectdashboard-production-d4b08",
+      "StackId": "arn:aws:cloudformation:us-east-1:905418190753:stack/amplify-connectdashboard-production-d4b08/c2733f20-fec1-11ee-bded-12cc0e4468b9",
       "AmplifyAppId": "d29u1f6lnc5crs",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-connectdashboard-staging-5ea37-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-connectdashboard-production-d4b08-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
