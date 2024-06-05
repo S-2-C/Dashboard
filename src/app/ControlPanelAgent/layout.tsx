@@ -2,13 +2,6 @@ import React, { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 
-// Control panel: Ask for help
-// Ongoing call time,
-// amazon connect instance
-// documentation,
-// Chat,
-// wally (AI)
-
 const time = {
   currentTime: "18:15:33",
 };
