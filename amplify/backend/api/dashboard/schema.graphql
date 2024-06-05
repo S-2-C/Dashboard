@@ -39,5 +39,5 @@ type Notification @model {
   description: String! # Text to display to the user
   urgency: Urgency! @default(value: "REGULAR")
   timestamp: AWSDateTime!
-  agentArn: String
+  agentEmail: AWSEmail
 }

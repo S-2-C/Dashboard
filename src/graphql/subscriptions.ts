@@ -430,6 +430,8 @@ export const onCreateNotification = /* GraphQL */ `subscription OnCreateNotifica
     action
     description
     urgency
+    timestamp
+    agentEmail
     id
     createdAt
     updatedAt
@@ -448,6 +450,8 @@ export const onUpdateNotification = /* GraphQL */ `subscription OnUpdateNotifica
     action
     description
     urgency
+    timestamp
+    agentEmail
     id
     createdAt
     updatedAt
@@ -466,6 +470,8 @@ export const onDeleteNotification = /* GraphQL */ `subscription OnDeleteNotifica
     action
     description
     urgency
+    timestamp
+    agentEmail
     id
     createdAt
     updatedAt
