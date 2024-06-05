@@ -315,7 +315,7 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                       <h3
                         className="text-sm"
                         onClick={() => {
-                          navigator.clipboard.writeText(isOnCall?.id);
+                          navigator.clipboard.writeText(isOnCall?.user?.arn);
                           alert("User ARN Copied to clipboard");
                         }}
                       >
