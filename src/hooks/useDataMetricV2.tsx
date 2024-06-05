@@ -31,7 +31,7 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   }, [channelIds, daysAgo]);
 
   const getMetricValue = (metricName: string) => {
-    const metric = queueMetrics.find((m) => m.Metric === metricName);
+    const metric = queueMetrics?.find((m) => m.Metric === metricName);
     return metric ? metric.Value : "N/A";
   };
 
@@ -61,7 +61,7 @@ export const useAgentMetrics = (
   }, [agentIds, daysAgo]);
 
   const getMetricValue = (metricName: string) => {
-    const metric = agentMetrics.find((m) => m.Metric === metricName);
+    const metric = agentMetrics?.find((m) => m.Metric === metricName);
     return metric ? metric.Value : "N/A";
   };
 
