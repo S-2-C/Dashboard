@@ -72,15 +72,12 @@ export async function GET(request: Request) {
     const bucketName = process.env.HISTORIC_CALL_BUCKET_NAME || "";
 
     const datePrefix = generateDatePrefix(date, contactId);
-    console.log("Date Prefix", datePrefix);
-
     let key_object;
     try {
         key_object = await ListObjects(datePrefix, bucketName, client);
     } catch (err) {
         return returnError("Error listing objects in the bucket", 500);
     }
-    console.log("Key Object", key_object);
 
     if ("Contents" in key_object === false || key_object.Contents.length === 0) {
         return returnError("No objects found in the bucket", 404);

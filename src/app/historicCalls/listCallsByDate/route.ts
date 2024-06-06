@@ -17,7 +17,6 @@ function getContactIdFromKey(key: string) {
 
 function getContactIdsFromResponse(response: any) {
     const contactIds: string[] = [];
-    console.log("Response", response);
     response.Contents.forEach((content: any) => {
         contactIds.push(getContactIdFromKey(content.Key));
     });
@@ -49,7 +48,6 @@ export async function GET(request: Request) {
         Prefix: datePrefix
     };
 
-    console.log("Bucket Params", bucketParams);
     // List the items in the bucket
     let data;
     try {
