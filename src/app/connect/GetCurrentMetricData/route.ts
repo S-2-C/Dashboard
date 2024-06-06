@@ -24,8 +24,8 @@ async function getUserMetricData(
       },
       {
         Name: "CONTACTS_IN_QUEUE",
-        Unit: "COUNT"
-      }
+        Unit: "COUNT",
+      },
     ],
     Filters: {
       Queues: queueIdsArray,
@@ -62,7 +62,7 @@ function arrangeMetricData(response: any): any[] {
     result.Collections.forEach((metric: any) => {
       groupedByQueue[queueId].push({
         Metric: metric.Metric.Name,
-        Value: metric.Value
+        Value: metric.Value,
       });
     });
   });
@@ -70,25 +70,26 @@ function arrangeMetricData(response: any): any[] {
   // Convert the grouped object into the desired array format
   return Object.keys(groupedByQueue).map((queueId) => ({
     queue: queueId,
-    queue_metrics: groupedByQueue[queueId]
+    queue_metrics: groupedByQueue[queueId],
   }));
 }
-
 
 export async function GET(request: Request) {
   const config = make_config_json();
   // Get the queueIDs from the request
   const { searchParams } = new URL(request.url);
   const queueIds = searchParams.get("queueIds") || undefined;
-  const { searchParams } = new URL(request.url);
 
   if (queueIds === undefined) {
-    return new Response(JSON.stringify({ message: "Please provide a queue ID" }), {
-      status: 400,
-      headers: {
-        'Content-Type': 'application/json'
+    return new Response(
+      JSON.stringify({ message: "Please provide a queue ID" }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
   }
 
   const queueIdsArray = queueIds.split(",");
@@ -99,7 +100,7 @@ export async function GET(request: Request) {
   const response = await getUserMetricData(client, InstanceId, queueIdsArray);
 
   return Response.json({
-    "message": "Current metric data retrieved successfully.",
-    "data": arrangeMetricData(response)
+    message: "Current metric data retrieved successfully.",
+    data: arrangeMetricData(response),
   });
 }
