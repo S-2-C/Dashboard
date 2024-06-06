@@ -8,11 +8,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import "@aws-amplify/ui-react/styles.css";
+import "../styles/styles.css";
 import Home from "./NavBar"; // Importing the NavBar component
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";
-import { GetUserQuery } from "@/API";
+import { GetUserQuery } from "@/API"; 
 
 export default function Home2({ params }: { params: { id: string } }) {
   const [agent, setAgent] = useState<GetUserQuery["getUser"]>();
@@ -29,6 +30,9 @@ export default function Home2({ params }: { params: { id: string } }) {
   }, []);
 
   return (
+    <>
+    {agent?.role ?  
+      (
     <div className="flex h-screen">
       <div
         className={`${
@@ -109,6 +113,24 @@ export default function Home2({ params }: { params: { id: string } }) {
           className=" w-16 h-auto pb-64 shrink-0"
         />
       </div>
-    </div>
+    </div>  
+    )
+    :
+    (
+      <div className="flex h-screen w-screen justify-center items-center">
+        <div className=" justify-center  items-center flex flex-col">
+          <img
+              src="/images/S2C Figma7 Logo.svg"
+              className=" w-32 h-auto"
+            />
+            <h4 className=" py-10 text-3xl font-extralight text-blue-800 ">Summit Service & Consulting</h4>
+            <div className="loading-line-container">
+              <div className="loading-line"></div>
+            </div>
+        </div>
+      </div>  
+        )
+  }
+  </>
   );
 }
