@@ -14,6 +14,13 @@ interface Agent {
   Username: string;
 }
 
+const formatDecimals = (value: any, decimal: any, unit: any) => {
+  if (value !== undefined && value !== null && !isNaN(value)) {
+    return `${Number(value).toFixed(decimal)} ${unit}`;
+  }
+  return value; // Return NaN or other invalid values as is, without the unit
+};
+
 export default function MetricsSlot() {
   const agent = useUserRole();
 
@@ -60,24 +67,51 @@ export default function MetricsSlot() {
     {
       title: "Average Talk Time",
       values: {
-        "Walmart Delivery": getMetricValueWalmartDelivery("AVG_TALK_TIME"),
-        "Walmart Online": getMetricValueWalmartOnline("AVG_TALK_TIME"),
-        "Walmart Physical Store":
+        "Walmart Delivery": formatDecimals(
+          getMetricValueWalmartDelivery("AVG_TALK_TIME"),
+          2,
+          "s"
+        ),
+        "Walmart Online": formatDecimals(
+          getMetricValueWalmartOnline("AVG_TALK_TIME"),
+          2,
+          "s"
+        ),
+        "Walmart Physical Store": formatDecimals(
           getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),
-        "Walmart Pass": getMetricValueWalmartPass("AVG_TALK_TIME"),
+          2,
+          "s"
+        ),
+        "Walmart Pass": formatDecimals(
+          getMetricValueWalmartPass("AVG_TALK_TIME"),
+          2,
+          "s"
+        ),
       },
     },
     {
       title: "Average Resolution Time",
       values: {
-        "Walmart Delivery": getMetricValueWalmartDelivery(
-          "AVG_RESOLUTION_TIME"
+        "Walmart Delivery": formatDecimals(
+          getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),
+          2,
+          "s"
         ),
-        "Walmart Online": getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),
-        "Walmart Physical Store": getMetricValueWalmartPhysicalStore(
-          "AVG_RESOLUTION_TIME"
+        "Walmart Online": formatDecimals(
+          getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),
+          2,
+          "s"
         ),
-        "Walmart Pass": getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),
+        "Walmart Physical Store": formatDecimals(
+          getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),
+          2,
+          "s"
+        ),
+        "Walmart Pass": formatDecimals(
+          getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),
+          2,
+          "s"
+        ),
       },
     },
     {
@@ -103,18 +137,29 @@ export default function MetricsSlot() {
     {
       title: "Average Queue Answer Time",
       values: {
-        "Walmart Delivery": getMetricValueWalmartDelivery(
-          "AVG_QUEUE_ANSWER_TIME"
+        "Walmart Delivery": formatDecimals(
+          getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),
+          2,
+          "s"
         ),
-        "Walmart Online": getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),
-        "Walmart Physical Store": getMetricValueWalmartPhysicalStore(
-          "AVG_QUEUE_ANSWER_TIME"
+        "Walmart Online": formatDecimals(
+          getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),
+          2,
+          "s"
         ),
-        "Walmart Pass": getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),
+        "Walmart Physical Store": formatDecimals(
+          getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),
+          2,
+          "s"
+        ),
+        "Walmart Pass": formatDecimals(
+          getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),
+          2,
+          "s"
+        ),
       },
     },
   ];
-
   const handleNextMetric = () => {
     setCurrentMetricIndex((prevIndex) => (prevIndex + 1) % metrics.length);
   };
