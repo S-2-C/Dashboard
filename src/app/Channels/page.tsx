@@ -1,5 +1,4 @@
 'use client'
-import Home from "../NavBar" // Importing the NavBar component
 import { Button, Flex, Heading, Text } from "@aws-amplify/ui-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -107,7 +106,6 @@ export default function Notifications() {
     return (
         <div>
             <div className="h-screen flex w-full">
-                <Home />
                 <div className="mt-12  w-full flex-col ml-40  overflow-scroll  no-scrollbar">
                     {/* <div className="flex justify-end">
                         <SearchBar />

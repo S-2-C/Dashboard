@@ -1,12 +1,10 @@
 import React from "react";
-import Home from "../NavBar"
 import "@aws-amplify/ui-react/styles.css";
 
 export default function DocumentationAgent() {
 
     return (
         <div className="flex h-screen bg-background text-foreground relative">
-            <Home />
             <div className='flex flex-col ml-40 mr-40'>
                 <h1 className='mt-20 mb-5 text-5xl font-bold'>Documentation</h1>
                 <div className="h-12 flex mb-5 ">

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Home from "../../NavBar";
 import { Flex, Heading, Text, View, Button } from "@aws-amplify/ui-react";
 import {
   Popover,
@@ -117,7 +116,6 @@ export default function ManageCall({ params }: { params: { id: string } }) {
 
   return (
     <div className="flex h-screen bg-background text-foreground relative">
-      <Home />
       <div className="flex flex-col flex-1 p-10 ml-20">
         <Flex direction="column" gap="2rem">
           <Heading level={1} fontWeight="bold">

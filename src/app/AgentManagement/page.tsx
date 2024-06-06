@@ -1,6 +1,5 @@
 "use client";
 import { Flex, Heading, Text } from "@aws-amplify/ui-react";
-import Home from "../NavBar";
 import { useEffect, useState } from "react";
 import { fetchAllAgents } from "@/fetching/fetchingDataFunctions";
 import Link from "next/link";
@@ -87,7 +86,6 @@ export default function AgentManagement() {
 
   return (
     <div className="flex h-screen bg-background text-foreground relative">
-      <Home />
       <div className="flex flex-col flex-1 p-10 ml-20">
         <Flex direction="column" gap="2rem">
           <Heading level={1} fontWeight="bold">

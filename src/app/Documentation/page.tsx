@@ -6,7 +6,6 @@ import {
   faTriangleExclamation,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import Home from "../NavBar"; // Importing the NavBar component
 import SearchBar from "../searchBar"; //importing the SearchBar component
 import { documents } from "@/app/content/relevantFiles";
 import DocumentReader from "@/components/documentReader";
@@ -49,7 +48,6 @@ export default function Documentation() {
   return (
     <div>
       <div className="h-screen flex w-full">
-        <Home />
         <div className="flex flex-col ml-40 w-full">
           <div className="flex justify-end px-16 pt-4">
             <SearchBar />

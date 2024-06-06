@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import AIChatButtonWrapper from "@/components/ui/aiChatButtonWrapper";
 import { CCPContextProvider } from "@/context/ccp";
 import CCPContainer from "@/components/ccpContainer";
+import Home from "./NavBar";
 
 export const metadata: Metadata = {
   title: "Wallmart Dashboard",
@@ -32,7 +33,10 @@ export default function RootLayout({
       >
         <WrappedAuthenticator>
           <CCPContextProvider>
-            {children}
+            <Home>
+               {children}
+            </Home>
+           
             <CCPContainer />
             <AIChatButtonWrapper />
           </CCPContextProvider>
