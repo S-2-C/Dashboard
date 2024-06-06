@@ -21,6 +21,12 @@ const formatDecimals = (value: any, decimal: any, unit: any) => {
   }
   return value; // Return NaN or other invalid values as is, without the unit
 };
+const formatDecimalsChart = (value: any, decimal: any) => {
+  if (value !== undefined && value !== null && !isNaN(value)) {
+    return Number(value).toFixed(decimal);
+  }
+  return value; // Return NaN or other invalid values as is, without the unit
+};
 
 const getMetricColor = (
   metric: any,
@@ -377,34 +383,26 @@ export default function Metrics() {
       },
     },
   ];
-  // const formatDecimals = (value:any, decimal:any, unit:any) => {
-  //   if (value !== undefined && value !== null && !isNaN(value)) {
-  //     return `${Number(value).toFixed(decimal)} ${unit}`;
-  //   }
-  //   return value; // Return NaN or other invalid values as is, without the unit
-  // };
-
-  // const  WalmartDelivery=[1.5,4,5,7,4];
-
+ 
   const WalmartDelivery = [
-    getMetricValueWalmartDelivery("AVG_TALK_TIME"),
-    getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),
-    getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),
+    formatDecimalsChart(getMetricValueWalmartDelivery("AVG_TALK_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),2),
   ];
   const WalmartOnline = [
-    getMetricValueWalmartOnline("AVG_TALK_TIME"),
-    getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),
-    getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),
+    formatDecimalsChart(getMetricValueWalmartOnline("AVG_TALK_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),2),
   ];
   const WalmartPhysicalStore = [
-    getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),
-    getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),
-    getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),
+    formatDecimalsChart(getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),2),
   ];
   const WalmartPass = [
-    getMetricValueWalmartPass("AVG_TALK_TIME"),
-    getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),
-    getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),
+    formatDecimalsChart(getMetricValueWalmartPass("AVG_TALK_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),2),
   ];
   const label = [
     "Avg. Call Length",
@@ -508,7 +506,7 @@ export default function Metrics() {
                   label={label}
                   title={"Time Metrics"}
                 />
-                <BarChartSeconds
+                <BarChartSeconds 
                   WalmartDelivery={WalmartDeliveryCount}
                   WalmartOnline={WalmartOnlineCount}
                   WalmartPhysicalStore={WalmartPhysicalStoreCount}
