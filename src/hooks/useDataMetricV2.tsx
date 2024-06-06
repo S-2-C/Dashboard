@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { fetchMetricDataV2Queue } from "@/fetching/fetchingMetricDataV2Queue";
 import { fetchMetricDataV2Agent } from "@/fetching/fetchingMetricDataV2Agent";
 
-interface Metric {
+export interface Metric {
   Metric: string;
   Value: number;
 }
 
-export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
+const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   const [queueMetrics, setQueueMetrics] = useState<Metric[]>([]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   }, [channelIds, daysAgo]);
 
   const getMetricValue = (metricName: string) => {
-    if (!queueMetrics) return "N/A";
+    if (!queueMetrics) return console.error("No metrics found for queue");
     const metric = queueMetrics.find((m) => m.Metric === metricName);
     return metric ? metric.Value : "N/A";
   };
@@ -39,39 +39,21 @@ export const useQueueMetrics = (channelIds: string, daysAgo: number = 7) => {
   return { queueMetrics, getMetricValue };
 };
 
-export const useAgentMetrics = (
-  agentIds: string | null,
-  daysAgo: number = 7
-) => {
-  const [agentMetrics, setAgentMetrics] = useState<Metric[]>([]);
+const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
+  const [agentMetrics, setAgentMetrics] = useState<Record<string, Metric[]>>(
+    {}
+  );
 
-  useEffect(() => {
-    if (!agentIds) return;
 
-    const fetchData = async () => {
-      const today = new Date();
-      const pastDate = new Date(today);
-      pastDate.setDate(today.getDate() - daysAgo);
-      const date = pastDate.toISOString().split("T")[0]; // Format the date as 'YYYY-MM-DD'
 
-      const metricDataV2Agent = await fetchMetricDataV2Agent(
-        agentIds,
-        date,
-        today.toISOString()
-      );
-      setAgentMetrics(metricDataV2Agent.data);
-    };
-
-    fetchData();
-  }, [agentIds, daysAgo]);
-
-  const getMetricValue = (metricName: string) => {
-    const metric = agentMetrics?.find((m) => m.Metric === metricName);
+const getMetricValue = (agentId: string, metricName: string) => {
+    const metrics = agentMetrics[agentId] || [];
+    if (!metrics) return console.error("No metrics found for agent", agentId);
+    const metric = metrics.find((m) => m.Metric === metricName);
     return metric ? metric.Value : "N/A";
   };
 
   return { agentMetrics, getMetricValue };
 };
 
-export default useQueueMetrics;
-useAgentMetrics;
+export { useQueueMetrics };
