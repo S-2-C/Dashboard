@@ -5,6 +5,7 @@
 export async function AIReportMaker(
     content: string, // The queue ID
   ): Promise<any> {
+    console.log("content", content);
     const url = `http://localhost:3000/reportMaker?content=${content}`;
     try {
       const response = await fetch(url);

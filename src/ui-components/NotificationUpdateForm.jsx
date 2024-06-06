@@ -36,7 +36,7 @@ export default function NotificationUpdateForm(props) {
     description: "",
     urgency: "",
     timestamp: "",
-    agentArn: "",
+    agentEmail: "",
   };
   const [rule, setRule] = React.useState(initialValues.rule);
   const [action, setAction] = React.useState(initialValues.action);
@@ -45,7 +45,7 @@ export default function NotificationUpdateForm(props) {
   );
   const [urgency, setUrgency] = React.useState(initialValues.urgency);
   const [timestamp, setTimestamp] = React.useState(initialValues.timestamp);
-  const [agentArn, setAgentArn] = React.useState(initialValues.agentArn);
+  const [agentEmail, setAgentEmail] = React.useState(initialValues.agentEmail);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = notificationRecord
@@ -56,7 +56,7 @@ export default function NotificationUpdateForm(props) {
     setDescription(cleanValues.description);
     setUrgency(cleanValues.urgency);
     setTimestamp(cleanValues.timestamp);
-    setAgentArn(cleanValues.agentArn);
+    setAgentEmail(cleanValues.agentEmail);
     setErrors({});
   };
   const [notificationRecord, setNotificationRecord] = React.useState(
@@ -83,7 +83,7 @@ export default function NotificationUpdateForm(props) {
     description: [{ type: "Required" }],
     urgency: [{ type: "Required" }],
     timestamp: [{ type: "Required" }],
-    agentArn: [],
+    agentEmail: [{ type: "Email" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -133,7 +133,7 @@ export default function NotificationUpdateForm(props) {
           description,
           urgency,
           timestamp,
-          agentArn: agentArn ?? null,
+          agentEmail: agentEmail ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -199,7 +199,7 @@ export default function NotificationUpdateForm(props) {
               description,
               urgency,
               timestamp,
-              agentArn,
+              agentEmail,
             };
             const result = onChange(modelFields);
             value = result?.rule ?? value;
@@ -228,7 +228,7 @@ export default function NotificationUpdateForm(props) {
               description,
               urgency,
               timestamp,
-              agentArn,
+              agentEmail,
             };
             const result = onChange(modelFields);
             value = result?.action ?? value;
@@ -257,7 +257,7 @@ export default function NotificationUpdateForm(props) {
               description: value,
               urgency,
               timestamp,
-              agentArn,
+              agentEmail,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -286,7 +286,7 @@ export default function NotificationUpdateForm(props) {
               description,
               urgency: value,
               timestamp,
-              agentArn,
+              agentEmail,
             };
             const result = onChange(modelFields);
             value = result?.urgency ?? value;
@@ -338,7 +338,7 @@ export default function NotificationUpdateForm(props) {
               description,
               urgency,
               timestamp: value,
-              agentArn,
+              agentEmail,
             };
             const result = onChange(modelFields);
             value = result?.timestamp ?? value;
@@ -354,10 +354,10 @@ export default function NotificationUpdateForm(props) {
         {...getOverrideProps(overrides, "timestamp")}
       ></TextField>
       <TextField
-        label="Agent arn"
+        label="Agent email"
         isRequired={false}
         isReadOnly={false}
-        value={agentArn}
+        value={agentEmail}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -367,20 +367,20 @@ export default function NotificationUpdateForm(props) {
               description,
               urgency,
               timestamp,
-              agentArn: value,
+              agentEmail: value,
             };
             const result = onChange(modelFields);
-            value = result?.agentArn ?? value;
+            value = result?.agentEmail ?? value;
           }
-          if (errors.agentArn?.hasError) {
-            runValidationTasks("agentArn", value);
+          if (errors.agentEmail?.hasError) {
+            runValidationTasks("agentEmail", value);
           }
-          setAgentArn(value);
+          setAgentEmail(value);
         }}
-        onBlur={() => runValidationTasks("agentArn", agentArn)}
-        errorMessage={errors.agentArn?.errorMessage}
-        hasError={errors.agentArn?.hasError}
-        {...getOverrideProps(overrides, "agentArn")}
+        onBlur={() => runValidationTasks("agentEmail", agentEmail)}
+        errorMessage={errors.agentEmail?.errorMessage}
+        hasError={errors.agentEmail?.hasError}
+        {...getOverrideProps(overrides, "agentEmail")}
       ></TextField>
       <Flex
         justifyContent="space-between"

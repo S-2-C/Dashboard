@@ -1,153 +1,178 @@
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  @import "@aws-amplify/ui-react/styles.css";
+@import "@aws-amplify/ui-react/styles.css";
 
-  @layer utilities {
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    /* Hide scrollbar for IE, Edge and Firefox */
-    .no-scrollbar {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-    }
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Primary Button */
+.amplify-button--primary {
+  background: #007EC9;
+}
+
+/* Primary Button Hover */
+.amplify-button--primary:hover {
+  background: #01598c;
+}
+
+/* Forgot Password link */
+.amplify-button--link {
+  color: #01598c;
+}
+
+.amplify-tabs-item[data-state="active"] {
+  color: #007EC9;
+}
+
+[data-amplify-authenticator] {
+  /* Text color tabs */
+  --amplify-components-tabs-item-focus-color: #007EC9;
+  /* Active tab border */
+  --amplify-components-tabs-item-active-border-color: #007EC9;
+  /* Selected tab border */
+
+  /* Tab hover */
+  --amplify-components-tabs-item-hover-color: #007EC9;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --blue: 205 83% 91%;
+    --blue-foreground: 210 40% 98%;
+    --blue-highlight: 204 70% 91%;
+    --blue-dark: 210 98% 17%;
+    --blue-darkhighlight: 210 82% 26%;
+    --blue-teal: 203 51% 44%;
+
+    --teal: 210 98% 17%;
+    --teal-foreground: 222.2 47.4% 11.2%;
+    --teal-highlight: 203 95% 40%;
+    --teal-dark: 203 69% 11%;
+    --teal-background: 202, 43%, 61%;
+    --teal-FU: 203 61% 33%;
+
+    /* figma colors HSL */
+    --figma: 0, 0%, 100%;
+    --figma-figma1: 203, 95%, 40%;
+    --figma-figma2: 44, 100%, 56%;
+    --figma-figma3: 203, 93%, 30%;
+    --figma-figma4: 216, 20%, 95%;
+    --figma-figma5: 0, 0%, 0%;
+    --figma-figma6: 203, 66%, 73%;
+    --figma-figma7: 210, 98%, 17%;
+    --figma-figma8: 126, 65%, 30%; /* //green */
+    --figma-figma9: 43, 94%, 51%; /* //yellow */
+    --figma-figma10: 0, 100%, 50%; /* //red */
+    --figma-figma11: 202, 65%, 93%; /* //lightblue */
+    --figma-figma12: 201, 66%, 87%; /* //darkerblue */
+    --figma-figma13: 202, 65%, 72%; /* //skyblue */
+    --figma-figma14: 210, 94%, 26%; /* //midblue */
+    --figma-figma15: 210, 91%, 35%; /* //darkblue */
+    --figma-figma16: 208, 92%, 36%; /* //darkblue */
+
+    --metrics: 0 0% 96%;
+    --gray: 213 12% 29%;
+
+    /* Agent Management */
+    --agenman: 205, 83%, 93%; /* baby blue */
+    --agenman-agenmangray: 204, 45%, 98%; /* light gray */
+    --agenman-agenmanred: 0, 100%, 50%; /* red */
+    --agenman-agenmanyellow: 43, 94%, 51%; /* yellow */
+    --agenman-agenmanblue: 203, 92%, 48%; /* blue */
+    --agenman-agenmandarkblue: 270, 56%, 13%; /* dark blue */
+    --agenman-agenmansblue1: 202, 67%, 78%; /* sky blue */
+    --agenman-agenmansblue2: 202, 76%, 33%; /* mid blue */
+    --agenman-agenmansblue3: 210, 74%, 21%; /* mid-dark blue */
   }
 
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 222.2 84% 4.9%;
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-      --card: 0 0% 100%;
-      --card-foreground: 222.2 84% 4.9%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-      --popover: 0 0% 100%;
-      --popover-foreground: 222.2 84% 4.9%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-      --primary: 222.2 47.4% 11.2%;
-      --primary-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
 
-      --secondary: 210 40% 96.1%;
-      --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-      --muted: 210 40% 96.1%;
-      --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-      --accent: 210 40% 96.1%;
-      --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-      --border: 214.3 31.8% 91.4%;
-      --input: 214.3 31.8% 91.4%;
-      --ring: 222.2 84% 4.9%;
-
-      --radius: 0.5rem;
-
-      --blue: 205 83% 91%;
-      --blue-foreground: 210 40% 98%;
-      --blue-highlight: 204 70% 91%;
-      --blue-dark: 210 98% 17%;
-      --blue-darkhighlight: 210 82% 26%;
-      --blue-teal: 203 51% 44%;
-    
-
-      --teal:210 98% 17%;
-      --teal-foreground: 222.2 47.4% 11.2%;
-      --teal-highlight: 203 95% 40%;
-      --teal-dark: 203 69% 11%;
-      --teal-background: 202, 43%, 61%;
-      --teal-FU: 203 61% 33%;
-
-      /* figma colors HSL */
-      --figma: 0, 0%, 100%;
-      --figma-figma1: 203, 95%, 40%;
-      --figma-figma2: 44, 100%, 56%;
-      --figma-figma3:203, 93%, 30%;
-      --figma-figma4: 216, 20%, 95%;
-      --figma-figma5: 0, 0%, 0%;
-      --figma-figma6: 203, 66%, 73%;
-      --figma-figma7: 210, 98%, 17%;
-      --figma-figma8: 126, 65%, 30%; /* //green */
-      --figma-figma9: 43, 94%, 51%;/* //yellow */
-      --figma-figma10:0, 100%, 50%;   /* //red */
-      --figma-figma11: 202, 65%, 93%; /* //lightblue */
-      --figma-figma12: 201, 66%, 87%; /* //darkerblue */
-      --figma-figma13: 202, 65%, 72%; /* //skyblue */
-      --figma-figma14: 210, 94%, 26%; /* //midblue */
-      --figma-figma15: 210, 91%, 35%; /* //darkblue */
-      --figma-figma16: 208, 92%, 36%; /* //darkblue */
-
-
-      --metrics: 0 0% 96%;
-      --gray: 213 12% 29%;
-
-      /* Agent Management */
-      --agenman: 205, 83%, 93%; /* baby blue */
-      --agenman-agenmangray:204, 45%, 98%; /* light gray */
-      --agenman-agenmanred: 0, 100%, 50%; /* red */
-      --agenman-agenmanyellow: 43, 94%, 51%; /* yellow */
-      --agenman-agenmanblue: 203, 92%, 48%; /* blue */
-      --agenman-agenmandarkblue: 270, 56%, 13%; /* dark blue */
-      --agenman-agenmansblue1: 202, 67%, 78%; /* sky blue */
-      --agenman-agenmansblue2: 202, 76%, 33%; /* mid blue */
-      --agenman-agenmansblue3: 210, 74%, 21%; /* mid-dark blue */
-
-
-
-    }
-
-    .dark {
-      --background: 222.2 84% 4.9%;
-      --foreground: 210 40% 98%;
-
-      --card: 222.2 84% 4.9%;
-      --card-foreground: 210 40% 98%;
-
-      --popover: 222.2 84% 4.9%;
-      --popover-foreground: 210 40% 98%;
-
-      --primary: 210 40% 98%;
-      --primary-foreground: 222.2 47.4% 11.2%;
-
-      --secondary: 217.2 32.6% 17.5%;
-      --secondary-foreground: 210 40% 98%;
-
-      --muted: 217.2 32.6% 17.5%;
-      --muted-foreground: 215 20.2% 65.1%;
-
-      --accent: 217.2 32.6% 17.5%;
-      --accent-foreground: 210 40% 98%;
-
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 217.2 32.6% 17.5%;
-      --input: 217.2 32.6% 17.5%;
-      --ring: 212.7 26.8% 83.9%;
-    }
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
+}
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+@layer base {
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
 
-  .loadingNoStyle {
-    display: inline-block;
-    clip-path: inset(0 1ch 0 0);
-    animation: l 1s steps(4) infinite;
-  }
+.loadingNoStyle {
+  display: inline-block;
+  clip-path: inset(0 1ch 0 0);
+  animation: l 1s steps(4) infinite;
+}
 
-  @keyframes l {
-    to {
-      clip-path: inset(0 -1ch 0 0);
-    }
+@keyframes l {
+  to {
+    clip-path: inset(0 -1ch 0 0);
   }
+}

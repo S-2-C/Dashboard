@@ -46,7 +46,7 @@ const useAgentMetrics = (agentIds: string[], daysAgo: number = 7) => {
 
 
 
-  const getMetricValue = (agentId: string, metricName: string) => {
+const getMetricValue = (agentId: string, metricName: string) => {
     const metrics = agentMetrics[agentId] || [];
     if (!metrics) return console.error("No metrics found for agent", agentId);
     const metric = metrics.find((m) => m.Metric === metricName);

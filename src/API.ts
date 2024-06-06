@@ -3,7 +3,7 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateUserInput = {
-  id?: string | null,
+  id: string,
   arn: string,
   name?: string | null,
   profilePic?: string | null,
@@ -28,6 +28,8 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelStringInput = {
@@ -143,6 +145,8 @@ export type ModelContactConditionInput = {
   and?: Array< ModelContactConditionInput | null > | null,
   or?: Array< ModelContactConditionInput | null > | null,
   not?: ModelContactConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   userContactsId?: ModelIDInput | null,
 };
 
@@ -179,6 +183,8 @@ export type CreateNotificationInput = {
   action: string,
   description: string,
   urgency: Urgency,
+  timestamp: string,
+  agentEmail?: string | null,
   id?: string | null,
 };
 
@@ -195,9 +201,13 @@ export type ModelNotificationConditionInput = {
   action?: ModelStringInput | null,
   description?: ModelStringInput | null,
   urgency?: ModelUrgencyInput | null,
+  timestamp?: ModelStringInput | null,
+  agentEmail?: ModelStringInput | null,
   and?: Array< ModelNotificationConditionInput | null > | null,
   or?: Array< ModelNotificationConditionInput | null > | null,
   not?: ModelNotificationConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelUrgencyInput = {
@@ -211,6 +221,8 @@ export type Notification = {
   action: string,
   description: string,
   urgency: Urgency,
+  timestamp: string,
+  agentEmail?: string | null,
   id: string,
   createdAt: string,
   updatedAt: string,
@@ -221,6 +233,8 @@ export type UpdateNotificationInput = {
   action?: string | null,
   description?: string | null,
   urgency?: Urgency | null,
+  timestamp?: string | null,
+  agentEmail?: string | null,
   id: string,
 };
 
@@ -236,6 +250,8 @@ export type ModelUserFilterInput = {
   role?: ModelRoleInput | null,
   needsHelp?: ModelBooleanInput | null,
   isOnCall?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -251,6 +267,9 @@ export type ModelContactFilterInput = {
   phone?: ModelStringInput | null,
   callStart?: ModelStringInput | null,
   callEnd?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelContactFilterInput | null > | null,
   or?: Array< ModelContactFilterInput | null > | null,
   not?: ModelContactFilterInput | null,
@@ -262,6 +281,11 @@ export type ModelNotificationFilterInput = {
   action?: ModelStringInput | null,
   description?: ModelStringInput | null,
   urgency?: ModelUrgencyInput | null,
+  timestamp?: ModelStringInput | null,
+  agentEmail?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelNotificationFilterInput | null > | null,
   or?: Array< ModelNotificationFilterInput | null > | null,
   not?: ModelNotificationFilterInput | null,
@@ -287,8 +311,11 @@ export type ModelSubscriptionUserFilterInput = {
   role?: ModelSubscriptionStringInput | null,
   needsHelp?: ModelSubscriptionBooleanInput | null,
   isOnCall?: ModelSubscriptionBooleanInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  userContactsId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -311,10 +338,28 @@ export type ModelSubscriptionBooleanInput = {
   eq?: boolean | null,
 };
 
+export type ModelSubscriptionIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  in?: Array< string | null > | null,
+  notIn?: Array< string | null > | null,
+};
+
 export type ModelSubscriptionContactFilterInput = {
   phone?: ModelSubscriptionStringInput | null,
   callStart?: ModelSubscriptionStringInput | null,
   callEnd?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionContactFilterInput | null > | null,
   or?: Array< ModelSubscriptionContactFilterInput | null > | null,
 };
@@ -324,6 +369,11 @@ export type ModelSubscriptionNotificationFilterInput = {
   action?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   urgency?: ModelSubscriptionStringInput | null,
+  timestamp?: ModelSubscriptionStringInput | null,
+  agentEmail?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
   or?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
 };
@@ -766,6 +816,8 @@ export type CreateNotificationMutation = {
     action: string,
     description: string,
     urgency: Urgency,
+    timestamp: string,
+    agentEmail?: string | null,
     id: string,
     createdAt: string,
     updatedAt: string,
@@ -784,6 +836,8 @@ export type UpdateNotificationMutation = {
     action: string,
     description: string,
     urgency: Urgency,
+    timestamp: string,
+    agentEmail?: string | null,
     id: string,
     createdAt: string,
     updatedAt: string,
@@ -802,6 +856,8 @@ export type DeleteNotificationMutation = {
     action: string,
     description: string,
     urgency: Urgency,
+    timestamp: string,
+    agentEmail?: string | null,
     id: string,
     createdAt: string,
     updatedAt: string,
@@ -1089,6 +1145,8 @@ export type GetNotificationQuery = {
     action: string,
     description: string,
     urgency: Urgency,
+    timestamp: string,
+    agentEmail?: string | null,
     id: string,
     createdAt: string,
     updatedAt: string,
@@ -1110,6 +1168,8 @@ export type ListNotificationsQuery = {
       action: string,
       description: string,
       urgency: Urgency,
+      timestamp: string,
+      agentEmail?: string | null,
       id: string,
       createdAt: string,
       updatedAt: string,
@@ -1616,6 +1676,8 @@ export type OnCreateNotificationSubscription = {
     action: string,
     description: string,
     urgency: Urgency,
+    timestamp: string,
+    agentEmail?: string | null,
     id: string,
     createdAt: string,
     updatedAt: string,
@@ -1633,6 +1695,8 @@ export type OnUpdateNotificationSubscription = {
     action: string,
     description: string,
     urgency: Urgency,
+    timestamp: string,
+    agentEmail?: string | null,
     id: string,
     createdAt: string,
     updatedAt: string,
@@ -1650,6 +1714,8 @@ export type OnDeleteNotificationSubscription = {
     action: string,
     description: string,
     urgency: Urgency,
+    timestamp: string,
+    agentEmail?: string | null,
     id: string,
     createdAt: string,
     updatedAt: string,

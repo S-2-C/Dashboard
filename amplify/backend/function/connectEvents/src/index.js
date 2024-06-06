@@ -146,6 +146,45 @@ async function createNotification(event, description, urgency = "REGULAR", agent
 
     let createNotificationQuery;
     if (agentArn) {
+
+        // get agent by arn to get the email so we can redirect to agent page when notification is clicked
+        const getUserByArn = {
+            query: `query GetUserByArn($arn: String!) {
+                usersByArn(arn: $arn) {
+                    items {
+                        id
+                        arn
+                        name
+                        profilePic
+                        role
+                        needsHelp
+                        isOnCall
+                    }
+                }
+            }`,
+            variables: {
+                arn: agentArn,
+            },
+        };
+
+        // execute query to get agent by arn
+        let getUserByArnRes;
+        try {
+            getUserByArnRes = await sendAppSyncRequest(
+                APPSYNCURL,
+                REGION,
+                "POST",
+                getUserByArn,
+                GQLAPIKEY
+            );
+            console.log(`Got user with arn ${agentArn} from the database`);
+        } catch (error) {
+            return {
+                statusCode: 500,
+                body: JSON.stringify(`Could not get user by arn ${agentArn}. Error: ${error}`),
+            };
+        }
+
         createNotificationQuery = {
             query: `mutation CreateNotification($input: CreateNotificationInput!) {
                 createNotification(input: $input) {
@@ -155,7 +194,7 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     description
                     urgency
                     timestamp
-                    agentArn
+                    agentEmail
                 }
             }`,
             variables: {
@@ -165,7 +204,7 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     description: description,
                     urgency: urgency,
                     timestamp: new Date().toISOString(),
-                    agentArn: agentArn
+                    agentEmail: getUserByArnRes.data.usersByArn.items[0].id
                 }
             }
         };
@@ -180,7 +219,7 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     description
                     urgency
                     timestamp
-                    agentArn
+                    agentEmail
                 }
             }`,
             variables: {
@@ -235,17 +274,8 @@ exports.handler = async (event) => {
         case "DISCONNECTED":
             return updateCallEnd(event);
 
-        case "QUEUE_WAIT_TOO_LONG_DELIVERY":
-            return createNotification(event, "The wait time in the Walmart Delivery queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
-
-        case "QUEUE_WAIT_TOO_LONG_ONLINE":
-            return createNotification(event, "The wait time in the Walmart Online queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
-
-        case "QUEUE_WAIT_TOO_LONG_PASS":
-            return createNotification(event, "The wait time in the Walmart Pass queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
-
-        case "QUEUE_WAIT_TOO_LONG_PHYSICAL":
-            return createNotification(event, "The wait time in the Walmart Physical Store queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
+        case "QUEUE_WAIT_TOO_LONG":
+            return createNotification(event, "The wait time in the queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
 
         case "NO_AGENTS_IN_QUEUE":
             return createNotification(event, "There are no agents available in the queue, watch out for an increase in inbound calls.", "LOW");
