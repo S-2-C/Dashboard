@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { DateRangeType } from "react-tailwindcss-datepicker";
 import DownloadPdfButton from "./downloadPdfButton";
-import { fetchAllAgents } from "@/fetching/fetchingDataFunctions";
+import DownloadCsvButton from "./downloadCsvButton";
+import { fetchAllAgents } from "../fetching/fetchingDataFunctions";
 
 const NewReport = ({ props, onSave, onDelete }: any) => {
   const today = new Date();
@@ -227,10 +228,10 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                         <div key={attr} className="flex justify-between items-center mb-2">
                           <span>{textAttributes[attr]}</span>
                           <button
-                            className="ml-2 p-1 bg-green-500 text-white rounded"
+                            className="ml-2 px-2 text-2xl bg-green-500 text-white rounded"
                             onClick={() => handleAttributeSelect(attr)}
                           >
-                            Add
+                            +
                           </button>
                         </div>
                       ))}
@@ -241,10 +242,10 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                         <div key={attr} className="flex justify-between items-center mb-2">
                           <span>{textAttributes[attr]}</span>
                           <button
-                            className="ml-2 p-1 bg-green-500 text-white rounded"
+                            className="ml-2 px-2 text-2xl bg-green-500 text-white rounded"
                             onClick={() => handleAttributeSelect(attr)}
                           >
-                            Add
+                            +
                           </button>
                         </div>
                       ))}
@@ -257,10 +258,10 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                         <div key={attr} className="flex justify-between items-center mb-2">
                           <span>{textAttributes[attr]}</span>
                           <button
-                            className="ml-2 p-1 bg-red-500 text-white rounded"
+                            className="ml-2 px-2 text-2xl bg-red-500 text-white rounded"
                             onClick={() => handleAttributeRemove(attr)}
                           >
-                            Remove
+                            -
                           </button>
                         </div>
                       ))}
@@ -285,14 +286,17 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                   </div>
                   <p className="text-base font-extralight pb-1">Last updated at: {props.date}</p>
 
-                  <DownloadPdfButton rangeDate={value} siQueue={isTypeQueue} specifiesAgent={selectedAgent} specifiesQueue={selectedChannel} relevantKPI={selectedAttributes} title={props.title} description={props.description} date={props.date} />
+                  <div className=" flex">
+                    <DownloadPdfButton rangeDate={value} siQueue={isTypeQueue} specifiesAgent={selectedAgent} specifiesQueue={selectedChannel} relevantKPI={selectedAttributes} title={props.title} description={props.description} date={props.date} />
+                    <DownloadCsvButton rangeDate={value} siQueue={isTypeQueue} specifiesAgent={selectedAgent} specifiesQueue={selectedChannel} relevantKPI={selectedAttributes} title={props.title} description={props.description} date={props.date} />
+                  </div>
                 </>
               )}
             </div>
             <div className="flex justify-between items-center">
               {isEditing ? (
                 <button
-                  className="text-lg rounded-sm bg-slate-500 p-2 text-white hover:scale-105 ease-in transition-all"
+                  className="text-lg rounded-sm bg-figma-figma3 p-2 text-white hover:scale-105 ease-in transition-all"
                   onClick={handleSave}
                   disabled={!title || !description || selectedAttributes.length === 0 || (!isTypeQueue && !selectedAgent) || (isTypeQueue && !selectedChannel)}
                 >

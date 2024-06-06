@@ -34,6 +34,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "file-saver": "^2.0.5",
+    "json2csv": "^6.0.0-alpha.2",
     "langchain": "^0.1.34",
     "lucide-react": "^0.367.0",
     "mocha": "^10.3.0",

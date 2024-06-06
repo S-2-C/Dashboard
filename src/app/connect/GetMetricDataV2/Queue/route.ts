@@ -52,7 +52,8 @@ export async function GET(request: Request) {
   console.log("QUEUE IDS");
   console.log(searchParams, queueIds);
   let metricDate: any = searchParams.get("metricDate") || undefined;
-  let currentMetricData: any = searchParams.get("currentMetricData") || undefined;
+  let currentMetricData: any =
+    searchParams.get("currentMetricData") || undefined;
 
   if (!metricDate && !currentMetricData) {
     metricDate = new Date();
@@ -78,8 +79,13 @@ export async function GET(request: Request) {
 
   const client = new ConnectClient(config as any);
 
-  const response = await getUserMetricData(client, queueIdsArray, metricDate, currentMetricData);
-  console.log("Response from GetMetricDataV2Command:", response);
+  const response = await getUserMetricData(
+    client,
+    queueIdsArray,
+    metricDate,
+    currentMetricData
+  );
+  console.log("Response from GetMetricDataV2Command QUEUE:", response);
 
   return new Response(
     JSON.stringify({
