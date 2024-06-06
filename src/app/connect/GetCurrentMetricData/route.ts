@@ -80,6 +80,7 @@ export async function GET(request: Request) {
   // Get the queueIDs from the request
   const { searchParams } = new URL(request.url);
   const queueIds = searchParams.get("queueIds") || undefined;
+  const { searchParams } = new URL(request.url);
 
   if (queueIds === undefined) {
     return new Response(JSON.stringify({ message: "Please provide a queue ID" }), {

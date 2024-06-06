@@ -9,3 +9,13 @@ export function make_config_json() {
     }
 }
 
+
+
+export function returnError(message: string, status: number) {
+    return new Response(JSON.stringify({ message: message }), {
+        status: status,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
