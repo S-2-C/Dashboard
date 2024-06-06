@@ -22,7 +22,7 @@ export const ConnectCallModal = () => {
 
   return (
     <div
-      className={`bg-white border border-gray-200 rounded-lg shadow-lg p-3 flex flex-row space-x-2 items-center absolute left-1/2 transform -translate-x-1/2 top-1 ${
+      className={`bg-white border border-gray-200 rounded-lg shadow-lg p-3 flex flex-row space-x-2 items-center absolute left-1/2 transform -translate-x-1/2 top-1 z-[50]${
         (!incomingContact || !currentAgent) && "hidden"
       }`}
     >

@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import Home from "../NavBar";
 import SearchBar from "../searchBar";
 import { fetchMetricDataV2Agent } from '@/fetching/fetchingMetricDataV2Agent';
 import { fetchMetricDataV2Queue } from '@/fetching/fetchingMetricDataV2Queue';
@@ -48,7 +47,6 @@ const ManageReports = () => {
     
     return (
     <div className="flex h-screen bg-background text-foreground relative">
-    <Home />
     <div className="flex flex-col flex-1 p-10 ml-20">
     <div className="flex justify-end px-16 pt-4">
     <SearchBar />

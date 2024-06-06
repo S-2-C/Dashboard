@@ -1,15 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import { fetchAuthSession } from "aws-amplify/auth";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import "@aws-amplify/ui-react/styles.css";
 import "../styles/styles.css";
-import Home from "./NavBar"; // Importing the NavBar component
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { fetchOneAgent } from "@/fetching/fetchingDataFunctions";

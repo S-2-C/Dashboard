@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Home from "../NavBar";
 import SearchBar from "../searchBar";
 import { Flex, Heading, Text, Button } from "@aws-amplify/ui-react";
 import { useQueueMetrics, Metric } from "@/hooks/useDataMetricV2"; // Updated import
@@ -469,7 +468,6 @@ export default function Metrics() {
 
   return (
     <div className="flex h-screen bg-background text-foreground relative ">
-      <Home />
       <div className="flex flex-col flex-1 p-10 ml-20">
         <div className="flex justify-between items-center mb-6">
           <Heading level={1} fontWeight="Bold">

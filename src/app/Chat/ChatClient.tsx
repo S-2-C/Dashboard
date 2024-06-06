@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Text } from '@aws-amplify/ui-react';
-import Home from '../NavBar';
+
 import StoryTypeMenu from './StoryTypeMenu';
 import ChatList from './ChatList'; // Import ChatList component
 import ChatWindow from './ChatWindow'; // Import ChatWindow component
@@ -50,9 +50,9 @@ export const ChatClient: React.FC<ChatClientProps> = ({
 
 
     return (
+        <div className='relative w-full'>
         <Flex direction="column" style={{ height: '100vh', width: '100%' }}>
             <Flex direction="row" style={{ height: '100%', backgroundColor: '#FFFFFF' }}>
-                <Flex direction="column" style={{}}><Home /></Flex>
                 <Flex direction="column" style={{ flex: 1, marginLeft: '65px', padding: '30px', position: 'relative' }}>
                     <Text style={{ fontWeight: 600, fontSize: 25, marginLeft: '10px' }}>Messages</Text>
                     <Text style={{ fontWeight: 500, fontSize: 17, marginLeft: '10px' }}>Agents</Text>
@@ -67,6 +67,7 @@ export const ChatClient: React.FC<ChatClientProps> = ({
                 </Flex>
             </Flex>
         </Flex>
+        </div>
     );
 };
 

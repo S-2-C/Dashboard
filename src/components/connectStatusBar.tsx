@@ -5,7 +5,7 @@ import React from "react";
 export const ConnectStatusBar = () => {
   const { currentAgent, agentState, callTime, changeAgentState } = useCCP();
   return (
-    <div className="absolute bottom-1 left-1">
+    <div className="fixed bottom-1 left-1 z-[50]">
       {currentAgent ? (
         <div className="flex flex-col justify-center">
           {agentState === "Available" ? (

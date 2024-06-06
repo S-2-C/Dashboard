@@ -31,6 +31,9 @@ const Stories: React.FC = () => {
 
     // Set agent username to stories array
     for (let i = 0; i < agents.length; i++) {
+        if (!stories[i]) {
+            continue;
+        }
         stories[i].first_name = agents[i].Username;
         stories[i].id = agents[i].Id;
     }

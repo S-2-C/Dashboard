@@ -184,7 +184,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
     <div
       ref={chatBoxRef}
       className={cn(
-        "z-10 w-[400px] p-1 fixed",
+        "z-[50] w-[400px] p-1 fixed",
         open
           ? "opacity-95 transition-opacity duration-300"
           : "hidden opacity-0 transition-opacity duration-300"
