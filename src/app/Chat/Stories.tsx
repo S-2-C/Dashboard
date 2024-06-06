@@ -29,14 +29,11 @@ const Stories: React.FC = () => {
         fetchData();
     }, []);
 
-    console.log(agents, "agents");
-
     // Set agent username to stories array
     for (let i = 0; i < agents.length; i++) {
         stories[i].first_name = agents[i].Username;
         stories[i].id = agents[i].Id;
     }
-    console.log(stories, "stories");
 
 
 

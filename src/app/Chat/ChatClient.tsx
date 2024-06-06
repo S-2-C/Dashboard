@@ -11,20 +11,28 @@ import { fetchAllUsers } from '../../fetching/fetchingDataFunctions';
 interface ChatClientProps {
     isConnected: boolean;
     chatRows: React.ReactNode[];
+    members: string[];
     onPublicMessage: () => void;
     onPrivateMessage: (to: string) => void;
     onConnect: () => void;
     onDisconnect: () => void;
+    email: string;
 }
+
+
 
 export const ChatClient: React.FC<ChatClientProps> = ({
     isConnected,
+    members,
     chatRows,
     onPublicMessage,
     onPrivateMessage,
     onConnect,
-    onDisconnect
+    onDisconnect,
+    email
 }) => {
+
+
 
 
 
@@ -38,7 +46,6 @@ export const ChatClient: React.FC<ChatClientProps> = ({
     const fetchData = async () => {
         const response = await fetchAllUsers();
         setAgents(response.data);
-        console.log("Agents", response.data);
     };
 
 
