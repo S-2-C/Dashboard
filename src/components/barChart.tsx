@@ -67,9 +67,9 @@ function BarChartSeconds({WalmartDelivery, WalmartOnline, WalmartPhysicalStore, 
     return (
         <>
             {/* Bar chart */}
-            <h1 className="w-[150px] mx-auto mt-10 text-xl font-semibold capitalize ">{title}</h1> 
+            <h1 className="w-[150px] mx-auto  text-xl font-semibold capitalize ">{title}</h1> 
             <div className="w-[625px] flex mx-auto my-auto">
-                <div className='border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl'>
+                <div className='border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl mb-8'>
                     <canvas id={title}></canvas>
                 </div>
             </div>
