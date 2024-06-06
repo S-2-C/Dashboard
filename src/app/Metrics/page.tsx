@@ -49,6 +49,7 @@ export default function Metrics() {
   // const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [weeksAgo, setWeeksAgo] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
   const [selectedAgents, setSelectedAgents] = useState<Agent[]>([]);
   const [agentMetricsData, setAgentMetricsData] = useState<any>({});
   const [agentMetrics, setAgentMetrics] = useState<Record<string, Metric[]>>(
@@ -222,7 +223,7 @@ export default function Metrics() {
     };
 
     fetchAgentMetricsData();
-  }, [selectedAgents, weeksAgo]);
+  }, [selectedAgents, weeksAgo, agentMetrics]);
 
   const handleWeeksChange = (weeks: number) => {
     setWeeksAgo(weeks);
@@ -234,6 +235,14 @@ export default function Metrics() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleOpenGuideModal = () => {
+    setIsGuideModalOpen(true);
+  };
+
+  const handleCloseGuideModal = () => {
+    setIsGuideModalOpen(false);
   };
 
   const channelIds = {
@@ -390,6 +399,14 @@ export default function Metrics() {
           style={{ height: "calc(100vh - 130px)" }}
         >
           {/* <Text className="text-sans mb-6">Here are some metrics</Text> */}
+          <div className="flex justify-end">
+            <button
+              className=" mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1"
+              onClick={handleOpenGuideModal}
+            >
+              Metric Guide
+            </button>
+          </div>
 
           <div className="flex mb-6">
             <div className="flex ">
@@ -418,6 +435,7 @@ export default function Metrics() {
                 4 Weeks
               </button>
             </div>
+
             <div className="flex">
               <button
                 className=" mr-2 w-36 p-2 rounded-xl shadow-md flex justify-center items-center hover:bg-figma-figma6 bg-blue text-figma-figma1"
@@ -426,6 +444,8 @@ export default function Metrics() {
                 Show Agents
               </button>
             </div>
+
+            <div className="flex"></div>
           </div>
 
           <div className="flex-1 grid grid-cols-2 gap-4 overflow-hidden">
@@ -536,6 +556,94 @@ export default function Metrics() {
                 </li>
               ))}
             </ul>
+          </Modal>
+        )}
+
+        {isGuideModalOpen && (
+          <Modal onClose={handleCloseGuideModal}>
+            <Heading level={2} fontWeight="Bold">
+              Metric Guide
+            </Heading>
+            <div className="p-4">
+              <h3 className="font-bold">Agent Metrics</h3>
+              <ul>
+                <li>
+                  <b>Average Talk Time:</b> The average time an agent spends
+                  talking with customers.
+                </li>
+                <li>
+                  <b>Average Resolution Time:</b> The average time it takes for
+                  an agent to resolve an issue.
+                </li>
+                <li>
+                  <b>Contacts Queued:</b> The number of contacts waiting in the
+                  queue.
+                </li>
+                <li>
+                  <b>Contacts Handled:</b> The number of contacts handled by an
+                  agent.
+                </li>
+                <li>
+                  <b>Average Queue Answer Time:</b> The average time it takes
+                  for an agent to answer a contact in the queue.
+                </li>
+                <li>
+                  <b>Average Contact Duration:</b> The average duration of a
+                  contact handled by the agent.
+                </li>
+                <li>
+                  <b>Average Handle Time:</b> The average time spent by the
+                  agent on handling contacts.
+                </li>
+                <li>
+                  <b>Average Hold Time:</b> The average time an agent puts a
+                  contact on hold.
+                </li>
+                <li>
+                  <b>Average Interruptions Agent:</b> The average number of
+                  interruptions faced by the agent.
+                </li>
+                <li>
+                  <b>Agent Occupancy:</b> The percentage of time an agent is
+                  occupied with contacts.
+                </li>
+                <li>
+                  <b>Sum Non-Productive Time Agent:</b> The total non-productive
+                  time of the agent.
+                </li>
+                <li>
+                  <b>Agent Non-Response:</b> The number of times the agent
+                  failed to respond.
+                </li>
+                <li>
+                  <b>Agent Answer Rate:</b> The percentage of contacts answered
+                  by the agent.
+                </li>
+              </ul>
+              <h2 className="font-bold mt-4">Queue Metrics</h2>
+              <ul>
+                <li>
+                  <b>Average Talk Time:</b> The average talk time for contacts
+                  in the queue.
+                </li>
+                <li>
+                  <b>Average Resolution Time:</b> The average resolution time
+                  for contacts in the queue.
+                </li>
+                <li>
+                  <b>Contacts Queued:</b> The total number of contacts currently
+                  in the queue.
+                </li>
+                <li>
+                  <b>Contacts Handled:</b> The total number of contacts handled
+                  from the queue.
+                </li>
+                <li>
+                  <b>Average Queue Answer Time:</b> The average time taken to
+                  answer a contact in the queue.
+                </li>
+              </ul>
+            </div>
           </Modal>
         )}
       </div>
