@@ -8,6 +8,7 @@ import { useQueueMetrics } from "@/hooks/useDataMetricV2"; // Updated import
 import { fetchListUsers } from "@/fetching/fetchingListAgent";
 import { useEffect } from "react";
 import { useState } from "react";
+import { askForHelp } from "@/fetching/mutatationFunctions";
 
 interface Agent {
   Id: string;
@@ -18,6 +19,7 @@ export default function MetricsSlot() {
   const agent = useUserRole();
 
   const [agents, setAgents] = useState<Agent[]>([]);
+  const [ isAskingForHelp, setIsAskingForHelp] = useState<boolean>(false);
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [weeksAgo, setWeeksAgo] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,10 +30,19 @@ export default function MetricsSlot() {
       const response = await fetchListUsers();
       setAgents(response.data);
       console.log("Agents", response.data);
+
     };
 
     fetchData();
   }, []);
+
+
+  useEffect(() => {
+    if (agent)
+      setIsAskingForHelp(agent?.needsHelp)
+
+
+  }, [agent])
 
   const channelIds = {
     walmartDelivery: "46bf33f7-3381-4db1-a3f7-85eafdf04578",
@@ -164,14 +175,18 @@ export default function MetricsSlot() {
           </div>
         </>
       ) : (
-        <div className="bg-red-500 hover:bg-figma-figma9 rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-64 xl:h-full">
-          <button className="w-full flex flex-col items-center justify-center">
-            <div className="flex items-center justify-center p-4">
+        <div className={`${isAskingForHelp? "bg-red-500 " : "bg-figma-figma9" }  rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-64 xl:h-full`} >
+          { agent && 
+          <button className="w-full flex flex-col items-center justify-center" onClick={() => {
+            askForHelp(agent?.id, !isAskingForHelp)
+            setIsAskingForHelp(!isAskingForHelp)
+            } }>
+            <div className="flex items-center justify-center p-4" >
               <FontAwesomeIcon
                 icon={faQuestion}
                 className="text-white text-4xl mr-4"
               />
-              <h1 className="text-4xl font-bold text-white">Ask for help</h1>
+              <h1 className="text-4xl font-bold text-white">{isAskingForHelp? "Asking for help" : "Ask for help"}</h1>
             </div>
             <div className="flex items-center justify-center px-3">
               <text className="text-white">
@@ -179,6 +194,7 @@ export default function MetricsSlot() {
               </text>
             </div>
           </button>
+          }
         </div>
       )}
     </div>
