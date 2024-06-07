@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import 'amazon-connect-streams';
 import "./agentConnectPopup.css";
 import { MicOff, Mic, Phone, PhoneCall, PhoneOff } from 'lucide-react';
+import next from 'next';
  
 // Extendiendo la interfaz Window para incluir 'connect'
 declare global {
@@ -55,23 +56,58 @@ const AgentConnectPopup: React.FC = () => {
         });
     }, []);
 
-    const MuteButton = () => {
-        const [isMuted, setIsMuted] = React.useState<boolean>(false);
+const MuteButton: React.FC = () => {
+    const [isMuted, setIsMuted] = React.useState(false);
 
-        const handleMuteToggle = () => {
-            setIsMuted(!isMuted);
-        };
+    // Function to mute/unmute agent
+    const muteAgent = (action: 'mute' | 'unmute') => {
+        const agent = new connect.Agent();
+        const contact = agent.getContacts(connect.ContactType.VOICE)?.[0];
 
-        return (
-            <button
-                onClick={handleMuteToggle}
-                className="px-3 text-center text-white text-sm bg-gray-400 border border-grey-500 rounded-full shadow-lg py-3 cursor-pointer hover:bg-gray-300 transition duration-200"
-            >
-                {isMuted ? <MicOff /> : <Mic />}
-            </button>
-        );
-    } 
+        // Get all open active connections
+        const activeConnections = contact?.getConnections().filter((conn) => conn.isActive()) || [];
 
+        if (activeConnections.length === 0) {
+            console.log("No Active Connections to mute");
+            return;
+        }
+
+        // Check if we are using multiparty and see if there more than 2 active connections
+        if (contact.isMultiPartyConferenceEnabled() && activeConnections.length > 2) {
+            // if any of those are in connecting mode
+            const connectingConnections = contact?.getConnections().filter((conn) => conn.isConnecting()) || [];
+            if (connectingConnections.length === 0) {
+                console.log("Agent Connection is muted at the server side");
+                if (action === 'mute') {
+                    // contact.getAgentConnection().muteParticipant();
+                } else {
+                    // contact.getAgentConnection().unmuteParticipant();
+                }
+            } else {
+                console.log("Agent Connection cannot be muted while multi party participant is connecting");
+            }
+        } else {
+            console.log("Agent connection muted at the client side");
+            if (action === 'mute') {
+                agent.mute();
+            } else {
+                agent.unmute();
+            }
+        }
+    };
+
+    const handleClick = () => {
+        setIsMuted(prevState => {
+            const newState = !prevState;
+            muteAgent(newState ? 'mute' : 'unmute');
+            return newState;
+        });
+    };
+
+    return (
+        <button onClick={handleClick}>{isMuted ? 'Unmute' : 'Mute'}</button>
+    );
+};
 
     const changeAgentState = (targetState: string) => {
         // Usamos la función callback para obtener la referencia del agente
