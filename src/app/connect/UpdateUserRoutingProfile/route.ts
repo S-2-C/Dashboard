@@ -45,10 +45,10 @@ const getUserIdByUsername = async (client: ConnectClient, instanceId: string, us
 export async function PUT(request: any) {
     const body = await request.json();
 
-    const { userName, routingProfile } = body;
+    let { userId, userName, routingProfileName, routingProfileId } = body;
 
     // Check that the request body contains the required fields and if not return a 400 error
-    if (!userName || !routingProfile) {
+    if (!(userId || userName) || !(routingProfileName || routingProfileId)) {
         return Response.json({
             "message": "Request body is missing required fields.",
         }, {
@@ -56,29 +56,33 @@ export async function PUT(request: any) {
         });
     }
 
-    // Check that the routing profile is valid
-    if (!(routingProfile in routingProfileToId)) {
-        return Response.json({
-            "message": "Request routing profile is not valid.",
-        }, {
-            status: 400,
-        })
+    if (!routingProfileId) {
+        // Check that the routing profile is valid
+        if (!(routingProfileName in routingProfileToId)) {
+            return Response.json({
+                "message": "Request routing profile is not valid.",
+            }, {
+                status: 400,
+            })
+        }
+    
+        routingProfileId = routingProfileToId[routingProfileName as keyof Object];
     }
-
-    const routingProfileId = routingProfileToId[routingProfile as keyof Object];
 
     const config = make_config_json();
 
     const InstanceId: string = process.env.CONNECT_INSTANCE_ID || "";
     const client = new ConnectClient(config as any);
 
-    const userId = await getUserIdByUsername(client, InstanceId, userName);
-    if (userId === '') {
-        return Response.json({
-            "message": "User not found.",
-        }, {
-            status: 404,
-        });
+    if (!userId) {
+        userId = await getUserIdByUsername(client, InstanceId, userName);
+        if (userId === '') {
+            return Response.json({
+                "message": "User not found.",
+            }, {
+                status: 404,
+            });
+        }
     }
 
     updateUserRoutingProfile(InstanceId, userId, routingProfileId, client);
