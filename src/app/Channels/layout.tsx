@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactNode } from "react";
-// import Home from '../NavBar'
 import SearchBar from "../searchBar";
 import NotifSlot from '@/app/ControlPanel/@Notif/page';
 

@@ -8,7 +8,6 @@ import { GetUserQuery } from "@/API";
 import { useEffect, useState } from "react";
 
 import { ReactNode } from "react";
-// import Home from '../NavBar'
 import SearchBar from "../searchBar";
 
 export default function ControlPanelLayout({

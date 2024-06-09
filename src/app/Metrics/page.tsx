@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Home from "../NavBar";
 import SearchBar from "../searchBar";
 import { Flex, Heading, Text, Button } from "@aws-amplify/ui-react";
 import { useQueueMetrics, Metric } from "@/hooks/useDataMetricV2"; // Updated import
@@ -15,12 +14,15 @@ interface Agent {
   Username: string;
 }
 
-const formatDecimals = (value: any, decimal: any, unit: any) => {
-  if (value !== undefined && value !== null && !isNaN(value)) {
-    return `${Number(value).toFixed(decimal)} ${unit}`;
-  }
-  return value; // Return NaN or other invalid values as is, without the unit
+const formatDecimals = (
+  value: number | "N/A" | void,
+  decimal: number,
+  unit: string
+) => {
+  if (value === "N/A") return value;
+  return Number(value).toFixed(decimal) + unit;
 };
+
 const formatDecimalsChart = (value: any, decimal: any) => {
   if (value !== undefined && value !== null && !isNaN(value)) {
     return Number(value).toFixed(decimal);
@@ -119,7 +121,7 @@ export default function Metrics() {
 
         for (const agent of selectedAgents) {
           data[agent.Id] = {
-            avgContactDuration: {
+            "Average Contact Duration": {
               threshold: {
                 low: 180,
                 mid: 300,
@@ -133,84 +135,105 @@ export default function Metrics() {
                 "s"
               ),
             },
-            avgHandleTime: {
+            "Average Handle Time": {
               threshold: {
                 low: 300,
                 mid: 600,
                 isHigh: false,
               },
-              value:
+              value: formatDecimals(
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "AVG_HANDLE_TIME"
                 )?.Value || "N/A",
+                2,
+                "s"
+              ),
             },
-            contactsHandled: {
+            "Contacts Handled": {
               threshold: {
                 low: 10,
                 mid: 5,
                 isHigh: true,
               },
-              value:
+              value: formatDecimals(
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "CONTACTS_HANDLED"
                 )?.Value || "N/A",
+                0,
+                ""
+              ),
             },
-            avgHoldTime: {
+            "Avg Hold Time": {
               threshold: {
                 low: 30,
                 mid: 90,
                 isHigh: false,
               },
-              value:
+              value: formatDecimals(
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "AVG_HOLD_TIME"
                 )?.Value || "N/A",
+                2,
+                "s"
+              ),
             },
-            avgInterruptionsAgent: {
+            "Avg Interruptions Agent": {
               threshold: {
                 low: 8,
                 mid: 3,
                 isHigh: false,
               },
-              value:
+              value: formatDecimals(
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "AVG_INTERRUPTIONS_AGENT"
                 )?.Value || "N/A",
+                0,
+                ""
+              ),
             },
-            agentOccupancy: {
+            "Agent Occupancy": {
               threshold: {
                 low: 90,
                 mid: 60,
                 isHigh: true,
               },
-              value:
+              value: formatDecimals(
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "AGENT_OCCUPANCY"
                 )?.Value || "N/A",
+                2,
+                "%"
+              ),
             },
-            sumNonProductiveTimeAgent: {
+            "Sum Non-Productive Time Agent": {
               threshold: {
                 low: 300,
                 mid: 600,
                 isHigh: false,
               },
-              value:
+              value: formatDecimals(
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "SUM_NON_PRODUCTIVE_TIME_AGENT"
                 )?.Value || "N/A",
+                2,
+                ""
+              ),
             },
-            agentNonResponse: {
+            "Agent Non-Response": {
               threshold: {
                 low: 3,
                 mid: 7,
                 isHigh: false,
               },
-              value:
+              value: formatDecimals(
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "AGENT_NON_RESPONSE"
                 )?.Value || "N/A",
+                0,
+                ""
+              ),
             },
-            agentAnswerRate: {
+            "Agent Answer Rate": {
               threshold: {
                 low: 85,
                 mid: 60,
@@ -220,7 +243,7 @@ export default function Metrics() {
                 agentMetrics[agent.Id]?.find(
                   (m) => m.Metric === "AGENT_ANSWER_RATE"
                 )?.Value || "N/A",
-                4,
+                2,
                 "%"
               ),
             },
@@ -383,26 +406,41 @@ export default function Metrics() {
       },
     },
   ];
- 
+
   const WalmartDelivery = [
-    formatDecimalsChart(getMetricValueWalmartDelivery("AVG_TALK_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartDelivery("AVG_TALK_TIME"), 2),
+    formatDecimalsChart(
+      getMetricValueWalmartDelivery("AVG_RESOLUTION_TIME"),
+      2
+    ),
+    formatDecimalsChart(
+      getMetricValueWalmartDelivery("AVG_QUEUE_ANSWER_TIME"),
+      2
+    ),
   ];
   const WalmartOnline = [
-    formatDecimalsChart(getMetricValueWalmartOnline("AVG_TALK_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartOnline("AVG_TALK_TIME"), 2),
+    formatDecimalsChart(getMetricValueWalmartOnline("AVG_RESOLUTION_TIME"), 2),
+    formatDecimalsChart(
+      getMetricValueWalmartOnline("AVG_QUEUE_ANSWER_TIME"),
+      2
+    ),
   ];
   const WalmartPhysicalStore = [
-    formatDecimalsChart(getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartPhysicalStore("AVG_TALK_TIME"), 2),
+    formatDecimalsChart(
+      getMetricValueWalmartPhysicalStore("AVG_RESOLUTION_TIME"),
+      2
+    ),
+    formatDecimalsChart(
+      getMetricValueWalmartPhysicalStore("AVG_QUEUE_ANSWER_TIME"),
+      2
+    ),
   ];
   const WalmartPass = [
-    formatDecimalsChart(getMetricValueWalmartPass("AVG_TALK_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartPass("AVG_RESOLUTION_TIME"),2),
-    formatDecimalsChart(getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"),2),
+    formatDecimalsChart(getMetricValueWalmartPass("AVG_TALK_TIME"), 2),
+    formatDecimalsChart(getMetricValueWalmartPass("AVG_RESOLUTION_TIME"), 2),
+    formatDecimalsChart(getMetricValueWalmartPass("AVG_QUEUE_ANSWER_TIME"), 2),
   ];
   const label = [
     "Avg. Call Length",
@@ -430,7 +468,6 @@ export default function Metrics() {
 
   return (
     <div className="flex h-screen bg-background text-foreground relative ">
-      <Home />
       <div className="flex flex-col flex-1 p-10 ml-20">
         <div className="flex justify-between items-center mb-6">
           <Heading level={1} fontWeight="Bold">
@@ -506,7 +543,7 @@ export default function Metrics() {
                   label={label}
                   title={"Time Metrics"}
                 />
-                <BarChartSeconds 
+                <BarChartSeconds
                   WalmartDelivery={WalmartDeliveryCount}
                   WalmartOnline={WalmartOnlineCount}
                   WalmartPhysicalStore={WalmartPhysicalStoreCount}

@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 //import { useEffect, useRef, useState, ChangeEvent, FormEvent } from "react";
-import Home from "../../NavBar"
 import "@aws-amplify/ui-react/styles.css";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator"
@@ -65,7 +64,6 @@ export default function Profile({ params }: { params: { id: string } }) {
 
     return (
         <div className="flex h-screen bg-background text-foreground relative items-center">
-            <Home />
             <div className="flex flex-col bg-background text-foreground h-screen w-screen items-center">
                 {/* Sección superior */}
                 <div className="flex ml-20 mr-20 mt-20 mb-10">

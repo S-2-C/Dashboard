@@ -1,0 +1,17 @@
+.storyBorder {
+  background: linear-gradient(to top right, #057dc7, #e2f0f9);
+  transition: background 0.3s ease;
+}
+
+.storyBorder:hover {
+  background: #057dc7;
+}
+
+.storyContainer:hover .storyFontSize {
+  font-size: 0.800rem;
+}
+
+.storyFontSize {
+  font-size: 0.625rem;
+  transition: font-size 0.3s ease;
+}

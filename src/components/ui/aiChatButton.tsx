@@ -18,10 +18,11 @@ export default function AiChatButton() {
           ref={buttonRef}
         //   onMouseDown={handleMouseDown}
           style={{
-            position: 'absolute', // Ensures the button can be freely moved
+            position: 'fixed', // Ensures the button can be freely moved
             cursor: 'pointer',
             bottom: 0,
             right: 0,
+            zIndex: 50,
           }}
         >
           <Button className="mb-5 mr-11 rounded-full h-20 w-20 shadow-2xl transition ease-in-out delay-150 bg-primary hover:-translate-y-1 hover:scale-110 hover:bg-yellow-500 duration-300" onClick={() => setChatBoxOpen(true)}>

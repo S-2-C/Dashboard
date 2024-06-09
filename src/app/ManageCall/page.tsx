@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-import Home from "../NavBar";
 import { Flex, Heading, Text, View, Button } from "@aws-amplify/ui-react";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"; // Make sure the path is correct
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +14,6 @@ export default function ManageCall() {
 
     return (
         <div className="flex h-screen bg-background text-foreground relative">
-            <Home />
             <div className="flex flex-col flex-1 p-10 ml-20">
                 <Flex direction="column" gap="2rem">
                     <Heading level={1} fontWeight="bold">Manage Call</Heading>

@@ -1,15 +1,25 @@
 import React from 'react';
-import { Button, Flex, Text, View } from '@aws-amplify/ui-react';
+import { Flex, Text } from '@aws-amplify/ui-react';
+
+import StoryTypeMenu from './StoryTypeMenu';
+import ChatList from './ChatList'; // Import ChatList component
+import ChatWindow from './ChatWindow'; // Import ChatWindow component
+import members from './ChatListDummy.json'; // Import dummy data
+import { useEffect, useState } from 'react';
+import { fetchAllUsers } from '../../fetching/fetchingDataFunctions';
 
 interface ChatClientProps {
     isConnected: boolean;
-    members: string[];
     chatRows: React.ReactNode[];
+    members: string[];
     onPublicMessage: () => void;
     onPrivateMessage: (to: string) => void;
     onConnect: () => void;
     onDisconnect: () => void;
+    email: string;
 }
+
+
 
 export const ChatClient: React.FC<ChatClientProps> = ({
     isConnected,
@@ -18,34 +28,46 @@ export const ChatClient: React.FC<ChatClientProps> = ({
     onPublicMessage,
     onPrivateMessage,
     onConnect,
-    onDisconnect
+    onDisconnect,
+    email
 }) => {
+
+
+
+
+
+    const handleSendMessage = (message: string) => {
+        // Implement the logic to handle sending a message
+    };
+    const [agents, setAgents] = useState<any[]>([]);
+
+
+
+    const fetchData = async () => {
+        const response = await fetchAllUsers();
+        setAgents(response.data);
+    };
+
+
     return (
+        <div className='relative w-full'>
         <Flex direction="column" style={{ height: '100vh', width: '100%' }}>
-            <Flex direction="row" style={{ height: '100%', backgroundColor: '#f4ede3' }}>
-                <Flex direction="column" style={{ width: '20%', backgroundColor: '#3e103f', color: 'white' }}>
-                    {members.map((item, index) => (
-                        <Button key={index} onClick={() => onPrivateMessage(item)} isFullWidth variation="link">
-                            {item}
-                        </Button>
-                    ))}
-                </Flex>
-                <Flex direction="column" style={{ flex: '1', padding: '10px' }}>
-                    <View style={{ overflowY: 'scroll', marginBottom: '20px' }}>
-                        {chatRows.map((item, index) => (
-                            <Text key={index} style={{ margin: '10px 0' }}>
-                                {item}
-                            </Text>
-                        ))}
-                    </View>
-                    <Flex direction="row" justifyContent="space-between">
-                        <Button onClick={onPublicMessage} disabled={!isConnected}>Send Public Message</Button>
-                        <Button onClick={onDisconnect} disabled={!isConnected}>Disconnect</Button>
-                        <Button onClick={onConnect} disabled={isConnected}>Connect</Button>
+            <Flex direction="row" style={{ height: '100%', backgroundColor: '#FFFFFF' }}>
+                <Flex direction="column" style={{ flex: 1, marginLeft: '65px', padding: '30px', position: 'relative' }}>
+                    <Text style={{ fontWeight: 600, fontSize: 25, marginLeft: '10px' }}>Messages</Text>
+                    <Text style={{ fontWeight: 500, fontSize: 17, marginLeft: '10px' }}>Agents</Text>
+                    <Flex style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+                        <Flex direction="column" style={{ width: '36vw', marginRight: '20px', height: '80vh' }}>
+                            <StoryTypeMenu />
+                            <Text style={{ fontWeight: 500, fontSize: 17, marginLeft: '10px' }}>Conversation</Text>
+                            <ChatList members={members} />
+                        </Flex>
+                        <ChatWindow chatRows={chatRows} onSendMessage={handleSendMessage} />
                     </Flex>
                 </Flex>
             </Flex>
         </Flex>
+        </div>
     );
 };
 

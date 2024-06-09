@@ -131,6 +131,8 @@ export const CCPContextProvider = ({
   const rejectContact = () => {
     if (incomingContact) {
       incomingContact.reject();
+    } else {
+      console.error("No incoming contact to reject");
     }
     setIncomingContact(null);
   };
