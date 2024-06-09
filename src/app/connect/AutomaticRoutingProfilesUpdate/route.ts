@@ -72,9 +72,7 @@ export async function PATCH(request: any) {
             message = "The number of active agents is bigger than the customers in the queue, assigning all active agents to the equal priority routing profile.";
             activeAgents.forEach((agent: any) => setRoutingProfile(baseUrl as string, agent.User.Id, equalPriorityRoutingProfile));
         } else {
-            // assign priority equal to the ratio for each of the channels occupancy
-            console.log("ALSÑDJKFLÑAJSDFLÑAJKSDLFJALSJDFAL -> here 1");
-
+            // assign agents to queue priority in the same ratio of the channels queue occupancy / total queue occupancy
             let agentsAssigned = 0;
 
             message = "Assigned agents to queues based on occupancy ratio: "
