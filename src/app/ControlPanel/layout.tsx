@@ -56,22 +56,22 @@ export default function ControlPanelLayout({
               <div className=" overflow-scroll  no-scrollbar">
                 {/* Row for children and components */}
                 {/* Second column for Agent, Saturation, and Notif */}
-                <div className="flex justify-end  px-16 pt-4">
+                <div className="flex justify-end  px-16 pt-3">
                   <SearchBar />
                 </div>
                 <div className="flex h-4/5 justify-between pl-20 ">
                   <div>
-                    <div className="p-4 ">{Agent}</div>
-                    <div className="p-4 ">{Metrics}</div>
+                    <div className="pl-4 pt-4">{Agent}</div>
+                    <div className="pl-4 ">{Metrics}</div>
                   </div>
                   <div>
-                    <div className="p-4 ">{Saturation}</div>
-                    <div className="p-4 ">{Metrics}</div>
+                    <div className="pl-4 pt-4">{Saturation}</div>
+                    <div className="pl-4 ">{Metrics}</div>
                   </div>
-                  <div className="p-4 ">{Notif}</div>
+                  <div className="p-4 pb-3">{Notif}</div>
                 </div>
                 <div className="justify-between pl-20">
-                  <div className="p-4 ">{FU}</div>
+                  <div className="pl-4 pr-4 pb-1">{FU}</div>
                 </div>
               </div>
             </div>
