@@ -1,118 +1,53 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ChatClient } from './ChatClient';
-import { Button, Flex, View, Text } from '@aws-amplify/ui-react';
-
-const URL = 'wss://6roylhz4w6.execute-api.us-east-1.amazonaws.com/production/';
-
-function extractEmailsFromLocalStorage() {
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('CognitoIdentityServiceProvider') && key.endsWith('signInDetails')) {
-      console.log("Key found:", key);
-      // Get json from local storage
-      const json = JSON.parse(localStorage.getItem(key) || '{}');
-      return json.loginId;
-    }
-  }
-  return '';
-}
+import React, { useEffect, useState } from "react";
+import { App as SendbirdApp } from "@sendbird/uikit-react";
+import "@sendbird/uikit-react/dist/index.css";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const Chat = () => {
-  const socket = useRef<WebSocket | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [members, setMembers] = useState<string[]>(['']);
-  const [chatRows, setChatRows] = useState<React.ReactNode[]>([]);
-  const [userEmail, setUserEmail] = useState('');
+  const agent = useUserRole();
+  const [userId, setUserId] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    const email = extractEmailsFromLocalStorage();
-    if (email) {
-      setUserEmail(email);
-      console.log("Email found:", email);
+    if (agent) {
+      // remove everything after the @ symbol
+      const userId = agent?.arn.split("-").pop() || "";
+      setUserId(userId);
     }
-  }
-    , []);
-
-  useEffect(() => {
-    console.log("Attempting to connect to WebSocket...");
-    socket.current = new WebSocket(URL);
-    socket.current.onopen = () => {
-      console.log("WebSocket connection established.");
-      console.log("User email:", userEmail);
-      setIsConnected(true);
-      if (userEmail) {
-        console.log(`Setting name: ${userEmail}`);
-
-        const payload = { action: 'setName', "name": userEmail };
-        console.log("Sending payload:", payload);
-        socket.current?.send(JSON.stringify(payload));
-      }
-    };
-    socket.current.onmessage = (event) => {
-      console.log("Message received:", event.data);
-      const data = JSON.parse(event.data);
-      if (data.members) {
-        console.log("Updating members list:", data.members);
-        setMembers(data.members);
-      } else if (data.publicMessage) {
-        console.log("Displaying public message:", data.publicMessage);
-        setChatRows(oldArray => [...oldArray, <Text key={oldArray.length}><b>{data.publicMessage}</b></Text>]);
-      } else if (data.privateMessage) {
-        console.log("Displaying private message:", data.privateMessage);
-        alert(data.privateMessage);
-      }
-    };
-    socket.current.onclose = () => {
-      console.log("WebSocket connection closed.");
-      setIsConnected(false);
-      setMembers([]);
-      setChatRows([]);
-    };
-
-    return () => {
-      console.log("Cleaning up WebSocket connection...");
-      socket.current?.close();
-    };
-  }, [userEmail]);
-
-  const sendPublicMessage = useCallback(() => {
-    const message = prompt('Enter public message');
-    if (message) {
-      console.log(`Sending public message: ${message}`);
-      socket.current?.send(JSON.stringify({ action: 'sendPublic', message }));
+    if (agent?.name) {
+      setNickname(agent.name);
     }
-  }, []);
+  }, [agent]);
 
-  const sendPrivateMessage = useCallback((to: string) => {
-    const message = prompt(`Enter private message for ${to}`);
-    if (message) {
-      console.log(`Sending private message to ${to}: ${message}`);
-      socket.current?.send(JSON.stringify({ action: 'sendPrivate', message, to }));
-    }
-  }, []);
-
-  const disconnect = useCallback(() => {
-    console.log("Disconnecting WebSocket...");
-    socket.current?.close();
-  }, []);
-
-  console.log("Rendering Chat component...");
+  const myColorSet = {
+    "--sendbird-light-primary-500": "#210F34",
+    "--sendbird-light-primary-400": "#0E365D",
+    "--sendbird-light-primary-300": "#146594",
+    "--sendbird-light-primary-200": "#A1D1EC",
+    "--sendbird-light-primary-100": "#DEF0FC",
+  };
 
   return (
-    <ChatClient
-      isConnected={isConnected}
-      members={members}
-      chatRows={chatRows}
-      onPublicMessage={sendPublicMessage}
-      onPrivateMessage={sendPrivateMessage}
-      email={userEmail}
-      onConnect={() => { }}
-      onDisconnect={disconnect}
-    />
+    // The chat interface can expand up to the dimensions of your parent component.
+    // To achieve a full-screen mode, apply the following CSS rules to the parent element.
+    <div className="h-screen w-screen bg-background text-foreground relative items-center justify-end flex ">
+      {userId && (
+        <div className=" w-[95%] h-full ">
+          <SendbirdApp
+            colorSet={myColorSet}
+            // You can find your Sendbird application ID on the Sendbird dashboard.
+            appId={"FE360E02-367D-43E1-96BC-EC4E38681455"}
+            // Specify the user ID you've created on the dashboard.
+            // Or you can create a user by specifying a unique userId.
+            userId={userId}
+            nickname={nickname}
+          />
+        </div>
+      )}
+    </div>
   );
-}
+};
 
 export default Chat;

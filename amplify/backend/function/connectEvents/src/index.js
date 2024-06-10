@@ -275,7 +275,7 @@ exports.handler = async (event) => {
             return updateCallEnd(event);
 
         case "QUEUE_WAIT_TOO_LONG":
-            return createNotification(event, "The wait time in the queue is too long, please move agents to the queue to reduce wait time.", "MEDIUM");
+            return createNotification(event, "High queue wait times detected, click here to prioritize busy channels.", "MEDIUM");
 
         case "NO_AGENTS_IN_QUEUE":
             return createNotification(event, "There are no agents available in the queue, watch out for an increase in inbound calls.", "LOW");

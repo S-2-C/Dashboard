@@ -150,18 +150,18 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
           <div className="absolute w-screen h-screen backdrop-blur-lg bg-black bg-opacity-50" onClick={() => setIsReportModalOpen(false)} />
           <div className="relative w-2/3 rounded-lg shadow-white overflow-y-scroll no-scrollbar shadow-md bg-stone-200 border-white z-[9999] p-10">
             <button className="absolute top-5 right-5 hover:scale-125 hover:text-red-600 transition-all ease-in" onClick={() => setIsReportModalOpen(false)}>X</button>
-            <div className="sticky -top-10 pb-5 bg-stone-200">
+            <div className="sticky -top-20 pb-5 bg-stone-200">
               {isEditing ? (
                 <div className="flex flex-col">
                   <div className=" justify-end w-full flex">
                     <button
-                      className={` ${isTypeQueue ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}  p-2 rounded-s-md`}
+                      className={` ${isTypeQueue ? 'bg-figma-figma1 text-white' : 'bg-gray-300 text-black'}  p-2 rounded-s-md`}
                       onClick={() => { setIsTypeQueue(!isTypeQueue), setSelectedAttributes([]) }}
                     >
                       Queue
                     </button>
                     <button
-                      className={` ${!isTypeQueue ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'} p-2 rounded-e-md`}
+                      className={` ${!isTypeQueue ? 'bg-figma-figma1 text-white' : 'bg-gray-300 text-black'} p-2 rounded-e-md`}
                       onClick={() => { setIsTypeQueue(!isTypeQueue), setSelectedAttributes([]) }}
                     >
                       Agent
@@ -170,29 +170,35 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                   <p className="text-base font-extralight pb-1">
                     {new Date().toDateString()}
                   </p>
+                  <div>
+                    <h2>Title</h2>
+                  </div>
                   <input
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-                  <br />
+                
+                  <div className="pt-2">
+                    <h2>Description</h2>
+                  </div>
                   <textarea
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
                   <div className="py-3">
-                    <h2>Select range</h2>
+                    <h2>Select Range</h2>
                     <Datepicker value={value} onChange={handleValueChange} maxDate={today} minDate={twoMonthsAgo} />
                   </div>
                   {isTypeQueue ? (
                     <>
                       <h3>Select Queue</h3>
-                      <div className="flex justify-between pb-1">
+                      <div className="flex space-x-2 pb-1">
                         {channelIds.map(channel => (
                           <button
                             key={channel.id}
-                            className={`flex w-full border border-black justify-center items-center mb-2 ${selectedChannel?.id === channel.id ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'
+                            className={`w-45 p-2 rounded-lg shadow-md  justify-center items-center hover:bg-figma-figma6 ${selectedChannel?.id === channel.id ? 'bg-figma-figma1 text-blue' : 'bg-blue text-figma-figma1'
                               }`}
                             onClick={() => setSelectedChannel(channel)}
                           >
@@ -215,6 +221,9 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                       </select>
                     </div>
                   )}
+                  <div className="pt-2">
+                    <h2>Select Attributes</h2>
+                  </div>
                   <input
                     type="text"
                     placeholder="Search attributes"
@@ -228,7 +237,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                         <div key={attr} className="flex justify-between items-center mb-2">
                           <span>{textAttributes[attr]}</span>
                           <button
-                            className="ml-2 px-2 text-2xl bg-green-500 text-white rounded"
+                            className="ml-2 px-2 text-2xl bg-figma-figma1 text-blue rounded"
                             onClick={() => handleAttributeSelect(attr)}
                           >
                             +
@@ -242,7 +251,7 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                         <div key={attr} className="flex justify-between items-center mb-2">
                           <span>{textAttributes[attr]}</span>
                           <button
-                            className="ml-2 px-2 text-2xl bg-green-500 text-white rounded"
+                            className="ml-2 px-2 text-2xl bg-figma-figma1 text-blue rounded"
                             onClick={() => handleAttributeSelect(attr)}
                           >
                             +
@@ -286,8 +295,9 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
                   </div>
                   <p className="text-base font-extralight pb-1">Last updated at: {props.date}</p>
 
-                  <div className=" flex">
+                  <div className="flex" >
                     <DownloadPdfButton rangeDate={value} siQueue={isTypeQueue} specifiesAgent={selectedAgent} specifiesQueue={selectedChannel} relevantKPI={selectedAttributes} title={props.title} description={props.description} date={props.date} />
+                    <p className="px-2"></p>
                     <DownloadCsvButton rangeDate={value} siQueue={isTypeQueue} specifiesAgent={selectedAgent} specifiesQueue={selectedChannel} relevantKPI={selectedAttributes} title={props.title} description={props.description} date={props.date} />
                   </div>
                 </>
@@ -296,14 +306,14 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
             <div className="flex justify-between items-center">
               {isEditing ? (
                 <button
-                  className="text-lg rounded-sm bg-figma-figma3 p-2 text-white hover:scale-105 ease-in transition-all"
+                  className="text-lg rounded-sm bg-figma-figma1 p-2 text-white hover:scale-105 ease-in transition-all"
                   onClick={handleSave}
                   disabled={!title || !description || selectedAttributes.length === 0 || (!isTypeQueue && !selectedAgent) || (isTypeQueue && !selectedChannel)}
                 >
                   Save
                 </button>
               ) : (
-                <button className="text-lg hover:text-neutral-400" onClick={() => setIsEditing(true)}>
+                <button className="text-lg rounded-sm bg-figma-figma1 p-2 text-white hover:scale-105 ease-in transition-all" onClick={() => setIsEditing(true)}>
                   Edit
                 </button>
               )}

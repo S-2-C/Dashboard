@@ -575,12 +575,12 @@ export default function Metrics() {
             <div className="flex-1 overflow-scroll no-scrollbar">
               {selectedAgents.length > 0 ? (
                 selectedAgents.map((agent) => (
-                  <div key={agent.Id} className="pb-4">
-                    <Text className="text-lg">
+                  <div key={agent.Id} className="pb-4 pt-3">
+                    {/* <Text className="text-lg">
                       Selected Agent: {agent.Username}
-                    </Text>
+                    </Text> */}
                     <div className="bg-figma-figma11 rounded-xl p-4 shadow-md flex flex-col mt-4">
-                      <p className="text-xl font-bold mb-2">Agent Metrics</p>
+                      <p className="text-xl font-bold mb-2">Agent Metrics: {agent.Username}</p>
                       {agentMetricsData && agentMetricsData[agent.Id] ? (
                         Object.entries(agentMetricsData[agent.Id]).map(
                           ([key, value], idx) => (

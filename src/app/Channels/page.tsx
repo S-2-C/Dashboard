@@ -28,6 +28,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { fetchListQueues } from "@/fetching/fetchingListQueues";
 import { fetchCurrentMetricData } from "@/fetching/fetchingGetCurrentMetricData";
+import { fetchNumberOfUsersWithQueuePriority } from "@/fetching/fetchingNumberOfUsersWithPriorityPerQueue";
 
 interface Metric {
     Metric: string;
@@ -53,9 +54,11 @@ export function getChannelsQueues(channels: any, data: any) {
 export function sortQueues(data: any[]) {
     return data.sort((a, b) => a.queue.localeCompare(b.queue));
 }
+
 export default function Notifications() {
     // Make a useState for the data
     const [QueueMetrics, setQueueMetrics] = useState<QueueMetric[]>([]);
+    const [numberOfUsersWithQueuePriority, setNumberOfUsersWithQueuePriority] = useState<Map<any, any>>();
     // const [CurrentMetricData, setMetricData] = useState([]);
     // //I need to create a set for currentMetricData
 
@@ -66,6 +69,10 @@ export default function Notifications() {
 
             const QueueIdsString = "fe0bd989-c3d1-4959-a47c-b7d27def9a99,f617a7d6-2be6-4f9b-b365-600fd3fc8646,4948d5e2-1434-44dd-a78f-37cbeb96d1d9,46bf33f7-3381-4db1-a3f7-85eafdf04578"
 
+            // fecth the number of agents with priority per queue
+            const numberOfUsersWithQueuePriority = await fetchNumberOfUsersWithQueuePriority();
+            const asAMap = new Map(Object.entries(numberOfUsersWithQueuePriority));
+            setNumberOfUsersWithQueuePriority(asAMap);
 
             // Fetch the current metric data
             const currentMetricData = await fetchCurrentMetricData(QueueIdsString);
@@ -103,6 +110,8 @@ export default function Notifications() {
         return totalAgents > 0 ? (agentsOnCall / totalAgents) * 100 : 0;
     };
 
+
+
     return (
         <div>
             <div className="h-screen flex w-full">
@@ -114,16 +123,18 @@ export default function Notifications() {
                         <h1 className="text-figma-figma5 font-bold text-4xl">Channels</h1>
                     </div>
                     <div className="w-full h-screen overflow-y-auto">
-                        <Accordion className="" type="single" collapsible>
-                            <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Walmart Delivery
-                                    <div className={`${QueueMetrics.length > 0 ? (() => {
-                                        const percentage = calculateAgentsOnCallPercentage(QueueMetrics[0].queue_metrics);
-                                        return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
-                                            percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
-                                                'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-1/4 "></div>
+                        <Accordion className="" type="single" defaultValue="item-1">
+                            <AccordionItem value="item-1" >
+                                <AccordionTrigger className="flex items-center justify-between w-full">
+                                    <div className="flex justify-between w-full pr-8">
+                                        <span>Walmart Delivery</span>
+                                        <div className={`${QueueMetrics.length > 0 ? (() => {
+                                            const percentage = calculateAgentsOnCallPercentage(QueueMetrics[0].queue_metrics);
+                                            return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
+                                                percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
+                                                    'bg-figma-figma10';
+                                        })() : 'bg-figma-figma8'} h-4 w-4 rounded-full`}></div>
+                                    </div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
@@ -170,20 +181,36 @@ export default function Notifications() {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="mr-4 p-2 w-1/3">
+                                            <div>Priority Agents</div>
+                                            <div className="flex">
+                                                <div className="pr-4 w-1/3">
+                                                    <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
+                                                </div>
+                                                <div className=" pt-4 w-2/3 flex justify-center">
+                                                    <b className="text-xl">{numberOfUsersWithQueuePriority?.get("46bf33f7-3381-4db1-a3f7-85eafdf04578")}</b>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
-                        <Accordion className="" type="single" collapsible>
+
+
+
+                        <Accordion className="" type="single" defaultValue="item-1" >
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Walmart Online
-                                    <div className={`${QueueMetrics.length > 0 ? (() => {
-                                        const percentage = calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics);
-                                        return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
-                                            percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
-                                                'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-1/4 "></div>
+                                <AccordionTrigger className="flex items-center justify-between w-full">
+                                    <div className="flex justify-between w-full pr-8">
+                                        <span>Walmart Online</span>
+                                        <div className={`${QueueMetrics.length > 0 ? (() => {
+                                            const percentage = calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics);
+                                            return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
+                                                percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
+                                                    'bg-figma-figma10';
+                                        })() : 'bg-figma-figma8'} h-4 w-4 rounded-full`}></div>
+                                    </div>
                                 </AccordionTrigger>
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
@@ -230,21 +257,37 @@ export default function Notifications() {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="mr-4 p-2 w-1/3">
+                                            <div>Priority Agents</div>
+                                            <div className="flex">
+                                                <div className="pr-4 w-1/3">
+                                                    <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
+                                                </div>
+                                                <div className=" pt-4 w-2/3 flex justify-center">
+                                                    <b className="text-xl">{numberOfUsersWithQueuePriority?.get("4948d5e2-1434-44dd-a78f-37cbeb96d1d9")}</b>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
-                        <Accordion className="" type="single" collapsible>
+
+
+                        <Accordion className="" type="single" defaultValue="item-1">
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Physical Store
-                                    <div className={`${QueueMetrics.length > 0 ? (() => {
-                                        const percentage = calculateAgentsOnCallPercentage(QueueMetrics[2].queue_metrics);
-                                        return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
-                                            percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
-                                                'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-1/4 "></div>
+                                <AccordionTrigger className="flex items-center justify-between w-full">
+                                    <div className="flex justify-between w-full pr-8">
+                                        <span>Walmart Physical Store</span>
+                                        <div className={`${QueueMetrics.length > 0 ? (() => {
+                                            const percentage = calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics);
+                                            return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
+                                                percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
+                                                    'bg-figma-figma10';
+                                        })() : 'bg-figma-figma8'} h-4 w-4 rounded-full`}></div>
+                                    </div>
                                 </AccordionTrigger>
+
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[2].queue_metrics);
@@ -290,21 +333,38 @@ export default function Notifications() {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="mr-4 p-2 w-1/3">
+                                            <div>Priority Agents</div>
+                                            <div className="flex">
+                                                <div className="pr-4 w-1/3">
+                                                    <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
+                                                </div>
+                                                <div className=" pt-4 w-2/3 flex justify-center">
+                                                    <b className="text-xl">{numberOfUsersWithQueuePriority?.get("f617a7d6-2be6-4f9b-b365-600fd3fc8646")}</b>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
-                        <Accordion className="" type="single" collapsible>
+
+
+
+                        <Accordion className="" type="single" defaultValue="item-1">
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="flex items-center">Walmart Pass
-                                    <div className={`${QueueMetrics.length > 0 ? (() => {
-                                        const percentage = calculateAgentsOnCallPercentage(QueueMetrics[3].queue_metrics);
-                                        return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
-                                            percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
-                                                'bg-figma-figma10';
-                                    })() : 'bg-figma-figma8'} h-4 w-4 flex justify-end rounded-2xl items-center m-1`}></div>
-                                    <div className="w-1/4 "></div>
+                                <AccordionTrigger className="flex items-center justify-between w-full">
+                                    <div className="flex justify-between w-full pr-8">
+                                        <span>Walmart Pass</span>
+                                        <div className={`${QueueMetrics.length > 0 ? (() => {
+                                            const percentage = calculateAgentsOnCallPercentage(QueueMetrics[1].queue_metrics);
+                                            return percentage === 0 ? 'bg-figma-figma8' : percentage <= 33 ? 'bg-figma-figma8' :
+                                                percentage > 33 && percentage <= 66 ? 'bg-figma-figma9' :
+                                                    'bg-figma-figma10';
+                                        })() : 'bg-figma-figma8'} h-4 w-4 rounded-full`}></div>
+                                    </div>
                                 </AccordionTrigger>
+
                                 <div className="w-full bg-figma-figma6 rounded-full overflow-hidden shadow-md ">
                                     <div className={`${QueueMetrics.length > 0 ? (() => {
                                         const percentage = calculateAgentsOnCallPercentage(QueueMetrics[3].queue_metrics);
@@ -350,10 +410,24 @@ export default function Notifications() {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="mr-4 p-2 w-1/3">
+                                            <div>Priority Agents</div>
+                                            <div className="flex">
+                                                <div className="pr-4 w-1/3">
+                                                    <FontAwesomeIcon icon={faUser} className="text-figma-figma5 my-1 text-2xl" />
+                                                </div>
+                                                <div className=" pt-4 w-2/3 flex justify-center">
+                                                    <b className="text-xl">{numberOfUsersWithQueuePriority?.get("fe0bd989-c3d1-4959-a47c-b7d27def9a99")}</b>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
+
+
+
                     </div>
                 </div>
             </div>
