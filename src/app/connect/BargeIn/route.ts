@@ -23,11 +23,12 @@ export async function GET(req: Request) {
   const ContactId = searchParams.get("ContactId") || undefined;
   const UserId = searchParams.get("UserId") || undefined;
 
+
   const input: MonitorContactCommandInput = {
     InstanceId: InstanceId,
     ContactId: ContactId,
     UserId: UserId,
-    AllowedMonitorCapabilities: ["SILENT_MONITOR"],
+    AllowedMonitorCapabilities: ["SILENT_MONITOR", "BARGE"],
   };
 
   const command = new MonitorContactCommand(input);
@@ -36,7 +37,7 @@ export async function GET(req: Request) {
     response = await client.send(command);
   } catch (error) {
     return Response.json({
-      message: "Failed to monitor contact for barge-in. userId: " + UserId,
+      message: "Failed to monitor contact for barge-in. userId: " + UserId + " error: " + error + " contactId: " + ContactId + " instanceId: " + InstanceId + " allowedMonitorCapabilities: " + input.AllowedMonitorCapabilities + " input: " + input,
       error: error,
     });
   }
