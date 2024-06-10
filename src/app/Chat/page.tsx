@@ -8,6 +8,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 const Chat = () => {
   const agent = useUserRole();
   const [userId, setUserId] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
     if (agent) {
@@ -15,14 +16,17 @@ const Chat = () => {
       const userId = agent?.arn.split("-").pop() || "";
       setUserId(userId);
     }
+    if (agent?.name) {
+      setNickname(agent.name);
+    }
   }, [agent]);
 
   const myColorSet = {
     "--sendbird-light-primary-500": "#210F34",
     "--sendbird-light-primary-400": "#0E365D",
     "--sendbird-light-primary-300": "#146594",
-    "--sendbird-light-primary-200": "#A1D1EC", 
-    "--sendbird-light-primary-100": "#DEF0FC", 
+    "--sendbird-light-primary-200": "#A1D1EC",
+    "--sendbird-light-primary-100": "#DEF0FC",
   };
 
   return (
@@ -38,6 +42,7 @@ const Chat = () => {
             // Specify the user ID you've created on the dashboard.
             // Or you can create a user by specifying a unique userId.
             userId={userId}
+            nickname={nickname}
           />
         </div>
       )}
