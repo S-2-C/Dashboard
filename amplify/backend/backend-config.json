@@ -141,6 +141,88 @@
       "service": "Lambda"
     }
   },
+  "parameters": {
+    "AMPLIFY_function_callStart_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "callStart"
+        }
+      ]
+    },
+    "AMPLIFY_function_callStart_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "callStart"
+        }
+      ]
+    },
+    "AMPLIFY_function_chatWebSocket_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "chatWebSocket"
+        }
+      ]
+    },
+    "AMPLIFY_function_chatWebSocket_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "chatWebSocket"
+        }
+      ]
+    },
+    "AMPLIFY_function_connectEvents_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "connectEvents"
+        }
+      ]
+    },
+    "AMPLIFY_function_connectEvents_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "connectEvents"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashAuthPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashAuthPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashAuthPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashAuthPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashAuthPreSignup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashAuthPreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_dashAuthPreSignup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dashAuthPreSignup"
+        }
+      ]
+    }
+  },
   "storage": {
     "dashboardS3": {
       "dependsOn": [],
