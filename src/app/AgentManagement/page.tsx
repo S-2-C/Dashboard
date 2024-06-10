@@ -72,16 +72,16 @@ export default function AgentManagement() {
   const formatDateToMexicanTimezone = (timestamp: any) => {
     const date = new Date(timestamp);
     const options: Intl.DateTimeFormatOptions = {
-      timeZone: 'America/Mexico_City',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
+      timeZone: "America/Mexico_City",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
     };
-    return date.toLocaleString('es-MX', options);
+    return date.toLocaleString("es-MX", options);
   };
 
   return (
@@ -96,39 +96,52 @@ export default function AgentManagement() {
           <Flex direction="column" gap="2rem">
             <Flex gap="2rem">
               <div className="w-2/4">
-                {activeWarnings.length > 0 && activeWarnings.map((user, index) => (
-                  <div className="grid gap-2 my-1 grid-cols-12 h-16 bg-agenman-agenmangray rounded-xl transition-colors ease-in hover:bg-neutral-300" key={index}>
-                    <div className=" m-0 order-1 col-span-2  flex items-center justify-center">
-                      <h1 className="m-0">{user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}</h1>
+                {activeWarnings.length > 0 &&
+                  activeWarnings.map((user, index) => (
+                    <div
+                      className="grid gap-2 my-1 grid-cols-12 h-16 bg-agenman-agenmangray rounded-xl transition-colors ease-in hover:bg-neutral-300"
+                      key={index}
+                    >
+                      <div className=" m-0 order-1 col-span-2  flex items-center justify-center">
+                        <h1 className="m-0">
+                          {user?.name
+                            ? user.name.split(" ")[0]
+                            : user.id.split("@")[0]}
+                        </h1>
+                      </div>
+                      <div
+                        className=" order-2 col-span-3 "
+                        style={{ padding: "8px" }}
+                      >
+                        <span className="font-bold">
+                          {user?.id ? user.id.split("@")[0] : " No ID "}
+                        </span>
+                        <br />
+                        <span className="text-xs">Walmart®️.com</span>
+                      </div>
+                      <div className="order-3 col-span-4 flex items-center ">
+                        {user?.needsHelp ? (
+                          <img
+                            src={"images/Warning.svg"}
+                            className="h-10 w-10"
+                            alt="Agent"
+                          />
+                        ) : (
+                          <img
+                            src={"images/AgentYellow.svg"}
+                            className="h-10 w-10"
+                            alt="Agent"
+                          />
+                        )}
+                        <h1>
+                          {user?.needsHelp ? "Needs help" : "Ongoing call"}
+                        </h1>
+                      </div>
+                      <div className="order-4 col-span-2 flex items-center text-xs">
+                        <h1>{formatDateToMexicanTimezone(user.updatedAt)}</h1>
+                      </div>
                     </div>
-                    <div className=" order-2 col-span-3 " style={{ padding: "8px" }}>
-                      <span className="font-bold">
-                        {user?.id ? user.id.split("@")[0] : " No ID "}
-                      </span>
-                      <br />
-                      <span className="text-xs">Walmart®️.com</span>
-                    </div>
-                    <div className="order-3 col-span-4 flex items-center ">
-                      {user?.needsHelp ? (
-                        <img
-                          src={"images/Warning.svg"}
-                          className="h-10 w-10"
-                          alt="Agent"
-                        />
-                      ) : (
-                        <img
-                          src={"images/AgentYellow.svg"}
-                          className="h-10 w-10"
-                          alt="Agent"
-                        />
-                      )}
-                      <h1>{user?.needsHelp ? "Needs help" : "Ongoing call"}</h1>
-                    </div>
-                    <div className="order-4 col-span-2 flex items-center text-xs">
-                      <h1>{formatDateToMexicanTimezone(user.updatedAt)}</h1>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
 
               <div className="w-2/4">
@@ -140,9 +153,14 @@ export default function AgentManagement() {
                     </div>
                   </div>
                   <div className="h-4 flex bg-neutral-300 items-center rounded-xl shadow-md">
-                    <div className="h-full bg-agenman-agenmanred rounded-xl" style={{width: `${(alertUsers.length/totalCalls)*100}%` }}/>
+                    <div
+                      className="h-full bg-agenman-agenmanred rounded-xl"
+                      style={{
+                        width: `${(alertUsers.length / totalCalls) * 100}%`,
+                      }}
+                    />
                   </div>
-                  <div className="flex w-full overflow-x-scroll no-scrollbar bg-agenman-agenmansblue1 p-2.5 rounded-xl">
+                  <div className="alertUsers flex w-full overflow-x-scroll no-scrollbar bg-agenman-agenmansblue1 p-2.5 rounded-xl">
                     {alertUsers?.map((user, index) => (
                       <div className="w-min p-1" key={index}>
                         <Link href={`/ManageCall/${user?.id}`}>
@@ -153,7 +171,9 @@ export default function AgentManagement() {
                               alt="Agent"
                             />
                             <p className="text-center text-sm text-red-500">
-                              {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
+                              {user?.name
+                                ? user.name.split(" ")[0]
+                                : user.id.split("@")[0]}
                             </p>
                           </div>
                         </Link>
@@ -163,16 +183,27 @@ export default function AgentManagement() {
                 </Flex>
 
                 <Flex direction="column">
-                  <div className="flex items-center" style={{ paddingTop: "30px" }}>
+                  <div
+                    className="flex items-center"
+                    style={{ paddingTop: "30px" }}
+                  >
                     <div className="h-6 w-6 bg-agenman-agenmanyellow rounded-full mr-2"></div>
                     <div className="text-2xl">
                       <Text>Agent on Call</Text>
                     </div>
                   </div>
                   <div className="h-4 flex bg-neutral-300 items-center rounded-xl shadow-md">
-                    <div className="h-full bg-agenman-agenmanyellow rounded-xl" style={{width: `${(activeUsers.length/totalCalls)*100}%` }}/>
+                    <div
+                      className="h-full bg-agenman-agenmanyellow rounded-xl"
+                      style={{
+                        width: `${(activeUsers.length / totalCalls) * 100}%`,
+                      }}
+                    />
                   </div>
-                  <div className="flex bg-agenman-agenmansblue2 items-center rounded-xl" style={{ padding: "10px" }}>
+                  <div
+                    className="activeUsers flex bg-agenman-agenmansblue2 items-center rounded-xl"
+                    style={{ padding: "10px" }}
+                  >
                     {activeUsers?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div>
@@ -181,8 +212,14 @@ export default function AgentManagement() {
                             className="mx-auto h-10 w-10"
                             alt="Agent"
                           />
-                          <p className={"text-center text-sm text-agenman-agenmanyellow"}>
-                            {user?.name ? user.name.split(" ")[0] : user.id.split("@")[0]}
+                          <p
+                            className={
+                              "text-center text-sm text-agenman-agenmanyellow"
+                            }
+                          >
+                            {user?.name
+                              ? user.name.split(" ")[0]
+                              : user.id.split("@")[0]}
                           </p>
                         </div>
                       </Link>
@@ -191,13 +228,19 @@ export default function AgentManagement() {
                 </Flex>
 
                 <div className="flex gap-2">
-                  <div className="w-2/4 flex items-center" style={{ paddingTop: "30px", paddingBottom: "15px" }}>
+                  <div
+                    className="w-2/4 flex items-center"
+                    style={{ paddingTop: "30px", paddingBottom: "15px" }}
+                  >
                     <div className="h-6 w-6 bg-agenman-agenmanblue rounded-full mr-2"></div>
                     <div className="text-xl">
                       <Text>Agent Available</Text>
                     </div>
                   </div>
-                  <div className="w-2/4 flex items-center" style={{ paddingTop: "30px", paddingBottom: "15px" }}>
+                  <div
+                    className="w-2/4 flex items-center"
+                    style={{ paddingTop: "30px", paddingBottom: "15px" }}
+                  >
                     <div className="h-6 w-6 bg-agenman-agenmandarkblue rounded-full mr-2"></div>
                     <div className="text-xl">
                       <Text>Supervisor Available</Text>
@@ -207,15 +250,30 @@ export default function AgentManagement() {
 
                 <div className="flex gap-2">
                   <div className="w-2/4 h-4 flex bg-neutral-400 items-center rounded-xl shadow-md">
-                    <div className="h-full bg-agenman-agenmandarkblue rounded-xl" style={{width: `${(offlineUsers.length/totalCalls)*100}%` }}/>
+                    <div
+                      className="h-full bg-agenman-agenmandarkblue rounded-xl"
+                      style={{
+                        width: `${(offlineUsers.length / totalCalls) * 100}%`,
+                      }}
+                    />
                   </div>
                   <div className="w-2/4 h-4 flex bg-neutral-400 items-center rounded-xl shadow-md">
-                    <div className="h-full bg-agenman-agenmandarkblue rounded-xl" style={{width: `${(offlineSupervisors.length/totalCalls)*100}%` }}/>
+                    <div
+                      className="h-full bg-agenman-agenmandarkblue rounded-xl"
+                      style={{
+                        width: `${
+                          (offlineSupervisors.length / totalCalls) * 100
+                        }%`,
+                      }}
+                    />
                   </div>
                 </div>
 
                 <div className="flex gap-2" style={{ paddingTop: "15px" }}>
-                  <div className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl" style={{ padding: "10px" }}>
+                  <div
+                    className="offlineUsers w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl"
+                    style={{ padding: "10px" }}
+                  >
                     {offlineUsers?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div className="text-4xl flex items-center h-10 w-10">
@@ -225,14 +283,19 @@ export default function AgentManagement() {
                             alt="Agent"
                           />
                           <p className="text-white text-sm px-1">
-                            {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}
+                            {user?.name
+                              ? user?.name.split(" ")[0]
+                              : user.id.split("@")[0]}
                           </p>
                         </div>
                       </Link>
                     ))}
-                    </div>
+                  </div>
 
-                  <div className="w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl" style={{ padding: "10px" }}>
+                  <div
+                    className="offlineSupervisors w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl"
+                    style={{ padding: "10px" }}
+                  >
                     {offlineSupervisors?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div className="text-4xl flex items-center h-10 w-10">
@@ -242,7 +305,9 @@ export default function AgentManagement() {
                             alt="Agent"
                           />
                           <p className="text-white text-sm px-1">
-                            {user?.name ? user?.name.split(" ")[0] : user.id.split("@")[0]}
+                            {user?.name
+                              ? user?.name.split(" ")[0]
+                              : user.id.split("@")[0]}
                           </p>
                         </div>
                       </Link>
