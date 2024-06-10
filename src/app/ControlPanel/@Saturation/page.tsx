@@ -112,7 +112,7 @@ export default function SaturationSlot() {
     <div>
       {agent?.role === "SUPERVISOR" ? (
         <>
-          <div className="bg-blue-dark flex flex-col rounded-lg shadow-md h-96">
+          <div className="bg-blue-dark flex flex-col rounded-lg shadow-md h-80">
             <Link href="/Channels">
               <div className="text-center p-4 bg-blue-darkhighlight rounded-lg shadow-md">
                 <h1 className="text-3xl font-bold text-white text-center px-4 py-2">
@@ -122,7 +122,7 @@ export default function SaturationSlot() {
             </Link>
             <div className="overflow-auto h-[65%] no-scrollbar">
               <div className="text-white sm:w-full,px-2 md:w-full lg:w-[calc(60vw-32rem)],px-2 xl:w-[calc(60vw-32rem)] px-8 flex-wrap">
-                <div className="flex items-center justify-between py-4 md:py-7">
+                <div className="flex items-center justify-between py-4 md:py-5">
                   <span className="text-white text-xl">Physical Store</span>
                   <div
                     className={`${
@@ -143,7 +143,7 @@ export default function SaturationSlot() {
                     } h-4 w-4 flex justify-end rounded-2xl items-center m-1`}
                   ></div>{" "}
                 </div>
-                <div className="flex items-center justify-between py-4 md:py-7">
+                <div className="flex items-center justify-between py-4 md:py-5">
                   <span className="text-white text-xl">Walmart®.com</span>
                   {/* <div className="bg-figma-figma10 h-4 w-4 flex rounded-full ml-4 md:ml-8"></div> */}
                   <div
@@ -162,10 +162,10 @@ export default function SaturationSlot() {
                               : "bg-figma-figma10";
                           })()
                         : "bg-figma-figma8"
-                    } h-4 w-4 flex rounded-full ml-4 md:ml-8`}
+                    } h-4 w-4 flex justify-end rounded-2xl items-center m-1`}
                   ></div>
                 </div>
-                <div className="flex items-center justify-between py-4 md:py-7">
+                <div className="flex items-center justify-between py-4 md:py-5">
                   <span className="text-white text-xl">Walmart Pass</span>
                   <div
                     className={`${
@@ -186,7 +186,7 @@ export default function SaturationSlot() {
                     } h-4 w-4 flex justify-end rounded-2xl items-center m-1`}
                   ></div>{" "}
                 </div>
-                <div className="flex items-center justify-between py-4 md:py-7">
+                <div className="flex items-center justify-between py-4 md:py-5">
                   <span className="text-white text-xl">Delivery</span>
                   <div
                     className={`${
