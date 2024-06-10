@@ -111,12 +111,12 @@ export default function AgentSlot() {
       {agent?.role === "SUPERVISOR" ? (
         <>
           <div
-            className="bg-blue-highlight rounded-lg sm:p-2 md:p-3 lg:p-4 xl:p-8 shadow-md h-96"
+            className="bg-blue-highlight rounded-lg sm:p-1 md:p-2 lg:p-3 xl:p-6 shadow-md h-80"
             style={{ display: "inline-block" }}
           >
             <div className="rounded-lg">
               <Link href="/AgentManagement">
-                <h1 className="text-4xl font-bold text-center ">Agent</h1>
+                <h1 className="text-4xl font-bold text-center pb-1">Agent</h1>
               </Link>
             </div>
             <div className="h-5/6 grid grid-cols-5 gap-x-16 gap-y-2 p-2 overflow-scroll no-scrollbar">

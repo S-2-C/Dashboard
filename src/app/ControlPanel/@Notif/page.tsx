@@ -75,7 +75,7 @@ export default function NotifSlot() {
 
   return (
     <div
-      className={`flex flex-col p-4 rounded-lg h-full ${
+      className={`flex flex-col p-4 rounded-lg h-full shadow-lg ${
         agent?.role === "SUPERVISOR" ? "bg-teal-background" : "bg-blue-dark"
       }`}
     >
@@ -106,7 +106,7 @@ export default function NotifSlot() {
             <div
               key={notif.id}
               onClick={() => handleNotificationClick(notif.action, notif.agentEmail)}
-              className={`p-4 rounded-lg shadow-md mb-4 flex flex-row font-bold 
+              className={`p-4 rounded-lg shadow-md mb-4 flex flex-row
               ${notif.action && "cursor-pointer"}
                ${notif.urgency === "HIGH" ? "text-white" : "text-blue-dark"}
                 ${

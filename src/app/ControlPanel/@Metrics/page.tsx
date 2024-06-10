@@ -26,7 +26,7 @@ export default function MetricsSlot() {
   const agent = useUserRole();
 
   const [agents, setAgents] = useState<Agent[]>([]);
-  const [ isAskingForHelp, setIsAskingForHelp] = useState<boolean>(false);
+  const [isAskingForHelp, setIsAskingForHelp] = useState<boolean>(false);
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [weeksAgo, setWeeksAgo] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -185,60 +185,55 @@ export default function MetricsSlot() {
     <div className="py-4">
       {agent?.role === "SUPERVISOR" ? (
         <>
-          <div className="flex-1  ">
-            <div className="h-full ">
-              <div className=" bg-metrics overflow-scroll no-scrollbar sm:h-40 lg:h-40 xl:h-max  rounded-lg shadow-md p-4">
-                <div className="p-4">
-                  <h1 className="text-3xl font-bold text-center p-4">
+          <div className="flex-1 bg-metrics sm:h-52 lg:h-52 xl:h-72 rounded-lg shadow-md p-4 ">
+            <div className="h-5/6 p-2">
+                  <h1 className="sm:text-xl xl:text-2xl font-bold text-center p-2 pt-1 ">
                     {metrics[currentMetricIndex].title}
                   </h1>
                   {Object.entries(metrics[currentMetricIndex].values).map(
                     ([key, value], idx) => (
-                      <p key={idx} className="text-lg">
+                      <p key={idx} className="sm:text-xs xl:text-lg">
                         <span className="font-bold">{key}</span>: {value}
                       </p>
                     )
                   )}
-                </div>
-
-                <div className="sm:flex hidden justify-between">
-                  <button
-                    className="bg-teal text-white px-4 py-2 rounded-md shadow-md hover:shadow-lg hover:shadow-teal-500/50 transition-shadow duration-300"
-                    onClick={handlePrevMetric}
-                  >
-                    Previous
-                  </button>
-                  <button
-                    className="bg-teal text-white px-4 py-2 rounded-md shadow-md hover:shadow-lg hover:shadow-teal-500/50 transition-shadow duration-300"
-                    onClick={handleNextMetric}
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
+            </div>
+            <div className="sm:flex hidden justify-between">
+              <button
+                className="bg-teal text-white px-4 py-2 rounded-md shadow-md hover:shadow-lg hover:shadow-teal-500/50 transition-shadow duration-300"
+                onClick={handlePrevMetric}
+              >
+                Previous
+              </button>
+              <button
+                className="bg-teal text-white px-4 py-2 rounded-md shadow-md hover:shadow-lg hover:shadow-teal-500/50 transition-shadow duration-300"
+                onClick={handleNextMetric}
+              >
+                Next
+              </button>
             </div>
           </div>
         </>
       ) : (
-        <div className={`${isAskingForHelp? "bg-red-500 " : "bg-figma-figma9" }  rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-64 xl:h-full`} >
-          { agent && 
-          <button className="w-full flex flex-col items-center justify-center" onClick={() => {
-            askForHelp(agent?.id, !isAskingForHelp)
-            setIsAskingForHelp(!isAskingForHelp)
-            } }>
-            <div className="flex items-center justify-center p-4" >
-              <FontAwesomeIcon
-                icon={faQuestion}
-                className="text-white text-4xl mr-4"
-              />
-              <h1 className="text-4xl font-bold text-white">{isAskingForHelp? "Asking for help" : "Ask for help"}</h1>
-            </div>
-            <div className="flex items-center justify-center px-3">
-              <text className="text-white">
-                Ask your supervisor for help with a call or anything needed.
-              </text>
-            </div>
-          </button>
+        <div className={`${isAskingForHelp ? "bg-red-500 " : "bg-figma-figma9"}  rounded-lg shadow-md p-4 overflow-hidden sm:h-56 md:h-64 lg:h-64 xl:h-full`} >
+          {agent &&
+            <button className="w-full flex flex-col items-center justify-center" onClick={() => {
+              askForHelp(agent?.id, !isAskingForHelp)
+              setIsAskingForHelp(!isAskingForHelp)
+            }}>
+              <div className="flex items-center justify-center p-4" >
+                <FontAwesomeIcon
+                  icon={faQuestion}
+                  className="text-white text-4xl mr-4"
+                />
+                <h1 className="text-4xl font-bold text-white">{isAskingForHelp ? "Asking for help" : "Ask for help"}</h1>
+              </div>
+              <div className="flex items-center justify-center px-3">
+                <text className="text-white">
+                  Ask your supervisor for help with a call or anything needed.
+                </text>
+              </div>
+            </button>
           }
         </div>
       )}
