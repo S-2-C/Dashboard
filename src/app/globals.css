@@ -12,6 +12,13 @@
   display: none;
 }
 
+.sendbird-conversation__footer
+  .sendbird-conversation__footer__typing-indicator:has(
+    .sendbird-conversation__footer__typing-indicator__text
+  ) {
+  /* hidden */
+  display: none;
+}
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
