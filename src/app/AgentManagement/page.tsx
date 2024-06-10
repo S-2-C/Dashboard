@@ -86,13 +86,13 @@ export default function AgentManagement() {
 
   return (
     <div className="flex h-screen bg-background text-foreground relative">
-      <div className="flex flex-col flex-1 p-10 ml-20">
+      <div className="flex flex-col flex-1 p-10 pt-6 ml-20">
         <Flex direction="column" gap="2rem">
           <Heading level={1} fontWeight="bold">
             Agent Management
           </Heading>
         </Flex>
-        <div className="mt-12">
+        <div className="mt-4">
           <Flex direction="column" gap="2rem">
             <Flex gap="2rem">
               <div className="w-2/4">
@@ -144,7 +144,7 @@ export default function AgentManagement() {
                   ))}
               </div>
 
-              <div className="w-2/4">
+              <div className="w-2/4 pb-3">
                 <Flex direction="column">
                   <div className="flex items-center">
                     <div className="h-6 w-6 bg-agenman-agenmanred rounded-full mr-2"></div>
@@ -160,7 +160,7 @@ export default function AgentManagement() {
                       }}
                     />
                   </div>
-                  <div className="alertUsers flex w-full overflow-x-scroll no-scrollbar bg-agenman-agenmansblue1 p-2.5 rounded-xl">
+                  <div className="alertUsers flex h-32 w-full overflow-x-scroll no-scrollbar bg-agenman-agenmansblue1 p-2.5 rounded-xl">
                     {alertUsers?.map((user, index) => (
                       <div className="w-min p-1" key={index}>
                         <Link href={`/ManageCall/${user?.id}`}>
@@ -201,8 +201,7 @@ export default function AgentManagement() {
                     />
                   </div>
                   <div
-                    className="activeUsers flex bg-agenman-agenmansblue2 items-center rounded-xl"
-                    style={{ padding: "10px" }}
+                    className="activeUsers h-32 flex bg-agenman-agenmansblue2 items-center rounded-xl"
                   >
                     {activeUsers?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
@@ -271,15 +270,15 @@ export default function AgentManagement() {
 
                 <div className="flex gap-2" style={{ paddingTop: "15px" }}>
                   <div
-                    className="offlineUsers w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl"
-                    style={{ padding: "10px" }}
+                    className="offlineUsers w-2/4 h-40 flex flex-col bg-agenman-agenmansblue3 rounded-xl overflow-scroll no-scrollbar pt-1 p-3"
+                    /*style={{ padding: "8px" }}*/
                   >
                     {offlineUsers?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div className="text-4xl flex items-center h-10 w-10">
                           <img
                             src={"images/AgentBlue.svg"}
-                            className="mx-auto h-10 w-10"
+                            className="mx-auto h-8 w-8"
                             alt="Agent"
                           />
                           <p className="text-white text-sm px-1">
@@ -293,15 +292,15 @@ export default function AgentManagement() {
                   </div>
 
                   <div
-                    className="offlineSupervisors w-2/4 flex flex-col bg-agenman-agenmansblue3 rounded-xl"
-                    style={{ padding: "10px" }}
+                    className="offlineSupervisors w-2/4 h-40 flex flex-col bg-agenman-agenmansblue3 rounded-xl overflow-scroll no-scrollbar pt-1 p-3"
+                    /*style={{ padding: "10px" }}*/
                   >
                     {offlineSupervisors?.map((user, index) => (
                       <Link href={`/ManageCall/${user?.id}`} key={index}>
                         <div className="text-4xl flex items-center h-10 w-10">
                           <img
                             src={"images/AgentWhite.svg"}
-                            className="mx-auto h-20 w-20"
+                            className="mx-auto h-8 w-8"
                             alt="Agent"
                           />
                           <p className="text-white text-sm px-1">
