@@ -60,7 +60,7 @@ const DownloadPdfButton = ({title, description, date, siQueue, specifiesQueue, s
       </svg>
     </div>
     ) : (
-      <button className='font-light p-2 bg-gray-300 rounded-sm shadow hover:shadow-inner shadow-black text-lg mt-4' onClick={handleDownload}>Download PDF</button>
+      <button className='w-45 p-2 bg-blue text-figma-figma1 rounded-lg shadow-md  justify-center items-center hover:bg-figma-figma6' onClick={handleDownload}>Download PDF</button>
     )
   );
 };
