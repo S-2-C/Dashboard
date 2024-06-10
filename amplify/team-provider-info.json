@@ -19,7 +19,7 @@
       "function": {
         "callStart": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",
-          "s3Key": "amplify-builds/callStart-4a562b64367571766c66-build.zip"
+          "s3Key": "amplify-builds/callStart-334a38687a506150325a-build.zip"
         },
         "chatWebSocket": {
           "deploymentBucketName": "amplify-connectdashboard-staging-5ea37-deployment",

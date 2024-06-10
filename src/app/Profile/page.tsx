@@ -22,7 +22,7 @@ const profileData = {
     location: 'Mexico City, Mexico',
     ID: '123456',
     profileImage: 'https://monteliphotography.com/wp-content/uploads/2022/04/Monteli-Photography-Retrato-Profesional-Barcelona-1.jpg',
-    avatarImages: "images/S2C Logo.svg",
+    avatarImages: "images/S2C_Logo.svg",
     status: 'Available'
 };
 

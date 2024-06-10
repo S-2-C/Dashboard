@@ -4,6 +4,21 @@
 
 @import "@aws-amplify/ui-react/styles.css";
 
+.sendbird-chat-header
+  .sendbird-ui-header__right:has(
+    .sendbird-chat-header__right__info .sendbird-iconbutton__inner
+  ) {
+  /* hidden */
+  display: none;
+}
+
+.sendbird-conversation__footer
+  .sendbird-conversation__footer__typing-indicator:has(
+    .sendbird-conversation__footer__typing-indicator__text
+  ) {
+  /* hidden */
+  display: none;
+}
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -17,7 +32,7 @@
 
 /* Primary Button */
 .amplify-button--primary {
-  background: #007EC9;
+  background: #007ec9;
 }
 
 /* Primary Button Hover */
@@ -31,18 +46,18 @@
 }
 
 .amplify-tabs-item[data-state="active"] {
-  color: #007EC9;
+  color: #007ec9;
 }
 
 [data-amplify-authenticator] {
   /* Text color tabs */
-  --amplify-components-tabs-item-focus-color: #007EC9;
+  --amplify-components-tabs-item-focus-color: #007ec9;
   /* Active tab border */
-  --amplify-components-tabs-item-active-border-color: #007EC9;
+  --amplify-components-tabs-item-active-border-color: #007ec9;
   /* Selected tab border */
 
   /* Tab hover */
-  --amplify-components-tabs-item-hover-color: #007EC9;
+  --amplify-components-tabs-item-hover-color: #007ec9;
 }
 
 @layer base {

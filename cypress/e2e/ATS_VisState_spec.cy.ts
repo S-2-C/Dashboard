@@ -1,5 +1,5 @@
 import awsExports from "../../src/aws-exports";
-/*
+
 describe("TS_VisState", function () {
   const gqlEndpoint = awsExports.aws_appsync_graphqlEndpoint;
   const apiKey = awsExports.aws_appsync_apiKey;
@@ -270,4 +270,3 @@ export const selectors = {
   alertUsers: "#alertUsers", // id of the alert users list
   activeUsers: "#activeUsers", // id of the active users list
 };
-*/
