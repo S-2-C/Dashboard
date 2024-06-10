@@ -73,9 +73,6 @@ export default function Notifications() {
             const numberOfUsersWithQueuePriority = await fetchNumberOfUsersWithQueuePriority();
             const asAMap = new Map(Object.entries(numberOfUsersWithQueuePriority));
             setNumberOfUsersWithQueuePriority(asAMap);
-            console.log("number of users with queue priority: ", JSON.stringify(numberOfUsersWithQueuePriority))
-            console.error(numberOfUsersWithQueuePriority);
-            console.error({ numberOfUsersWithQueuePriority });
 
             // Fetch the current metric data
             const currentMetricData = await fetchCurrentMetricData(QueueIdsString);
