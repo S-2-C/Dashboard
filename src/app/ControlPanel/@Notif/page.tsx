@@ -75,7 +75,7 @@ export default function NotifSlot() {
 
   return (
     <div
-      className={`flex flex-col p-4 rounded-lg h-full ${
+      className={`flex flex-col p-4 rounded-lg h-full shadow-lg ${
         agent?.role === "SUPERVISOR" ? "bg-teal-background" : "bg-blue-dark"
       }`}
     >

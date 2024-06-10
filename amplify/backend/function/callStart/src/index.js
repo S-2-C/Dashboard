@@ -107,6 +107,7 @@ exports.handler = async (event) => {
       agentUsername
     );
     const resSetUserOnCall = await setUserOnCall(agentUsername);
+    console.log(`resCreateContact: ${JSON.stringify(resCreateContact)}`);
     return {
       statusCode: 200,
       body: JSON.stringify({ resCreateContact, resSetUserOnCall }),
