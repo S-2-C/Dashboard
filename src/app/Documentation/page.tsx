@@ -5,7 +5,7 @@ import SearchBar from "../searchBar"; //importing the SearchBar component
 import { documents } from "@/app/content/relevantFiles";
 import DocumentReader from "@/components/documentReader";
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 12;
 
 export default function Documentation() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,13 +62,9 @@ export default function Documentation() {
             </button>
           ))}
         </div>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"> {/* Adjusted columns to 4 for xl */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2"> {/* Adjusted gap to 2 */}
           {currentDocuments.map((item, index) => (
-            <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between h-80" key={index}> {/* Increased height to h-80 */}
-              <div className="overflow-hidden text-ellipsis break-words">
-                <DocumentReader content={item} index={index} />
-              </div>
-            </div>
+            <DocumentReader content={item} index={index} key={index} />
           ))}
         </div>
         <div className="flex justify-center mt-4">
