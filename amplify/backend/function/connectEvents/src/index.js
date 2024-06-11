@@ -29,6 +29,8 @@ async function updateCallEnd(event) {
                 userContactsId
                 callStart
                 callEnd
+                createdAt
+                updatedAt
             }
           }`,
 
@@ -85,6 +87,8 @@ async function updateCallEnd(event) {
                 role
                 needsHelp
                 isOnCall
+                createdAt
+                updatedAt
             }
         }`,
         variables: {
