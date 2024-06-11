@@ -11,24 +11,6 @@ const App: React.FC = () => {
     const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
     const [transcript, setTranscript] = useState<any>(null);
 
-    // const handleListen = async (contactId: string) => {
-    //     console.log(contactId);
-    //     const response = await fetch(`/historicCalls/getCallAudio?date=${date}&contactId=${contactId}`, {
-    //         method: "GET"
-    //     });
-
-    //     const audio = await response.blob();
-    //     const audioUrl = URL.createObjectURL(audio);
-    //     const audioPlayer = document.getElementById("audioPlayer") as HTMLAudioElement; // Casteo a HTMLAudioElement
-
-    //     if (!audioPlayer) {
-    //         console.error("Audio player element not found");
-    //         return;
-    //     }
-    //     audioPlayer.src = audioUrl;
-    //     audioPlayer.play();
-    // };
-
     useEffect(() => {
         const fetchAudios = async () => {
             if (dateResponse && dateResponse.data && dateResponse.data.contactIds) {
@@ -53,8 +35,6 @@ const App: React.FC = () => {
         fetchAudios();
     }, [dateResponse]);
 
-
-
     const handleTranscript = async (contactId: string) => {
         const response = await fetch(`/historicCalls/getCallAnalysis?date=${date}&contactId=${contactId}`, {
             method: "GET"
@@ -65,7 +45,6 @@ const App: React.FC = () => {
 
         setTranscript(data.data);
     }
-
 
     return (
         <div className="flex h-screen bg-background text-foreground relative " >
