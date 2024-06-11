@@ -9,6 +9,7 @@ const App: React.FC = () => {
     // Date response state
     const [dateResponse, setDateResponse] = useState<any>(null);
     const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
+    const [transcript, setTranscript] = useState<any>(null);
 
     // const handleListen = async (contactId: string) => {
     //     console.log(contactId);
@@ -61,6 +62,8 @@ const App: React.FC = () => {
         // Get data from response
         const data = await response.json();
         console.log(data);
+
+        setTranscript(data.data);
     }
 
 
@@ -95,7 +98,22 @@ const App: React.FC = () => {
                         </div>
                     ))
                 }
+                <div className="flex flex-col w-full gap-2 h-[600px]  overflow-y-scroll no-scrollbar">
+                    {
+                        transcript &&
+                        transcript.map((t: any, index: any) => {
+                            console.log(t);
+                            if (!t) return;
+                            return (
+                                <div>
+                                    <h1>Transcript {index + 1}</h1>
+                                    <p>{t.content}</p>
+                                </div>
+                            );
+                        })}
+                </div>
             </div>
+
         </div>
     );
 };
