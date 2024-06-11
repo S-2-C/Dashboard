@@ -5,6 +5,7 @@ import { Heading } from "@aws-amplify/ui-react";
 import DateInputComponent from '@/components/DateInputComponent';
 import { useState } from 'react';
 
+
 const App: React.FC = () => {
     // Date response state
     const [dateResponse, setDateResponse] = useState<any>(null);
@@ -88,15 +89,25 @@ const App: React.FC = () => {
                                     transcript.data &&
                                     transcript.data.map((t: any, index: number) => {
                                         console.log("t", t);
-                                        if (!t) return;
+                                        if (!t) return null;
                                         console.log("t.Content", t.Content);
+
+                                        let textColorClass = 'text-gray-700'; // Default color
+                                        if (t.Sentiment === 'POSITIVE') {
+                                            textColorClass = 'text-green-500';
+                                        } else if (t.Sentiment === 'NEGATIVE') {
+                                            textColorClass = 'text-red-500';
+                                        }
+
                                         return (
                                             <div key={index} className="my-2">
                                                 <p className="text-gray-700">
                                                     <span className="font-bold">
                                                         {t.ParticipantId}:{" "}
                                                     </span>
-                                                    {t.Content}
+                                                    <span className={textColorClass}>
+                                                        {t.Content}
+                                                    </span>
                                                 </p>
                                             </div>
                                         );
