@@ -28,7 +28,7 @@ const ManageReports = () => {
       date: new Date().toDateString(),
       description: "This is a new report",
       isEditing: true,
-      isReportModalOpen: true,
+      isReportModalOpen: false,
     };
 
     const updatedReports = [...allReports, newReport];
