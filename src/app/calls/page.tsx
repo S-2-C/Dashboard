@@ -72,6 +72,14 @@ const App: React.FC = () => {
                             >
                                 Transcript
                             </button>
+                            {transcript && transcript[contactId] && (
+                                <div>
+                                    {transcript[contactId].transcript.map((transcript: string) => (
+                                        <p key={transcript}>{transcript}</p>
+                                    ))}
+                                    <p>{transcript[contactId].sentiment}</p>
+                                </div>
+                            )}
                         </div>
                     ))
                 }
