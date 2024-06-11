@@ -56,8 +56,6 @@ const App: React.FC = () => {
                     </Heading>
                 </div>
 
-                <h1>Audio Player</h1>
-                <AudioPlayer />
                 <DateInputComponent setResponse={setDateResponse} date={date} setDate={setDate} />
                 {
                     dateResponse && dateResponse.data.contactIds.map((contactId: string) => (
@@ -77,23 +75,24 @@ const App: React.FC = () => {
                         </div>
                     ))
                 }
-                <div className="flex flex-col w-full gap-2 h-[600px]  overflow-y-scroll no-scrollbar">
+                <div>
                     {
                         transcript &&
                         transcript.map((t: any, index: any) => {
                             console.log(t);
                             if (!t) return;
+                            console.log(t.Content);
                             return (
                                 <div>
-                                    <h1>Transcript {index + 1}</h1>
-                                    <p>{t.content}</p>
+                                    <p>{t.ParticipantId}</p>
+                                    <p>{t.Content}</p>
                                 </div>
                             );
                         })}
                 </div>
             </div>
 
-        </div>
+        </div >
     );
 };
 
