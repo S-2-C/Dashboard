@@ -15,7 +15,6 @@ const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse }) 
         if (date) {
             try {
                 const data = await fetchHistoricCalls(date);
-                console.log(data);
                 setResponse(data);
                 setError(null);
             } catch (error: any) {
