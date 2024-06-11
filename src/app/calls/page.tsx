@@ -30,7 +30,8 @@ const App: React.FC = () => {
 
 
     return (
-        <div className="flex h-screen bg-background text-foreground relative ">
+        <div className="flex h-screen bg-background text-foreground relative " >
+            <audio id="audioPlayer" controls className='hidden'></audio>
             <div className="flex flex-col flex-1 p-10 ml-20">
                 <div className="flex justify-between items-center mb-6">
 
