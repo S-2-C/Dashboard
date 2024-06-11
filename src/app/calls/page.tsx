@@ -85,6 +85,7 @@ const App: React.FC = () => {
                                 {
                                     transcript &&
                                     transcript.contactId === contactId &&
+                                    transcript.data &&
                                     transcript.data.map((t: any, index: number) => {
                                         console.log("t", t);
                                         if (!t) return;
