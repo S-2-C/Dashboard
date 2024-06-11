@@ -27,6 +27,7 @@ const App: React.FC = () => {
         audioPlayer.src = audioUrl;
         audioPlayer.play();
     };
+
     const handleTranscript = async (contactId: string) => {
         const response = await fetch(`/historicCalls/getCallAnalysis?date=${date}&contactId=${contactId}`, {
             method: "GET"
