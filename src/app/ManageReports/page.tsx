@@ -26,6 +26,8 @@ const ManageReports = () => {
       uploadedBy: "Admin",
       date: new Date().toDateString(),
       description: "This is a new report",
+      isEditing: true,
+      isReportModalOpen: true,
     };
 
     const updatedReports = [...allReports, newReport];
@@ -37,35 +39,34 @@ const ManageReports = () => {
     const updatedReports = allReports.map((report: any) => report.index === updatedReport.index ? updatedReport : report);
     setAllReports(updatedReports);
     saveReportsToLocalStorage(updatedReports);
-    };
+  };
     
-    const handleDelete = (reportIndex: number) => {
+  const handleDelete = (reportIndex: number) => {
     const updatedReports = allReports.filter((report: any) => report.index !== reportIndex);
     setAllReports(updatedReports);
     saveReportsToLocalStorage(updatedReports);
-    };
+  };
     
-    return (
+  return (
     <div className="flex h-screen bg-background text-foreground relative">
-    <div className="flex flex-col flex-1 p-10 ml-20">
-    <div className="flex justify-end px-16 pt-4">
-    <SearchBar />
+      <div className="flex flex-col flex-1 p-10 ml-20">
+        <div className="flex justify-end px-16 pt-4">
+          <SearchBar />
+        </div>
+        <div className='h-full w-full'>
+          <h1 className='text-5xl font-semibold p-4'>Create reports</h1>
+          <div className='flex w-full p-4 items-center'>
+            {allReports.map((report: any) => (
+              <NewReport key={report.index} props={report} onSave={handleSave} onDelete={() => handleDelete(report.index)} />
+            ))}
+            <button onClick={createReport} className='text-white text-2xl h-12 flex justify-center items-center bg-slate-400 rounded-lg p-5'>
+              New
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div className='h-full w-full'>
-    <h1 className='text-5xl font-semibold p-4'>Create reports</h1>
-    <div className='flex w-full p-4 items-center'>
-    {allReports.map((report: any) => (
-    <NewReport key={report.index} props={report} onSave={handleSave} onDelete={() => handleDelete(report.index)} />
-    ))}
-    <button onClick={createReport} className='text-white text-2xl h-12 flex justify-center items-center bg-slate-400 rounded-lg p-5'>
-    New
-    </button>
-    </div>
-    </div>
-    </div>
-    </div>
-    );
-    }
-    
-    export default ManageReports;
-    
+  );
+}
+
+export default ManageReports;
