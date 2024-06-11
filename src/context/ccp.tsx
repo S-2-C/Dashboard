@@ -6,6 +6,7 @@ import "amazon-connect-streams";
 declare global {
   interface Window {
     connect: {
+      contact: (callback: (contact: any) => void) => void;
       core: {
         initCCP: (container: HTMLElement, config: any) => void;
       };
@@ -24,6 +25,7 @@ interface CCPContextType {
   hangUpContact: () => void;
   incomingContact: connect.Contact | null;
   logOut: () => Promise<void>;
+  contacts: connect.Contact[];
 }
 
 const CCPContext = createContext<CCPContextType | null>(null);
@@ -37,8 +39,10 @@ export const CCPContextProvider = ({
   const [agentState, setAgentState] = useState("");
   const [incomingContact, setIncomingContact] =
     useState<connect.Contact | null>(null);
+  const [contacts, setContacts] = useState<connect.Contact[]>([]);
   const [isContactAccepted, setIsContactAccepted] = useState(false);
   const [callTime, setCallTime] = useState(0);
+  // const [callDuration, setCallDuration] = useState(0);
   const [callStartTime, setCallStartTime] = useState("");
 
   useEffect(() => {
@@ -57,6 +61,7 @@ export const CCPContextProvider = ({
 
     window.connect.core.initCCP(ccpContainer, {
       ccpUrl: "https://ss2cc.my.connect.aws/connect/ccp-v2/",
+      // ccpUrl: "https://bebopruebas.my.connect.aws/connect/ccp-v2/",
       loginPopup: true,
       region: "us-east-1",
       softphone: {
@@ -68,11 +73,21 @@ export const CCPContextProvider = ({
       setCurrentAgent(agent);
       agent.onStateChange(function (stateChange) {
         setAgentState(stateChange.newState);
+        if (stateChange.newState === "Busy") {
+          setCallTime(0); // Reset call duration on new call
+          const intervalId = setInterval(() => {
+            const duration = agent.getStateDuration();
+            setCallTime(duration / 1000); // Convert milliseconds to seconds
+          }, 1000);
+          return () => clearInterval(intervalId);
+        }
       });
     });
 
     window.connect.contact(function (contact) {
       setIncomingContact(contact);
+      console.log("Hello, incomingContact: ", contact);
+      setContacts((prevContacts) => [...prevContacts, contact]);
     });
   }, [window.connect]);
 
@@ -189,6 +204,7 @@ export const CCPContextProvider = ({
         hangUpContact,
         incomingContact,
         logOut,
+        contacts,
       }}
     >
       {children}

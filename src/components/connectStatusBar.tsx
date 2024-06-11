@@ -12,9 +12,7 @@ export const ConnectStatusBar = () => {
             <div
               onClick={() => changeAgentState("Offline")}
               className={`px-3 mb-2 text-center text-sm border rounded-lg shadow-lg py-1 flex items-center ${
-                callTime > 0
-                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                  : "cursor-pointer hover:border-blue-300 hover:shadow-md bg-blue-100 hover:bg-blue-200 transition duration-200 hover:text-blue-800 border-blue-200 text-gray-800"
+                "cursor-pointer hover:border-blue-300 hover:shadow-md bg-blue-100 hover:bg-blue-200 transition duration-200 hover:text-blue-800 border-blue-200 text-gray-800"
               }`}
             >
               Go Offline
@@ -24,7 +22,7 @@ export const ConnectStatusBar = () => {
             <div
               onClick={() => changeAgentState("Available")}
               className={`px-3 mb-2 text-center text-sm border rounded-lg shadow-lg py-1 flex items-center ${
-                callTime > 0
+                agentState === "Busy"
                   ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                   : "cursor-pointer hover:border-blue-300 hover:shadow-md bg-blue-100 hover:bg-blue-200 transition duration-200 hover:text-blue-800 border-blue-200 text-gray-800"
               }`}
