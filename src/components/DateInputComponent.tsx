@@ -7,7 +7,7 @@ interface DateInputComponentProps {
 }
 
 const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse }) => {
-    const [date, setDate] = useState<string>('');
+    const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
     const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async (event: React.FormEvent) => {
