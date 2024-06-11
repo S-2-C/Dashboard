@@ -13,6 +13,9 @@ export const ConnectCallModal = () => {
     callTime,
     currentAgent,
     agentState,
+    mute,
+    unmute,
+    isMuted,
   } = useCCP();
 
   const user = useUserRole();
@@ -21,6 +24,14 @@ export const ConnectCallModal = () => {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${minutes}:${Math.floor(seconds).toString().padStart(2, "0")}`;
+  };
+
+  const toggleMute = () => {
+    if (isMuted) {
+      unmute();
+    } else {
+      mute();
+    }
   };
 
   if (user?.role === "AGENT") return (
@@ -64,6 +75,12 @@ export const ConnectCallModal = () => {
             className="px-3 text-center text-white text-sm bg-red-500 border border-red-600 rounded-lg shadow-lg py-1 cursor-pointer hover:bg-red-600 transition duration-200"
           >
             Hang Up
+          </button>
+          <button
+            onClick={toggleMute}
+            className={`px-3 text-center text-sm ${isMuted ? 'bg-yellow-500' : 'bg-green-500'} border border-green-600 rounded-lg shadow-lg py-1 cursor-pointer hover:bg-green-600 transition duration-200`}
+          >
+            {isMuted ? "Unmute" : "Mute"}
           </button>
         </div>
       )

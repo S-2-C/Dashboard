@@ -13,6 +13,7 @@ declare global {
     };
   }
 }
+
 interface CCPContextType {
   currentAgent: connect.Agent | null;
   agentState: string;
@@ -26,6 +27,9 @@ interface CCPContextType {
   incomingContact: connect.Contact | null;
   logOut: () => Promise<void>;
   contacts: connect.Contact[];
+  mute: () => void;
+  unmute: () => void;
+  isMuted: boolean;
 }
 
 const CCPContext = createContext<CCPContextType | null>(null);
@@ -44,6 +48,41 @@ export const CCPContextProvider = ({
   const [callTime, setCallTime] = useState(0);
   // const [callDuration, setCallDuration] = useState(0);
   const [callStartTime, setCallStartTime] = useState("");
+  const [isMuted, setIsMuted] = useState(false); // Estado para gestionar el mute
+
+  const mute = () => {
+    const connection = incomingContact?.getAgentConnection();
+    if (connection instanceof connect.VoiceConnection) { // Verificar que la conexión es una VoiceConnection
+      connection.muteParticipant({
+        success: () => {
+          console.log("Muted successfully.");
+          setIsMuted(true);
+        },
+        failure: (error) => {
+          console.error("Failed to mute:", error);
+        }
+      });
+    } else {
+      console.log("Connection is not a voice connection.");
+    }
+  };
+
+  const unmute = () => {
+    const connection = incomingContact?.getAgentConnection();
+    if (connection instanceof connect.VoiceConnection) { // Verificar que la conexión es una VoiceConnection
+      connection.unmuteParticipant({
+        success: () => {
+          console.log("Unmuted successfully.");
+          setIsMuted(false);
+        },
+        failure: (error) => {
+          console.error("Failed to unmute:", error);
+        }
+      });
+    } else {
+      console.log("Connection is not a voice connection.");
+    }
+  };
 
   useEffect(() => {
     const ccpContainer = document.getElementById("ccp-container");
@@ -205,6 +244,9 @@ export const CCPContextProvider = ({
         incomingContact,
         logOut,
         contacts,
+        mute,
+        unmute,
+        isMuted,
       }}
     >
       {children}
