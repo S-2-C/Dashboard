@@ -10,6 +10,23 @@ const App: React.FC = () => {
     const [transcript, setTranscript] = useState<any>(null);
     const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
 
+    const fetchHistoricCalls = async (date: string) => {
+        try {
+            const response = await fetch(`/historicCalls/listCallsByDate?date=${date}`, {
+                method: "GET"
+            });
+            const data = await response.json();
+            setDateResponse(data);
+        } catch (error) {
+            console.error('Error fetching historic calls:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch the contact IDs for the current date on initial load
+        fetchHistoricCalls(date);
+    }, []);
+
     useEffect(() => {
         const fetchAudios = async () => {
             if (dateResponse && dateResponse.data && dateResponse.data.contactIds) {
