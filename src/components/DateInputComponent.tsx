@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { fetchHistoricCalls } from '../fetching/fetchinglistCallsByDate';
 
 interface DateInputComponentProps {
@@ -28,22 +28,19 @@ const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, da
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Select a Date</h2>
-            <div className="space-y-4">
-                <div>
-                    <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
-                    <input
-                        type="date"
-                        id="date"
-                        name="date"
-                        value={date}
-                        onChange={handleDateChange}
-                        required
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                </div>
-                {error && <div className="text-red-500 text-sm">{error}</div>}
+            <div className="flex items-center">
+                <h2 className="text-2xl font-bold text-gray-800 mr-4">Select a Date:</h2>
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={date}
+                    onChange={handleDateChange}
+                    required
+                    className="block p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
             </div>
+            {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
         </div>
     );
 };
