@@ -1,6 +1,5 @@
 "use client";
 import useNotificationCreations from "@/hooks/useNotificationCreations";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Notification } from "@/API";
 import { useUserRole } from "@/hooks/useUserRole";
@@ -122,7 +121,7 @@ export default function NotifSlot() {
                     : notif.urgency === "MEDIUM"
                     ? "bg-blue"
                     : notif.urgency === "LOW"
-                    ? "bg-blue"
+                    ? "bg-white"
                     : "bg-white"
                 }`}
             >

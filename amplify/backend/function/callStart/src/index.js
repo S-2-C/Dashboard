@@ -24,6 +24,8 @@ async function createContact(phone, id, callStart, userContactsId) {
             id
             callStart
             userContactsId
+            createdAt
+            updatedAt
         }
       }`,
     variables: {
@@ -65,6 +67,8 @@ async function setUserOnCall(agentUsername) {
                 role
                 needsHelp
                 isOnCall
+                createdAt
+                updatedAt
             }
         }`,
     variables: {
