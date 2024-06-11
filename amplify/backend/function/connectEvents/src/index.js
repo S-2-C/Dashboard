@@ -195,6 +195,8 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     urgency
                     timestamp
                     agentEmail
+                    createdAt
+                    updatedAt
                 }
             }`,
             variables: {
@@ -220,6 +222,8 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     urgency
                     timestamp
                     agentEmail
+                    createdAt
+                    updatedAt
                 }
             }`,
             variables: {

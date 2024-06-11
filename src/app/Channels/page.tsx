@@ -66,7 +66,7 @@ export default function Notifications() {
 
     fetchData(); // Fetch data immediately on component mount
 
-    const intervalId = setInterval(fetchData, 10000); // Fetch data every 2 seconds
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
 
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, []);
