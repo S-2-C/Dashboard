@@ -10,11 +10,12 @@ interface DateInputComponentProps {
 const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, date, setDate }) => {
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        if (date) {
+    const handleDateChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedDate = e.target.value;
+        setDate(selectedDate);
+        if (selectedDate) {
             try {
-                const data = await fetchHistoricCalls(date);
+                const data = await fetchHistoricCalls(selectedDate);
                 setResponse(data);
                 setError(null);
             } catch (error: any) {
@@ -28,7 +29,7 @@ const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, da
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">Select a Date</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-4">
                 <div>
                     <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
                     <input
@@ -36,17 +37,13 @@ const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, da
                         id="date"
                         name="date"
                         value={date}
-                        onChange={(e) => setDate(e.target.value)}
+                        onChange={handleDateChange}
                         required
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                 </div>
-                <div>
-                    <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Submit
-                    </button>
-                </div>
-            </form>
+                {error && <div className="text-red-500 text-sm">{error}</div>}
+            </div>
         </div>
     );
 };

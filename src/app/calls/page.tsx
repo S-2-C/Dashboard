@@ -11,6 +11,7 @@ const App: React.FC = () => {
     const [dateResponse, setDateResponse] = useState<any>(null);
     const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
     const [transcript, setTranscript] = useState<any>(null);
+    console.log("dateResponse", date);
 
     useEffect(() => {
         const fetchAudios = async () => {
