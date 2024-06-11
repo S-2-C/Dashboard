@@ -99,7 +99,7 @@ export default function Home({ children }: HomeProps) {
                     {/* Upper column with only the logo */}
                     <div className="flex flex-col items-center justify-center">
                       <img
-                        src="images/S2C_Logo.svg"
+                        src="/images/S2C Logo.svg"
                         alt="Logo"
                         className="w-12 h-12"
                       />
@@ -354,7 +354,7 @@ export default function Home({ children }: HomeProps) {
                     {/* Upper column with only the logo */}
                     <div className="flex flex-col items-center justify-center">
                       <img
-                        src="images/S2C_Logo.svg"
+                        src="/images/S2C Logo.svg"
                         alt="Logo"
                         className="w-12 h-12"
                       />
