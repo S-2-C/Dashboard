@@ -41,8 +41,8 @@ const App: React.FC = () => {
 
                 <h1>Audio Player</h1>
                 <AudioPlayer />
-                <DateInputComponent setResponse={setDateResponse} date
-                    {
+                <DateInputComponent setResponse={setDateResponse} date={date} setDate={setDate} />
+                {
                     dateResponse && dateResponse.data.contactIds.map((contactId: string) => (
                         <div key={contactId}>
                             <p>{contactId}</p>
@@ -54,7 +54,7 @@ const App: React.FC = () => {
                             </button>
                         </div>
                     ))
-                    }
+                }
             </div>
         </div>
     );
