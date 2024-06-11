@@ -90,9 +90,13 @@ const App: React.FC = () => {
                                         if (!t) return;
                                         console.log("t.Content", t.Content);
                                         return (
-                                            <div key={index}>
-                                                <p>{t.ParticipantId}</p>
-                                                <p>{t.Content}</p>
+                                            <div key={index} className="my-2">
+                                                <p className="text-gray-700">
+                                                    <span className="font-bold">
+                                                        {t.ParticipantId}:{" "}
+                                                    </span>
+                                                    {t.Content}
+                                                </p>
                                             </div>
                                         );
                                     })}
