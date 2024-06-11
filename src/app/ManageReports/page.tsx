@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import SearchBar from "../searchBar";
 import { fetchMetricDataV2Agent } from '@/fetching/fetchingMetricDataV2Agent';
 import { fetchMetricDataV2Queue } from '@/fetching/fetchingMetricDataV2Queue';
@@ -49,10 +50,14 @@ const ManageReports = () => {
     <div className="flex h-screen bg-background text-foreground relative">
     <div className="flex flex-col flex-1 p-10 ml-20">
     <div className="flex justify-end px-16 pt-4">
-    <SearchBar />
     </div>
     <div className='h-full w-full'>
-    <h1 className='text-5xl font-semibold p-4'>Create reports</h1>
+    <div className="flex justify-between items-center mb-6">
+          <Heading level={1} fontWeight="Bold">
+            Create Reports
+          </Heading>
+          <SearchBar />
+        </div>
     <div className='flex w-full p-4 items-center'>
     {allReports.map((report: any) => (
     <NewReport key={report.index} props={report} onSave={handleSave} onDelete={() => handleDelete(report.index)} />

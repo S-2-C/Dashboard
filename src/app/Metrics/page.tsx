@@ -473,9 +473,7 @@ export default function Metrics() {
           <Heading level={1} fontWeight="Bold">
             Performance Metrics
           </Heading>
-          <div className="flex-1 max-w-xl">
-            <SearchBar />
-          </div>
+          <SearchBar />
         </div>
         <div
           className="flex flex-col "

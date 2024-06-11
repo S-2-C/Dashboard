@@ -5,6 +5,7 @@ import { fetchAllAgents } from "@/fetching/fetchingDataFunctions";
 import Link from "next/link";
 import { User } from "@/API";
 import useUserUpdates from "@/hooks/useUserUpdates";
+import SearchBar from "../searchBar"; //importing the SearchBar component
 
 export default function AgentManagement() {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
@@ -87,11 +88,13 @@ export default function AgentManagement() {
   return (
     <div className="flex h-screen bg-background text-foreground relative">
       <div className="flex flex-col flex-1 p-10 pt-6 ml-20">
-        <Flex direction="column" gap="2rem">
-          <Heading level={1} fontWeight="bold">
+      <div className="flex justify-between items-center mb-6">
+          <Heading level={1} fontWeight="Bold">
             Agent Management
           </Heading>
-        </Flex>
+          <SearchBar />
+        </div>
+        
         <div className="mt-4">
           <Flex direction="column" gap="2rem">
             <Flex gap="2rem">
