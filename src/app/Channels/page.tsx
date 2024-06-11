@@ -115,10 +115,7 @@ export default function Notifications() {
     return (
         <div>
             <div className="h-screen flex w-full">
-                <div className="mt-12  w-full flex-col ml-40  overflow-scroll  no-scrollbar">
-                    {/* <div className="flex justify-end">
-                        <SearchBar />
-                    </div> */}
+            <div className="w-full flex-col ml-40 overflow-scroll no-scrollbar">
                     <div className="h-12 p-4 m-1">
                         <h1 className="text-figma-figma5 font-bold text-4xl">Channels</h1>
                     </div>
