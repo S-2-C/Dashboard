@@ -1,23 +1,24 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { fetchAllAgents } from "@/fetching/fetchingDataFunctions";
-import { User } from "@/API";
+import {
+  fetchAllAgents,
+  fetchOneAgent,
+} from "@/fetching/fetchingDataFunctions";
+import { Contact, User } from "@/API";
 import useUserUpdates from "@/hooks/useUserUpdates";
 
 import { useUserRole } from "@/hooks/useUserRole";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Timer from "@/components/timer";
-import { useCCP } from "@/context/ccp";
 
 export default function AgentSlot() {
-  const { callStartTime } = useCCP();
-
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
   const [alertUsers, setAlertUsers] = useState<User[]>([]);
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
   const [offlineSupervisors, setOfflineSupervisors] = useState<User[]>([]);
+  const [callStartTime, setCallStartTime] = useState<Date | null>(null);
   const agent = useUserRole();
 
   const userChange = useUserUpdates(); // This will hold the latest user update
@@ -30,6 +31,36 @@ export default function AgentSlot() {
     setOfflineUsers((prev) => prev?.filter((u) => u.id !== user.id));
     setOfflineSupervisors((prev) => prev?.filter((u) => u.id !== user.id));
   };
+
+  // Polling function to fetch data every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (!agent) return;
+      const updatedAgent = await fetchOneAgent(agent.id); // Refetch the agent status
+
+      const isAgentOnCall = updatedAgent?.isOnCall;
+      if (!isAgentOnCall) {
+        setCallStartTime(null);
+        console.log("Agent is not on call");
+        return;
+      }
+
+      const agentCalls = updatedAgent?.Contacts?.items;
+      const currentCall = agentCalls?.find(
+        (call: any) => call?.callEnd === null
+      ) as Contact;
+      if (!currentCall) {
+        console.log("No ongoing call");
+        setCallStartTime(null);
+        return;
+      }
+
+      const callStart = new Date(currentCall?.callStart);
+      setCallStartTime(callStart);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [agent]);
 
   useEffect(() => {
     if (userChange) {
