@@ -12,23 +12,22 @@ const App: React.FC = () => {
 
     const handleListen = async (contactId: string) => {
         console.log(contactId);
-        // call http://localhost:3000/historicCalls/getCallAudio?date=2024-06-01&contactId=aa023c65-e1b0-4465-8fa8-fe2670ed362e
         const response = await fetch(`/historicCalls/getCallAudio?date=${date}&contactId=${contactId}`, {
-          method: "GET"
+            method: "GET"
         });
 
         const audio = await response.blob();
         const audioUrl = URL.createObjectURL(audio);
-        const audioPlayer = document.getElementById("audioPlayer");
+        const audioPlayer = document.getElementById("audioPlayer") as HTMLAudioElement; // Casteo a HTMLAudioElement
+
         if (!audioPlayer) {
-            return;
-        }
-        if (!audioPlayer.src || !audioPlayer.play) {
+            console.error("Audio player element not found");
             return;
         }
         audioPlayer.src = audioUrl;
         audioPlayer.play();
     };
+
 
     return (
         <div className="flex h-screen bg-background text-foreground relative ">
@@ -43,7 +42,7 @@ const App: React.FC = () => {
                 <h1>Audio Player</h1>
                 <AudioPlayer />
                 <DateInputComponent setResponse={setDateResponse} date
-                {
+                    {
                     dateResponse && dateResponse.data.contactIds.map((contactId: string) => (
                         <div key={contactId}>
                             <p>{contactId}</p>
@@ -55,11 +54,10 @@ const App: React.FC = () => {
                             </button>
                         </div>
                     ))
-                }
+                    }
             </div>
-
         </div>
     );
-}
+};
 
 export default App;
