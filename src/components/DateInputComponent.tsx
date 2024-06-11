@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { fetchHistoricCalls } from '../fetching/fetchinglistCallsByDate';
-
 
 interface DateInputComponentProps {
     setResponse: React.Dispatch<React.SetStateAction<any>>;
+    date: string;
+    setDate: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse }) => {
-    const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
+const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, date, setDate }) => {
     const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async (event: React.FormEvent) => {
