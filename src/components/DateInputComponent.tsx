@@ -19,7 +19,7 @@ const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, da
                 setResponse(data);
                 setError(null);
             } catch (error: any) {
-                setError(error.message || 'Error fetching data');
+                setError(error.message || 'No data found for the selected date');
             }
         } else {
             setError('Please provide a valid date');
