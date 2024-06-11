@@ -27,6 +27,14 @@ const App: React.FC = () => {
         audioPlayer.src = audioUrl;
         audioPlayer.play();
     };
+    const handleTranscript = async (contactId: string) => {
+        const response = await fetch(`/historicCalls/getCallAnalysis?date=${date}&contactId=${contactId}`, {
+            method: "GET"
+        });
+        // Get data from response
+        const data = await response.json();
+        console.log(data);
+    }
 
 
     return (
@@ -52,6 +60,12 @@ const App: React.FC = () => {
                                 onClick={() => handleListen(contactId)}
                             >
                                 Listen
+                            </button>
+                            <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => handleTranscript(contactId)}
+                            >
+                                Transcript
                             </button>
                         </div>
                     ))
