@@ -29,18 +29,27 @@ const App: React.FC = () => {
     // };
 
     useEffect(() => {
-        if (dateResponse && dateResponse.data && dateResponse.data.contactIds) {
-            dateResponse.data.contactIds.forEach((contactId: string) => {
-                // set sources of every audio element
-                const audioPlayer = document.getElementById(`audioPlayer${contactId}`) as HTMLAudioElement;
-                if (!audioPlayer) {
-                    console.error(`Audio player element not found for contactId: ${contactId}`);
-                    return;
+        const fetchAudios = async () => {
+            if (dateResponse && dateResponse.data && dateResponse.data.contactIds) {
+                for (const contactId of dateResponse.data.contactIds) {
+                    // set sources of every audio element
+                    const audioPlayer = document.getElementById(`audioPlayer${contactId}`) as HTMLAudioElement;
+                    if (!audioPlayer) {
+                        console.error(`Audio player element not found for contactId: ${contactId}`);
+                        return;
+                    }
+                    const response = await fetch(`/historicCalls/getCallAudio?date=${date}&contactId=${contactId}`, {
+                        method: "GET"
+                    });
+
+                    const audio = await response.blob();
+                    const audioUrl = URL.createObjectURL(audio);
+                    audioPlayer.src = audioUrl;
                 }
-                audioPlayer.src = `/historicCalls/getCallAudio?date=${date}&contactId=${contactId}`;
-                // audioPlayer.play();
-            });
-        }
+            }
+        };
+
+        fetchAudios();
     }, [dateResponse]);
 
 
@@ -75,6 +84,7 @@ const App: React.FC = () => {
                             <audio
                                 id={`audioPlayer${contactId}`}
                                 controls
+                                preload="metadata"
                             />
                             <button
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
