@@ -25,23 +25,18 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
     };
 
     fetchAgents();
-    console.log("PROPS", props);
   }, []);
 
   const [allAgents, setAllAgents] = useState<any[]>([]);
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(props.isReportModalOpen || false);
   const [isTypeQueue, setIsTypeQueue] = useState(props.isTypeQueue || false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(props.isEditing || false);
   const [title, setTitle] = useState(props.title || "");
   const [description, setDescription] = useState(props.description || "");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAttributes, setSelectedAttributes] = useState<string[]>(props.attributes || []);
   const [selectedChannel, setSelectedChannel] = useState<{ id: string; name: string; }>(props.channel || null);
   const [selectedAgent, setSelectedAgent] = useState<{ id: string; name: string, arn: string }>(props.selectedAgent || null);
-
-  useEffect(() => {
-    console.log("VALUE", selectedAgent);
-  }, [selectedAgent]);
 
   const handleValueChange = (newValue: any) => {
     setValue(newValue);
@@ -63,7 +58,6 @@ const NewReport = ({ props, onSave, onDelete }: any) => {
     "SUM_NON_PRODUCTIVE_TIME_AGENT": "Total Non-Productive Time (Agent)",
     "AGENT_NON_RESPONSE": "Agent Non-Response"
   };
-
 
   const queueAttributes = [
     "CONTACTS_HANDLED",
