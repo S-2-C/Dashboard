@@ -43,12 +43,16 @@ const App: React.FC = () => {
         const data = await response.json();
         console.log(data);
 
-        setTranscript(data.data);
-    }
+        setTranscript({
+            contactId: contactId,
+            data: data.data
+        });
+        console.log("transcript", transcript);
+    };
 
     return (
         <div className="flex h-screen bg-background text-foreground relative " >
-            <div className="flex flex-col flex-1 p-10 ml-20">
+            <div className="flex flex-col items-center justify-start flex-1 p-10 ml-20">
                 <div className="flex justify-between items-center mb-6">
 
                     <Heading level={1} fontWeight="Bold">
@@ -57,46 +61,45 @@ const App: React.FC = () => {
                 </div>
 
                 <DateInputComponent setResponse={setDateResponse} date={date} setDate={setDate} />
-                {
-                    dateResponse && dateResponse.data.contactIds.map((contactId: string) => (
-                        <div key={contactId}>
-                            <p>{contactId}</p>
-                            <audio
-                                id={`audioPlayer${contactId}`}
-                                controls
-                                preload="metadata"
-                            />
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                onClick={() => handleTranscript(contactId)}
-                            >
-                                Transcript
-                            </button>
-                            {transcript && transcript[contactId] && (
-                                <div>
-                                    {transcript[contactId].transcript.map((transcript: string) => (
-                                        <p key={transcript}>{transcript}</p>
-                                    ))}
-                                    <p>{transcript[contactId].sentiment}</p>
-                                </div>
-                            )}
-                        </div>
-                    ))
-                }
-                <div>
+                <div className="flex flex-col justify-between items-center w-full py-6">
                     {
-                        transcript &&
-                        transcript.map((t: any, index: any) => {
-                            console.log(t);
-                            if (!t) return;
-                            console.log(t.Content);
-                            return (
-                                <div>
-                                    <p>{t.ParticipantId}</p>
-                                    <p>{t.Content}</p>
+                        dateResponse && dateResponse.data.contactIds.map((contactId: string) => (
+                            <div key={contactId} className="mb-4 border-b-2 border-gray-200 bg-gray-100 p-4 rounded w-full">
+                                <p className="text-xl font-bold mb-2">
+                                    Contact Id: {contactId}
+                                </p>
+                                <div className="w-full flex justify-between items-center">
+                                    <audio
+                                        id={`audioPlayer${contactId}`}
+                                        controls
+                                        preload="metadata"
+                                        className="border-2 border-gray-200 rounded"
+                                    />
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                        onClick={() => handleTranscript(contactId)}
+                                    >
+                                        Get Transcript
+                                    </button>
                                 </div>
-                            );
-                        })}
+                                {
+                                    transcript &&
+                                    transcript.contactId === contactId &&
+                                    transcript.data.map((t: any, index: number) => {
+                                        console.log("t", t);
+                                        if (!t) return;
+                                        console.log("t.Content", t.Content);
+                                        return (
+                                            <div key={index}>
+                                                <p>{t.ParticipantId}</p>
+                                                <p>{t.Content}</p>
+                                            </div>
+                                        );
+                                    })}
+
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
 
