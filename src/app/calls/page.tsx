@@ -116,7 +116,15 @@ const App: React.FC = () => {
                                             <span className="font-bold">
                                                 {t.ParticipantId}:{" "}
                                             </span>
-                                            {t.Content}
+                                            <span
+                                                className={
+                                                    t.Sentiment === 'POSITIVE' ? 'text-green-500' :
+                                                        t.Sentiment === 'NEGATIVE' ? 'text-red-500' :
+                                                            'text-gray-500' // default color
+                                                }
+                                            >
+                                                {t.Content}
+                                            </span>
                                         </p>
                                     </div>
                                 ))
@@ -126,6 +134,7 @@ const App: React.FC = () => {
                                 </div>
                             )}
                         </div>
+
                     </div>
                 </div>
             </div>
