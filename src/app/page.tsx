@@ -34,7 +34,7 @@ export default function Home2({ params }: { params: { id: string } }) {
             <div className="h-1/3 xl:h-1/2 lg:h-1/2 md:h-1/2 sm:h-1/3  w-full flex flex-row pl-20 pt-20">
               <img
                 src="/images/S2C Figma7 Logo.svg"
-                className=" w-16 h-auto xl:pb-56 l:pb-56 md:pb-56 pb-28"
+                className=" w-16 h-16 object-contain"
               />
               <h1 className="text-figma-figma1 font-bold text-4xl pt-4 pl-4">
                 S2C
