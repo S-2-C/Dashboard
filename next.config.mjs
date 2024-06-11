@@ -4,9 +4,6 @@ const nextConfig = {
     domains: ["orlandosydney.com"],
   },
   reactStrictMode: false,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 };
 
 export default nextConfig;

@@ -191,7 +191,7 @@ export default function AgentSlot() {
           </div>
           <div className="flex justify-center items-center">
             <div style={{ display: "inline-block" }}>
-              {callStartTime && <Timer startTime={callStartTime} />}
+              {callStartTime && <Timer startTime={callStartTime.toString()} />}
             </div>
           </div>
         </div>
