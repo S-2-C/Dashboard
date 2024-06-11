@@ -16,6 +16,9 @@ export const ConnectCallModal = () => {
     mute,
     unmute,
     isMuted,
+    putOnHold,
+    resumeCall,
+    isOnHold, // Asume que esto también se maneja a través de useCCP
   } = useCCP();
 
   const user = useUserRole();
@@ -81,6 +84,10 @@ export const ConnectCallModal = () => {
             className={`px-3 text-center text-sm ${isMuted ? 'bg-yellow-500' : 'bg-green-500'} border border-green-600 rounded-lg shadow-lg py-1 cursor-pointer hover:bg-green-600 transition duration-200`}
           >
             {isMuted ? "Unmute" : "Mute"}
+          </button>
+
+          <button onClick={isOnHold ? resumeCall : putOnHold} className={`px-3 text-center text-white border text-sm ${isOnHold ? 'bg-purple-500 border-purple-600 hover:bg-purple-600' : 'bg-orange-500 border-orange-600 hover:bg-orange-600'} rounded-lg shadow-lg py-1 cursor-pointer transition duration-200`}>
+            {isOnHold ? "Resume" : "Hold"}
           </button>
         </div>
       )

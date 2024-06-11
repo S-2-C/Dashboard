@@ -30,6 +30,9 @@ interface CCPContextType {
   mute: () => void;
   unmute: () => void;
   isMuted: boolean;
+  isOnHold: boolean;
+  putOnHold: () => void;
+  resumeCall: () => void;
 }
 
 const CCPContext = createContext<CCPContextType | null>(null);
@@ -49,6 +52,46 @@ export const CCPContextProvider = ({
   // const [callDuration, setCallDuration] = useState(0);
   const [callStartTime, setCallStartTime] = useState("");
   const [isMuted, setIsMuted] = useState(false); // Estado para gestionar el mute
+  const [isOnHold, setIsOnHold] = useState(false); // Estado para gestionar el hold
+
+  const putOnHold = () => {
+    if (!incomingContact) return;
+    console.log("Putting call on hold...")
+    const connection = incomingContact.getInitialConnection();
+    if (connection && !isOnHold) { // Verificar que la llamada no esté ya en espera
+      connection.hold({
+        success: () => {
+          console.log("Call placed on hold successfully.");
+          setIsOnHold(true);
+        },
+        failure: (error) => {
+          console.error("Failed to place call on hold:", error);
+        }
+      });
+    } else {
+      console.log("Cannot put call on hold: Invalid contact state or already on hold.");
+    }
+  };
+
+  const resumeCall = () => {
+    if (!incomingContact) return;
+    console.log("Resuming call...")
+    const connection = incomingContact.getInitialConnection();
+    if (connection && isOnHold) { // Verificar que la llamada esté en espera antes de reanudar
+      connection.resume({
+        success: () => {
+          console.log("Call resumed successfully.");
+          setIsOnHold(false);
+        },
+        failure: (error) => {
+          console.error("Failed to resume call:", error);
+        }
+      });
+    } else {
+      console.log("Cannot resume call: Call is not on hold.");
+    }
+  };
+
 
   const mute = () => {
     const connection = incomingContact?.getAgentConnection();
@@ -247,6 +290,9 @@ export const CCPContextProvider = ({
         mute,
         unmute,
         isMuted,
+        isOnHold,
+        putOnHold,
+        resumeCall,
       }}
     >
       {children}
