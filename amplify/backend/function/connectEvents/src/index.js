@@ -29,6 +29,8 @@ async function updateCallEnd(event) {
                 userContactsId
                 callStart
                 callEnd
+                createdAt
+                updatedAt
             }
           }`,
 
@@ -85,6 +87,8 @@ async function updateCallEnd(event) {
                 role
                 needsHelp
                 isOnCall
+                createdAt
+                updatedAt
             }
         }`,
         variables: {
@@ -195,6 +199,8 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     urgency
                     timestamp
                     agentEmail
+                    createdAt
+                    updatedAt
                 }
             }`,
             variables: {
@@ -220,6 +226,8 @@ async function createNotification(event, description, urgency = "REGULAR", agent
                     urgency
                     timestamp
                     agentEmail
+                    createdAt
+                    updatedAt
                 }
             }`,
             variables: {

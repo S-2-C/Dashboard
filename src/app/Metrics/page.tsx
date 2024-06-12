@@ -9,6 +9,14 @@ import BarChartSeconds from "@/components/barChart";
 import { LucideTableCellsMerge } from "lucide-react";
 import { fetchMetricDataV2Agent } from "@/fetching/fetchingMetricDataV2Agent";
 
+interface MetricValue {
+  value: string | number;
+  threshold: {
+    low: number;
+    mid: number;
+    isHigh: boolean;
+  };
+}
 interface Agent {
   Id: string;
   Username: string;
@@ -61,7 +69,9 @@ export default function Metrics() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
   const [selectedAgents, setSelectedAgents] = useState<Agent[]>([]);
-  const [agentMetricsData, setAgentMetricsData] = useState<any>({});
+  const [agentMetricsData, setAgentMetricsData] = useState<
+    Record<string, Record<string, MetricValue>>
+  >({});
   const [agentMetrics, setAgentMetrics] = useState<Record<string, Metric[]>>(
     {}
   );
@@ -560,7 +570,7 @@ export default function Metrics() {
                       {Object.entries(metric.values).map(
                         ([key, value], idx) => (
                           <p key={idx} className="text-lg">
-                            {key}: {value}
+                            {key}: {value as string}
                           </p>
                         )
                       )}
@@ -578,7 +588,9 @@ export default function Metrics() {
                       Selected Agent: {agent.Username}
                     </Text> */}
                     <div className="bg-figma-figma11 rounded-xl p-4 shadow-md flex flex-col mt-4">
-                      <p className="text-xl font-bold mb-2">Agent Metrics: {agent.Username}</p>
+                      <p className="text-xl font-bold mb-2">
+                        Agent Metrics: {agent.Username}
+                      </p>
                       {agentMetricsData && agentMetricsData[agent.Id] ? (
                         Object.entries(agentMetricsData[agent.Id]).map(
                           ([key, value], idx) => (

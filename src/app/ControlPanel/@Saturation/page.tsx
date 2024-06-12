@@ -6,9 +6,7 @@ import { documents } from "@/app/content/relevantFiles";
 import AgentDocumentReader from "@/components/agentDocumentReader";
 import { useEffect } from "react";
 import { useState } from "react";
-import { fetchListQueues } from "@/fetching/fetchingListQueues";
 import { fetchCurrentMetricData } from "@/fetching/fetchingGetCurrentMetricData";
-import { getChannelsQueues, sortQueues } from "@/app/Channels/page";
 
 const ITEMS_PER_PAGE = 9;
 
@@ -19,6 +17,10 @@ interface Metric {
 
 interface QueueMetric {
   queue_metrics: Metric[];
+}
+
+function sortQueues(data: any[]) {
+  return data.sort((a, b) => a.queue.localeCompare(b.queue));
 }
 
 export default function SaturationSlot() {

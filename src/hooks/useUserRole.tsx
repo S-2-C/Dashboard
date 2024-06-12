@@ -13,6 +13,7 @@ export const useUserRole = () => {
       const user = await fetchAuthSession(); //Funcion que me da la información del user tokens.signInDetails.loginId
       // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
+      // @ts-ignore
       const agent = await fetchOneAgent(email);
       setAgent(agent);
     }

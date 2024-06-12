@@ -4,6 +4,27 @@ import { Heading } from "@aws-amplify/ui-react";
 import DateInputComponent from '@/components/DateInputComponent';
 import SearchBar from '../searchBar';
 
+async function downloadAudioFromS3(url: any) {
+    try {
+        const presignedUrl = url;
+        console.log(presignedUrl, "url");
+
+        const audioResponse = await fetch(presignedUrl);
+        console.log(audioResponse, "audio_response");
+
+        if (!audioResponse.ok) {
+            throw new Error(`Error fetching audio: ${audioResponse.statusText}`);
+        }
+
+        const audioBlob = await audioResponse.blob();
+        console.log('Audio downloaded and converted to Blob:', audioBlob);
+        return audioBlob;
+    } catch (error) {
+        console.error('Error downloading audio:', error);
+        throw error;
+    }
+}
+
 const App: React.FC = () => {
     const [dateResponse, setDateResponse] = useState<any>(null);
     const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
@@ -40,8 +61,15 @@ const App: React.FC = () => {
                         method: "GET"
                     });
 
-                    const audio = await response.blob();
-                    const audioUrl = URL.createObjectURL(audio);
+
+                    // Get the pre-signed URL for the audio file
+                    const presignedUrlJson = await response.json();
+
+                    // Fetch the audio file from the pre-signed URL
+                    const audioBlob = await downloadAudioFromS3(presignedUrlJson.data.url);
+
+
+                    const audioUrl = URL.createObjectURL(audioBlob);
                     audioPlayer.src = audioUrl;
                 }
             }

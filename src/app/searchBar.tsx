@@ -14,6 +14,7 @@ const SearchBar = () => {
       const user = await fetchAuthSession(); // Function that gives me the user information tokens.signInDetails.loginId
       // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
+      // @ts-ignore
       const agent = await fetchOneAgent(email);
       setAgent(agent);
     }

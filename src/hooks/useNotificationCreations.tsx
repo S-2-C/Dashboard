@@ -6,31 +6,37 @@ import { Notification } from "@/API";
 const client = generateClient();
 
 const useNotificationCreations = () => {
-  const [lastNotificationCreation, setLastNotificationCreation] =
-    useState<any>(null);
+    const [lastNotificationCreation, setLastNotificationCreation] =
+        useState<Notification | null>(null);
 
-  useEffect(() => {
-    const sub = client.graphql({
-      query: subscriptions.onCreateNotification,
-    });
-    console.log("Subscribing to notifications");
-    sub.subscribe({
-      next: ({ data }: any) => {
-        if (data.onCreateNotification) {
-          setLastNotificationCreation(data.onCreateNotification);
-        }
-      },
-      error: (error: any) => {
-        console.warn("Subscription error:", error);
-      },
-    });
+    useEffect(() => {
+        let subscription: any = null;
 
-    return () => {
-      // TODO: Unsubscribe from the subscription
-    };
-  }, []);
+        const startSubscription = async () => {
+            subscription = (client.graphql({
+                query: subscriptions.onCreateNotification,
+            })).subscribe({
+                next: (value: any) => {
+                    if (value.data.onCreateNotification) {
+                        setLastNotificationCreation(value.data.onCreateNotification);
+                    }
+                },
+                error: (error: any) => {
+                    console.warn("Subscription error:", error);
+                },
+            });
+        };
 
-  return lastNotificationCreation as Notification;
+        startSubscription();
+
+        return () => {
+            if (subscription) {
+                subscription.unsubscribe();
+            }
+        };
+    }, []);
+
+    return lastNotificationCreation;
 };
 
 export default useNotificationCreations;

@@ -38,6 +38,7 @@ export default function ControlPanelLayout({
       // @ts-ignore
       const email = user?.tokens?.signInDetails?.loginId;
       console.log(email);
+      // @ts-ignore
       const agent = await fetchOneAgent(email);
       console.log("agent", agent);
       setAgent(agent);

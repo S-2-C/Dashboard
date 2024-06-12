@@ -13,6 +13,7 @@ declare global {
     };
   }
 }
+
 interface CCPContextType {
   currentAgent: connect.Agent | null;
   agentState: string;
@@ -26,6 +27,12 @@ interface CCPContextType {
   incomingContact: connect.Contact | null;
   logOut: () => Promise<void>;
   contacts: connect.Contact[];
+  mute: () => void;
+  unmute: () => void;
+  isMuted: boolean;
+  isOnHold: boolean;
+  putOnHold: () => void;
+  resumeCall: () => void;
 }
 
 const CCPContext = createContext<CCPContextType | null>(null);
@@ -44,6 +51,81 @@ export const CCPContextProvider = ({
   const [callTime, setCallTime] = useState(0);
   // const [callDuration, setCallDuration] = useState(0);
   const [callStartTime, setCallStartTime] = useState("");
+  const [isMuted, setIsMuted] = useState(false); // Estado para gestionar el mute
+  const [isOnHold, setIsOnHold] = useState(false); // Estado para gestionar el hold
+
+  const putOnHold = () => {
+    if (!incomingContact) return;
+    console.log("Putting call on hold...")
+    const connection = incomingContact.getInitialConnection();
+    if (connection && !isOnHold) { // Verificar que la llamada no esté ya en espera
+      connection.hold({
+        success: () => {
+          console.log("Call placed on hold successfully.");
+          setIsOnHold(true);
+        },
+        failure: (error) => {
+          console.error("Failed to place call on hold:", error);
+        }
+      });
+    } else {
+      console.log("Cannot put call on hold: Invalid contact state or already on hold.");
+    }
+  };
+
+  const resumeCall = () => {
+    if (!incomingContact) return;
+    console.log("Resuming call...")
+    const connection = incomingContact.getInitialConnection();
+    if (connection && isOnHold) { // Verificar que la llamada esté en espera antes de reanudar
+      connection.resume({
+        success: () => {
+          console.log("Call resumed successfully.");
+          setIsOnHold(false);
+        },
+        failure: (error) => {
+          console.error("Failed to resume call:", error);
+        }
+      });
+    } else {
+      console.log("Cannot resume call: Call is not on hold.");
+    }
+  };
+
+
+  const mute = () => {
+    const connection = incomingContact?.getAgentConnection();
+    if (connection instanceof connect.VoiceConnection) { // Verificar que la conexión es una VoiceConnection
+      connection.muteParticipant({
+        success: () => {
+          console.log("Muted successfully.");
+          setIsMuted(true);
+        },
+        failure: (error) => {
+          console.error("Failed to mute:", error);
+        }
+      });
+    } else {
+      console.log("Connection is not a voice connection.");
+    }
+  };
+
+  const unmute = () => {
+    const connection = incomingContact?.getAgentConnection();
+    if (connection instanceof connect.VoiceConnection) { // Verificar que la conexión es una VoiceConnection
+      connection.unmuteParticipant({
+        success: () => {
+          console.log("Unmuted successfully.");
+          setIsMuted(false);
+        },
+        failure: (error) => {
+          console.error("Failed to unmute:", error);
+        }
+      });
+    } else {
+      console.log("Connection is not a voice connection.");
+    }
+  };
 
   useEffect(() => {
     const ccpContainer = document.getElementById("ccp-container");
@@ -205,6 +287,12 @@ export const CCPContextProvider = ({
         incomingContact,
         logOut,
         contacts,
+        mute,
+        unmute,
+        isMuted,
+        isOnHold,
+        putOnHold,
+        resumeCall,
       }}
     >
       {children}
