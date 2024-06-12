@@ -145,7 +145,7 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                         <Link href={`/ProfileAgent/${agent?.id}`}>
                             {/* {agent?.id} - Walmart®.com */}
                             <h1 className=" text-3xl font-bold hover:underline hover:text-blue-400">
-                                {agent?.name || agent?.id.split("@")[0] + "- Walmart®.com"}
+                                {params.id.split("%40")[0] + "- Walmart®.com"}
                             </h1>
                         </Link>
 
