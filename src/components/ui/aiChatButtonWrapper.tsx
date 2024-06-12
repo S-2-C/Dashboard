@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export default function AIChatButtonWrapper() {
   const pathname = usePathname();
 
-  const hiddenRoutes = ["/", "/AgentManagement"];
+  const hiddenRoutes = ["/"];
 
   const shouldShowAIChatButton = !hiddenRoutes.includes(pathname);
 

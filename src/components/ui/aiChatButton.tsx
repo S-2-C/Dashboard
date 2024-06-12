@@ -13,10 +13,11 @@ export default function AiChatButton() {
 
   return (
     <>
-      { !chatBoxOpen && (
+      {!chatBoxOpen && (
+
         <div
           ref={buttonRef}
-        //   onMouseDown={handleMouseDown}
+          //   onMouseDown={handleMouseDown}
           style={{
             position: 'fixed', // Ensures the button can be freely moved
             cursor: 'pointer',
@@ -30,11 +31,10 @@ export default function AiChatButton() {
           </Button>
         </div>
       )}
-      <AIChatBox 
-        open={chatBoxOpen} 
-        onClose={() => setChatBoxOpen(false)} 
-        // position={buttonPosition}
-        
+
+      <AIChatBox
+        open={chatBoxOpen}
+        onClose={() => setChatBoxOpen(false)}
       />
     </>
   );
