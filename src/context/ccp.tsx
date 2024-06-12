@@ -56,9 +56,10 @@ export const CCPContextProvider = ({
 
   const putOnHold = () => {
     if (!incomingContact) return;
-    console.log("Putting call on hold...")
+    console.log("Putting call on hold...");
     const connection = incomingContact.getInitialConnection();
-    if (connection && !isOnHold) { // Verificar que la llamada no esté ya en espera
+    if (connection && !isOnHold) {
+      // Verificar que la llamada no esté ya en espera
       connection.hold({
         success: () => {
           console.log("Call placed on hold successfully.");
@@ -66,18 +67,21 @@ export const CCPContextProvider = ({
         },
         failure: (error) => {
           console.error("Failed to place call on hold:", error);
-        }
+        },
       });
     } else {
-      console.log("Cannot put call on hold: Invalid contact state or already on hold.");
+      console.log(
+        "Cannot put call on hold: Invalid contact state or already on hold."
+      );
     }
   };
 
   const resumeCall = () => {
     if (!incomingContact) return;
-    console.log("Resuming call...")
+    console.log("Resuming call...");
     const connection = incomingContact.getInitialConnection();
-    if (connection && isOnHold) { // Verificar que la llamada esté en espera antes de reanudar
+    if (connection && isOnHold) {
+      // Verificar que la llamada esté en espera antes de reanudar
       connection.resume({
         success: () => {
           console.log("Call resumed successfully.");
@@ -85,17 +89,17 @@ export const CCPContextProvider = ({
         },
         failure: (error) => {
           console.error("Failed to resume call:", error);
-        }
+        },
       });
     } else {
       console.log("Cannot resume call: Call is not on hold.");
     }
   };
 
-
   const mute = () => {
     const connection = incomingContact?.getAgentConnection();
-    if (connection instanceof connect.VoiceConnection) { // Verificar que la conexión es una VoiceConnection
+    if (connection instanceof connect.VoiceConnection) {
+      // Verificar que la conexión es una VoiceConnection
       connection.muteParticipant({
         success: () => {
           console.log("Muted successfully.");
@@ -103,7 +107,7 @@ export const CCPContextProvider = ({
         },
         failure: (error) => {
           console.error("Failed to mute:", error);
-        }
+        },
       });
     } else {
       console.log("Connection is not a voice connection.");
@@ -112,7 +116,8 @@ export const CCPContextProvider = ({
 
   const unmute = () => {
     const connection = incomingContact?.getAgentConnection();
-    if (connection instanceof connect.VoiceConnection) { // Verificar que la conexión es una VoiceConnection
+    if (connection instanceof connect.VoiceConnection) {
+      // Verificar que la conexión es una VoiceConnection
       connection.unmuteParticipant({
         success: () => {
           console.log("Unmuted successfully.");
@@ -120,7 +125,7 @@ export const CCPContextProvider = ({
         },
         failure: (error) => {
           console.error("Failed to unmute:", error);
-        }
+        },
       });
     } else {
       console.log("Connection is not a voice connection.");
@@ -148,6 +153,7 @@ export const CCPContextProvider = ({
       region: "us-east-1",
       softphone: {
         allowFramedSoftphone: true,
+        disableRingtone: true,
       },
     });
 

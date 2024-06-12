@@ -243,7 +243,7 @@ export default function MetricsSlot() {
               <div role="status" className="">
                 <svg
                   aria-hidden="true"
-                  className="w-20 h-20 text-[#8BC4E6] animate-spin dark:text-gray-600 fill-blue-600"
+                  className="w-20 h-20 text-figma-figma9 animate-spin dark:text-gray-600 fill-white"
                   viewBox="0 0 100 101"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
