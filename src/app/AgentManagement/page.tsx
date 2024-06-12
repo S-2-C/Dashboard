@@ -152,7 +152,7 @@ export default function AgentManagement() {
                                     <div className="flex items-center">
                                         <div className="h-6 w-6 bg-agenman-agenmanred rounded-full mr-2"></div>
                                         <div className="text-2xl">
-                                            <Text>Alert for Agent in Call</Text>
+                                            <Text>Alert for Agent on Call</Text>
                                         </div>
                                     </div>
                                     <div className="h-4 flex bg-neutral-300 items-center rounded-xl shadow-md">
