@@ -62,8 +62,13 @@ const App: React.FC = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full w-full">
                     {/* Date selection and audio files column */}
-                    <div className="col-span-1 w-full flex flex-col">
-                        <div className="w-full mb-4 h-20">
+                    <div className="col-span-1 w-full flex flex-col" style={{maxHeight:'80vh'}}>
+                        <div className="w-full mb-4 h-30 flex  flex-col">
+                            <div className="  w-3/4 mb-4">
+                                <Heading level={4} fontWeight="semibold">
+                                    Select a Date
+                                </Heading>
+                            </div>
                             <DateInputComponent setResponse={setDateResponse} date={date} setDate={setDate} />
                         </div>
                         <div className="w-full mb-4">
@@ -71,9 +76,9 @@ const App: React.FC = () => {
                                 Audio Files
                             </Heading>
                         </div>
-                        <div className="w-full flex-grow">
+                        <div className={`w-full flex-grow rounded-lg overflow-y-auto scrollbar-hide border border-gray-300 ${transcript && selectedContactId ? 'bg-gray-100' : 'bg-white'} shadow-md`} style={{padding: '1rem'}}>
                             {dateResponse ? (
-                                <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-300px)]">
+                                <div className="space-y-4 max-h-[calc(100vh-300px)]">
                                     {dateResponse.data.contactIds.map((contactId: string) => (
                                         <div
                                             key={contactId}
@@ -108,7 +113,7 @@ const App: React.FC = () => {
                                 Transcript
                             </Heading>
                         </div>
-                        <div className={`flex-grow w-full rounded-lg overflow-y-auto border border-gray-300 ${transcript && selectedContactId ? 'bg-gray-100' : 'bg-white'} shadow-md`} style={{ padding: '1rem', minHeight: '70vh' }}>
+                        <div className={`flex-grow w-full max-h- rounded-lg overflow-y-auto scrollbar-hide border border-gray-300 ${transcript && selectedContactId ? 'bg-gray-100' : 'bg-white'} shadow-md`} style={{ padding: '1rem', minHeight: '70vh', maxHeight: '74vh' }}>
                             {transcript && selectedContactId ? (
                                 transcript.data && transcript.data.map((t: any, index: number) => (
                                     <div key={index} className="my-2">
