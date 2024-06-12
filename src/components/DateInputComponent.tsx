@@ -27,9 +27,8 @@ const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, da
     };
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <div className="flex items-center">
-                <h2 className="text-2xl font-bold text-gray-800 mr-4">Select a Date:</h2>
+        <div className="p-4 rounded-lg border border-gray-300 text-center shadow-md w-full h-full flex items-center justify-center">
+            <div className="flex items-center w-full">
                 <input
                     type="date"
                     id="date"
@@ -37,8 +36,7 @@ const DateInputComponent: React.FC<DateInputComponentProps> = ({ setResponse, da
                     value={date}
                     onChange={handleDateChange}
                     required
-                    className="block p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
+                    className="p-4 rounded-lg border border-gray-300 bg-blue-50 text-center shadow-md w-full h-full flex items-center justify-center"/>
             </div>
             {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
         </div>
