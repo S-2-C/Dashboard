@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState } from "react";
 import { Flex, Heading } from "@aws-amplify/ui-react";
 import SearchBar from "../searchBar"; //importing the SearchBar component
@@ -37,15 +37,11 @@ export default function Documentation() {
   return (
     <div className="h-screen flex w-full">
       <div className="flex flex-col w-full p-4 ml-24"> {/* left margin */}
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center mb-6 mt-4"> {/* Added margin-top */}
+          <Heading level={1} fontWeight="bold">
+            Documentation
+          </Heading>
           <SearchBar />
-        </div>
-        <div className="">
-          <Flex direction="column" gap="2rem">
-            <Heading level={1} fontWeight="bold">
-              Documentation
-            </Heading>
-          </Flex>
         </div>
         <div className="h-14 flex pt-4 justify-start border-b-2 border-gray-300">
           {["All", "Sales", "Walmart.com", "Walmart Express", "Agent Training", "FAQ"].map((type) => (
@@ -53,7 +49,7 @@ export default function Documentation() {
               key={type}
               className={`py-2 px-4 mx-1 rounded-t-lg border-b-2 ${
                 filterType === type
-                  ? "border-t-2 border-l-2 border-r-2 border-gray-300 text-blue"
+                  ? "border-t-2 border-l-2 border-r-2 border-gray-300 text-figma-figma1"
                   : "border-gray-300 text-gray-700"
               }`}
               onClick={() => handleFilterChange(type)}

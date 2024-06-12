@@ -10,6 +10,23 @@ const App: React.FC = () => {
     const [transcript, setTranscript] = useState<any>(null);
     const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
 
+    const fetchHistoricCalls = async (date: string) => {
+        try {
+            const response = await fetch(`/historicCalls/listCallsByDate?date=${date}`, {
+                method: "GET"
+            });
+            const data = await response.json();
+            setDateResponse(data);
+        } catch (error) {
+            console.error('Error fetching historic calls:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch the contact IDs for the current date on initial load
+        fetchHistoricCalls(date);
+    }, []);
+
     useEffect(() => {
         const fetchAudios = async () => {
             if (dateResponse && dateResponse.data && dateResponse.data.contactIds) {
@@ -78,8 +95,8 @@ const App: React.FC = () => {
                         </div>
                         <div className={`w-full flex-grow rounded-lg overflow-y-auto scrollbar-hide border border-gray-300 ${transcript && selectedContactId ? 'bg-gray-100' : 'bg-white'} shadow-md`} style={{padding: '1rem'}}>
                             {dateResponse ? (
-                                <div className="space-y-4 max-h-[calc(100vh-300px)]">
-                                    {dateResponse.data.contactIds.map((contactId: string) => (
+                                <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-300px)]">
+                                    {dateResponse.data.contactIds.map((contactId: string, index: number) => (
                                         <div
                                             key={contactId}
                                             className={`p-4 rounded-lg border cursor-pointer transition-all ${selectedContactId === contactId ? 'border-blue-600 bg-blue-100' : 'border-gray-300 bg-blue-50'}`}
@@ -87,7 +104,7 @@ const App: React.FC = () => {
                                         >
                                             <div className="flex justify-between items-center mb-2">
                                                 <p className="text-md font-bold">
-                                                    Contact Id: <span className="text-blue-600">{contactId}</span>
+                                                    Call number {index + 1}
                                                 </p>
                                             </div>
                                             <div className="w-full flex justify-center items-center">
@@ -121,7 +138,15 @@ const App: React.FC = () => {
                                             <span className="font-bold">
                                                 {t.ParticipantId}:{" "}
                                             </span>
-                                            {t.Content}
+                                            <span
+                                                className={
+                                                    t.Sentiment === 'POSITIVE' ? 'text-green-500' :
+                                                        t.Sentiment === 'NEGATIVE' ? 'text-red-500' :
+                                                            'text-gray-500' // default color
+                                                }
+                                            >
+                                                {t.Content}
+                                            </span>
                                         </p>
                                     </div>
                                 ))
@@ -131,6 +156,7 @@ const App: React.FC = () => {
                                 </div>
                             )}
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -21,6 +21,8 @@ import {
   formatDateToMexicanTimezone,
   getSentimentColor,
 } from "@/functions/timeFunctions";
+import { useCCP } from "@/context/ccp";
+import { useUserRole } from "@/hooks/useUserRole";
 
 export default function ManageCall({ params }: { params: { id: string } }) {
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
@@ -31,6 +33,14 @@ export default function ManageCall({ params }: { params: { id: string } }) {
   const [totalSentiment, setTotalSentiment] = useState(0);
   const [agentSentiment, setAgentSentiment] = useState(0);
   const [customerSentiment, setCustomerSentiment] = useState(0);
+
+  const { contacts } = useCCP();
+
+  const role = useUserRole();
+
+  useEffect(() => {
+    console.log("Hello, contacts: ", contacts);
+  }, [contacts]);
 
   // Function to fetch agent data
   async function fetchAgent() {
@@ -76,23 +86,23 @@ export default function ManageCall({ params }: { params: { id: string } }) {
               val.Transcript.Sentiment == "POSITIVE"
                 ? 1
                 : val.Transcript.Sentiment == "NEGATIVE"
-                ? -1
-                : 0;
+                  ? -1
+                  : 0;
           } else {
             customerSentiment +=
               val.Transcript.Sentiment == "POSITIVE"
                 ? 1
                 : val.Transcript.Sentiment == "NEGATIVE"
-                ? -1
-                : 0;
+                  ? -1
+                  : 0;
           }
 
           totalSentiment +=
             val.Transcript.Sentiment == "POSITIVE"
               ? 1
               : val.Transcript.Sentiment == "NEGATIVE"
-              ? -1
-              : 0;
+                ? -1
+                : 0;
         }
       }
 
@@ -175,7 +185,34 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                 alignItems: "center",
                 ...commonShadowStyle,
               }}
-              onClick={() => setIsPopoverVisible(true)}
+              onClick={async () => {
+                if (isOnCall?.id && role?.arn) {
+                  // Obtenemos el UserId de forma segura, garantizando que siempre será un string.
+                  const userId = role?.arn.split("/").pop() || "";  // "" como fallback si pop() da undefined
+
+                  console.log("ContactId: ", isOnCall?.id);
+                  console.log("UserId: ", userId);
+                  console.log("AllowedMonitorCapabilities: ", ['SILENT_MONITOR', 'BARGE']);
+                  console.log("InstanceId: ", "96cb63e2-25a1-4014-8f3c-e3919415d597");
+
+                  const params = {
+                    ContactId: isOnCall.id,  // Asumimos que isOnCall?.id existe basado en el if
+                    UserId: userId,
+                    AllowedMonitorCapabilities: JSON.stringify(['SILENT_MONITOR', 'BARGE']),
+                    InstanceId: "96cb63e2-25a1-4014-8f3c-e3919415d597"
+                  };
+
+                  const queryString = new URLSearchParams(params).toString();
+
+                  const response = await fetch(`/connect/BargeIn?${queryString}`, {
+                    method: "GET"
+                  });
+
+                  const data = await response.json();
+                  console.log("data: ", data);
+                }
+                setIsPopoverVisible(true);
+              }}
             >
               <FontAwesomeIcon icon={faPhone} size="3x" color="darkblue" />
             </PopoverTrigger>
@@ -202,7 +239,7 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                     onClick={() => setIsPopoverVisible(false)}
                   />
                   <Text fontWeight="bold" className="my-4">
-                    You are now about to join the call
+                    {isOnCall ? "You are now about to join the call" : "No active call"}
                   </Text>
                   <Button
                     onClick={() => setIsPopoverVisible(false)}
@@ -382,26 +419,23 @@ export default function ManageCall({ params }: { params: { id: string } }) {
                     return (
                       <div
                         key={index}
-                        className={`flex rounded-lg flex-col ${
-                          t.Transcript.ParticipantRole == "AGENT"
-                            ? "items-end text-end"
-                            : "items-start text-start"
-                        } `}
+                        className={`flex rounded-lg flex-col ${t.Transcript.ParticipantRole == "AGENT"
+                          ? "items-end text-end"
+                          : "items-start text-start"
+                          } `}
                       >
                         <div
                           className={` w-2/3 px-2
-                              ${
-                                t.Transcript.ParticipantRole == "AGENT"
-                                  ? " rounded-s-2xl"
-                                  : "rounded-e-2xl"
-                              } 
-                                ${
-                                  t.Transcript.Sentiment == "NEGATIVE"
-                                    ? "bg-red-300"
-                                    : t.Transcript.Sentiment == "POSITIVE"
-                                    ? "bg-green-200"
-                                    : "bg-gray-300"
-                                }`}
+                              ${t.Transcript.ParticipantRole == "AGENT"
+                              ? " rounded-s-2xl"
+                              : "rounded-e-2xl"
+                            } 
+                                ${t.Transcript.Sentiment == "NEGATIVE"
+                              ? "bg-red-300"
+                              : t.Transcript.Sentiment == "POSITIVE"
+                                ? "bg-green-200"
+                                : "bg-gray-300"
+                            }`}
                         >
                           <h1 className=" font-bold">
                             {t.Transcript.ParticipantRole}
@@ -416,6 +450,6 @@ export default function ManageCall({ params }: { params: { id: string } }) {
           </div>
         </Flex>
       </div>
-    </div>
+    </div >
   );
 }

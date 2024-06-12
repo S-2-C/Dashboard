@@ -9,7 +9,7 @@ import CCPContainer from "@/components/ccpContainer";
 import Home from "./NavBar";
 
 export const metadata: Metadata = {
-  title: "Wallmart Dashboard",
+  title: "Walmart Dashboard",
   description: "For Amazon Connect Supervisors and Agents",
 };
 
