@@ -61,7 +61,7 @@ export async function PATCH(request: any) {
         const agents = await listUsers(baseUrl as string);
         
         // get the active agents
-        const activeAgents = agents.filter((agent: any) => agent.Status.StatusName === "Available")
+        const activeAgents = agents.filter((agent: any) => agent.Status.StatusName === "Available" && agent.Contacts[0].AgentContactState !== "MISSED")
     
         // get the total nomber of contacts in queue and in call for all queues
         const totalUsersInChannels = queueMetricsData.reduce((sum : number, queue : any) => sum + queue.queue_metrics[2].Value + queue.queue_metrics[1].Value, 0);
@@ -79,7 +79,10 @@ export async function PATCH(request: any) {
 
             queueMetricsData.forEach((queue: any) => {
                 // Use the occupancyRatio to assign priority
-                const occupancyRatio = (queue.queue_metrics[1] + queue.queue_metrics[2].Value) / totalUsersInChannels;
+                const channelOccupancy = queue.queue_metrics[1].Value + queue.queue_metrics[2].Value;
+                if (channelOccupancy === 0) return;
+                
+                const occupancyRatio = channelOccupancy / totalUsersInChannels;
                 const agentsToAssign = Math.floor(occupancyRatio * activeAgents.length);
 
                 message = message + "Assigned " + agentsToAssign + " agents to queue " + queue.queue + ". "; 
