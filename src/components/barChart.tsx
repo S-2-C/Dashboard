@@ -1,16 +1,22 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Chart } from "chart.js";
 
 function BarChartSeconds({ WalmartDelivery, WalmartOnline, WalmartPhysicalStore, WalmartPass, label, title }: any) {
     console.log(WalmartDelivery, WalmartOnline, WalmartPhysicalStore, WalmartPass);
+    const [chartInstance, setChartInstance] = useState<any>(null);
     useEffect(() => {
         console.log("labels", label);
         var ctx = (document.getElementById(title) as HTMLCanvasElement)?.getContext('2d');
+        
 
         // if WalmartDelivery elements in the array are equal to ´N/A, return
 
         if (WalmartDelivery[0] === "N/A" || WalmartOnline[0] === "N/A" || WalmartPhysicalStore[0] === "N/A" || WalmartPass[0] === "N/A") {
             return;
+        }
+
+        if (chartInstance) {
+            chartInstance.destroy();
         }
 
         //@ts-ignore
@@ -50,7 +56,13 @@ function BarChartSeconds({ WalmartDelivery, WalmartOnline, WalmartPhysicalStore,
 
 
         });
-    }, [WalmartDelivery, WalmartOnline, WalmartPhysicalStore, WalmartPass, label])
+        setChartInstance(myChart);
+        return () => {
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+        };
+    }, [WalmartDelivery,  WalmartOnline, WalmartPhysicalStore, WalmartPass, label])
 
     if (WalmartDelivery[0] === "N/A" || WalmartOnline[0] === "N/A" || WalmartPhysicalStore[0] === "N/A" || WalmartPass[0] === "N/A") {
         return (

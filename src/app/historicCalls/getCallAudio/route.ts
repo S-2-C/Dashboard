@@ -1,5 +1,7 @@
 const { S3Client, ListObjectsV2Command, GetObjectCommand } = require("@aws-sdk/client-s3");
 import { make_config_json, checkDateIsValid, returnError, } from "@/app/apis_library/connect";
+import { PassThrough } from 'stream';
+
 
 function generateDatePrefixWav(date: string, contactId: string) {
     const dateArray = date.split("-");
@@ -71,13 +73,15 @@ export async function GET(request: Request) {
 
 
     const wav = await downloadObject(bucketName, key, client);
+    const passThrough = new PassThrough();
 
+    wav.pipe(passThrough);
 
-
-    return new Response(wav, {
+    return new Response(passThrough as any, {
         headers: {
             'Content-Type': 'audio/wav',
             'Content-Disposition': `attachment; filename="${key.split('/').pop()}"`
         }
     });
+
 }
