@@ -22,7 +22,7 @@ const DocumentReader = ({ content, index }: textReaderProps) => {
                     {content.title}
                 </div>
                 <div className="mb-2 w-full text-gray-600 text-lg"> {/* Increased font size to lg */}
-                    {content.description}
+                    {content.description.length > 60 ? content.description.slice(0, 60) + "..." : content.description}
                 </div>
                 <div className="text-sm font-extralight w-full text-gray-500">
                     Last Updated: {content.date}
