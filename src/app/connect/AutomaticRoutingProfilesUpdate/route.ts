@@ -63,13 +63,13 @@ export async function PATCH(request: any) {
         // get the active agents
         const activeAgents = agents.filter((agent: any) => agent.Status.StatusName === "Available")
     
-        // get the total nomber of contacts in queue for all queues
-        const totalUsersInQueue = queueMetricsData.reduce((sum : number, queue : any) => sum + queue.queue_metrics[2].Value, 0);
+        // get the total nomber of contacts in queue and in call for all queues
+        const totalUsersInChannels = queueMetricsData.reduce((sum : number, queue : any) => sum + queue.queue_metrics[2].Value + queue.queue_metrics[1].Value, 0);
     
         // if the number of active agents is greater than the number of users then set all of the agents to equal priority routing profile
         let message: string;
-        if (activeAgents.length >= totalUsersInQueue) {
-            message = "The number of active agents is bigger than the customers in the queue, assigning all active agents to the equal priority routing profile.";
+        if (activeAgents.length >= totalUsersInChannels) {
+            message = "The number of active agents is bigger than the customers in all queues, assigning all active agents to the equal priority routing profile.";
             activeAgents.forEach((agent: any) => setRoutingProfile(baseUrl as string, agent.User.Id, equalPriorityRoutingProfile));
         } else {
             // assign agents to queue priority in the same ratio of the channels queue occupancy / total queue occupancy
@@ -79,7 +79,7 @@ export async function PATCH(request: any) {
 
             queueMetricsData.forEach((queue: any) => {
                 // Use the occupancyRatio to assign priority
-                const occupancyRatio = queue.queue_metrics[2].Value / totalUsersInQueue;
+                const occupancyRatio = (queue.queue_metrics[1] + queue.queue_metrics[2].Value) / totalUsersInChannels;
                 const agentsToAssign = Math.floor(occupancyRatio * activeAgents.length);
 
                 message = message + "Assigned " + agentsToAssign + " agents to queue " + queue.queue + ". "; 
@@ -90,8 +90,6 @@ export async function PATCH(request: any) {
                     agentsAssigned++;
                 }
             });
-
-
 
             message = message + "Assigned the remaining " + (activeAgents.length - agentsAssigned) + " agents to the equal priority routing profile. ";
             // since we are rounding down, assign the remaining agents to the equal priority routing profile
