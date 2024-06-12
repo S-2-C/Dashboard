@@ -49,7 +49,7 @@ export default function Documentation() {
               key={type}
               className={`py-2 px-4 mx-1 rounded-t-lg border-b-2 ${
                 filterType === type
-                  ? "border-t-2 border-l-2 border-r-2 border-gray-300 text-blue"
+                  ? "border-t-2 border-l-2 border-r-2 border-gray-300 text-figma-figma1"
                   : "border-gray-300 text-gray-700"
               }`}
               onClick={() => handleFilterChange(type)}
